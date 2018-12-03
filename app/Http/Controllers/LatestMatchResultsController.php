@@ -23,10 +23,12 @@ class LatestMatchResultsController extends Controller
         FootballAPIConnector::getLatestMatchResult_ExternalAPI('https://api.football-data.org/v2/teams/86/matches?status=FINISHED', env('APP_FootballAPIToken'));
     }
 
-    public function get_latest_match_result()
+    public function get_latest_match_result(Request $request)
     {
         $latest_match = DB::table('latest_match_results')->join('clubs as clubHome', 'clubHome.idClub', '=', 'latest_match_results.idClubHome')->join('clubs as clubAway', 'clubAway.idClub', '=', 'latest_match_results.idClubAway')->select('clubHome.Name as home_team', 'HomeClubScore as home_team_score', 'clubAway.Name as away_team', 'AwayClubScore as away_team_score', 'League as league', 'Date as date')->orderBy('Date', 'desc')->first();
         return response()->json($latest_match);
+
+        var_dump($request->cookie('token'));
     }
 
     /**
