@@ -32,6 +32,9 @@ class LeagueScoreboardController extends Controller
             $league_scoreboard = DB::table('league_scoreboards')->select('Group as group')->where('Season', $season)->where('League', $league)->groupBy('Group')->get();
             foreach ($league_scoreboard as $key => $leagueClubs) {
                 $leagueClubs->standings = DB::table('league_scoreboards')->select('idClub as club', 'Position as position', 'Matches as matches', 'Won as won', 'Draw as draw', 'Lost as lost', 'Points as points')->where('Season', $season)->where('League', $league)->where('Group', $leagueClubs->group)->orderBy('Position', 'asc')->get();
+                foreach ($leagueClubs->standings as $key => $club) {
+                    ClubsController::buildClubData($club->club);
+                }
             }
         }
         if($league == 'PD')
