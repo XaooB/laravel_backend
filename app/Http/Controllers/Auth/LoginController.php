@@ -68,7 +68,7 @@ class LoginController extends Controller
         $authUser = $this->findOrCreateUser($user, $provider);
         $_SESSION['token'] = $this->access_token;
         $_SESSION['name'] = DB::table('users')->select('Name')->where('remember_token', $this->access_token)->value('Name');
-        return redirect('rmdv2.herokuapp.com')
+        return redirect('https://rmdv2.herokuapp.com')
             ->withCookie(cookie()->forever('token', $this->access_token));
     }
 
