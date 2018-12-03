@@ -18,7 +18,7 @@ class APIResponse
         $response = $next($request)
             ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
             ->header('Content-Type', 'application/json');
-            //->header('Access-Control-Allow-Origin', 'DOMAIN', true);
+            ->header('Access-Control-Allow-Origin', '*', true);
             return $response;
     }
 }
