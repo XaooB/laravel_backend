@@ -68,8 +68,8 @@ class LoginController extends Controller
         $authUser = $this->findOrCreateUser($user, $provider);
         $_SESSION['token'] = $this->access_token;
         $_SESSION['name'] = DB::table('users')->select('Name')->where('remember_token', $this->access_token)->value('Name');
-        return redirect('http://pw-inz.epizy.com/cookie.php?host=' . $_SERVER['SERVER_NAME'] . '&token=' . $this->access_token);
-            //->withCookie(cookie()->forever('token', $this->access_token));
+        return redirect('http://portal-wertykalny.herokuapp.com/');
+            ->withCookie(cookie()->forever('token', $this->access_token));
     }
 
     public function findOrCreateUser($user)

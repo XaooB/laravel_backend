@@ -14,6 +14,4 @@ import React, { Component } from 'react'
         )
       }
     }
-
-    console.log(document.getElementById('app'));
     ReactDOM.render(<App/>, document.getElementById('app'))
