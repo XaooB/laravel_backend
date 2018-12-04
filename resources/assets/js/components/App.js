@@ -8,11 +8,12 @@ import React, { Component } from 'react'
         return (
           <BrowserRouter>
             <div>
-              <Header />
+              <Header/>
             </div>
           </BrowserRouter>
         )
       }
     }
 
-    ReactDOM.render(<App />, document.getElementById('app'))
+    console.log(document.getElementById('app'));
+    ReactDOM.render(<App/>, document.getElementById('app'))
