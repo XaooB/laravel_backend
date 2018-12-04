@@ -4,7 +4,7 @@ import React from 'react'
     const Header = () => (
       <nav className='navbar navbar-expand-md navbar-light navbar-laravel'>
         <div className='container'>
-        	<h1> adsadad </h1>
+        	<h1> Test react </h1>
         </div>
       </nav>
     )
