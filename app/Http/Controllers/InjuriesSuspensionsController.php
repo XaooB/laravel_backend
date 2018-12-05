@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PlayersController;
 
-session_start();
-
 class InjuriesSuspensionsController extends Controller
 {
     /**

@@ -10,8 +10,6 @@
     use Illuminate\Support\Facades\DB;
     use App\Http\Controllers\UsersController;
 
-    session_start();
-
     class ArticlesController extends Controller
     {
         public static function buildArticleData(&$article)

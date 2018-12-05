@@ -20,8 +20,6 @@ use Session;
 use DateTime;
 use Illuminate\Support\Facades\Crypt;
 
-session_start();
-
 class UsersController extends Controller
 {
     public static function buildUserData(&$user)

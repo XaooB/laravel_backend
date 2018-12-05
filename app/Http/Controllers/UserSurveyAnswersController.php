@@ -9,8 +9,6 @@ use App\Http\Resources\UserSurveyAnswers as UserSurveyAnswersResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 
-session_start();
-
 class UserSurveyAnswersController extends Controller
 {
     /**
