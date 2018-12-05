@@ -59,6 +59,18 @@ class UsersController extends Controller
         $this->buildUserData($user);
         return response()->json($user);
     }
+	
+	public function check_user(Request $request)
+	{
+		if()
+		{
+			$user = DB::table('users')->select('id')->where('remember_token', $request->cookie('token'))->value('id');
+			$this->buildUserData($user);
+			return response()->json($user);
+		}
+		else
+			else { return response()->json(['status' => false]); }
+	}
 
     /**
      * Show the form for creating a new resource.
