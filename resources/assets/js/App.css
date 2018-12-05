@@ -1,0 +1,52 @@
+@font-face {
+  font-family: 'DoHyeon';
+  src: url('/fonts/DoHyeon/DoHyeon-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'AvenirR';
+  src: url('/fonts/Avenir/AvenirNextLTPro-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'AvenirHC';
+  src: url('/fonts/Avenir/AvenirNextLTPro-HeavyCn.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'AvenirB';
+  src: url('/fonts/Avenir/AvenirNextLTPro-Bold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'AvenirBC';
+  src: url('/fonts/Avenir/AvenirNextLTPro-BoldCn.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'AvenirD';
+  src: url('/fonts/Avenir/AvenirNextLTPro-Demi.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'socialtype';
+  src: url('/fonts/socialtype/SocialType.ttf') format('truetype');
+}
+
+* {
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+a {
+  color:white;
+  text-decoration:none;
+  display:inline-block;
+  line-height:1.5;
+}
+
+#root {
+  height:100%;
+  width:100%;
+}
