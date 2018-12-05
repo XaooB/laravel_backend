@@ -19,7 +19,7 @@ class APIAuth
      */
     public function handle($request, Closure $next)
     {
-        if($_SESSION['token'])
+        if(isset($_SESSION['token']))
         {
             if(DB::table('users')->join('statuses', 'users.idStatus', '=', 'statuses.idStatus')->select('statuses.Name')->where('users.remember_token', $_SESSION['token'])->value('statuses.Name') == 'aktywny')
             {
