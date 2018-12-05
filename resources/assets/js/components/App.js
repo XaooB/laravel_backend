@@ -6,6 +6,7 @@ import Home from '../containers/Home/';
 import Live from '../containers/Live/';
 import Header from './Reusable/header'
 import Footer from './Reusable/footer'
+import Topbar from './Reusable/topbar'
 import SingleArticle from '../containers/Article/'
 import NotFound from './404';
 
@@ -19,6 +20,7 @@ class App extends Component {
     return (
       <Router>
         <Container>
+		<Topbar />
         <Header />
           <Switch>
             <Route exact path='/' component={ Home } />
