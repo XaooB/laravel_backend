@@ -20,6 +20,8 @@ use Session;
 use DateTime;
 use Illuminate\Support\Facades\Crypt;
 
+session_start();
+
 class UsersController extends Controller
 {
     public static function buildUserData(&$user)
@@ -60,9 +62,9 @@ class UsersController extends Controller
         return response()->json($user);
     }
 	
-	public function check_user(Request $request)
+	public function check_user()
 	{
-		$user = DB::table('users')->select('id')->where('remember_token', $request->cookie('token'))->value('id');
+		$user = DB::table('users')->select('id')->where('remember_token', $_SESSION['token'])->value('id');
 		$this->buildUserData($user);
 		return response()->json($user);
 	}

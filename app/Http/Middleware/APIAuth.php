@@ -19,12 +19,15 @@ class APIAuth
      */
     public function handle($request, Closure $next)
     {
-        if(DB::table('users')->join('statuses', 'users.idStatus', '=', 'statuses.idStatus')->select('statuses.Name')->where('users.remember_token', $request->cookie('token'))->value('statuses.Name') == 'aktywny')
+        if($_SESSION['token'])
         {
-            $response = $next($request)
-                ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
-                ->header('Content-Type', 'application/json');
-            return $response;
+            if(DB::table('users')->join('statuses', 'users.idStatus', '=', 'statuses.idStatus')->select('statuses.Name')->where('users.remember_token', $_SESSION['token'])->value('statuses.Name') == 'aktywny')
+            {
+                $response = $next($request)
+                    ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
+                    ->header('Content-Type', 'application/json');
+                return $response;
+            }
         }
         else
         {

@@ -24,7 +24,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/google/logout', function() {
         session_start();
         session_destroy();
-        unset($_COOKIE['token']);
         $data = array();
         array_push($data, ['message' => 'logged out.']);
         $response = response($data)
