@@ -45,7 +45,7 @@ Route::get('google-user',array('as'=>'user.glist','uses'=>'UsersController@listG
 Route::group(['middleware' => 'apiresponse'], function() {
     // Users routes
     Route::resource('users', 'UsersController')->only(['index']);
-    //Route::get('users_get_user/{id}', 'UsersController@get_user')->name('users.get_user');
+    Route::get('users_get_user/{id}', 'UsersController@get_user')->name('users.get_user');
     Route::get('users_get_user_by_name/{login}', 'UsersController@get_user_by_name')->name('users.get_user_by_name');
     // Articles routes
     Route::resource('articles', 'ArticlesController')->only(['index']);
@@ -98,7 +98,6 @@ Route::group(['middleware' => 'apiresponse'], function() {
 
 // Secure API using token
 Route::group(['middleware' => 'apiauth'], function() {
-	Route::get('users_get_user/{id}', 'UsersController@get_user')->name('users.get_user');
     // Users routes
     Route::resource('users', 'UsersController')->except(['index']);
     Route::get('users_get_images', 'UsersController@get_images')->name('users.get_images');
