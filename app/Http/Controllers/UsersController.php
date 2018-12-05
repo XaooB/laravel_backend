@@ -126,13 +126,13 @@ class UsersController extends Controller
         {
             $input['imageName'] = time() . '.' . $request->file('image')->getClientOriginalExtension();
             $destinationFolder = public_path('images') . '/users/' . $id;
-            if($request->cookie('token') != null && User::where('id', $id)->where('remember_token', $request->cookie('token'))->update(['Image' => env("APP_PUBLIC_PATH", "http://pw-inz.cba.pl/inz_be/public") . '/images/' . $id . '/' . $input['imageName']]))
+            if($_SESSION['token'] != null && User::where('id', $id)->where('remember_token', $_SESSION['token'])->update(['Image' => env("APP_PUBLIC_PATH", "http://pw-inz.cba.pl/inz_be/public") . '/images/' . $id . '/' . $input['imageName']]))
                 { $request->file('image')->move($destinationFolder, $input['imageName']); $msg = 'success'; }
             else { return response()->json(['message' => 'connection failure']); }
         }
         if($request->nname != null)
         {
-            if($request->cookie('token') != null && User::where('Name', $request->nname)->count() == 0 && User::where('id', $id)->where('remember_token', $request->cookie('token'))->update(['Name' => $request->nname]))
+            if($_SESSION['token'] != null && User::where('Name', $request->nname)->count() == 0 && User::where('id', $id)->where('remember_token', $_SESSION['token'])->update(['Name' => $request->nname]))
                 { $msg = 'success'; }
             else { return response()->json(['message' => 'user with same name already exists']); }
         }
@@ -147,16 +147,16 @@ class UsersController extends Controller
      */
     public function destroy(Request $request, $id) // ZMIENIC
     {
-        if($request->cookie('token') != null && User::where('id', $id)->where('remember_token', $request->cookie('token'))->count()) 
+        if($_SESSION['token'] != null && User::where('id', $id)->where('remember_token', $_SESSION['token'])->count()) 
             {
-                $user = User::where('id', $id)->where('remember_token', $request->cookie('token'))->get();
+                $user = User::where('id', $id)->where('remember_token', $_SESSION['token'])->get();
                 $userRemoval = new Removals;
                 $userRemoval->id = $user[0]->id;
                 $userRemoval->provider = $user[0]->provider;
                 $userRemoval->provider_id = $user[0]->provider_id;
                 if($userRemoval->save())
                 {
-                    DB::table('users')->where('remember_token', $request->cookie('token'))->update(['idStatus' => DB::table('statuses'->where('Name', 'usunięty')->value('idStatus'))]);
+                    DB::table('users')->where('remember_token', $_SESSION['token'])->update(['idStatus' => DB::table('statuses'->where('Name', 'usunięty')->value('idStatus'))]);
                     return response()->json(['message' => 'user data removed.']); 
                 }
                 else
@@ -168,8 +168,8 @@ class UsersController extends Controller
 
     public function get_images(Request $request)
     {
-        if($request->cookie('token') != null && $request->cookie('token') != null && DB::table('users')->where('remember_token', $request->cookie('token'))->count()){
-            $id = DB::table('users')->select('id')->where('remember_token', $request->cookie('token'))->value('id');
+        if($_SESSION['token'] != null && $_SESSION['token'] != null && DB::table('users')->where('remember_token', $_SESSION['token'])->count()){
+            $id = DB::table('users')->select('id')->where('remember_token', $_SESSION['token'])->value('id');
             $dir = public_path('images') . '/users/' . $id;
             $userImages = array_diff(scandir($dir), array('.', '..'));
             $images['images'] = array();
@@ -183,7 +183,7 @@ class UsersController extends Controller
     public function get_notifications(Request $request)
     {
         $id = null;
-        $id = DB::table('users')->select('id')->where('remember_token', $request->cookie('token'))->value('id');
+        $id = DB::table('users')->select('id')->where('remember_token', $_SESSION['token'])->value('id');
         if($id && $request->from && $request->to)
         {
             $notifications = Notifications::where('idUser', $id)->limit($request->from, $request->to);
@@ -198,9 +198,9 @@ class UsersController extends Controller
     public function change_user_status(Request $request, $id)
     {
         $msg = 'failure';
-        $staffPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.remember_token', $request->cookie('token'))->where('users.Name', $request->cookie('token'))->value('privileges.Name');
+        $staffPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.remember_token', $_SESSION['token'])->where('users.Name', $_SESSION['token'])->value('privileges.Name');
         $userPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.id', $id)->value('privileges.Name');
-        $ids = DB::table('users')->select('id')->where('remember_token', $request->cookie('token'))->value('id');
+        $ids = DB::table('users')->select('id')->where('remember_token', $_SESSION['token'])->value('id');
         $msg = $this->change_user_property($id, 'statuses', 'idStatus', $request->status, $ids, $request->reason, $staffPrivilege, $userPrivilege);
         return response()->json(['message' => $msg]);
     }
@@ -208,9 +208,9 @@ class UsersController extends Controller
     public function change_user_privilege(Request $request, $id)
     {
         $msg = 'failure';
-        $staffPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.remember_token', $request->cookie('token'))->where('users.Name', $request->cookie('token'))->value('privileges.Name');
+        $staffPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.remember_token', $_SESSION['token'])->where('users.Name', $_SESSION['token'])->value('privileges.Name');
         $userPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.id', $id)->value('privileges.Name');
-        $ids = DB::table('users')->select('id')->where('remember_token', $request->cookie('token'))->value('id');
+        $ids = DB::table('users')->select('id')->where('remember_token', $_SESSION['token'])->value('id');
         $msg = $this->change_user_property($id, 'privileges', 'idPrivilege', $request->privilege,  $ids, null, $staffPrivilege, $userPrivilege);
         return response()->json(['message' => $msg]);
     }

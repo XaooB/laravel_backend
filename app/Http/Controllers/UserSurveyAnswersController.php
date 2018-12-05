@@ -68,7 +68,7 @@ class UserSurveyAnswersController extends Controller
     public function store(Request $request)
     {
         $user_survey_answer = new UserSurveyAnswers;
-        $user_survey_answer->idUser = DB::table('users')->select('id')->where('remember_token', $request->cookie('token'))->value('id');
+        $user_survey_answer->idUser = DB::table('users')->select('id')->where('remember_token', $_SESSION['token'])->value('id');
         $user_survey_answer->idSurveySet = $request->idsurveyset;
         $surveyId = DB::table('survey_sets')->select('idSurvey')->where('idSurveySet', '=', $request->idsurveyset)->value('idSurvey');
         $answers = DB::table('survey_sets')->select('idSurveySet')->where('idSurvey', '=', $surveyId)->pluck('idSurveySet');

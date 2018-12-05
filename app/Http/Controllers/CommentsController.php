@@ -65,7 +65,7 @@ class CommentsController extends Controller
     public function store(Request $request)
     {
         if($request->idarticle != null && $request->idreference != null && $request->content != null){
-            $idUser = DB::table('users')->select('id')->where('Name', $request->name)->where('remember_token', $request->token)->value('id');
+            $idUser = DB::table('users')->select('id')->where('Name', $request->name)->where('remember_token', $_SESSION['token'])->value('id');
             $comments = new Comments;
             $comments->idArticle = $request->idarticle;
             $comments->idUser = $idUser;

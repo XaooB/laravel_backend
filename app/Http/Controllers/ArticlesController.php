@@ -125,11 +125,11 @@
          */
         public function store(Request $request)
         {
-            if($request->category != null && $_request->cookie('token') != null && $request->title != null && $request->content != null && $request->image != null)
+            if($request->category != null && $_SESSION['token'] != null && $request->title != null && $request->content != null && $request->image != null)
             {
                 $articles = new Articles;
                 $articles->idCategory = DB::table('categories')->select('idCategory')->where('Name', $request->category)->value('idCategory');
-                $articles->idUser = DB::table('users')->select('id')->where('remember_token', '=', $_request->cookie('token'))->value('id');
+                $articles->idUser = DB::table('users')->select('id')->where('remember_token', '=', $_SESSION['token'])->value('id');
                 $articles->Title = $request->title;
                 $articles->Content = $request->content;
                 $image = $request->file('image');
@@ -179,14 +179,14 @@
                 Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
                 <input type="hidden" name="_method" value="PUT">
             */
-            if($request->category != null && $_request->cookie('token') != null && $request->title != null && $request->content)
+            if($request->category != null && $_SESSION['token'] != null && $request->title != null && $request->content)
             {
                 if($request->file('image') != null) {
                     $input['imageName'] = time() . '.' . $request->file('image')->getClientOriginalExtension();
                     $destinationFolder = public_path('images') . '/articles'; }
                 if(Articles::where('idArticle', '=' , $id)->where('Visible', '!=', 0)->update([
                     'idCategory' => DB::table('categories')->select('idCategory')->where('Name', $request->category)->value('idCategory'),
-                    'idUser' => DB::table('users')->select('id')->where('remember_token', $_request->cookie('token'))->value('id'),
+                    'idUser' => DB::table('users')->select('id')->where('remember_token', $_SESSION['token'])->value('id'),
                     'Title' => $request->title,
                     'Content' => $request->content,
                     'Image' => env("APP_PUBLIC_PATH", "http://pw-inz.cba.pl/inz_be/public") . '/images' . '/articles' . '/' . $input['imageName']
@@ -204,7 +204,7 @@
          */
         public function destroy(Request $request, $id)
         {
-            $iduser = DB::table('users')->select('id')->where('remember_token', $_request->cookie('token'))->value('id');
+            $iduser = DB::table('users')->select('id')->where('remember_token', $_SESSION['token'])->value('id');
             if(Articles::where('idArticle', '=' , $id)->where('idUser', '=' , $iduser)->where('Visible', '!=', 0)->update(['Visible' => 0])) {return response()->json(['message' => 'success']);}
             else {return response()->json(['message' => 'connection failure']);}
         }
