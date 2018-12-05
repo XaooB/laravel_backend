@@ -29,7 +29,7 @@ class APIAuth
         else
         {
             $data = array();
-            array_push($data, ['message' => 'unauthorized.']);
+            array_push($data, ['status' => false]);
             $response = response($data)
                 ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
                 ->header('Content-Type', 'application/json');
