@@ -10,6 +10,8 @@ use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UsersController;
 
+session_start();
+
 class CommentsController extends Controller
 {
     /**
