@@ -62,7 +62,7 @@ class UsersController extends Controller
 	
 	public function check_user(Request $request)
 	{
-		if()
+		if($request->cookie('token') && DB::table('users')->where('remember_token', $request->cookie('token'))->count())
 		{
 			$user = DB::table('users')->select('id')->where('remember_token', $request->cookie('token'))->value('id');
 			$this->buildUserData($user);
