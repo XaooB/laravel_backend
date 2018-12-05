@@ -32,6 +32,7 @@ Route::group(['middleware' => ['web']], function () {
         return $response;
     });
 });
+
 /*
 Route::post('login', 'PassportController@login');
 Route::post('register', 'PassportController@register');
@@ -98,6 +99,12 @@ Route::group(['middleware' => 'apiresponse'], function() {
 
 // Secure API using token
 Route::group(['middleware' => 'apiauth'], function() {
+    // Google Drive
+    Route::get('/drive', 'DriveController@getDrive'); // retreive folders
+    Route::get('/drive/upload', 'DriveController@uploadFile'); // File upload form
+    Route::post('/drive/upload', 'DriveController@uploadFile'); // Upload file to Drive from Form
+    Route::get('/drive/create', 'DriveController@create'); // Upload file to Drive from Storage
+    Route::get('/drive/delete/{id}', 'DriveController@deleteFile'); // Delete file or folder
     // Users routes
     Route::resource('users', 'UsersController')->except(['index']);
     Route::get('users_get_images', 'UsersController@get_images')->name('users.get_images');
