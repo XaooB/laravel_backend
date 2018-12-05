@@ -69,7 +69,7 @@ class UsersController extends Controller
 			return response()->json($user);
 		}
 		else
-			else { return response()->json(['status' => false]); }
+			else { return response()->json(['status' => 'false']); }
 	}
 
     /**
