@@ -18,7 +18,7 @@ class CreateArticlesTable extends Migration
             $table->unsignedInteger('idCategory');
             $table->unsignedInteger('idUser');
             $table->string('Title', 90);
-            $table->string('Image', 256);
+            $table->string('Image', 256)->nullable();
             $table->longText('Content');
             $table->unsignedInteger('Views');
             $table->tinyInteger('Visible');

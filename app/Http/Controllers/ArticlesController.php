@@ -141,6 +141,7 @@
                 $articles->Title = $request->title;
                 $articles->Content = $request->content;
                 $articles->Views = 1;
+                if($request->main == true) { $articles->Main = 1; } else { $articles->Main = 0; }
                 if(Articles::where('Title', '=' , $articles->Title)->where('idCategory', '=' , $articles->idCategory)->where('idUser', '=' , $articles->idUser)->exists()) 
                     {return response()->json(['status' => false]);}
                 else 
@@ -152,10 +153,8 @@
                             $destinationFolder = public_path('images') . '/articles/';
                             $request->file('image')->move($destinationFolder, $image_name);
                             $path = $destinationFolder . $image_name;
-                            if(CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id))
-                            { return response()->json(['message' => 'success']); }
-                            else
-                            { return response()->json(['status' => false]); }  
+                            CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id);
+                            return response()->json(['status' => 'success']);
                         }
                         else
                         { return response()->json(['status' => false]); } 
@@ -209,10 +208,12 @@
                     $path = $destinationFolder . $image_name;
                     CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id); 
                 }
+                if($request->main == true) { $articleMain = 1; } else { $articleMain = 0; }
                 if(Articles::where('idArticle', '=' , $id)->where('Visible', '!=', 0)->update([
                     'idCategory' => DB::table('categories')->select('idCategory')->where('Name', $request->category)->value('idCategory'),
                     'Title' => $request->title,
-                    'Content' => $request->content]))
+                    'Content' => $request->content,
+                    'Main' => $articleMain]))
                     { return response()->json(['message' => 'success']); }
                 return response()->json(['status' => false]);
             }
