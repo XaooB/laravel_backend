@@ -102,17 +102,14 @@
             elseif($previousCount < $count && $nextCount > $count) { $nextCount = $count + ($count - $previousCount); }
             elseif($previousCount > $count && $nextCount < $count) { $previousCount = $count + ($count - $nextCount); }
             $article['previous'] = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idArticle', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 200) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idArticle = articles.idArticle and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_article_likes where user_article_likes.idArticle = articles.idArticle) as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idArticle')->where('articles.Visible', '!=', 0)->where('articles.idArticle', '<', $id)->orderBy('articles.idArticle', 'desc')->limit($previousCount)->get();
-            foreach ($article['previous'] as $key => $article) {
-                UsersController::buildUserData($article->user);
-            }
             $article['current'] = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idArticle', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 200) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idArticle = articles.idArticle and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_article_likes where user_article_likes.idArticle = articles.idArticle) as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idArticle')->where('articles.Visible', '!=', 0)->where('articles.idArticle', $id)->get();
-            foreach ($article['current'] as $key => $article) {
-                UsersController::buildUserData($article->user);
-            }
             $article['next'] = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idArticle', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 200) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idArticle = articles.idArticle and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_article_likes where user_article_likes.idArticle = articles.idArticle) as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idArticle')->where('articles.Visible', '!=', 0)->orderBy('articles.idArticle', 'asc')->where('articles.idArticle', '>', $id)->limit($nextCount)->get();
-            foreach ($article['next'] as $key => $article) {
-                UsersController::buildUserData($article->user);
-            }
+
+            //foreach ($article['next'] as $key => $article) {
+            //    UsersController::buildUserData($article->user);
+            //}
+            //print_r($article['previous'][0]);
+            //return;
             return response()->json($article);
         }
 
