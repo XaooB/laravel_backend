@@ -10,7 +10,7 @@
         "fideloper/proxy": "^4.0",
         "google/apiclient": "^2.2",
         "guzzlehttp/guzzle": "^6.3",
-        "jrm2k6/cloudder": "0.4.*",
+        "jrm2k6/cloudder": "^0.6.0",
         "laravel/framework": "5.6.*",
         "laravel/passport": "^6.0",
         "laravel/socialite": "^3.1",
