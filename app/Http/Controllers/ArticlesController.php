@@ -83,12 +83,12 @@
         {
             if(Articles::where('idArticle', $id)->where('Visible', '!=', 0)->count())
             {
-                 $article = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idArticle', '=', 'articles.idArticle')->leftJoin('user_article_likes', 'user_article_likes.idArticle', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', 'articles.Content as content', 'articles.Views as views', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idArticle = articles.idArticle and comments.Visible = 1) as comments_count'), DB::raw("(select count(*) from user_article_likes where user_article_likes.idArticle = articles.idArticle and user_article_likes.Type = 'like') as likes_count"))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idArticle', 'user_article_likes.idarticle')->where('articles.idArticle', $id)->where('articles.Visible', '!=', 0)->get();
+                 $article = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idArticle', '=', 'articles.idArticle')->leftJoin('user_article_likes', 'user_article_likes.idArticle', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', 'articles.Content as content', 'articles.Views as views', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idArticle = articles.idArticle and comments.Visible = 1) as comments_count'), DB::raw("(select count(*) from user_article_likes where user_article_likes.idArticle = articles.idArticle and user_article_likes.Type = 'like') as likes_count"))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idArticle', 'user_article_likes.idarticle')->where('articles.idArticle', $id)->where('articles.Visible', '!=', 0)->first();
             }
             else
                 return response()->json(['message' => 'wrong article id']);
-            UsersController::buildUserData($article[0]->user);
-            $articleViews = $article[0]->views;
+            UsersController::buildUserData($article->user);
+            $articleViews = $article->views;
             $articleViews += 1;
             Articles::where('idArticle', $id)->update(['Views' => $articleViews]);
             return response()->json($article);
@@ -102,10 +102,17 @@
             elseif($previousCount < $count && $nextCount > $count) { $nextCount = $count + ($count - $previousCount); }
             elseif($previousCount > $count && $nextCount < $count) { $previousCount = $count + ($count - $nextCount); }
             $article['previous'] = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idArticle', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 200) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idArticle = articles.idArticle and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_article_likes where user_article_likes.idArticle = articles.idArticle) as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idArticle')->where('articles.Visible', '!=', 0)->where('articles.idArticle', '<', $id)->orderBy('articles.idArticle', 'desc')->limit($previousCount)->get();
-
+            foreach ($article['previous'] as $key => $article) {
+                UsersController::buildUserData($article->user);
+            }
             $article['current'] = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idArticle', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 200) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idArticle = articles.idArticle and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_article_likes where user_article_likes.idArticle = articles.idArticle) as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idArticle')->where('articles.Visible', '!=', 0)->where('articles.idArticle', $id)->get();
-
+            foreach ($article['current'] as $key => $article) {
+                UsersController::buildUserData($article->user);
+            }
             $article['next'] = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idArticle', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 200) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idArticle = articles.idArticle and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_article_likes where user_article_likes.idArticle = articles.idArticle) as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idArticle')->where('articles.Visible', '!=', 0)->orderBy('articles.idArticle', 'asc')->where('articles.idArticle', '>', $id)->limit($nextCount)->get();
+            foreach ($article['next'] as $key => $article) {
+                UsersController::buildUserData($article->user);
+            }
             return response()->json($article);
         }
 
@@ -120,6 +127,10 @@
             {
                 $fixedPhrase = $this->escapeLike($request->phrase);
                 $articles = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idArticle', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idArticle = articles.idArticle and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_article_likes where user_article_likes.idArticle = articles.idArticle) as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idArticle')->where('Title', 'like', '%' . $fixedPhrase . '%')->where('articles.Visible', '!=', 0)->orderBy('articles.idArticle', 'desc')->get();
+                foreach ($articles as $key => $article) 
+                {
+                    UsersController::buildUserData($article->user);
+                }
                 return response()->json($articles);
             }
             else
