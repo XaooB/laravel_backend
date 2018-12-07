@@ -9,6 +9,7 @@ use App\Http\Resources\LatestMatchResults as LatestMatchResultsResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 use App\ExternalAPI\FootballAPIConnector;
+use App\Http\Controllers\ClubsController;
 
 class LatestMatchResultsController extends Controller
 {
@@ -25,10 +26,10 @@ class LatestMatchResultsController extends Controller
 
     public function get_latest_match_result(Request $request)
     {
-        $latest_match = DB::table('latest_match_results')->join('clubs as clubHome', 'clubHome.idClub', '=', 'latest_match_results.idClubHome')->join('clubs as clubAway', 'clubAway.idClub', '=', 'latest_match_results.idClubAway')->select('clubHome.ShortName as home_team', 'HomeClubScore as home_team_score', 'clubAway.ShortName as away_team', 'AwayClubScore as away_team_score', 'League as league', 'Date as date')->orderBy('Date', 'desc')->first();
+        $latest_match = DB::table('latest_match_results')->select('idClubHome as home_team', 'HomeClubScore as home_team_score', 'idClubAway as away_team', 'AwayClubScore as away_team_score', 'League as league', 'Date as date')->orderBy('Date', 'desc')->first();
+        ClubsController::buildClubData($latest_match->home_team);
+        ClubsController::buildClubData($latest_match->away_team);
         return response()->json($latest_match);
-
-        var_dump($request->cookie('token'));
     }
 
     /**
