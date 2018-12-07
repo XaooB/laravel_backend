@@ -147,7 +147,7 @@
                     {
                         if($articles->save()) 
                         {
-                            $id = DB::table('articles')->select('idArticle')->where('Title', $articles->Title)->where('idUser', $articles->idUser)->where('Content', $articles->Content)->first();
+                            $id = DB::table('articles')->select('idArticle')->where('Title', $articles->Title)->where('idUser', $articles->idUser)->where('Content', $articles->Content)->value('idArticle');
                             $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
                             $destinationFolder = public_path('images') . '/articles/';
                             $request->file('image')->move($destinationFolder, $image_name);
