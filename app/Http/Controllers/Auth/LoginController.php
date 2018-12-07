@@ -69,6 +69,8 @@ class LoginController extends Controller
             }
         $authUser = $this->findOrCreateUser($user, $provider);
         $_SESSION['token'] = $this->access_token;
+        $_SESSION['id_user'] = DB::table('users')->select('id')->where('remember_token', $this->access_token)->value('id');
+        $_SESSION['privileges'] = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.remember_token', $this->access_token)->value('privileges.Name')
         return redirect('http://portal-wertykalny.herokuapp.com/');
     }
 

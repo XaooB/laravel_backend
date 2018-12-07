@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Session;
 use DateTime;
 use Illuminate\Support\Facades\Crypt;
+use App\Http\Controllers\CloudinaryController;
 
 session_start();
 
@@ -122,13 +123,14 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $msg = 'failure';
-        if($request->image != null)
+        if($request->file('image') != null)
         {
-            $input['imageName'] = time() . '.' . $request->file('image')->getClientOriginalExtension();
+            /*$input['imageName'] = time() . '.' . $request->file('image')->getClientOriginalExtension();
             $destinationFolder = public_path('images') . '/users/' . $id;
             if($_SESSION['token'] != null && User::where('id', $id)->where('remember_token', $_SESSION['token'])->update(['Image' => env("APP_PUBLIC_PATH", "http://pw-inz.cba.pl/inz_be/public") . '/images/' . $id . '/' . $input['imageName']]))
                 { $request->file('image')->move($destinationFolder, $input['imageName']); $msg = 'success'; }
-            else { return response()->json(['message' => 'connection failure']); }
+            else { return response()->json(['message' => 'connection failure']); }*/
+            CloudinaryController::uploadImage($request, 'users', 'id', $_SESSION['id_user']);
         }
         if($request->nname != null)
         {
