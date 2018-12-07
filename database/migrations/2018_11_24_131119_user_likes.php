@@ -13,7 +13,7 @@ class UserArticleLikes extends Migration
      */
     public function up()
     {
-        Schema::create('user_article_likes', function (Blueprint $table) {
+        Schema::create('user_likes', function (Blueprint $table) {
             $table->unsignedInteger('idUser');
             $table->unsignedInteger('idArticle');
             $table->string('Type', 7);
@@ -30,6 +30,6 @@ class UserArticleLikes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_article_likes');
+        Schema::dropIfExists('user_likes');
     }
 }
