@@ -9,6 +9,9 @@
     use App\Http\Controllers\Auth;
     use Illuminate\Support\Facades\DB;
     use App\Http\Controllers\UsersController;
+    use App\Http\Controllers\CloudinaryController;
+
+    if(!isset($_SESSION)) { session_start(); } 
 
     class ArticlesController extends Controller
     {
@@ -107,6 +110,11 @@
             return response()->json($article);
         }
 
+        public function filtrate(Request $request)
+        {
+            
+        }
+
         /**
          * Show the form for creating a new resource.
          *
@@ -125,23 +133,36 @@
          */
         public function store(Request $request)
         {
-            if($request->category != null && $_SESSION['token'] != null && $request->title != null && $request->content != null && $request->image != null)
+            if($request->category != null && $request->title != null && $request->content != null && $request->image != null)
             {
                 $articles = new Articles;
                 $articles->idCategory = DB::table('categories')->select('idCategory')->where('Name', $request->category)->value('idCategory');
-                $articles->idUser = DB::table('users')->select('id')->where('remember_token', '=', $_SESSION['token'])->value('id');
+                $articles->idUser = $_SESSION['iduser'];
                 $articles->Title = $request->title;
                 $articles->Content = $request->content;
-                $image = $request->file('image');
-                $input['imageName'] = time() . '.' . $image->getClientOriginalExtension();
-                $destinationFolder = public_path('images') . '/articles';
-                $articles->Image = env("APP_PUBLIC_PATH", "http://pw-inz.cba.pl/inz_be/public") . '/images' . '/articles' . '/' . $input['imageName'];
                 $articles->Views = 1;
-                if(Articles::where('Title', '=' , $articles->Title)->where('idCategory', '=' , $articles->idCategory)->where('idUser', '=' , $articles->idUser)->exists()) {return response()->json(['message' => 'failure']);}
-                else {if($articles->save()) {$image->move($destinationFolder, $input['imageName']); return response()->json(['message' => 'success']);}}
-                return response()->json(['message' => 'connection failure']);
+                if(Articles::where('Title', '=' , $articles->Title)->where('idCategory', '=' , $articles->idCategory)->where('idUser', '=' , $articles->idUser)->exists()) 
+                    {return response()->json(['status' => false]);}
+                else 
+                    {
+                        if($articles->save()) 
+                        {
+                            $id = DB::table('articles')->select('idArticle')->where('Title', $articles->Title)->where('idUser', $articles->idUser)->where('Content', $articles->Content)->first();
+                            $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
+                            $destinationFolder = public_path('images') . '/articles/';
+                            $request->file('image')->move($destinationFolder, $image_name);
+                            $path = $destinationFolder . $image_name;
+                            if(CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id))
+                            { return response()->json(['message' => 'success']); }
+                            else
+                            { return response()->json(['status' => false]); }  
+                        }
+                        else
+                        { return response()->json(['status' => false]); } 
+                    }
+                return response()->json(['status' => false]);
             }
-            return response()->json(['message' => 'failure']);
+            return response()->json(['status' => false]);
         }
 
         /**
@@ -179,21 +200,23 @@
                 Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
                 <input type="hidden" name="_method" value="PUT">
             */
-            if($request->category != null && $_SESSION['token'] != null && $request->title != null && $request->content)
+            if($request->category != null && $request->title != null && $request->content)
             {
                 if($request->file('image') != null) {
-                    $input['imageName'] = time() . '.' . $request->file('image')->getClientOriginalExtension();
-                    $destinationFolder = public_path('images') . '/articles'; }
+                    $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
+                    $destinationFolder = public_path('images') . '/articles/';
+                    $request->file('image')->move($destinationFolder, $image_name);
+                    $path = $destinationFolder . $image_name;
+                    CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id); 
+                }
                 if(Articles::where('idArticle', '=' , $id)->where('Visible', '!=', 0)->update([
                     'idCategory' => DB::table('categories')->select('idCategory')->where('Name', $request->category)->value('idCategory'),
-                    'idUser' => DB::table('users')->select('id')->where('remember_token', $_SESSION['token'])->value('id'),
                     'Title' => $request->title,
-                    'Content' => $request->content,
-                    'Image' => env("APP_PUBLIC_PATH", "http://pw-inz.cba.pl/inz_be/public") . '/images' . '/articles' . '/' . $input['imageName']
-                ])) {$request->file('image')->move($destinationFolder, $input['imageName']); return response()->json(['message' => 'success']);}
-                return response()->json(['message' => 'connection failure']);
+                    'Content' => $request->content]))
+                    { return response()->json(['message' => 'success']); }
+                return response()->json(['status' => false]);
             }
-            return response()->json(['message' => 'failure']);
+            return response()->json(['status' => flase]);
         }
 
         /**
@@ -204,7 +227,7 @@
          */
         public function destroy(Request $request, $id)
         {
-            $iduser = DB::table('users')->select('id')->where('remember_token', $_SESSION['token'])->value('id');
+            $iduser = $_SESSION['iduser'];
             if(Articles::where('idArticle', '=' , $id)->where('idUser', '=' , $iduser)->where('Visible', '!=', 0)->update(['Visible' => 0])) {return response()->json(['message' => 'success']);}
             else {return response()->json(['message' => 'connection failure']);}
         }
@@ -247,7 +270,7 @@
                 if(Articles::where('idArticle', '=' , $id)->update(['Content' => $request->content])) return response()->json(['message' => 'success']);
                 else return response()->json(['message' => 'connection failure']);
             }
-            return response()->json(['message' => 'failure']);
+            return response()->json(['status' => false]);
         }
 
         public function staff_change_article_visibility(Request $request, $id)
@@ -255,6 +278,6 @@
             if(Articles::where('idArticle', $id)->where('Visible', '!=', $request->visible)->update(['Visible' => $request->visible]))
                 return response()->json(['message' => 'success']);
             else
-                return response()->json(['message' => 'failure']);
+                return response()->json(['status' => false]);
         }
     }

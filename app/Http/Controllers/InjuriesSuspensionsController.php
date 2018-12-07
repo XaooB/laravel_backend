@@ -72,7 +72,7 @@ class InjuriesSuspensionsController extends Controller
     public function store(Request $request)
     {
         $injuriesSuspensions = new InjuriesSuspensions;
-        $injuriesSuspensions->idUser = DB::table('users')->select('id')->where('remember_token', $_SESSION['token'])->value('id');
+        $injuriesSuspensions->idUser = $_SESSION['iduser'];
         $injuriesSuspensions->idPlayer = $request->idplayer;
         $injuriesSuspensions->Type = $request->type;
         $injuriesSuspensions->Description = $request->description;

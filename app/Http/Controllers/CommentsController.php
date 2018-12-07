@@ -65,7 +65,7 @@ class CommentsController extends Controller
     public function store(Request $request)
     {
         if($request->idarticle != null && $request->idreference != null && $request->content != null){
-            $idUser = DB::table('users')->select('id')->where('Name', $request->name)->where('remember_token', $_SESSION['token'])->value('id');
+            $idUser = $_SESSION['iduser'];
             $comments = new Comments;
             $comments->idArticle = $request->idarticle;
             $comments->idUser = $idUser;
@@ -120,8 +120,7 @@ class CommentsController extends Controller
             <input type="hidden" name="_method" value="PUT">
         */
         if($request->name != null && $request->content != null){
-            $iduser = DB::table('users')->select('id')->where('Name', $request->name)->value('id');
-            if(Comments::where('idComment', '=' , $id)->where('idUser', '=', $iduser)->where('Visible', '=', 1)->update(['Content' => $request->content])) { return response()->json(['message' => 'success']); }
+            if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', '=', 1)->update(['Content' => $request->content])) { return response()->json(['message' => 'success']); }
             else { return response()->json(['message' => 'failure']); }
         }
         return response()->json(['message' => 'connection failure']);
@@ -139,10 +138,8 @@ class CommentsController extends Controller
             Aby wysłać dane (usunięcie) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="DELETE">
         */
-        if($request->iduser != null){
-            if(Comments::where('idComment', '=' , $id)->where('idUser', '=', $request->iduser)->where('Visible', '=', 1)->update(['Visible' => 0]))  {return response()->json(['message' => 'success']);}
-            else {return response()->json(['message' => 'failure']);}
-        }
+        if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', '=', 1)->update(['Visible' => 0]))  {return response()->json(['message' => 'success']);}
+        else {return response()->json(['message' => 'failure']);}
         return response()->json(['message' => 'connection failure']);
     }
 

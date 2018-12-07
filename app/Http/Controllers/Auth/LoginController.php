@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Auth;
 
-session_start();
+if(!isset($_SESSION)) { session_start(); } 
 
 class LoginController extends Controller
 {
@@ -68,10 +68,14 @@ class LoginController extends Controller
                     'reason' => DB::table('user_blockades')->select('Reason')->where('idUser', DB::table('users')->select('id')->where('provider_id', $user->id)->value('id'))->value('Reason')]);
             }
         $authUser = $this->findOrCreateUser($user, $provider);
-        $_SESSION['token'] = $this->access_token;
-        $_SESSION['id_user'] = DB::table('users')->select('id')->where('remember_token', $this->access_token)->value('id');
-        $_SESSION['privileges'] = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.remember_token', $this->access_token)->value('privileges.Name')
-        return redirect('http://portal-wertykalny.herokuapp.com/');
+        $userData = DB::table('users')->select('users.id', 'users.Name', 'users.Email', 'users.Image', 'privileges.Name as Privileges', 'users.created_at')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->where('remember_token', $this->access_token)->first();
+        $_SESSION['iduser'] = $userData->id;
+        $_SESSION['name'] = $userData->Name;
+        $_SESSION['email'] = $userData->Email;
+        $_SESSION['image'] = $userData->Image;
+        $_SESSION['privileges'] = $userData->Privileges;
+        $_SESSION['crate_date'] = $userData->created_at;
+        return redirect('https://portal-wertykalny.herokuapp.com/');
     }
 
     public function findOrCreateUser($user)

@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 
+if(!isset($_SESSION)) { session_start(); } 
+
 class APIResponse
 {
     /**

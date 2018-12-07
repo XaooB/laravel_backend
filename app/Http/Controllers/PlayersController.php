@@ -9,6 +9,7 @@ use App\Http\Resources\Players as PlayersResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 use App\ExternalAPI\FootballAPIConnector;
+use App\Http\Controllers\CloudinaryController;
 
 class PlayersController extends Controller
 {
@@ -106,12 +107,17 @@ class PlayersController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        $image = $request->file('image');
-        $input['imageName'] = time() . '.' . $image->getClientOriginalExtension();
-        $destinationFolder = public_path('images') . '/players';
-        if(Players::where('idPlayer', '=' , $id)->update(['Image' => env("APP_PUBLIC_PATH", "http://pw-inz.cba.pl/inz_be/public") . "/players/" . $input['imageName']])) 
-            {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'failure']);}
+        if($request->file('image') != null)
+        {
+            $image_name = 'players' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $destinationFolder = public_path('images') . '/players/';
+            $request->file('image')->move($destinationFolder, $image_name);
+            $path = $destinationFolder . $image_name;
+            CloudinaryController::uploadImage($path, $image_name, 'players', 'idPlayer', $id); 
+            return response()->json(['message' => 'success']);
+        }
+        else 
+            {return response()->json(['message' => 'failure']);}
     }
 
     /**

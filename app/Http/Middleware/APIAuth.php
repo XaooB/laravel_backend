@@ -8,6 +8,8 @@ use Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
+if(!isset($_SESSION)) { session_start(); } 
+
 class APIAuth
 {
     /**
@@ -19,9 +21,9 @@ class APIAuth
      */
     public function handle($request, Closure $next)
     {
-        if(isset($_SESSION['token']))
+        if(isset($_SESSION['iduser']))
         {
-            if(DB::table('users')->join('statuses', 'users.idStatus', '=', 'statuses.idStatus')->select('statuses.Name')->where('users.remember_token', $_SESSION['token'])->value('statuses.Name') == 'aktywny')
+            if(DB::table('users')->join('statuses', 'users.idStatus', '=', 'statuses.idStatus')->select('statuses.Name')->where('users.id', $_SESSION['iduser'])->value('statuses.Name') == 'aktywny')
             {
                 $response = $next($request)
                     ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
@@ -32,7 +34,7 @@ class APIAuth
         else
         {
             $data = array();
-            array_push($data, ['status' => false]);
+            array_push($data, ['status' => 'auth fail']);
             $response = response($data)
                 ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
                 ->header('Content-Type', 'application/json');
