@@ -60,6 +60,7 @@ Route::group(['middleware' => 'apiresponse'], function() {
     Route::get('articles_most_viewed/{count}', 'ArticlesController@most_viewed')->name('articles.most_viewed');
     Route::get('articles_show_article/{id}', 'ArticlesController@show_article')->name('articles.show_article');
     Route::get('articles_show_neighbours/{id}/{count}', 'ArticlesController@show_neighbours')->name('articles.show_neighbours');
+    Route::get('articles_filtrate', 'ArticlesController@filtrate')->name('articles.filtrate');
     // Comments routes
     Route::resource('comments', 'CommentsController')->only(['index']);
     Route::get('comments_get_comments/{id}', 'CommentsController@get_comments')->name('comments.get_comments');
