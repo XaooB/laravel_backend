@@ -51,20 +51,7 @@ class ClubsController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->image != null && $request->cname != null)
-        {
-            $clubs = new Clubs;
-            $input['imageName'] = time() . '.' . $request->file('image')->getClientOriginalExtension();
-            $destinationFolder = public_path('images') . '/' . 'clubs';
-            $clubs->Name = $request->cname;
-            $clubs->Image = $destinationFolder . '/' . $input['imageName'];
-            if(Clubs::where('Name', '=' , $clubs->Name)->exists()) { return response()->json(['message' => 'failure']); }
-            else {
-                if($clubs->save()) { $request->file('image')->move($destinationFolder, $input['imageName']); return response()->json(['message' => 'success']);} 
-                else { return response()->json(['message' => 'connection failure']); } 
-            }
-        }
-        else { return response()->json(['message' => 'failure']); }
+        //
     }
 
     /**
@@ -98,7 +85,16 @@ class ClubsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->image != null)
+        {
+            $image_name = 'clubs' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $destinationFolder = public_path('images') . '/clubs/';
+            $request->file('image')->move($destinationFolder, $image_name);
+            $path = $destinationFolder . $image_name;
+            CloudinaryController::uploadImage($path, $image_name, 'clubs', 'idClub', $id);
+            $msg = 'success';
+        }
+        else { return response()->json(['message' => 'failure']); }
     }
 
     /**
