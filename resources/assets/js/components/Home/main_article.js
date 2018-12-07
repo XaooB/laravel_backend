@@ -71,14 +71,13 @@ const LinkTo = styled(Link)`
 `
 
 const MainArticle = props => {
-  console.log(props);
   const { image, category, idarticle,  title } = props.mainArticle[0],
           link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-')}`;
 
   return (
     <Article>
       <ImageWrapper>
-        <Image src={image}  alt='' />
+        <Image src={image}  title={title} alt={title} />
       </ImageWrapper>
       <LinkTo to={link}>
         <HeaderWrapper>

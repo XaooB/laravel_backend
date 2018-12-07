@@ -1,15 +1,17 @@
 import React from 'react';
-import RleatedListItem from './article_related_list_item';
+import RelatedListItem from './article_related_list_item';
 import Wrapper from '../Reusable/wrapper';
 
-const RleatedList = props => {
+const RelatedList = props => {
+  const {neighbours} = props;
+
   return (
     <Wrapper>
-      <RleatedListItem />
-      <RleatedListItem />
-      <RleatedListItem />
+      {neighbours.reverse().map((item, key) => {
+        return <RelatedListItem article={item} key={key} />
+      })}
     </Wrapper>
   )
 }
 
-export default RleatedList;
+export default RelatedList;

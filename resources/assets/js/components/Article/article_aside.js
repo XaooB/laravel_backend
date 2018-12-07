@@ -22,7 +22,7 @@ const Aside = props => {
   return (
     <Wrapper>
       <Header>Latest news</Header>
-      <AsideList />
+      <AsideList latest = {props.latest} />
       <Centered>
         <Button name='See more' fullWidth colorBlue />
       </Centered>

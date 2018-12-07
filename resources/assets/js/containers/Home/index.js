@@ -69,15 +69,15 @@ class Home extends Component {
   {
 	  super(props);
 	  this.state = {
-    loadingStatus: true,
-    mainArticle: [],
-    articles: [],
-    schedule: [],
-    leagueTable: [],
-    latestResult: [],
-    pollData: [],
-    injuriesData: []
-  };
+      loadingStatus: true,
+      mainArticle: [],
+      articles: [],
+      schedule: [],
+      leagueTable: [],
+      latestResult: [],
+      pollData: [],
+      injuriesData: []
+    };
   }
   async componentDidMount() {
     const mainArticle = await API.get('articles_latest_main/1'),
@@ -88,16 +88,15 @@ class Home extends Component {
           pollData = await API.get('surveys_latest/1'),
           injuriesData = await API.get('injuriessuspensions_actual_injuries');
 
-    this.setState({ mainArticle, articles, schedule, leagueTable, latestResult, pollData, injuriesData });
-    this.setState({ loadingStatus: false });
+    this.setState({ mainArticle, articles, schedule, leagueTable, latestResult, pollData, injuriesData, loadingStatus: false });
   }
 
   render() {
     const { mainArticle, articles, schedule, leagueTable, latestResult, pollData, injuriesData, loadingStatus } = this.state;
 
     if(loadingStatus) return <Loader />
-    const lastestNewsBig = articles.slice(0, 8),
-          smallNews = articles.slice(9, 18),
+    const lastestNewsBig = articles.slice(0, 9),
+          smallNews = articles.slice(10, 19),
           nextMatch = schedule[0],
           upcomingMatches = schedule.slice(1, 4);
 
@@ -108,7 +107,7 @@ class Home extends Component {
           <FixturesInfo>
             <LatestResult latestResult={latestResult} />
             <NextMatch  nextMatch={nextMatch} />
-            <Schedule schedule={upcomingMatches}/>
+            <Schedule schedule={upcomingMatches} />
           </FixturesInfo>
           <LatestNews latestArticles={lastestNewsBig} />
           <RestNewsAndPolls>

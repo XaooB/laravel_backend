@@ -92,34 +92,37 @@ const Count = styled.span`
   font-size:.9em;
 `
 
-const RleatedListItem = props => {
+const RelatedListItem = props => {
+  const { image, category, title, idarticle, comments_count, user } = props.article,
+          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-')}`;
+
   return (
     <Article>
       <ImageWrapper>
-        <Image src='https://i.imgur.com/oQbTVhy.jpg'  alt='Vinicius Jr' />
+        <Image src={image} title={title} alt={title} />
       </ImageWrapper>
       <Header>
-        <LinkTo to='jakis news'>
-          <Category>club</Category>
+        <LinkTo to={link}>
+          <Category>{category}</Category>
           <Title>
-            <Hover>Vinicius Jr. plays his first match in Real Madrid</Hover>
+            <Hover>{title}</Hover>
           </Title>
         </LinkTo>
       </Header>
       <Footer>
         <Author>
           <ImageContainer>
-            <ImageAuthor src='https://i.imgur.com/IlUh0PX.png' alt='users avatar' title='username' />
+            <ImageAuthor src={image} title={user.name} alt={user.name} />
           </ImageContainer>
-          <span>Xaoo</span>
+          <span>{user.name}</span>
         </Author>
         <Statistics>
           <GoCommentDiscussion />
-          <Count>354</Count>
+          <Count>{comments_count}</Count>
         </Statistics>
       </Footer>
     </Article>
   )
 }
 
-export default RleatedListItem;
+export default RelatedListItem;

@@ -14,10 +14,11 @@ const Title = styled.h3`
 `
 
 const Related = props => {
+  const {neighbours} = props;
   return (
     <Section>
       <Title>Related articles</Title>
-      <RelatedList />
+      <RelatedList neighbours = {neighbours} />
     </Section>
   )
 }

@@ -2,14 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const LinkTo = styled(Link)`
-  display:flex;
-  align-items:center;
-  font-family: "Arial";
-  color:#1e1e1e;
-  }
-`
-
 const Wrapper = styled.div`
   background:#ee324e;
   display:flex;
@@ -20,16 +12,21 @@ const Wrapper = styled.div`
   color:white;
   margin-right:5px;
   font-family: 'AvenirD';
-  & + span {
-    color:#d8d8d8;
-    &:hover {
-      color: #ee324e;
-    }
 `
 
 const LogoText = styled.span`
   color:inherit;
   letter-spacing:1px;
+`
+
+const LinkTo = styled(Link)`
+  display:flex;
+  align-items:center;
+  font-family: "Arial";
+  color:#1e1e1e;
+  &:hover ${Wrapper} + span {
+    color:#ee324e;
+  }
 `
 
 const Logo = () => {

@@ -47,14 +47,17 @@ const LinkTo = styled(Link)`
 `
 
 const AsideItem = props => {
+  const { image, title, category, idarticle } = props.item,
+          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-')}`;
+
   return (
     <ListItem>
       <ImageWrapper>
-        <Image src='https://i.imgur.com/oQbTVhy.jpg' alt='comment' title='title' />
+        <Image src={image} title={title} alt={title} />
       </ImageWrapper>
       <Title>
-        <LinkTo to='/news/costam'>
-          <Span>Vinicius Jr. plays his first match in Real Madrid</Span>
+        <LinkTo to={link}>
+          <Span>{title}</Span>
         </LinkTo>
       </Title>
     </ListItem>

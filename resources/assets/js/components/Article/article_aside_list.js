@@ -10,15 +10,14 @@ const List = styled.ul`
   margin-bottom:20px;
 `
 
-const AsideList = props => <List>
-  <ArticleItem />
-  <ArticleItem />
-  <ArticleItem />
-  <ArticleItem />
-  <ArticleItem />
-  <ArticleItem />
-  <ArticleItem />
-  <ArticleItem />
-</List>
+const AsideList = props => {
+  return (
+    <List>
+      { props.latest.map((item, key) => {
+        return <ArticleItem item={item} key={key} />
+      })}
+    </List>
+  )
+}
 
 export default AsideList;

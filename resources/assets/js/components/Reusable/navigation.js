@@ -40,7 +40,6 @@ const ListItem = styled.li`
   letter-spacing:1.2px;
 `
 
-
 const Navigation = () => {
   return (
     <Nav>

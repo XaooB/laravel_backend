@@ -25,7 +25,7 @@ const Item = styled.div`
   display:flex;
   align-items:center;
   &:not(:last-child) {
-    margin-right:15px;
+    margin-right:6px;
   }
   svg {
     color:#00529f;
@@ -46,11 +46,11 @@ const ArticleTitle = props => {
       <Wrapper>
         <Item>
           <GoCommentDiscussion />
-          <Count>{comments_count} komentarzy</Count>
+          <Count>{comments_count}</Count>
         </Item>
         <Item>
           <GoHeart />
-          <Count>{likes_count} polubień</Count>
+          <Count>{likes_count}</Count>
         </Item>
       </Wrapper>
     </Header>

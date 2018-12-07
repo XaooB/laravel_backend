@@ -35,6 +35,7 @@ const LinkTo = styled(Link)`
 
 const Author = props => {
   const { category, user } = props.article;
+
   return (
     <Wrapper>
       <Sticky>

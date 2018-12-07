@@ -23,9 +23,10 @@ const Image = styled.img`
 `
 
 const ArticleImage = props => {
+  const { image, title } = props.article;
   return (
       <ImageWrapper>
-        <Image src='https://i.imgur.com/oQbTVhy.jpg'  alt='Vinicius Jr' />
+        <Image src={image} title={title} alt={title}  />
       </ImageWrapper>
   )
 }

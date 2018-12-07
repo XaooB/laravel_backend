@@ -31,17 +31,35 @@ class SingleArticle extends Component {
     this.state = {
       loadingStatus: true,
       articleID: null,
-      article: null
+      article: null,
+      latest: [],
+      neighbours: []
+    }
+  }
+
+  async componentDidUpdate(prevProps) {
+    window.scrollTo(0,0);
+
+    const currentID = Number(this.props.match.params.id),
+          prevID = Number(prevProps.match.params.id);
+
+    if (currentID !== prevID) {
+      const article = await API.get(`articles_show_article/${currentID}`),
+            neighbours = await API.get(`articles_show_neighbours/${currentID}`);
+
+      this.setState({article: article, neighbours})
     }
   }
 
   async componentDidMount() {
-    await this.setState({
-      articleID: this.props.match.params.id
-    })
-    const article = await API.get(`articles_show_article/${Number(this.state.articleID)}`);
-    this.setState({ article: article[0]});
-    this.setState({loadingStatus: false})
+    window.scrollTo(0,0);
+
+    const currentID = Number(this.props.match.params.id),
+          article = await API.get(`articles_show_article/${currentID}`),
+          latest = await API.get('articles_latest/10'),
+          neighbours = await API.get(`articles_show_neighbours/${currentID}`);
+
+    this.setState({article, latest, neighbours, loadingStatus: false });
   }
 
   render() {
@@ -49,10 +67,10 @@ class SingleArticle extends Component {
     const { image } = this.state.article;
     return (
         <Main>
-          <ArticleImage image = {image} />
+          <ArticleImage article = {this.state.article} />
           <Container>
-            <Article article = {this.state.article} />
-            <Aside />
+            <Article article = {this.state.article} neighbours = {this.state.neighbours} />
+            <Aside latest = {this.state.latest} />
           </Container>
         </Main>
     )

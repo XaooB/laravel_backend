@@ -28,14 +28,15 @@ const Wrapper = styled.section`
 `
 
 const Article = props => {
+  const {article, neighbours} = props;
   return (
     <ArticleWrapper>
       <Section>
-        <Author article = {props.article} />
+        <Author article = {article} />
         <Wrapper>
-          <ArticleHeader article = {props.article} />
-          <Content article = {props.article} />
-          <Related />
+          <ArticleHeader article = {article} />
+          <Content article = {article} />
+          <Related neighbours = {neighbours} />
         </Wrapper>
       </Section>
       <Section>

@@ -1,24 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
+import { FaSearch } from 'react-icons/fa';
 
 const Input = styled.input`
-  padding:5px 10px;
+  flex:.9;
+  display:block;
   border:none;
   outline:none;
-  color:#fff;
-  min-width:300px;
-  border-bottom:1px solid #ee324e;
-  margin-right:20px;
-  transition: background .3s;
-  &:active, &:focus {
-    ${Input} {
-      &::placeholder {
-          color:#fff;
-      }
-    }
-    transition: background .3s;
-    background: #ee324e;
-  }
+  transition: background .4s;
+  background:#ee324e;
+  font-weight:lighter;
+  height:68px;
+  padding:6px 15px;
+  color:#ffffff;
+  font-size:1.3em;
   &::placeholder {
     color:#1e1e1e;
   }
@@ -31,10 +26,58 @@ const Input = styled.input`
   }
 `
 
+const Search = styled.label`
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 10px;
+  background:#ee324e;
+`
+
+const Exit = styled.label`
+  flex:.1;
+  display:flex;
+  cursor:pointer;
+  align-items:center;
+  justify-content:center;
+  background:#ee324e;
+`
+
+const ExitIcon = styled.span`
+  font-size:1.5em;
+  position:relative;
+  top:-2px;
+`
+
+const Wrapper = styled.div`
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  display:none;
+  flex-flow: row nowrap;
+  justify-content:flex-start;
+`
+
+const Checkbox = styled.input`
+  display:none;
+  &:checked ~ ${Wrapper} {
+    display:flex;
+  }
+`
+
+
 class Searchbar extends Component {
   render() {
     return (
-      <Input placeholder='Search for articles..' type='search' />
+      <Fragment>
+        <Search htmlFor='search' name='search'><FaSearch /></Search>
+        <Checkbox type='checkbox' htmlFor='search' id='search' />
+        <Wrapper>
+          <Input placeholder='Search for articles..' type='text' />
+          <Exit htmlFor='search' name='search'><ExitIcon>x</ExitIcon></Exit>
+        </Wrapper>
+      </Fragment>
     )
   }
 }
