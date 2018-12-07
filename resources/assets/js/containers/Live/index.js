@@ -166,7 +166,7 @@ class Live extends Component {
     return (
         <Main>
           <ImageWrapper>
-            <Image src='./assets/images/ballPit.jpg' alt='pit' />
+            <Image src='./img/ballPit.jpg' alt='pit' />
             <MatchSummary />
           </ImageWrapper>
           <Section>

@@ -27,11 +27,11 @@ class CommentsController extends Controller
     // Nesting whole comments in article -> only for normal users
     public function buildComment($articleID, $mainCommentID, &$commentPart, $values)
     {
-        $comments = DB::table('comments')->select('idComment as idcomment', 'idUser as user', 'Content', 'created_at as create_date', 'updated_at as modify_date', 'idReference as comments')->where('idArticle', $articleID)->where('idReference', $mainCommentID)->whereIn('comments.Visible', $values)->orderBy('idReference', 'asc')->get();
+        $comments = DB::table('comments')->select('idComment as idcomment', 'idUser as user', 'Content', 'created_at as create_date', 'updated_at as modify_date', 'idSubReference as comments')->where('idReference', $articleID)->where('idSubReference', $mainCommentID)->whereIn('comments.Visible', $values)->orderBy('idSubReference', 'asc')->get();
         foreach ($comments as $key => $comment) {
             UsersController::buildUserData($comment->user);
             array_push($commentPart, $comment);
-            $subCommentsCount= DB::table('comments')->where('idArticle', $articleID)->where('idReference', $comment->idcomment)->whereIn('comments.Visible', $values)->count();
+            $subCommentsCount= DB::table('comments')->where('idReference', $articleID)->where('idSubReference', $comment->idcomment)->whereIn('comments.Visible', $values)->count();
             if($subCommentsCount > 0) {
                 $comment->comments = array();
                 $this->buildComment($articleID, $comment->idcomment, $comment->comments, $values);
@@ -70,14 +70,14 @@ class CommentsController extends Controller
             $idUser = $_SESSION['iduser'];
             $comments = new Comments;
             $comments->idArticle = $request->idarticle;
-            $comments->idUser = $idUser;
+            $comments->idUser = $_SESSION['iduser'];
             $comments->idReference = $request->idreference;
             $comments->Content = $request->content;
             if($comments->save()) { 
                 $notification = new Notifications;
-                $notification->idUser = $idUser;
+                $notification->idUser = $_SESSION['iduser'];
                 $notification->idReference = $request->idreference;
-                $notification->idComment = DB::table('comments')->select('idComment')->where('idArticle', $request->idarticle)->where('idUser', $idUser)->where('idReference', $request->idreference)->value('idComment');
+                $notification->idComment = DB::table('comments')->select('idComment')->where('idReference', $request->idarticle)->where('idUser', $idUser)->where('idSubReference', $request->idreference)->value('idComment');
                 $notification->save();
                 return response()->json(['message' => 'success']); 
             }

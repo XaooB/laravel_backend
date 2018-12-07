@@ -192,7 +192,7 @@ class FootballAPIConnector
 		}
 	}
 
-	public static function getLatestMatchResult_ExternalAPI($url, $token)
+	public static function getLatestMatchResult_ExternalAPI($url, $token, $type)
 	{
 		$data = self::getDataFromURL($url, $token);
 		$matches = $data->matches;
@@ -215,7 +215,8 @@ class FootballAPIConnector
 					'idClubHome' => $matchHomeClubID,
 					'idClubAway' => $matchAwayClubID,
 					'HomeClubScore' => $matchHomeClubScore,
-					'AwayClubScore' => $matchAwayClubScore]);
+					'AwayClubScore' => $matchAwayClubScore,
+					'Type' => $type]);
 			}
 			// INSERT
 			else

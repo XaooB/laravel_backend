@@ -29,7 +29,7 @@ class InjuriesSuspensionsController extends Controller
 
     public function latest_injuries($count)
     {
-        $injuriesSuspensions = DB::table('injuries_suspensions')->leftJoin('players', 'players.idPlayer', '=', 'injuries_suspensions.idPlayer')->select('players.Name as name', 'players.Surname as surname', 'players.Number as number', 'players.Image as image', 'players.Position as position', 'injuries_suspensions.Description as description', 'injuries_suspensions.ReturnDate as return_date')->where('Type', '=', 'injury')->orderBy('idInjurySuspension', 'desc')->limit($count)->get();
+        $injuriesSuspensions = DB::table('injuries_suspensions')->leftJoin('players', 'players.idPlayer', '=', 'injuries_suspensions.idPlayer')->select('players.Name as name', 'players.Number as number', 'players.Image as image', 'players.Position as position', 'injuries_suspensions.Description as description', 'injuries_suspensions.ReturnDate as return_date')->where('Type', '=', 'injury')->orderBy('idInjurySuspension', 'desc')->limit($count)->get();
         return response()->json($injuriesSuspensions);
     }
 

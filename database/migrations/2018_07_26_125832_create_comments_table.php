@@ -15,13 +15,13 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('idComment');
-            $table->unsignedInteger('idArticle');
             $table->unsignedInteger('idReference');
+            $table->unsignedInteger('idSubReference');
+            $table->string('Type', 45);
             $table->unsignedInteger('idUser');
             $table->text('Content');
             $table->boolean('Visible')->default(1);
             $table->timestamps();
-            $table->foreign('idArticle')->references('idArticle')->on('articles')->onDelete('cascade');
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
         });
     }

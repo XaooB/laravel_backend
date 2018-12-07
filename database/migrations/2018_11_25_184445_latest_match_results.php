@@ -13,7 +13,19 @@ class LatestMatchResults extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('latest_match_results', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('League', 45);
+            $table->timestamp('Date');
+            $table->string('Location', 45);
+            $table->unsignedInteger('idClubHome');
+            $table->string('HomeClubScore', 256);
+            $table->unsignedInteger('idClubAway');
+            $table->string('AwayClubScore', 256);
+            $table->string('Type', 45);
+            $table->timestamps();
+            $table->foreign('idClub')->references('idClub')->on('clubs')->onDelete('cascade');
+        });
     }
 
     /**
@@ -23,6 +35,6 @@ class LatestMatchResults extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('latest_match_results');
     }
 }

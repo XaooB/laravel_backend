@@ -93,7 +93,7 @@
             Articles::where('idArticle', $id)->update(['Views' => $articleViews]);
             return response()->json($article);
         }
-        
+
         public static function BuildNeighboursData($ids)
         {
             $articles = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->join('users', 'articles.idUser', '=', 'users.id')->leftJoin('comments', 'comments.idArticle', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 200) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idArticle = articles.idArticle and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_article_likes where user_article_likes.idArticle = articles.idArticle) as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idArticle')->where('articles.Visible', '!=', 0)->whereIn('articles.idArticle', $ids)->get();
@@ -284,12 +284,12 @@
         public function staff_show_article($id)
         {
             if(Articles::where('idArticle', $id)->count())
-                $article = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idArticle', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 200) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idArticle = articles.idArticle and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_article_likes where user_article_likes.idArticle = articles.idArticle) as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idArticle')->where('articles.idArticle', $id)->get();
+                $article = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idArticle', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 200) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idArticle = articles.idArticle and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_article_likes where user_article_likes.idArticle = articles.idArticle) as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idArticle')->where('articles.idArticle', $id)->first();
             else
                 return response()->json(['message' => 'wrong article id']);
 
-            UsersController::buildUserData($article[0]->user);
-            $articleViews = $article[0]->views;
+            UsersController::buildUserData($article->user);
+            $articleViews = $article->views;
             $articleViews += 1;
             Articles::where('idArticle', $id)->update(['Views' => $articleViews]);
             return response()->json($article);

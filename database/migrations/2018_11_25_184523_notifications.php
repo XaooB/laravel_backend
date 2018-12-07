@@ -13,7 +13,15 @@ class Notifications extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->increments('idNotification');
+            $table->unsignedInteger('idUser');
+            $table->unsignedInteger('idReference');
+            $table->string('Type', 45);
+            $table->tinyInteger('Readed');
+            $table->timestamps();
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
+        });
     }
 
     /**
@@ -23,6 +31,6 @@ class Notifications extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('notifications');
     }
 }

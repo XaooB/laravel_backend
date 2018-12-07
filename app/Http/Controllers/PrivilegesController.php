@@ -41,9 +41,9 @@ class PrivilegesController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->pname != null){
+        if($request->privilege != null){
             $privileges = new Privileges;
-            $privileges->Name = $request->pname;
+            $privileges->Name = $request->privilege;
             if(Privileges::where('Name', '=' , $privileges->Name)->exists()) { return response()->json(['message' => 'failure']); }
             else {if($privileges->save()) { return response()->json(['message' => 'success']);} }
             return response()->json(['message' => 'connection failure']);
@@ -86,7 +86,7 @@ class PrivilegesController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        if(Privileges::where('idPrivilege', '=' , $id)->update(['Name' => $request->pname])) {return response()->json(['message' => 'success']);}
+        if(Privileges::where('idPrivilege', '=' , $id)->update(['Name' => $request->privilege])) {return response()->json(['message' => 'success']);}
         else {return response()->json(['message' => 'failure']);}
     }
 

@@ -42,10 +42,10 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->name != null){
+        if($request->category != null){
             $categories = new Categories;
-            $categories->Name = $request->cname;
-            if(Categories::where('Name', '=' , $categories->Name)->exists()) { return response()->json(['message' => 'connection failure']); }
+            $categories->Name = $request->category;
+            if(Categories::where('Name', '=' , $categories->category)->exists()) { return response()->json(['message' => 'connection failure']); }
             else {if($categories->save()) { return response()->json(['message' => 'success']);} }
             return response()->json(['message' => 'failure']);
         }
@@ -87,8 +87,8 @@ class CategoriesController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        if($request->cname != null){
-            if(Categories::where('idCategory', '=' , $id)->update(['Name' => $request->cname])) { return response()->json(['message' => 'success']); }
+        if($request->category != null){
+            if(Categories::where('idCategory', '=' , $id)->update(['Name' => $request->category])) { return response()->json(['message' => 'success']); }
         else { return response()->json(['message' => 'failure']); }
         }
         return response()->json(['message' => 'connection failure']);

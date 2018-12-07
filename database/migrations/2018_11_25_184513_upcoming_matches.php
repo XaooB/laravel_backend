@@ -13,7 +13,15 @@ class UpcomingMatches extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('upcoming_matches', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('League', 45);
+            $table->timestamp('Date', 256);
+            $table->string('Location', 90);
+            $table->string('idClub', 256);
+            $table->timestamps();
+            $table->foreign('idClub')->references('idClub')->on('clubs')->onDelete('cascade');
+        });
     }
 
     /**
@@ -23,6 +31,6 @@ class UpcomingMatches extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('upcoming_matches');
     }
 }

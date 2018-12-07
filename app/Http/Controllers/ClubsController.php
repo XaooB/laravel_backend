@@ -92,7 +92,7 @@ class ClubsController extends Controller
             $request->file('image')->move($destinationFolder, $image_name);
             $path = $destinationFolder . $image_name;
             CloudinaryController::uploadImage($path, $image_name, 'clubs', 'idClub', $id);
-            $msg = 'success';
+            return response()->json(['message' => 'success']);
         }
         else { return response()->json(['message' => 'failure']); }
     }

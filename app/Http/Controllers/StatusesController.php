@@ -41,9 +41,9 @@ class StatusesController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->name != null){
+        if($request->status != null){
             $statuses = new Statuses;
-            $statuses->Name = $request->sname;
+            $statuses->Name = $request->status;
             if(Statuses::where('Name', '=' , $statuses->Name)->exists()) { return response()->json(['message' => 'failure']); }
             else {if($statuses->save()) { return response()->json(['message' => 'success']);} }
             return response()->json(['message' => 'connection failure']);
@@ -86,7 +86,7 @@ class StatusesController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        if(Privileges::where('idStatus', '=' , $id)->update(['Name' => $request->sname])) {return response()->json(['message' => 'success']);}
+        if(Privileges::where('idStatus', '=' , $id)->update(['Name' => $request->status])) {return response()->json(['message' => 'success']);}
         else {return response()->json(['message' => 'failure']);}
     }
 
