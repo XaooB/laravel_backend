@@ -31,10 +31,10 @@ const Article = props => {
   return (
     <ArticleWrapper>
       <Section>
-        <Author />
+        <Author article = {props.article} />
         <Wrapper>
-          <ArticleHeader />
-          <Content />
+          <ArticleHeader article = {props.article} />
+          <Content article = {props.article} />
           <Related />
         </Wrapper>
       </Section>

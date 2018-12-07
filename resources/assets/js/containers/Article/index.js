@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Article from '../../components/Article/article';
-import Aside from '../../components/Article/article_aside';
 import ArticleImage from '../../components/Article/article_image';
+import Aside from '../../components/Article/article_aside';
+import Loader from '../../components/Reusable/loader';
+
+//api calls
+import { API } from '../../helpers/api';
 
 const Main = styled.main`
   display:flex;
   flex-flow:column;
   position:relative;
   color:#1e1e1e;
-  top:-130px;
   width:100%;
 `
 
@@ -22,17 +25,36 @@ const Container = styled.section`
 `
 
 class SingleArticle extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      loadingStatus: true,
+      articleID: null,
+      article: null
+    }
+  }
+
+  async componentDidMount() {
+    await this.setState({
+      articleID: this.props.match.params.id
+    })
+    const article = await API.get(`articles_show_article/${Number(this.state.articleID)}`);
+    this.setState({ article: article[0]});
+    this.setState({loadingStatus: false})
+  }
+
   render() {
+    if(this.state.loadingStatus) return <Loader />
+    const { image } = this.state.article;
     return (
-      <Main>
-        <ArticleImage />
-        <Container>
-          <Article />
-          <Aside>
-            <p>miejsce na reklamemiejsce na reklamemiejsce na reklamemiejsce na reklame</p>
-          </Aside>
-        </Container>
-      </Main>
+        <Main>
+          <ArticleImage image = {image} />
+          <Container>
+            <Article article = {this.state.article} />
+            <Aside />
+          </Container>
+        </Main>
     )
   }
 }

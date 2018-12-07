@@ -9,6 +9,7 @@ import StrawPoll from '../../components/Home/Poll';
 import NextMatch from '../../components/Home/next_match';
 import Injuries from '../../components/Home/injuries';
 import SocialMedia from '../../components/Home/social_media';
+import Loader from '../../components/Reusable/loader';
 import styled from 'styled-components';
 
 //api calls
@@ -19,6 +20,7 @@ const Main = styled.main`
   flex-flow: row wrap;
   justify-content: space-between;
   margin-bottom:100px;
+  margin-top:50px;
 `
 
 const Container = styled.div`
@@ -27,6 +29,7 @@ const Container = styled.div`
 
 const RestNewsAndPolls = styled.section`
   flex:2;
+  order:1;
   margin-right:10px;
 `
 
@@ -49,6 +52,7 @@ const Polls = styled.section`
 
 const TableAndSocial = styled.section`
   flex:.9;
+  order:2;
   padding:0 10px;
 `
 
@@ -66,6 +70,7 @@ class Home extends Component {
 	  super(props);
 	  this.state = {
     loadingStatus: true,
+    mainArticle: [],
     articles: [],
     schedule: [],
     leagueTable: [],
@@ -75,31 +80,30 @@ class Home extends Component {
   };
   }
   async componentDidMount() {
-    const articles = await API.get('articles_latest/22'),
+    const mainArticle = await API.get('articles_latest_main/1'),
+          articles = await API.get('articles_latest/22'),
           schedule = await API.get('upcomingmatches_get_upcoming_matches/4'),
           leagueTable = await API.get('leaguescoreboard_get_league_scoreboard/2018-2019/PD'),
           latestResult = await API.get('latestmatchresult_get_latest_match_result'),
           pollData = await API.get('surveys_latest/1'),
           injuriesData = await API.get('injuriessuspensions_actual_injuries');
 
-    this.setState({ articles, schedule, leagueTable, latestResult, pollData, injuriesData });
+    this.setState({ mainArticle, articles, schedule, leagueTable, latestResult, pollData, injuriesData });
     this.setState({ loadingStatus: false });
   }
 
   render() {
-    const { articles, schedule, leagueTable, latestResult, pollData, injuriesData, loadingStatus } = this.state;
+    const { mainArticle, articles, schedule, leagueTable, latestResult, pollData, injuriesData, loadingStatus } = this.state;
 
-    if(loadingStatus) return <div style={{color: 'black'}}>loading data</div>
-    const mainArticle = articles.slice(0, 1),
-          asideArticles = articles.slice(1, 3),
-          lastestNewsBig = articles.slice(3, 9),
-          smallNews = articles.slice(10, 19),
+    if(loadingStatus) return <Loader />
+    const lastestNewsBig = articles.slice(0, 8),
+          smallNews = articles.slice(9, 18),
           nextMatch = schedule[0],
           upcomingMatches = schedule.slice(1, 4);
 
     return (
       <Container>
-        <MainArticle mainArticle={ mainArticle } asideArticles={ asideArticles } />
+        <MainArticle mainArticle={ mainArticle } />
         <Main>
           <FixturesInfo>
             <LatestResult latestResult={latestResult} />

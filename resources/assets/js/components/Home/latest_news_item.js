@@ -35,7 +35,6 @@ const Category = styled.span`
 `
 
 const Title = styled.h3`
-  font-family: 'AvenirD';
   font-size:1.55em;
   line-height:1.1em;
   margin-bottom:3px;
@@ -58,7 +57,7 @@ const Summary = styled.p`
 
 const Image = styled.img`
   width:100%;
-  align-self: flex-start;
+  align-self: center;
 `
 
 const Hover = styled.span`
@@ -77,7 +76,8 @@ const LinkTo = styled(Link)`
 
 
 const LatestNewsItem = props => {
-  const {title, image, category, content, create_date} = props.article;
+  const {title, image, category, content, create_date, idarticle} = props.article,
+        link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-')}`;
 
   return (
     <Article>
@@ -85,7 +85,7 @@ const LatestNewsItem = props => {
         <Image src={image} alt='isco' title='isco' />
       </ImageWrapper>
       <Container>
-        <LinkTo to='/jakis newst'>
+        <LinkTo to={link}>
           <Category>{category}</Category>
           <Title>
             <Hover>{title}</Hover>

@@ -24,6 +24,7 @@ const PublishedBy = styled.span`
 const LinkTo = styled(Link)`
   color:#00529f;
   display:inline-block;
+  text-transform: uppercase;
   font-family:'AvenirD';
   border-bottom:1px solid #e0e0e0;
   padding:0 0 12px 20px;
@@ -33,11 +34,12 @@ const LinkTo = styled(Link)`
 `
 
 const Author = props => {
+  const { category, user } = props.article;
   return (
     <Wrapper>
       <Sticky>
-        <LinkTo to='/club'>CLUB</LinkTo>
-        <PublishedBy>posted by xaoo, <br/> 3 hours ago</PublishedBy>
+        <LinkTo to='/club'>{category}</LinkTo>
+        <PublishedBy>posted by {user.name}, <br/> 3 hours ago</PublishedBy>
         <Share />
       </Sticky>
     </Wrapper>

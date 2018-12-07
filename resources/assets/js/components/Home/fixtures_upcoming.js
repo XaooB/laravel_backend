@@ -11,7 +11,7 @@ const Section = styled.section`
 const Wrapper = styled.div`
   display:flex;
   height:170px;
-  min-width:330px;
+  min-width:320px;
   flex-flow:row wrap;
 `
 

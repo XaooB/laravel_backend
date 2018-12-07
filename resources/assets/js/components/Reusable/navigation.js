@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 
 const Nav = styled.nav`
   font-family: 'DoHyeon';
-  font-size: 1em;
+  color:#1e1e1e;
+  font-size: .95em;
   text-transform: uppercase;
 `
 
@@ -13,15 +14,29 @@ const List = styled.ul`
 `
 
 const ListLink = styled(Link)`
-  color:white;
+  color:inherit;
+  padding:0 10px;
   &:hover {
-    color:#febe10;
+    color:#ee324e;
   }
+`
+
+const ApiRoute = styled.a`
+  background:#ee324e;
+  color:#ffffff;
+  padding:8px;
+`
+
+const GoogleIcon = styled.span`
+  display:inline-block;
+  line-height:1.1;
+  padding-right:6px;
+  margin-right:6px;
+  border-right:1px solid rgba(255,255,255,.65);
 `
 
 const ListItem = styled.li`
   display:inline-block;
-  padding:0 15px;
   letter-spacing:1.2px;
 `
 
@@ -45,9 +60,10 @@ const Navigation = () => {
         <ListLink to='/contact'>
           <ListItem>contact us</ListItem>
         </ListLink>
-        <ListLink to='/join'>
-          <ListItem>join us</ListItem>
-        </ListLink>
+        <ApiRoute href='/api/auth/google'>
+          <GoogleIcon>g+</GoogleIcon>
+          <ListItem>Sign In</ListItem>
+        </ApiRoute>
       </List>
     </Nav>
   )

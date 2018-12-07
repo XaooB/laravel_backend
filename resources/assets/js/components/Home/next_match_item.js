@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Container = styled.section`
   display:flex;
   width:100%;
-  min-width:330px;
+  min-width:320px;
   align-items:center;
   background: #00529f;
   height:170px;

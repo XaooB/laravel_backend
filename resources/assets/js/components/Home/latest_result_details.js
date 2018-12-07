@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   display:flex;
   width:100%;
   height:170px;
-  min-width:330px;
+  min-width:320px;
   flex-flow: row wrap;
   text-transform: uppercase;
   font-family:'AvenirBC';

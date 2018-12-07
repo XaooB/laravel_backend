@@ -39,17 +39,18 @@ const Count = styled.span`
 `
 
 const ArticleTitle = props => {
+  const { title, likes_count, comments_count } = props.article;
   return (
     <Header>
-      <Title>Vinicius Jr. plays his first match in Real Madrid</Title>
+      <Title>{title}</Title>
       <Wrapper>
         <Item>
           <GoCommentDiscussion />
-          <Count>158 comments</Count>
+          <Count>{comments_count} komentarzy</Count>
         </Item>
         <Item>
           <GoHeart />
-          <Count>72 likes</Count>
+          <Count>{likes_count} polubień</Count>
         </Item>
       </Wrapper>
     </Header>

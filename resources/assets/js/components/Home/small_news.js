@@ -31,7 +31,6 @@ const Added = styled.span`
 `
 
 const Title = styled.h3`
-  font-family: 'AvenirD';
   font-size: 1.3em;
   line-height:1em;
   padding:6px 0;
@@ -51,7 +50,8 @@ const LinkTo = styled(Link)`
 `
 
 const SmallNews = props => {
-  const { category, title, create_date } = props.data;
+  const { category, title, create_date, idarticle } = props.data,
+          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-')}`;
 
   return (
     <Article>
@@ -60,7 +60,7 @@ const SmallNews = props => {
           <Added> / { dateConverter.toDateOnly(create_date) }</Added>
         </CategoryAndDate>
         <Title>
-          <LinkTo to='/some-article' >
+          <LinkTo to={link} >
             <Hover>
               { title }
             </Hover>

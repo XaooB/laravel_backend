@@ -1,23 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import Aside from '../../components/Home/aside';
 import { Link } from 'react-router-dom';
 
 const Article = styled.article`
   position:relative;
-  top:-130px;
-  padding:0 10px;
   width:100%;
-  max-height:700px;
+  max-height:650px;
 `
 
-//DOES NOT WORK PROPERLY - THERES NOT BLUE OVERLAY
 const Image = styled.img`
   width:100%;
 `
 
 const ImageWrapper = styled.figure`
-  max-height: 700px;
+  max-height: 650px;
   overflow:hidden;
   position:relative;
   &:before {
@@ -26,7 +22,7 @@ const ImageWrapper = styled.figure`
     background: #00529f;
     width:100%;
     mix-blend-mode: hard-light;
-    opacity:.6;
+    opacity:.5;
     height:100%;
     left:0;
     top:0;
@@ -34,28 +30,30 @@ const ImageWrapper = styled.figure`
 `
 
 const HeaderWrapper = styled.div`
-  margin-left: 75px;
-  top:50%;
-  transform: translateY(-50%);
+  left:5%;
+  bottom:25%;
   display:flex;
+  background: rgba(0,0,0,.6);
+  padding:20px;
   flex-flow:column nowrap;
   flex-direction:column;
-  max-width:520px;
+  max-width:550px;
+  min-width:300px;
   position:absolute;
 `
 
 const Category = styled.span`
   font-family:'AvenirB';
-  font-size:1.1em;
   text-transform: uppercase;
   color:#febe10;
 `
 
 const Title = styled.h2`
-  font-size: 2.2em;
+  font-size: 2.1em;
   font-family: 'AvenirB';
   letter-spacing:1.5px;
   line-height: 1.2em;
+  color:#ffffff;
   padding:8px 0;
 `
 
@@ -73,24 +71,21 @@ const LinkTo = styled(Link)`
 `
 
 const MainArticle = props => {
-  const { image, category, title } = props.mainArticle[0];
+  console.log(props);
+  const { image, category, idarticle,  title } = props.mainArticle[0],
+          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-')}`;
 
   return (
     <Article>
       <ImageWrapper>
         <Image src={image}  alt='' />
       </ImageWrapper>
-      <LinkTo to='/news/la-liga/1/Vinicius-Jr.-plays-his-first-match-in-Real-Madrid'>
+      <LinkTo to={link}>
         <HeaderWrapper>
-          <header>
-            <Category>{category}</Category>
-            <Title>
-              <Hover>{title}</Hover>
-            </Title>
-          </header>
+          <Category>{category}</Category>
+          <Title>{title}</Title>
         </HeaderWrapper>
       </LinkTo>
-      <Aside data={ props.asideArticles } />
     </Article>
   )
 }

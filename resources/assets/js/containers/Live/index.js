@@ -7,8 +7,6 @@ import CommentSection from '../../components/Article/article_comments';
 import Wrapper from '../../components/Reusable/wrapper';
 
 const Main = styled.main`
-  position:relative;
-  top:-165px;
   width:calc(100% - 20px);
 `
 
@@ -166,22 +164,22 @@ const AWAY = [
 class Live extends Component {
   render() {
     return (
-      <Main>
-        <ImageWrapper>
-          <Image src='./assets/images/ballPit.jpg' alt='pit' />
-          <MatchSummary />
-        </ImageWrapper>
-        <Section>
-          <Wrapper>
-            <Squad team='fc barcelona' squad={AWAY} />
-            <LiveCentre>
-              <Commentary />
-              <CommentSection />
-            </LiveCentre>
-            <Squad team='real madrid' squad={HOME} />
-          </Wrapper>
-        </Section>
-      </Main>
+        <Main>
+          <ImageWrapper>
+            <Image src='./assets/images/ballPit.jpg' alt='pit' />
+            <MatchSummary />
+          </ImageWrapper>
+          <Section>
+            <Wrapper>
+              <Squad team='fc barcelona' squad={AWAY} />
+              <LiveCentre>
+                <Commentary />
+                <CommentSection />
+              </LiveCentre>
+              <Squad team='real madrid' squad={HOME} />
+            </Wrapper>
+          </Section>
+        </Main>
     )
   }
 }

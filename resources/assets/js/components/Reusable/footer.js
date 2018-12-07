@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const Wrapper = styled.footer`
   width:100%;
-  padding:0 10px;
 `
 
 const FooterNav = styled.div`
@@ -41,7 +40,7 @@ const Category = styled.h5`
 
 const List = styled.ul`
   list-style-type: none;
-  margin-top:23px;
+  margin-top:15px;
 `
 
 const ListItem = styled.li`

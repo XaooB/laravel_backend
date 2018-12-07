@@ -2,15 +2,44 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Image = styled.img`
-  height:60px;
+const LinkTo = styled(Link)`
+  display:flex;
+  align-items:center;
+  font-family: "Arial";
+  color:#1e1e1e;
+  }
+`
+
+const Wrapper = styled.div`
+  background:#ee324e;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:42px;
+  height:30px;
+  color:white;
+  margin-right:5px;
+  font-family: 'AvenirD';
+  & + span {
+    color:#d8d8d8;
+    &:hover {
+      color: #ee324e;
+    }
+`
+
+const LogoText = styled.span`
+  color:inherit;
+  letter-spacing:1px;
 `
 
 const Logo = () => {
   return (
-    <Link to='/'>
-      <Image src='./img/logo.svg' title='real madrid' alt='real madrids logo' />
-    </Link>
+    <LinkTo to='/'>
+      <Wrapper>
+        <LogoText>RM</LogoText>
+      </Wrapper>
+      <LogoText>Polska</LogoText>
+    </LinkTo>
   )
 }
 
