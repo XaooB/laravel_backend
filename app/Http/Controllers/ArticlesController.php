@@ -117,6 +117,7 @@
         public function filtrate(Request $request)
         {
             var_dump($request);
+            return;
             if($request->phrase != null)
             {
                 $fixedPhrase = $this->escapeLike($request->phrase);
