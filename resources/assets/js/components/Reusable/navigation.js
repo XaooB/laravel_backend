@@ -42,7 +42,10 @@ const ListItem = styled.li`
   letter-spacing:1.2px;
 `
 
-const Navigation = () => {
+const Navigation = props => {
+  const { user } = props.auth;
+
+  console.log(user);
   return (
     <Nav>
       <List>
@@ -61,10 +64,16 @@ const Navigation = () => {
         <ListLink to='/contact'>
           <ListItem>contact us</ListItem>
         </ListLink>
-        <ApiRoute href='/api/auth/google'>
-          <GoogleIcon>g+</GoogleIcon>
-          <ListItem>Sign In</ListItem>
-        </ApiRoute>
+        {
+          !user ?
+          <ApiRoute href='/api/auth/google'>
+            <GoogleIcon>g+</GoogleIcon>
+            <ListItem>Sign In</ListItem>
+          </ApiRoute> :
+          <ApiRoute to='/user'>
+            Hello, {user.name}
+          </ApiRoute>
+        }
       </List>
     </Nav>
   )

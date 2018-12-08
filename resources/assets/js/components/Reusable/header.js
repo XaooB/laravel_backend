@@ -4,6 +4,7 @@ import Logo from './logo';
 import Searchbar from './searchbar';
 import Navigation from './navigation';
 import Wrapper from './wrapper'
+import { connect } from 'react-redux';
 
 const Topbar = styled.header`
   padding: 15px 0;
@@ -19,16 +20,24 @@ const Topbar = styled.header`
   z-index:999;
 `
 
-const Header = () => {
+const Header = props => {
+  const { auth } = props;
+
   return (
     <Topbar>
       <Logo />
       <Wrapper>
         <Searchbar />
-        <Navigation />
+        <Navigation auth = {auth} />
       </Wrapper>
     </Topbar>
   )
 }
 
-export default Header;
+function mapStateToProps({auth}) {
+  return {
+    auth
+  }
+}
+
+export default connect(mapStateToProps)(Header);
