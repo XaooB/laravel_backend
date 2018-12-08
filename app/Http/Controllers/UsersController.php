@@ -71,7 +71,7 @@ class UsersController extends Controller
             return response()->json($data);
         }
         else
-            return response()->json(array());
+            return response()->json($_SESSION);
         
 	}
 
