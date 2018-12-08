@@ -60435,7 +60435,7 @@ var initialState = {
 
   switch (action.type) {
     case __WEBPACK_IMPORTED_MODULE_0__actions_types__["a" /* FETCH_USER */]:
-      return _extends({}, state, state.action);
+      return _extends({}, state, { user: action.payload });
     default:
       return state;
   }
