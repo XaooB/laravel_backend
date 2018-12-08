@@ -140,7 +140,7 @@ class UsersController extends Controller
         if($request->name != null)
         {
             if(User::where('Name', $request->name)->count() == 0 && User::where('id', $id)->where('id', $_SESSION['iduser'])->update(['Name' => $request->name]))
-            { $msg = 'success'; }
+            { $_SESSION['name'] = $request->name; $msg = 'success'; }
             else 
             { return response()->json(['message' => 'user with same name already exists']); }
         }

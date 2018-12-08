@@ -60412,7 +60412,7 @@ thunk.withExtraArgument = createThunkMiddleware;
 
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_0_redux__["c" /* combineReducers */])({
-  auth: __WEBPACK_IMPORTED_MODULE_1__user_reducer__["a" /* default */]
+  user: __WEBPACK_IMPORTED_MODULE_1__user_reducer__["a" /* default */]
 }));
 
 /***/ }),
@@ -66853,7 +66853,24 @@ var AsideItem = function AsideItem(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__navigation__ = __webpack_require__(196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__wrapper__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_redux__ = __webpack_require__(19);
-var _templateObject = _taggedTemplateLiteral(['\n  padding: 15px 0;\n  background:#fff;\n  border-bottom:1px solid #ededed;\n  display: flex;\n  width:100%;\n  align-items: center;\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  position:sticky;\n  top:0;\n  z-index:999;\n'], ['\n  padding: 15px 0;\n  background:#fff;\n  border-bottom:1px solid #ededed;\n  display: flex;\n  width:100%;\n  align-items: center;\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  position:sticky;\n  top:0;\n  z-index:999;\n']);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _templateObject = _taggedTemplateLiteral(['\n  padding: 15px 0;\n  background:#fff;\n  border-bottom:1px solid #ededed;\n  display: flex;\n  width:100%;\n  align-items: center;\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  position:sticky;\n  top:0;\n  z-index:999;\n'], ['\n  padding: 15px 0;\n  background:#fff;\n  border-bottom:1px solid #ededed;\n  display: flex;\n  width:100%;\n  align-items: center;\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  position:sticky;\n  top:0;\n  z-index:999;\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  padding:8px;\n  position:relative;\n  align-self:center;\n  font-family: \'SSP\';\n  display:flex;\n  align-items:center;\n'], ['\n  padding:8px;\n  position:relative;\n  align-self:center;\n  font-family: \'SSP\';\n  display:flex;\n  align-items:center;\n']),
+    _templateObject3 = _taggedTemplateLiteral(['\n  display:block;\n  margin-left:6px;\n  text-transform:lowercase;\n  letter-spacing:1px;\n  line-height:1;\n  color:#1e1e1e;\n  &:last-child {\n    font-size:.9em;\n    color:#d8d8d8;\n  }\n'], ['\n  display:block;\n  margin-left:6px;\n  text-transform:lowercase;\n  letter-spacing:1px;\n  line-height:1;\n  color:#1e1e1e;\n  &:last-child {\n    font-size:.9em;\n    color:#d8d8d8;\n  }\n']),
+    _templateObject4 = _taggedTemplateLiteral(['\n  display:inline-block;\n  height:35px;\n  border-radius:100%;\n'], ['\n  display:inline-block;\n  height:35px;\n  border-radius:100%;\n']),
+    _templateObject5 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:column nowrap;\n'], ['\n  display:flex;\n  flex-flow:column nowrap;\n']),
+    _templateObject6 = _taggedTemplateLiteral(['\n  display:inline-block;\n  line-height:1.1;\n  text-transform: lowercase;\n  padding-right:6px;\n  margin-right:6px;\n  border-right:1px solid rgba(255,255,255,.65);\n'], ['\n  display:inline-block;\n  line-height:1.1;\n  text-transform: lowercase;\n  padding-right:6px;\n  margin-right:6px;\n  border-right:1px solid rgba(255,255,255,.65);\n']),
+    _templateObject7 = _taggedTemplateLiteral(['\n  background:none;\n  border:none;\n  outline:none;\n  cursor:pointer;\n  height:20px;\n  width:20px;\n  position:relative;\n  &:before {\n    font-size:1.1em;\n    position:absolute;\n    content:\'\u25B6\';\n    left:50%;\n    top:10%;\n    transform: translate(-50%) rotate(-180deg);\n    color:#ee324e;\n  }\n'], ['\n  background:none;\n  border:none;\n  outline:none;\n  cursor:pointer;\n  height:20px;\n  width:20px;\n  position:relative;\n  &:before {\n    font-size:1.1em;\n    position:absolute;\n    content:\'\u25B6\';\n    left:50%;\n    top:10%;\n    transform: translate(-50%) rotate(-180deg);\n    color:#ee324e;\n  }\n']),
+    _templateObject8 = _taggedTemplateLiteral(['\n  position:absolute;\n  top:51px;\n  left:0;\n  width:100%;\n  background: #fff;\n  list-style-type:none;\n'], ['\n  position:absolute;\n  top:51px;\n  left:0;\n  width:100%;\n  background: #fff;\n  list-style-type:none;\n']),
+    _templateObject9 = _taggedTemplateLiteral(['\n  padding: 10px;\n  cursor:pointer;\n  color:#ee324e;\n  &:hover {\n    background:#ee324e;\n    color:#fff;\n    text-decoration:underline;\n  }\n'], ['\n  padding: 10px;\n  cursor:pointer;\n  color:#ee324e;\n  &:hover {\n    background:#ee324e;\n    color:#fff;\n    text-decoration:underline;\n  }\n']),
+    _templateObject10 = _taggedTemplateLiteral(['\n  color:#ee324e;\n  line-height:default;\n  &:hover {\n    color:#fff;\n    text-decoration:underline;\n  }\n'], ['\n  color:#ee324e;\n  line-height:default;\n  &:hover {\n    color:#fff;\n    text-decoration:underline;\n  }\n']);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -66867,29 +66884,173 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 
 var Topbar = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].header(_templateObject);
 
-var Header = function Header(props) {
-  var auth = props.auth;
+var User = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].section(_templateObject2);
+
+var Text = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].span(_templateObject3);
+
+var UserImage = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].img(_templateObject4);
+
+var UserInfo = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].div(_templateObject5);
+
+var GoogleIcon = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].span(_templateObject6);
+
+var ShowNav = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].button(_templateObject7);
+
+var UserNav = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].ul(_templateObject8);
+
+var NavItem = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].li(_templateObject9);
+
+var ApiLink = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].a(_templateObject10);
+
+var Header = function (_Component) {
+  _inherits(Header, _Component);
+
+  function Header(props) {
+    _classCallCheck(this, Header);
+
+    var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
+
+    _this.state = {
+      toggleNav: false
+
+      //have to use this approach instead of arrow function because it wasn't working..
+    };_this.toggleNav = _this.toggleNav.bind(_this);
+    return _this;
+  }
+
+  _createClass(Header, [{
+    key: 'toggleNav',
+    value: function toggleNav() {
+      this.setState({ toggleNav: !this.state.toggleNav });
+    }
+  }, {
+    key: 'showNavigation',
+    value: function showNavigation() {
+      console.log(this.state.toggleNav);
+      if (this.state.toggleNav) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          UserNav,
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            NavItem,
+            null,
+            'M\xF3j profil'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            NavItem,
+            null,
+            'Ustawienia'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            NavItem,
+            null,
+            'Powiadomienia'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            NavItem,
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              ApiLink,
+              { href: '/api/auth/google/logout' },
+              'Wyloguj si\u0119'
+            )
+          )
+        );
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var user = this.props.user;
 
 
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-    Topbar,
-    null,
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__logo__["a" /* default */], null),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      __WEBPACK_IMPORTED_MODULE_5__wrapper__["a" /* default */],
-      null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__searchbar__["a" /* default */], null),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__navigation__["a" /* default */], { auth: auth })
-    )
-  );
-};
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        Topbar,
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__logo__["a" /* default */], null),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_5__wrapper__["a" /* default */],
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__searchbar__["a" /* default */], null),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_5__wrapper__["a" /* default */],
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__navigation__["a" /* default */], null),
+            user.length > 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              User,
+              { href: '/api/auth/google' },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                GoogleIcon,
+                null,
+                'g+'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                ListItem,
+                null,
+                'Sign In'
+              )
+            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              User,
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(UserImage, { src: 'http://res.cloudinary.com/hhidlawm6/image/upload/c_fit,h_408,w_450/v1/users/users21544233398.png' }),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                UserInfo,
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  Text,
+                  null,
+                  'xaoo'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  Text,
+                  null,
+                  'xaooxx@gmail.com'
+                )
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ShowNav, { onClick: this.toggleNav }),
+              this.state.toggleNav ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                UserNav,
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  NavItem,
+                  null,
+                  'M\xF3j profil'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  NavItem,
+                  null,
+                  'Ustawienia'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  NavItem,
+                  null,
+                  'Powiadomienia'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  NavItem,
+                  null,
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    ApiLink,
+                    { href: '/api/auth/google/logout' },
+                    'Wyloguj si\u0119'
+                  )
+                )
+              ) : ''
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Header;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 function mapStateToProps(_ref) {
-  var auth = _ref.auth;
+  var user = _ref.user;
 
-  console.log('mapStateToProps:', auth);
   return {
-    auth: auth
+    user: user
   };
 }
 
@@ -66991,12 +67152,15 @@ var Searchbar = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(3);
-var _templateObject = _taggedTemplateLiteral(['\n  font-family: \'SSPBK\';\n  color:#1e1e1e;\n  font-size: .95em;\n  text-transform: uppercase;\n'], ['\n  font-family: \'SSPBK\';\n  color:#1e1e1e;\n  font-size: .95em;\n  text-transform: uppercase;\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  font-family: \'SSPBK\';\n  color:#1e1e1e;\n  font-size: .95em;\n  align-self:center;\n  text-transform: uppercase;\n'], ['\n  font-family: \'SSPBK\';\n  color:#1e1e1e;\n  font-size: .95em;\n  align-self:center;\n  text-transform: uppercase;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  list-style:none;\n'], ['\n  list-style:none;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  color:inherit;\n  padding:0 15px;\n  &:hover {\n    color:#ee324e;\n  }\n'], ['\n  color:inherit;\n  padding:0 15px;\n  &:hover {\n    color:#ee324e;\n  }\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n  background:#ee324e;\n  color:#ffffff;\n  padding:8px;\n  font-family: \'SSP\';\n'], ['\n  background:#ee324e;\n  color:#ffffff;\n  padding:8px;\n  font-family: \'SSP\';\n']),
-    _templateObject5 = _taggedTemplateLiteral(['\n  display:inline-block;\n  line-height:1.1;\n  text-transform: lowercase;\n  padding-right:6px;\n  margin-right:6px;\n  border-right:1px solid rgba(255,255,255,.65);\n'], ['\n  display:inline-block;\n  line-height:1.1;\n  text-transform: lowercase;\n  padding-right:6px;\n  margin-right:6px;\n  border-right:1px solid rgba(255,255,255,.65);\n']),
-    _templateObject6 = _taggedTemplateLiteral(['\n  display:inline-block;\n  letter-spacing:1.2px;\n'], ['\n  display:inline-block;\n  letter-spacing:1.2px;\n']);
+    _templateObject4 = _taggedTemplateLiteral(['\n  background:#ee324e;\n  color:#ffffff;\n  padding:8px;\n  position:relative;\n  font-family: \'SSP\';\n'], ['\n  background:#ee324e;\n  color:#ffffff;\n  padding:8px;\n  position:relative;\n  font-family: \'SSP\';\n']),
+    _templateObject5 = _taggedTemplateLiteral(['\n  position:absolute;\n  width:100%;\n  padding:10px;\n  left:0;\n  bottom:0;\n  background:#ee324e;\n'], ['\n  position:absolute;\n  width:100%;\n  padding:10px;\n  left:0;\n  bottom:0;\n  background:#ee324e;\n']),
+    _templateObject6 = _taggedTemplateLiteral(['\n  font-size:.9em;\n'], ['\n  font-size:.9em;\n']),
+    _templateObject7 = _taggedTemplateLiteral(['\n  display:inline-block;\n  height:30px;\n  border-radius:100%;\n'], ['\n  display:inline-block;\n  height:30px;\n  border-radius:100%;\n']),
+    _templateObject8 = _taggedTemplateLiteral(['\n  display:inline-block;\n  line-height:1.1;\n  text-transform: lowercase;\n  padding-right:6px;\n  margin-right:6px;\n  border-right:1px solid rgba(255,255,255,.65);\n'], ['\n  display:inline-block;\n  line-height:1.1;\n  text-transform: lowercase;\n  padding-right:6px;\n  margin-right:6px;\n  border-right:1px solid rgba(255,255,255,.65);\n']),
+    _templateObject9 = _taggedTemplateLiteral(['\n  display:inline-block;\n  letter-spacing:1.2px;\n'], ['\n  display:inline-block;\n  letter-spacing:1.2px;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -67012,16 +67176,17 @@ var ListLink = Object(__WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* def
 
 var ApiRoute = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].a(_templateObject4);
 
-var GoogleIcon = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].span(_templateObject5);
+var UserNav = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].div(_templateObject5);
 
-var ListItem = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].li(_templateObject6);
+var UserName = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].span(_templateObject6);
+
+var UserImage = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].img(_templateObject7);
+
+var GoogleIcon = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].span(_templateObject8);
+
+var ListItem = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].li(_templateObject9);
 
 var Navigation = function Navigation(props) {
-  var user = props.auth.user;
-
-
-  console.log('Użytkownik w komponencie Nav:', user);
-
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     Nav,
     null,
@@ -67072,25 +67237,6 @@ var Navigation = function Navigation(props) {
           null,
           'contact us'
         )
-      ),
-      !user.length ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        ApiRoute,
-        { href: '/api/auth/google' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          GoogleIcon,
-          null,
-          'g+'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          ListItem,
-          null,
-          'Sign In'
-        )
-      ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        ApiRoute,
-        { to: '/user' },
-        'Hello, ',
-        user[0].name
       )
     )
   );

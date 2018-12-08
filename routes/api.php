@@ -24,12 +24,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/google/logout', function() {
         session_start();
         session_destroy();
-        $data = array();
-        array_push($data, ['message' => 'logged out.']);
-        $response = response($data)
-            ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
-            ->header('Content-Type', 'application/json');
-        return $response;
+		return redirect('https://portal-wertykalny.herokuapp.com/');
     });
 });
 
@@ -43,7 +38,7 @@ Route::get('google-user',array('as'=>'user.glist','uses'=>'UsersController@listG
 */
 
 Route::post('test', function() {
-    return response()->json($_SESSION);
+    return response()->json($_POST);
 });
 
 // Use middleware to allow Client-side use API

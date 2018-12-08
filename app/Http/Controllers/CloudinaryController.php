@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use JD\Cloudder\Facades\Cloudder;
 
+if(!isset($_SESSION)) { session_start(); }
+
 class CloudinaryController extends Controller
 {
 	public static function saveImage($image_url, $table, $column, $id)
@@ -15,7 +17,8 @@ class CloudinaryController extends Controller
     $currentImageId = explode('/' . $table . '/', $currentUrl);
     Cloudder::destroyImage($currentUrl);
     Cloudder::delete(substr($currentImageId[1], 0, -4), ['folder' => $table]);*/
-    DB::table($table)->where($column, $id)->update(['Image' => $image_url]);
+    if(DB::table($table)->where($column, $id)->update(['Image' => $image_url]))
+        $_SESSION['image'] = $image_url;
 	}
 
   public static function uploadImage($path, $image_name, $table, $column, $id)
