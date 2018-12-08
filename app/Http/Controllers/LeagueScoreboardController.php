@@ -38,7 +38,7 @@ class LeagueScoreboardController extends Controller
             }
         }
         if($league == 'PD')
-            $league_scoreboard = DB::table('league_scoreboards')->select('idClub as club', 'Matches as matches', 'Won as won', 'Draw as draw', 'Lost as lost', 'Points as points')->where('Season', $season)->where('League', $league)->orderBy('Position', 'asc')->get();
+            $league_scoreboard = DB::table('league_scoreboards')->select('idClub as club', 'Position as position', 'Matches as matches', 'Won as won', 'Draw as draw', 'Lost as lost', 'Points as points')->where('Season', $season)->where('League', $league)->orderBy('Position', 'asc')->get();
         foreach ($league_scoreboard as $key => $team) {
             ClubsController::buildClubData($team->club);
         }
