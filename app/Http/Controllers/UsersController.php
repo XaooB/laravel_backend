@@ -130,9 +130,9 @@ class UsersController extends Controller
             CloudinaryController::uploadImage($path, $image_name, 'users', 'id', $_SESSION['iduser']);
             $msg = 'success';
         }
-        if($request->nname != null)
+        if($request->name != null)
         {
-            if(User::where('Name', $request->nname)->count() == 0 && User::where('id', $id)->where('id', $_SESSION['iduser'])->update(['Name' => $request->nname]))
+            if(User::where('Name', $request->name)->count() == 0 && User::where('id', $id)->where('id', $_SESSION['iduser'])->update(['Name' => $request->name]))
             { $msg = 'success'; }
             else 
             { return response()->json(['message' => 'user with same name already exists']); }
