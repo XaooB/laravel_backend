@@ -65,8 +65,14 @@ class UsersController extends Controller
 	
 	public function check_user()
 	{
-        $data = array($_SESSION);
-		return response()->json($data);
+        if(isset($_SESSION)
+        {
+            $data = array($_SESSION);
+            return response()->json($data);
+        }
+        else
+            return response($_SESSION);
+        
 	}
 
     /**
