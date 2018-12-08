@@ -69,7 +69,7 @@ Route::group(['middleware' => 'apiresponse'], function() {
     Route::resource('injuriessuspensions', 'InjuriesSuspensionsController')->only(['index']);
     Route::get('injuriessuspensions_latest_injuries/{count}', 'InjuriesSuspensionsController@latest_injuries')->name('injuriessuspensions.latest_injuries');
     Route::get('injuriessuspensions_latest_suspensions/{count}', 'InjuriesSuspensionsController@latest_suspensions')->name('injuriessuspensions.latest_suspensions');
-    Route::get('injuriessuspensions_actual', 'InjuriesSuspensionsController@actual_injuries')->name('injuriessuspensions.actual_injuries');
+    Route::get('injuriessuspensions_actual', 'InjuriesSuspensionsController@actual')->name('injuriessuspensions.actual');
     // Players routes
     Route::resource('players', 'PlayersController')->only(['index']);
     Route::get('players_get_squad', 'PlayersController@get_squad')->name('players.get_squad');
