@@ -199,9 +199,9 @@ class UsersController extends Controller
     public function change_user_status(Request $request, $id)
     {
         $msg = 'failure';
-        $staffPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.id', $_SESSION['iduser'])->where('users.Name', $_SESSION['iduser'])->value('privileges.Name');
+        $staffPrivilege = $_SESSION['privileges'];
         $userPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.id', $id)->value('privileges.Name');
-        $ids = DB::table('users')->select('id')->where('id', $_SESSION['iduser'])->value('id');
+        $ids = $_SESSION['iduser'];
         $msg = $this->change_user_property($id, 'statuses', 'idStatus', $request->status, $ids, $request->reason, $staffPrivilege, $userPrivilege);
         return response()->json(['message' => $msg]);
     }
@@ -209,9 +209,9 @@ class UsersController extends Controller
     public function change_user_privilege(Request $request, $id)
     {
         $msg = 'failure';
-        $staffPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.id', $_SESSION['iduser'])->where('users.Name', $_SESSION['iduser'])->value('privileges.Name');
+        $staffPrivilege = $_SESSION['privileges'];
         $userPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.id', $id)->value('privileges.Name');
-        $ids = DB::table('users')->select('id')->where('id', $_SESSION['iduser'])->value('id');
+        $ids = $_SESSION['iduser'];
         $msg = $this->change_user_property($id, 'privileges', 'idPrivilege', $request->privilege,  $ids, null, $staffPrivilege, $userPrivilege);
         return response()->json(['message' => $msg]);
     }

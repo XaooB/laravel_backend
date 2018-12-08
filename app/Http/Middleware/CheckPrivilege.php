@@ -27,27 +27,16 @@ class CheckPrivilege
             }
             else
             {
-                print_r($_SESSION['privileges']);
-                $data = array();
-                array_push($data, [
-                    'status' => false,
-                    'message' => 'access denied, you do not have permission.']);
-                $response = response($data)
-                ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
-                ->header('Content-Type', 'application/json');
-                return $response;
+                return response()->json([
+                'status' => false,
+                'message' => 'access denied, you do not have permission.']]);
             }
         }
         else
         {
-            $data = array();
-            array_push($data, [
+            return response()->json([
                 'status' => false,
                 'message' => 'priv fail']);
-            $response = response($data)
-            ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
-            ->header('Content-Type', 'application/json');
-            return $response;
         }
     }
 }

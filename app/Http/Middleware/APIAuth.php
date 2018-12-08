@@ -33,14 +33,9 @@ class APIAuth
         }
         else
         {
-            $data = array();
-            array_push($data, [
+            return response()->json([
                 'status' => false,
                 'message' => 'auth fail']);
-            $response = response($data)
-                ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
-                ->header('Content-Type', 'application/json');
-            return $response;
         }
     }
 }
