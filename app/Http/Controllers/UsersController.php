@@ -71,7 +71,7 @@ class UsersController extends Controller
             return response()->json($data);
         }
         else
-            return array();
+            return response()->json(array());
         
 	}
 
