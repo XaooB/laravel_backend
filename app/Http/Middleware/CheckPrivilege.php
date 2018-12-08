@@ -27,8 +27,11 @@ class CheckPrivilege
             }
             else
             {
+                print_r($_SESSION['privileges']);
                 $data = array();
-                array_push($data, ['message' => 'access denied, you do not have permission.']);
+                array_push($data, [
+                    'status' => false,
+                    'message' => 'access denied, you do not have permission.']);
                 $response = response($data)
                 ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
                 ->header('Content-Type', 'application/json');
