@@ -16,7 +16,8 @@ class UserArticleLikes extends Migration
         Schema::create('user_likes', function (Blueprint $table) {
             $table->unsignedInteger('idUser');
             $table->unsignedInteger('idArticle');
-            $table->string('Type', 7);
+            $table->string('Type', 45);
+            $table->string('Reaction', 15);
             $table->timestamps();
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');;
             $table->foreign('idArticle')->references('idArticle')->on('articles')->onDelete('cascade');;

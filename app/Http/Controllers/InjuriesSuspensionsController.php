@@ -42,9 +42,9 @@ class InjuriesSuspensionsController extends Controller
         return response()->json(InjuriesSuspensionsResource::collection($injuriesSuspensions));
     }
 
-    public function actual_injuries()
+    public function actual()
     {
-        $injuries = DB::table('injuries_suspensions')->where('Type', '=', 'injury')->whereRaw('ReturnDate > NOW()')->get();
+        $injuries = DB::table('injuries_suspensions')->whereRaw('ReturnDate > NOW()')->get();
         foreach ($injuries as $key => $injurySuspension) {
             PlayersController::buildPlayerData($injurySuspension->idPlayer);
         }

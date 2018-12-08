@@ -26,7 +26,7 @@ class LatestMatchResultsController extends Controller
 
     public function get_latest_match_result(Request $request)
     {
-        $latest_match = DB::table('latest_match_results')->select('idClubHome as home_team', 'HomeClubScore as home_team_score', 'idClubAway as away_team', 'AwayClubScore as away_team_score', 'League as league', 'Date as date')->orderBy('Date', 'desc')->first();
+        $latest_match = DB::table('latest_match_results')->select('idClubHome as home_team', 'HomeClubScore as home_team_score', 'idClubAway as away_team', 'AwayClubScore as away_team_score', 'League as league', 'Date as date')->where('Type', 'FINISHED')->orderBy('Date', 'desc')->first();
         ClubsController::buildClubData($latest_match->home_team);
         ClubsController::buildClubData($latest_match->away_team);
         return response()->json($latest_match);
