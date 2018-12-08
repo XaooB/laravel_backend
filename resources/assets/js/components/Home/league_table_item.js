@@ -16,6 +16,7 @@ const ItemField = styled.div`
   flex:.5;
   &:nth-child(2) {
     flex:3;
+    text-align:left;
   }
 `
 

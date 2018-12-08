@@ -16,6 +16,7 @@ const Container = styled.div`
 
 const Table = styled.div`
   display:flex;
+  text-align:center;
   color:#1e1e1e;
   letter-spacing:1.1px;
   flex-flow:column nowrap;

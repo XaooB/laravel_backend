@@ -23,7 +23,7 @@ class APIAuth
     {
         if(isset($_SESSION['iduser']))
         {
-            if([$_SESSION['status']] == 'aktywny')
+            if($_SESSION['status'] == 'aktywny')
             {
                 $response = $next($request)
                     ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
@@ -34,7 +34,9 @@ class APIAuth
         else
         {
             $data = array();
-            array_push($data, ['status' => 'auth fail']);
+            array_push($data, [
+                'status' => false,
+                'message' => 'auth fail']);
             $response = response($data)
                 ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
                 ->header('Content-Type', 'application/json');

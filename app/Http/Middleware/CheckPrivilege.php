@@ -38,7 +38,9 @@ class CheckPrivilege
         else
         {
             $data = array();
-            array_push($data, ['status' => 'priv fail']);
+            array_push($data, [
+                'status' => false,
+                'message' => 'priv fail']);
             $response = response($data)
             ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
             ->header('Content-Type', 'application/json');

@@ -8,6 +8,8 @@ import SingleArticle from '../containers/Article/'
 import Header from './Reusable/header'
 import Footer from './Reusable/footer'
 import NotFound from './404';
+import { connect } from 'react-redux';
+import { fetchUser } from '../actions/';
 
 const Container = styled.div`
   max-width:1450px;
@@ -15,6 +17,10 @@ const Container = styled.div`
 `
 
 class App extends Component {
+  componentDidMount() {
+    this.props.fetchUser();
+  }
+
   render() {
     return (
       <Router>
@@ -34,4 +40,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, {fetchUser})(App);

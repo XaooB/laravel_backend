@@ -7,11 +7,9 @@ const Wrapper = styled.section`
 `
 
 const Span = styled.div`
- position:sticky;
- top:50%;
- transform:translateY(-50%);
- margin-top:35px;
- margin-bottom:-10px;
+  margin-top:5px;
+  position:sticky;
+  top:45%;
 `
 
 const CommentFeatures = props => {

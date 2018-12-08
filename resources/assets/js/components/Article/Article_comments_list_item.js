@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import User from './article_user';
 import { FaHeart, FaReply, FaBan } from 'react-icons/fa';
+import Comments from './article_comments_list';
 
 const ListItem = styled.li`
   display:flex;
   flex-flow:row nowrap;
   justify-content:flex-start;
+  padding-top:25px;
   &:not(:last-child) {
-    margin-bottom:50px;
+    margin-bottom:25px;
   }
 `
 
 const Article = styled.article`
-  margin-left:10px;
+  margin-left:4px;
   flex:1;
 `
 
@@ -57,22 +59,12 @@ const FooterItem = styled.button`
   background:none;
   font-size:.85em;
   outline:none;
-  position:relative;
   padding:3px;
   border:none;
   color:rgb(169,169,169);
   cursor:pointer;
   &:not(:last-child) {
-    margin-right:8px;
-    &:after {
-      position: absolute;
-      content:'';
-      right:-4px;
-      top:3px;
-      height:15px;
-      width:2px;
-      background:#e0e0e0;
-    }
+    margin-right:6px;
   }
   &:hover {
     color:#00529f;
@@ -81,7 +73,7 @@ const FooterItem = styled.button`
 
 class SingleComment extends Component {
   render() {
-    const {user, content, create_date} = this.props.comment;
+    const {user, content, create_date, comments} = this.props.comment;
     return (
       <ListItem>
         <User image = {user.image}/>
@@ -104,6 +96,7 @@ class SingleComment extends Component {
               <ActionName>Report</ActionName>
             </FooterItem>
           </Footer>
+          {comments ? <Comments comments = {comments} /> : ''}
         </Article>
       </ListItem>
     )

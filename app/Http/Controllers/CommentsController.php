@@ -81,9 +81,11 @@ class CommentsController extends Controller
                 $notification->save();
                 return response()->json(['message' => 'success']); 
             }
-            return response()->json(['message' => 'failure']);
+            return response()->json(['status' => false]);
         }
-        return response()->json(['message' => 'connection failure']);
+        return response()->json([
+            'status' => false,
+            'message' => 'connection failure']);
     }
 
     /**
@@ -123,9 +125,11 @@ class CommentsController extends Controller
         */
         if($request->name != null && $request->content != null){
             if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', '=', 1)->update(['Content' => $request->content])) { return response()->json(['message' => 'success']); }
-            else { return response()->json(['message' => 'failure']); }
+            else { return response()->json(['status' => false]); }
         }
-        return response()->json(['message' => 'connection failure']);
+        return response()->json([
+            'status' => false,
+            'message' => 'connection failure']);
     }
 
     /**
@@ -141,8 +145,10 @@ class CommentsController extends Controller
             <input type="hidden" name="_method" value="DELETE">
         */
         if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', '=', 1)->update(['Visible' => 0]))  {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'failure']);}
-        return response()->json(['message' => 'connection failure']);
+        else { return response()->json(['status' => false]); }
+        return response()->json([
+            'status' => false,
+            'message' => 'connection failure']);
     }
 
     // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -159,6 +165,6 @@ class CommentsController extends Controller
         if(Comments::where('idComment', $id)->where('Visible', '!=', $request->visible)->update(['Visible' => $request->visible]))
             return response()->json(['message' => 'success']);
         else
-            return response()->json(['message' => 'failure']);
+            return response()->json(['status' => false]);
     }
 }

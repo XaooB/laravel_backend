@@ -4,7 +4,7 @@ import SingleComment from './Article_comments_list_item';
 
 const List = styled.ul`
   list-style-type: none;
-  margin-top:50px;
+  margin-top:25px;
   line-height:1.5;
 `
 

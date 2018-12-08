@@ -94,7 +94,7 @@ class ClubsController extends Controller
             CloudinaryController::uploadImage($path, $image_name, 'clubs', 'idClub', $id);
             return response()->json(['message' => 'success']);
         }
-        else { return response()->json(['message' => 'failure']); }
+        else { return response()->json(['status' => false]); }
     }
 
     /**

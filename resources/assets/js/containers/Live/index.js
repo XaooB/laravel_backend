@@ -32,8 +32,7 @@ const ImageWrapper = styled.div`
 `
 
 const Section = styled.section`
-  position:relative;
-  top:50px;
+  margin-top:50px;
   color:#1e1e1e;
 `
 
@@ -174,7 +173,7 @@ class Live extends Component {
               <Squad team='fc barcelona' squad={AWAY} />
               <LiveCentre>
                 <Commentary />
-                <CommentSection />
+
               </LiveCentre>
               <Squad team='real madrid' squad={HOME} />
             </Wrapper>

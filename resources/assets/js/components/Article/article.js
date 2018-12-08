@@ -17,6 +17,7 @@ const ArticleWrapper = styled.article`
 
 const Section = styled.section`
   display:flex;
+  margin-bottom:40px;
   justify-content: space-between;
   flex-flow: row wrap;
 `

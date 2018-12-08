@@ -190,7 +190,7 @@
                             $request->file('image')->move($destinationFolder, $image_name);
                             $path = $destinationFolder . $image_name;
                             CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id);
-                            return response()->json(['status' => 'success']);
+                            return response()->json(['message' => 'success']);
                         }
                         else
                         { return response()->json(['status' => false]); } 
@@ -266,7 +266,9 @@
         {
             $iduser = $_SESSION['iduser'];
             if(Articles::where('idArticle', '=' , $id)->where('idUser', '=' , $iduser)->where('Visible', '!=', 0)->update(['Visible' => 0])) {return response()->json(['message' => 'success']);}
-            else {return response()->json(['message' => 'connection failure']);}
+            else {return response()->json([
+                'status' => false,
+                'message' => 'connection failure']);}
         }
 
         // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------

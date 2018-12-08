@@ -1,2 +1,1 @@
-export const ADD = 'add';
-export const SUB = 'sub';
+export const FETCH_USER = 'FU';
