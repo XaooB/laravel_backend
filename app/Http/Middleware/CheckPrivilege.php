@@ -29,7 +29,7 @@ class CheckPrivilege
             {
                 return response()->json([
                 'status' => false,
-                'message' => 'access denied, you do not have permission.']]);
+                'message' => 'access denied, you do not have permission.']);
             }
         }
         else
