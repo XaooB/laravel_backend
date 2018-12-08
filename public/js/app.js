@@ -7370,7 +7370,7 @@ var CommentSection = function CommentSection(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  justify-content:center;\n  min-width:65px;\n  min-height:65px;\n  max-width:65px;\n  max-height:65px;\n  margin-right:10px;\n  overflow:hidden;\n  align-self:flex-start;\n  border-radius:100%;\n'], ['\n  display:flex;\n  justify-content:center;\n  min-width:65px;\n  min-height:65px;\n  max-width:65px;\n  max-height:65px;\n  margin-right:10px;\n  overflow:hidden;\n  align-self:flex-start;\n  border-radius:100%;\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  height:70px;\n'], ['\n  height:70px;\n']);
+    _templateObject2 = _taggedTemplateLiteral(['\n  height:65px;\n'], ['\n  height:65px;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -66856,15 +66856,15 @@ var AsideItem = function AsideItem(props) {
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _templateObject = _taggedTemplateLiteral(['\n  padding: 15px 0;\n  background:#fff;\n  border-bottom:1px solid #ededed;\n  display: flex;\n  width:100%;\n  align-items: center;\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  position:sticky;\n  top:0;\n  z-index:999;\n'], ['\n  padding: 15px 0;\n  background:#fff;\n  border-bottom:1px solid #ededed;\n  display: flex;\n  width:100%;\n  align-items: center;\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  position:sticky;\n  top:0;\n  z-index:999;\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  padding:8px;\n  position:relative;\n  align-self:center;\n  font-family: \'SSP\';\n  display:flex;\n  align-items:center;\n'], ['\n  padding:8px;\n  position:relative;\n  align-self:center;\n  font-family: \'SSP\';\n  display:flex;\n  align-items:center;\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  padding:8px;\n  min-width:175px;\n  position:relative;\n  z-index:1;\n  align-self:center;\n  justify-content:space-between;\n  font-family: \'SSP\';\n  display:flex;\n  align-items:center;\n'], ['\n  padding:8px;\n  min-width:175px;\n  position:relative;\n  z-index:1;\n  align-self:center;\n  justify-content:space-between;\n  font-family: \'SSP\';\n  display:flex;\n  align-items:center;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  display:block;\n  margin-left:6px;\n  text-transform:lowercase;\n  letter-spacing:1px;\n  line-height:1;\n  color:#1e1e1e;\n  &:last-child {\n    font-size:.9em;\n    color:#d8d8d8;\n  }\n'], ['\n  display:block;\n  margin-left:6px;\n  text-transform:lowercase;\n  letter-spacing:1px;\n  line-height:1;\n  color:#1e1e1e;\n  &:last-child {\n    font-size:.9em;\n    color:#d8d8d8;\n  }\n']),
     _templateObject4 = _taggedTemplateLiteral(['\n  display:inline-block;\n  height:35px;\n  border-radius:100%;\n'], ['\n  display:inline-block;\n  height:35px;\n  border-radius:100%;\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:column nowrap;\n'], ['\n  display:flex;\n  flex-flow:column nowrap;\n']),
     _templateObject6 = _taggedTemplateLiteral(['\n  display:inline-block;\n  line-height:1.1;\n  text-transform: lowercase;\n  padding-right:6px;\n  margin-right:6px;\n  border-right:1px solid rgba(255,255,255,.65);\n'], ['\n  display:inline-block;\n  line-height:1.1;\n  text-transform: lowercase;\n  padding-right:6px;\n  margin-right:6px;\n  border-right:1px solid rgba(255,255,255,.65);\n']),
     _templateObject7 = _taggedTemplateLiteral(['\n  background:none;\n  border:none;\n  outline:none;\n  cursor:pointer;\n  height:20px;\n  width:20px;\n  position:relative;\n  &:before {\n    font-size:1.1em;\n    position:absolute;\n    content:\'\u25B6\';\n    left:50%;\n    top:10%;\n    transform: translate(-50%) rotate(-180deg);\n    color:#ee324e;\n  }\n'], ['\n  background:none;\n  border:none;\n  outline:none;\n  cursor:pointer;\n  height:20px;\n  width:20px;\n  position:relative;\n  &:before {\n    font-size:1.1em;\n    position:absolute;\n    content:\'\u25B6\';\n    left:50%;\n    top:10%;\n    transform: translate(-50%) rotate(-180deg);\n    color:#ee324e;\n  }\n']),
     _templateObject8 = _taggedTemplateLiteral(['\n  position:absolute;\n  top:51px;\n  left:0;\n  width:100%;\n  background: #fff;\n  list-style-type:none;\n'], ['\n  position:absolute;\n  top:51px;\n  left:0;\n  width:100%;\n  background: #fff;\n  list-style-type:none;\n']),
-    _templateObject9 = _taggedTemplateLiteral(['\n  padding: 10px;\n  cursor:pointer;\n  color:#ee324e;\n  &:hover {\n    background:#ee324e;\n    color:#fff;\n    text-decoration:underline;\n  }\n'], ['\n  padding: 10px;\n  cursor:pointer;\n  color:#ee324e;\n  &:hover {\n    background:#ee324e;\n    color:#fff;\n    text-decoration:underline;\n  }\n']),
-    _templateObject10 = _taggedTemplateLiteral(['\n  color:#ee324e;\n  line-height:default;\n  &:hover {\n    color:#fff;\n    text-decoration:underline;\n  }\n'], ['\n  color:#ee324e;\n  line-height:default;\n  &:hover {\n    color:#fff;\n    text-decoration:underline;\n  }\n']);
+    _templateObject9 = _taggedTemplateLiteral(['\n  line-height:default;\n  color:#ee324e;\n'], ['\n  line-height:default;\n  color:#ee324e;\n']),
+    _templateObject10 = _taggedTemplateLiteral(['\n  padding: 10px;\n  cursor:pointer;\n  color:#ee324e;\n  &:hover {\n    background:#ee324e;\n    color:#fff;\n    text-decoration:underline;\n    ', ' {\n      color:#fff;\n      text-decoration:underline;\n    }\n  }\n'], ['\n  padding: 10px;\n  cursor:pointer;\n  color:#ee324e;\n  &:hover {\n    background:#ee324e;\n    color:#fff;\n    text-decoration:underline;\n    ', ' {\n      color:#fff;\n      text-decoration:underline;\n    }\n  }\n']);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -66898,9 +66898,9 @@ var ShowNav = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */]
 
 var UserNav = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].ul(_templateObject8);
 
-var NavItem = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].li(_templateObject9);
+var ApiLink = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].a(_templateObject9);
 
-var ApiLink = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].a(_templateObject10);
+var NavItem = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].li(_templateObject10, ApiLink);
 
 var Header = function (_Component) {
   _inherits(Header, _Component);
@@ -66926,7 +66926,6 @@ var Header = function (_Component) {
   }, {
     key: 'showNavigation',
     value: function showNavigation() {
-      console.log(this.state.toggleNav);
       if (this.state.toggleNav) {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           UserNav,
@@ -66976,7 +66975,7 @@ var Header = function (_Component) {
             __WEBPACK_IMPORTED_MODULE_5__wrapper__["a" /* default */],
             null,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__navigation__["a" /* default */], null),
-            user.length > 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            user.length ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               User,
               { href: '/api/auth/google' },
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -66992,50 +66991,27 @@ var Header = function (_Component) {
             ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               User,
               null,
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(UserImage, { src: 'http://res.cloudinary.com/hhidlawm6/image/upload/c_fit,h_408,w_450/v1/users/users21544233398.png' }),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                UserInfo,
+                __WEBPACK_IMPORTED_MODULE_5__wrapper__["a" /* default */],
                 null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(UserImage, { src: 'http://res.cloudinary.com/hhidlawm6/image/upload/c_fit,h_408,w_450/v1/users/users21544233398.png' }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  Text,
+                  UserInfo,
                   null,
-                  'xaoo'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  Text,
-                  null,
-                  'xaooxx@gmail.com'
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    Text,
+                    null,
+                    'test'
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    Text,
+                    null,
+                    'test'
+                  )
                 )
               ),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ShowNav, { onClick: this.toggleNav }),
-              this.state.toggleNav ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                UserNav,
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  NavItem,
-                  null,
-                  'M\xF3j profil'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  NavItem,
-                  null,
-                  'Ustawienia'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  NavItem,
-                  null,
-                  'Powiadomienia'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  NavItem,
-                  null,
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    ApiLink,
-                    { href: '/api/auth/google/logout' },
-                    'Wyloguj si\u0119'
-                  )
-                )
-              ) : ''
+              this.showNavigation()
             )
           )
         )
@@ -67072,7 +67048,7 @@ var _templateObject = _taggedTemplateLiteral(['\n  flex:1.9;\n  display:block;\n
     _templateObject2 = _taggedTemplateLiteral(['\n  cursor:pointer;\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  padding:0 10px;\n  background:#ee324e;\n'], ['\n  cursor:pointer;\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  padding:0 10px;\n  background:#ee324e;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  flex:.1;\n  display:flex;\n  cursor:pointer;\n  align-items:center;\n  justify-content:center;\n  background:#ee324e;\n'], ['\n  flex:.1;\n  display:flex;\n  cursor:pointer;\n  align-items:center;\n  justify-content:center;\n  background:#ee324e;\n']),
     _templateObject4 = _taggedTemplateLiteral(['\n  font-size:2em;\n  position:relative;\n  top:-2px;\n'], ['\n  font-size:2em;\n  position:relative;\n  top:-2px;\n']),
-    _templateObject5 = _taggedTemplateLiteral(['\n  position:fixed;\n  left:0;\n  top:0;\n  width:100%;\n  display:none;\n  flex-flow: row nowrap;\n  justify-content:flex-start;\n'], ['\n  position:fixed;\n  left:0;\n  top:0;\n  width:100%;\n  display:none;\n  flex-flow: row nowrap;\n  justify-content:flex-start;\n']),
+    _templateObject5 = _taggedTemplateLiteral(['\n  position:fixed;\n  left:0;\n  z-index:999;\n  top:0;\n  width:100%;\n  display:none;\n  flex-flow: row nowrap;\n  justify-content:flex-start;\n'], ['\n  position:fixed;\n  left:0;\n  z-index:999;\n  top:0;\n  width:100%;\n  display:none;\n  flex-flow: row nowrap;\n  justify-content:flex-start;\n']),
     _templateObject6 = _taggedTemplateLiteral(['\n  display:none;\n  &:checked ~ ', ' {\n    display:flex;\n  }\n'], ['\n  display:none;\n  &:checked ~ ', ' {\n    display:flex;\n  }\n']);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67154,7 +67130,7 @@ var Searchbar = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(3);
 var _templateObject = _taggedTemplateLiteral(['\n  font-family: \'SSPBK\';\n  color:#1e1e1e;\n  font-size: .95em;\n  align-self:center;\n  text-transform: uppercase;\n'], ['\n  font-family: \'SSPBK\';\n  color:#1e1e1e;\n  font-size: .95em;\n  align-self:center;\n  text-transform: uppercase;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  list-style:none;\n'], ['\n  list-style:none;\n']),
-    _templateObject3 = _taggedTemplateLiteral(['\n  color:inherit;\n  padding:0 15px;\n  &:hover {\n    color:#ee324e;\n  }\n'], ['\n  color:inherit;\n  padding:0 15px;\n  &:hover {\n    color:#ee324e;\n  }\n']),
+    _templateObject3 = _taggedTemplateLiteral(['\n  color:inherit;\n  padding:0 15px;\n  transition: all .3s;\n  &:hover {\n    transition: all .3s;\n    color:#ee324e;\n  }\n'], ['\n  color:inherit;\n  padding:0 15px;\n  transition: all .3s;\n  &:hover {\n    transition: all .3s;\n    color:#ee324e;\n  }\n']),
     _templateObject4 = _taggedTemplateLiteral(['\n  background:#ee324e;\n  color:#ffffff;\n  padding:8px;\n  position:relative;\n  font-family: \'SSP\';\n'], ['\n  background:#ee324e;\n  color:#ffffff;\n  padding:8px;\n  position:relative;\n  font-family: \'SSP\';\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  position:absolute;\n  width:100%;\n  padding:10px;\n  left:0;\n  bottom:0;\n  background:#ee324e;\n'], ['\n  position:absolute;\n  width:100%;\n  padding:10px;\n  left:0;\n  bottom:0;\n  background:#ee324e;\n']),
     _templateObject6 = _taggedTemplateLiteral(['\n  font-size:.9em;\n'], ['\n  font-size:.9em;\n']),
