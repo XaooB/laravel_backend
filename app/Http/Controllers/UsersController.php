@@ -65,7 +65,8 @@ class UsersController extends Controller
 	
 	public function check_user()
 	{
-		return response()->json($_SESSION);
+        $data = array($_SESSION);
+		return response()->json($data);
 	}
 
     /**

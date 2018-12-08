@@ -67087,7 +67087,7 @@ var Navigation = function Navigation(props) {
         ApiRoute,
         { to: '/user' },
         'Hello, ',
-        user.name
+        user[0].name
       )
     )
   );
