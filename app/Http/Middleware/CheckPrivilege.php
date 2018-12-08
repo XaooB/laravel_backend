@@ -22,9 +22,8 @@ class CheckPrivilege
         if(isset($_SESSION['iduser']))
         {
             $privileges = $request->route()->getAction()['privileges'];
-            $userPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.id', $_SESSION['iduser'])->value('privileges.Name');
-            if(in_array($userPrivilege, $privileges)){
-            return $next($request);
+            if(in_array($_SESSION['privileges'], $privileges)){
+                return $next($request);
             }
             else
             {

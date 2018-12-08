@@ -68,12 +68,13 @@ class LoginController extends Controller
                     'reason' => DB::table('user_blockades')->select('Reason')->where('idUser', DB::table('users')->select('id')->where('provider_id', $user->id)->value('id'))->value('Reason')]);
             }
         $authUser = $this->findOrCreateUser($user, $provider);
-        $userData = DB::table('users')->select('users.id', 'users.Name', 'users.Email', 'users.Image', 'privileges.Name as Privileges', 'users.created_at')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->where('remember_token', $this->access_token)->first();
+        $userData = DB::table('users')->select('users.id', 'users.Name', 'users.Email', 'users.Image', 'privileges.Name as Privileges', 'statuses.Name as Status', 'users.created_at')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->join('statuses', 'users.idStatus', '=', 'statuses.idStatus')->where('remember_token', $this->access_token)->first();
         $_SESSION['iduser'] = $userData->id;
         $_SESSION['name'] = $userData->Name;
         $_SESSION['email'] = $userData->Email;
         $_SESSION['image'] = $userData->Image;
         $_SESSION['privileges'] = $userData->Privileges;
+        $_SESSION['status'] = $userData->Status;
         $_SESSION['crate_date'] = $userData->created_at;
         return redirect('https://portal-wertykalny.herokuapp.com/');
     }

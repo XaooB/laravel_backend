@@ -23,7 +23,7 @@ class APIAuth
     {
         if(isset($_SESSION['iduser']))
         {
-            if(DB::table('users')->join('statuses', 'users.idStatus', '=', 'statuses.idStatus')->select('statuses.Name')->where('users.id', $_SESSION['iduser'])->value('statuses.Name') == 'aktywny')
+            if([$_SESSION['status']] == 'aktywny')
             {
                 $response = $next($request)
                     ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
