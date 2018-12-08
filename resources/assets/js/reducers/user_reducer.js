@@ -1,7 +1,7 @@
 import { FETCH_USER } from '../actions/types';
 
 const initialState = {
-  user: false
+  user: []
 }
 
 export default (state = initialState, action) => {

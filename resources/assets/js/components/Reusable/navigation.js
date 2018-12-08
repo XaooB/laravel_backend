@@ -45,7 +45,6 @@ const ListItem = styled.li`
 const Navigation = props => {
   const { user } = props.auth;
 
-  console.log(user);
   return (
     <Nav>
       <List>
@@ -65,7 +64,7 @@ const Navigation = props => {
           <ListItem>contact us</ListItem>
         </ListLink>
         {
-          !user ?
+          !user.length ?
           <ApiRoute href='/api/auth/google'>
             <GoogleIcon>g+</GoogleIcon>
             <ListItem>Sign In</ListItem>
