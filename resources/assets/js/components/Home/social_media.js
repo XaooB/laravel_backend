@@ -18,7 +18,7 @@ const SubTitle = styled.span`
 `
 
 const Title = styled.span`
-  font-family: 'AvenirB';
+  font-family: 'SSPB';
   font-size: 1.875em;
   display:block;
 `

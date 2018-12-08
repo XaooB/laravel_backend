@@ -14,6 +14,7 @@ const Main = styled.main`
   position:relative;
   color:#1e1e1e;
   width:100%;
+  margin-bottom:100px;
 `
 
 const Container = styled.section`
@@ -33,21 +34,22 @@ class SingleArticle extends Component {
       articleID: null,
       article: null,
       latest: [],
-      neighbours: []
+      neighbours: [],
+      comments: []
     }
   }
 
   async componentDidUpdate(prevProps) {
-    window.scrollTo(0,0);
-
     const currentID = Number(this.props.match.params.id),
           prevID = Number(prevProps.match.params.id);
 
     if (currentID !== prevID) {
       const article = await API.get(`articles_show_article/${currentID}`),
-            neighbours = await API.get(`articles_show_neighbours/${currentID}`);
+            neighbours = await API.get(`articles_show_neighbours/${currentID}`),
+            comments = await API.get(`comments_get_article_comments/${currentID}`);
 
-      this.setState({article: article, neighbours})
+      this.setState({article, neighbours, comments})
+      window.scrollTo(0,0);
     }
   }
 
@@ -57,22 +59,24 @@ class SingleArticle extends Component {
     const currentID = Number(this.props.match.params.id),
           article = await API.get(`articles_show_article/${currentID}`),
           latest = await API.get('articles_latest/10'),
-          neighbours = await API.get(`articles_show_neighbours/${currentID}`);
+          neighbours = await API.get(`articles_show_neighbours/${currentID}`),
+          comments = await API.get(`comments_get_article_comments/${currentID}`)
 
-    this.setState({article, latest, neighbours, loadingStatus: false });
+    this.setState({article, latest, neighbours, comments, loadingStatus: false });
   }
 
   render() {
     if(this.state.loadingStatus) return <Loader />
-    const { image } = this.state.article;
+    const { article, latest, neighbours, comments } = this.state;
+
     return (
-        <Main>
-          <ArticleImage article = {this.state.article} />
-          <Container>
-            <Article article = {this.state.article} neighbours = {this.state.neighbours} />
-            <Aside latest = {this.state.latest} />
-          </Container>
-        </Main>
+      <Main>
+        <ArticleImage article = {article} />
+        <Container>
+          <Article article = {article} neighbours = {neighbours} comments = {comments} />
+          <Aside latest = {latest} />
+        </Container>
+      </Main>
     )
   }
 }

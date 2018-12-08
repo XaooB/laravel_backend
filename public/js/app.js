@@ -3158,7 +3158,7 @@ module.exports = warning;
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__createHashHistory__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__createMemoryHistory__ = __webpack_require__(123);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_2__createMemoryHistory__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__LocationUtils__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__LocationUtils__ = __webpack_require__(13);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__LocationUtils__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_3__LocationUtils__["b"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PathUtils__ = __webpack_require__(8);
@@ -3253,6 +3253,42 @@ var createPath = function createPath(location) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
+var _templateObject = _taggedTemplateLiteral(['\n  margin-top:30px;\n  margin-bottom:35px;\n'], ['\n  margin-top:30px;\n  margin-bottom:35px;\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  font-family: \'SSPBK\';\n  font-size: 2.35em;\n  padding-left:16px;\n  color:#1e1e1e;\n  text-transform: uppercase;\n  position:relative;\n  display:inline-block;\n  &:before {\n    content: \'\';\n    position:absolute;\n    left:0;\n    top:9px;\n    height:31px;\n    width:5px;\n    background: #00529f;\n  }\n'], ['\n  font-family: \'SSPBK\';\n  font-size: 2.35em;\n  padding-left:16px;\n  color:#1e1e1e;\n  text-transform: uppercase;\n  position:relative;\n  display:inline-block;\n  &:before {\n    content: \'\';\n    position:absolute;\n    left:0;\n    top:9px;\n    height:31px;\n    width:5px;\n    background: #00529f;\n  }\n']);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+
+
+var Header = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].div(_templateObject);
+
+var Title = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].h3(_templateObject2);
+
+var PageHeader = function PageHeader(props) {
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    Header,
+    null,
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      Title,
+      null,
+      props.subtitle,
+      ' ',
+      props.title
+    )
+  );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (PageHeader);
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n'], ['\n  display:flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -3273,7 +3309,7 @@ var Wrapper = function Wrapper(props) {
 /* harmony default export */ __webpack_exports__["a"] = (Wrapper);
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 var g;
@@ -3300,7 +3336,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3367,7 +3403,7 @@ module.exports = warning;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3441,42 +3477,6 @@ var createLocation = function createLocation(path, state, key, currentLocation) 
 var locationsAreEqual = function locationsAreEqual(a, b) {
   return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && Object(__WEBPACK_IMPORTED_MODULE_1_value_equal__["a" /* default */])(a.state, b.state);
 };
-
-/***/ }),
-/* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
-var _templateObject = _taggedTemplateLiteral(['\n  margin-top:30px;\n  margin-bottom:45px;\n'], ['\n  margin-top:30px;\n  margin-bottom:45px;\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  font-family: \'AvenirB\';\n  font-size: 2.5em;\n  padding-left:16px;\n  color:#1e1e1e;\n  text-transform: uppercase;\n  position:relative;\n  display:inline-block;\n  &:before {\n    content: \'\';\n    position:absolute;\n    left:0;\n    top:9px;\n    height:31px;\n    width:5px;\n    background: #00529f;\n  }\n'], ['\n  font-family: \'AvenirB\';\n  font-size: 2.5em;\n  padding-left:16px;\n  color:#1e1e1e;\n  text-transform: uppercase;\n  position:relative;\n  display:inline-block;\n  &:before {\n    content: \'\';\n    position:absolute;\n    left:0;\n    top:9px;\n    height:31px;\n    width:5px;\n    background: #00529f;\n  }\n']);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-
-
-
-var Header = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].div(_templateObject);
-
-var Title = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].h3(_templateObject2);
-
-var PageHeader = function PageHeader(props) {
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-    Header,
-    null,
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      Title,
-      null,
-      props.subtitle,
-      ' ',
-      props.title
-    )
-  );
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (PageHeader);
 
 /***/ }),
 /* 14 */
@@ -4560,7 +4560,7 @@ if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCr
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 
 
@@ -7187,9 +7187,9 @@ var Loader = function Loader() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_styled_components__ = __webpack_require__(1);
-var _templateObject = _taggedTemplateLiteral(['\n  background:#ee324e;\n  display:flex;\n  justify-content:center;\n  align-items:center;\n  width:42px;\n  height:30px;\n  color:white;\n  margin-right:5px;\n  font-family: \'AvenirD\';\n'], ['\n  background:#ee324e;\n  display:flex;\n  justify-content:center;\n  align-items:center;\n  width:42px;\n  height:30px;\n  color:white;\n  margin-right:5px;\n  font-family: \'AvenirD\';\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  background:#ee324e;\n  display:flex;\n  justify-content:center;\n  align-items:center;\n  width:42px;\n  height:36px;\n  font-size:1.1em;\n  color:white;\n  margin-right:5px;\n  font-family: \'SSPBK\';\n  & + span {\n    color:#d8d8d8;\n  }\n'], ['\n  background:#ee324e;\n  display:flex;\n  justify-content:center;\n  align-items:center;\n  width:42px;\n  height:36px;\n  font-size:1.1em;\n  color:white;\n  margin-right:5px;\n  font-family: \'SSPBK\';\n  & + span {\n    color:#d8d8d8;\n  }\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  color:inherit;\n  letter-spacing:1px;\n'], ['\n  color:inherit;\n  letter-spacing:1px;\n']),
-    _templateObject3 = _taggedTemplateLiteral(['\n  display:flex;\n  align-items:center;\n  font-family: "Arial";\n  color:#1e1e1e;\n  &:hover ', ' + span {\n    color:#ee324e;\n  }\n'], ['\n  display:flex;\n  align-items:center;\n  font-family: "Arial";\n  color:#1e1e1e;\n  &:hover ', ' + span {\n    color:#ee324e;\n  }\n']);
+    _templateObject3 = _taggedTemplateLiteral(['\n  display:flex;\n  align-items:center;\n  font-family: "SSP";\n  color:#1e1e1e;\n  &:hover ', ' + span {\n    color:#ee324e;\n  }\n'], ['\n  display:flex;\n  align-items:center;\n  font-family: "SSP";\n  color:#1e1e1e;\n  &:hover ', ' + span {\n    color:#ee324e;\n  }\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -7293,12 +7293,12 @@ var API = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Reusable_wrapper__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Reusable_wrapper__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__article_user__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Article_comments_form__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__article_comments_list__ = __webpack_require__(177);
 var _templateObject = _taggedTemplateLiteral(['\n  margin-top:20px;\n'], ['\n  margin-top:20px;\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  font-size:1.4em;\n  font-family:\'AvenirD\';\n  margin-bottom:12px;\n'], ['\n  font-size:1.4em;\n  font-family:\'AvenirD\';\n  margin-bottom:12px;\n']);
+    _templateObject2 = _taggedTemplateLiteral(['\n  font-size:1.5em;\n  font-family:\'SSPB\';\n  margin-bottom:12px;\n'], ['\n  font-size:1.5em;\n  font-family:\'SSPB\';\n  margin-bottom:12px;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -7314,6 +7314,8 @@ var Section = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */]
 var Title = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].h3(_templateObject2);
 
 var CommentSection = function CommentSection(props) {
+  var comments = props.comments;
+
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     Section,
     null,
@@ -7328,7 +7330,7 @@ var CommentSection = function CommentSection(props) {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__article_user__["a" /* default */], null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Article_comments_form__["a" /* default */], null)
     ),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__article_comments_list__["a" /* default */], null)
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__article_comments_list__["a" /* default */], { comments: comments })
   );
 };
 
@@ -7355,10 +7357,12 @@ var ImageContainer = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* defa
 var Image = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].img(_templateObject2);
 
 var User = function User(props) {
+  var image = props.image;
+
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     ImageContainer,
     null,
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Image, { src: 'https://i.imgur.com/IlUh0PX.png', alt: 'users avatar', title: 'username' })
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Image, { src: image, title: '', alt: '' })
   );
 };
 
@@ -32591,7 +32595,7 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(63)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11), __webpack_require__(63)(module)))
 
 /***/ }),
 /* 63 */
@@ -35200,7 +35204,7 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(11)))
 
 /***/ }),
 /* 65 */
@@ -58363,7 +58367,7 @@ exports.unstable_shouldYield = unstable_shouldYield;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
 /***/ }),
 /* 89 */
@@ -60089,7 +60093,7 @@ if (typeof self !== 'undefined') {
 var result = Object(__WEBPACK_IMPORTED_MODULE_0__ponyfill_js__["a" /* default */])(root);
 /* harmony default export */ __webpack_exports__["a"] = (result);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(10), __webpack_require__(40)(module)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(11), __webpack_require__(40)(module)))
 
 /***/ }),
 /* 102 */
@@ -60448,7 +60452,7 @@ exports = module.exports = __webpack_require__(43)(false);
 
 
 // module
-exports.push([module.i, "body {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: 'AvenirR';\n  color:white;\n}\n\nimg {\n  display:block;\n}\n", ""]);
+exports.push([module.i, "body {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: 'SSP';\n  color:white;\n}\n\nimg {\n  display:block;\n}\n", ""]);
 
 // exports
 
@@ -60669,7 +60673,7 @@ exports = module.exports = __webpack_require__(43)(false);
 
 
 // module
-exports.push([module.i, "@font-face {\n  font-family: 'DoHyeon';\n  src: url('/fonts/DoHyeon/DoHyeon-Regular.ttf') format('truetype');\n}\n\n@font-face {\n  font-family: 'AvenirR';\n  src: url('/fonts/Avenir/AvenirNextLTPro-Regular.otf') format('opentype');\n}\n\n@font-face {\n  font-family: 'AvenirHC';\n  src: url('/fonts/Avenir/AvenirNextLTPro-HeavyCn.otf') format('opentype');\n}\n\n@font-face {\n  font-family: 'AvenirB';\n  src: url('/fonts/Avenir/AvenirNextLTPro-Bold.otf') format('opentype');\n}\n\n@font-face {\n  font-family: 'AvenirBC';\n  src: url('/fonts/Avenir/AvenirNextLTPro-BoldCn.otf') format('opentype');\n}\n\n@font-face {\n  font-family: 'AvenirD';\n  src: url('/fonts/Avenir/AvenirNextLTPro-Demi.otf') format('opentype');\n}\n\n@font-face {\n  font-family: 'socialtype';\n  src: url('/fonts/socialtype/SocialType.ttf') format('truetype');\n}\n\n* {\n  margin: 0;\n  padding:0;\n  box-sizing: border-box;\n}\n\na {\n  color:white;\n  text-decoration:none;\n  display:inline-block;\n  line-height:1.5;\n}\n\n#root {\n  height:100%;\n  width:100%;\n}\n", ""]);
+exports.push([module.i, "@font-face {\n  font-family: 'DoHyeon';\n  src: url('/fonts/DoHyeon/DoHyeon-Regular.ttf') format('truetype');\n}\n\n@font-face {\n  font-family: 'SSP';\n  src: url('/fonts/SourceSans/sourcesanspro-regular.ttf') format('truetype');\n}\n\n@font-face {\n  font-family: 'SSPBK';\n  src: url('/fonts/SourceSans/sourcesanspro-black.ttf') format('truetype');\n}\n\n@font-face {\n  font-family: 'SSPB';\n  src: url('/fonts/SourceSans/sourcesanspro-bold.ttf') format('truetype');\n}\n\n@font-face {\n  font-family: 'SSPL';\n  src: url('/fonts/SourceSans/sourcesanspro-light.ttf') format('truetype');\n}\n\n@font-face {\n  font-family: 'socialtype';\n  src: url('/fonts/socialtype/SocialType.ttf') format('truetype');\n}\n\n* {\n  margin: 0;\n  padding:0;\n  box-sizing: border-box;\n}\n\na {\n  color:white;\n  text-decoration:none;\n  display:inline-block;\n  line-height:1.5;\n}\n\n#root {\n  height:100%;\n  width:100%;\n}\n", ""]);
 
 // exports
 
@@ -60745,11 +60749,11 @@ BrowserRouter.propTypes = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(45);
@@ -61169,11 +61173,11 @@ function valueEqual(a, b) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(45);
@@ -61490,10 +61494,10 @@ var createHashHistory = function createHashHistory() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PathUtils__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createTransitionManager__ = __webpack_require__(23);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -62790,10 +62794,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  margin-bottom:100px;\n  margin-top:50px;\n'], ['\n  display:flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  margin-bottom:100px;\n  margin-top:50px;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  width:100%;\n'], ['\n  width:100%;\n']),
-    _templateObject3 = _taggedTemplateLiteral(['\n  flex:2;\n  order:1;\n  margin-right:10px;\n'], ['\n  flex:2;\n  order:1;\n  margin-right:10px;\n']),
+    _templateObject3 = _taggedTemplateLiteral(['\n  flex:2 1 600px;\n  order:1;\n  margin-right:10px;\n'], ['\n  flex:2 1 600px;\n  order:1;\n  margin-right:10px;\n']),
     _templateObject4 = _taggedTemplateLiteral(['\n  align-content:flex-start;\n  display:flex;\n  margin-left:5px;\n  flex-flow:row wrap;\n  justify-content:space-between;\n'], ['\n  align-content:flex-start;\n  display:flex;\n  margin-left:5px;\n  flex-flow:row wrap;\n  justify-content:space-between;\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  margin-top:20px;\n  padding:0 10px;\n  display:flex;\n  align-items: flex-start;\n  flex-flow:row wrap;\n  justify-content:space-between;\n'], ['\n  margin-top:20px;\n  padding:0 10px;\n  display:flex;\n  align-items: flex-start;\n  flex-flow:row wrap;\n  justify-content:space-between;\n']),
-    _templateObject6 = _taggedTemplateLiteral(['\n  flex:.9;\n  order:2;\n  padding:0 10px;\n'], ['\n  flex:.9;\n  order:2;\n  padding:0 10px;\n']),
+    _templateObject6 = _taggedTemplateLiteral(['\n  margin-top:-12px;\n  flex:.9 1 300px;\n  order:2;\n  padding:0 10px;\n'], ['\n  margin-top:-12px;\n  flex:.9 1 300px;\n  order:2;\n  padding:0 10px;\n']),
     _templateObject7 = _taggedTemplateLiteral(['\n  width:100%;\n  padding:0 10px;\n  display:flex;\n  justify-content:space-between;\n  flex-flow: row wrap;\n'], ['\n  width:100%;\n  padding:0 10px;\n  display:flex;\n  justify-content:space-between;\n  flex-flow: row wrap;\n']);
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -62898,7 +62902,7 @@ var Home = function (_Component) {
               case 17:
                 pollData = _context.sent;
                 _context.next = 20;
-                return __WEBPACK_IMPORTED_MODULE_14__helpers_api__["a" /* API */].get('injuriessuspensions_actual_injuries');
+                return __WEBPACK_IMPORTED_MODULE_14__helpers_api__["a" /* API */].get('injuriessuspensions_actual');
 
               case 20:
                 injuriesData = _context.sent;
@@ -62935,8 +62939,8 @@ var Home = function (_Component) {
 
 
       if (loadingStatus) return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__components_Reusable_loader__["a" /* default */], null);
-      var lastestNewsBig = articles.slice(0, 9),
-          smallNews = articles.slice(10, 19),
+      var lastestNewsBig = articles.slice(0, 6),
+          smallNews = articles.slice(7, 16),
           nextMatch = schedule[0],
           upcomingMatches = schedule.slice(1, 4);
 
@@ -63771,14 +63775,14 @@ if (hadRuntime) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(3);
-var _templateObject = _taggedTemplateLiteral(['\n  position:relative;\n  width:100%;\n  max-height:650px;\n'], ['\n  position:relative;\n  width:100%;\n  max-height:650px;\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  position:relative;\n  width:100%;\n  max-height:500px;\n'], ['\n  position:relative;\n  width:100%;\n  max-height:500px;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  width:100%;\n'], ['\n  width:100%;\n']),
-    _templateObject3 = _taggedTemplateLiteral(['\n  max-height: 650px;\n  overflow:hidden;\n  position:relative;\n  &:before {\n    position:absolute;\n    content: \'\';\n    background: #00529f;\n    width:100%;\n    mix-blend-mode: hard-light;\n    opacity:.5;\n    height:100%;\n    left:0;\n    top:0;\n  }\n'], ['\n  max-height: 650px;\n  overflow:hidden;\n  position:relative;\n  &:before {\n    position:absolute;\n    content: \'\';\n    background: #00529f;\n    width:100%;\n    mix-blend-mode: hard-light;\n    opacity:.5;\n    height:100%;\n    left:0;\n    top:0;\n  }\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n  left:5%;\n  bottom:25%;\n  display:flex;\n  background: rgba(0,0,0,.6);\n  padding:20px;\n  flex-flow:column nowrap;\n  flex-direction:column;\n  max-width:550px;\n  min-width:300px;\n  position:absolute;\n'], ['\n  left:5%;\n  bottom:25%;\n  display:flex;\n  background: rgba(0,0,0,.6);\n  padding:20px;\n  flex-flow:column nowrap;\n  flex-direction:column;\n  max-width:550px;\n  min-width:300px;\n  position:absolute;\n']),
-    _templateObject5 = _taggedTemplateLiteral(['\n  font-family:\'AvenirB\';\n  text-transform: uppercase;\n  color:#febe10;\n'], ['\n  font-family:\'AvenirB\';\n  text-transform: uppercase;\n  color:#febe10;\n']),
-    _templateObject6 = _taggedTemplateLiteral(['\n  font-size: 2.1em;\n  font-family: \'AvenirB\';\n  letter-spacing:1.5px;\n  line-height: 1.2em;\n  color:#ffffff;\n  padding:8px 0;\n'], ['\n  font-size: 2.1em;\n  font-family: \'AvenirB\';\n  letter-spacing:1.5px;\n  line-height: 1.2em;\n  color:#ffffff;\n  padding:8px 0;\n']),
+    _templateObject3 = _taggedTemplateLiteral(['\n  max-height: 500px;\n  overflow:hidden;\n  position:relative;\n  &:before {\n    position:absolute;\n    content: \'\';\n    background: #00529f;\n    width:100%;\n    mix-blend-mode: hard-light;\n    opacity:.5;\n    height:100%;\n    left:0;\n    top:0;\n  }\n'], ['\n  max-height: 500px;\n  overflow:hidden;\n  position:relative;\n  &:before {\n    position:absolute;\n    content: \'\';\n    background: #00529f;\n    width:100%;\n    mix-blend-mode: hard-light;\n    opacity:.5;\n    height:100%;\n    left:0;\n    top:0;\n  }\n']),
+    _templateObject4 = _taggedTemplateLiteral(['\n  left:5%;\n  bottom:25%;\n  display:flex;\n  background: rgba(0,0,0,.6);\n  padding:20px;\n  flex-flow:column nowrap;\n  flex-direction:column;\n  max-width:550px;\n  min-width:300px;\n  position:absolute;\n  font-family:\'SSPBK\';\n'], ['\n  left:5%;\n  bottom:25%;\n  display:flex;\n  background: rgba(0,0,0,.6);\n  padding:20px;\n  flex-flow:column nowrap;\n  flex-direction:column;\n  max-width:550px;\n  min-width:300px;\n  position:absolute;\n  font-family:\'SSPBK\';\n']),
+    _templateObject5 = _taggedTemplateLiteral(['\n  text-transform: uppercase;\n  color:#febe10;\n  font-size: 1.05em;\n'], ['\n  text-transform: uppercase;\n  color:#febe10;\n  font-size: 1.05em;\n']),
+    _templateObject6 = _taggedTemplateLiteral(['\n  font-size: 2.1em;\n  letter-spacing:1.5px;\n  line-height: 1.2em;\n  color:#ffffff;\n  padding:8px 0;\n'], ['\n  font-size: 2.1em;\n  letter-spacing:1.5px;\n  line-height: 1.2em;\n  color:#ffffff;\n  padding:8px 0;\n']),
     _templateObject7 = _taggedTemplateLiteral(['\n  border-bottom:0px solid #febe10;\n  transition: border .15s;\n'], ['\n  border-bottom:0px solid #febe10;\n  transition: border .15s;\n']),
-    _templateObject8 = _taggedTemplateLiteral(['\n  color:inherit;\n  &:hover ', ' {\n    border-bottom:4px solid #febe10;\n    transition: border .15s;\n  }\n'], ['\n  color:inherit;\n  &:hover ', ' {\n    border-bottom:4px solid #febe10;\n    transition: border .15s;\n  }\n']);
+    _templateObject8 = _taggedTemplateLiteral(['\n  color:inherit;\n  &:hover ', ' {\n    border-left: 4px solid #febe10;\n  }\n'], ['\n  color:inherit;\n  &:hover ', ' {\n    border-left: 4px solid #febe10;\n  }\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -63800,7 +63804,7 @@ var Title = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].h
 
 var Hover = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].span(_templateObject7);
 
-var LinkTo = Object(__WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */])(_templateObject8, Hover);
+var LinkTo = Object(__WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */])(_templateObject8, HeaderWrapper);
 
 var MainArticle = function MainArticle(props) {
   var _props$mainArticle$ = props.mainArticle[0],
@@ -63849,7 +63853,7 @@ var MainArticle = function MainArticle(props) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Reusable_PageHeader__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Reusable_PageHeader__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__latest_result_details__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_styled_components__ = __webpack_require__(1);
 var _templateObject = _taggedTemplateLiteral(['\n  flex:1;\n  margin-right:20px;\n'], ['\n  flex:1;\n  margin-right:20px;\n']);
@@ -63886,12 +63890,12 @@ var LatestResult = function LatestResult(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Reusable_checkMore__ = __webpack_require__(154);
-var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  width:100%;\n  height:170px;\n  min-width:320px;\n  flex-flow: row wrap;\n  text-transform: uppercase;\n  font-family:\'AvenirBC\';\n'], ['\n  display:flex;\n  width:100%;\n  height:170px;\n  min-width:320px;\n  flex-flow: row wrap;\n  text-transform: uppercase;\n  font-family:\'AvenirBC\';\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:column nowrap;\n  flex:5;\n'], ['\n  display:flex;\n  flex-flow:column nowrap;\n  flex:5;\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  width:100%;\n  height:170px;\n  min-width:320px;\n  flex-flow: row wrap;\n  text-transform: uppercase;\n  font-family:\'SSPBK\';\n'], ['\n  display:flex;\n  width:100%;\n  height:170px;\n  min-width:320px;\n  flex-flow: row wrap;\n  text-transform: uppercase;\n  font-family:\'SSPBK\';\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:column nowrap;\n  flex:7;\n'], ['\n  display:flex;\n  flex-flow:column nowrap;\n  flex:7;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  display:flex;\n  height: 50%;\n  word-wrap: break-word;\n  padding:10px 24px;\n  align-items:center;\n  flex-flox: column nowrap;\n  background: #3f3f3f;\n  line-height:1.5em;\n  &:nth-child(even) {\n    background: #1e1e1e;\n  }\n'], ['\n  display:flex;\n  height: 50%;\n  word-wrap: break-word;\n  padding:10px 24px;\n  align-items:center;\n  flex-flox: column nowrap;\n  background: #3f3f3f;\n  line-height:1.5em;\n  &:nth-child(even) {\n    background: #1e1e1e;\n  }\n']),
     _templateObject4 = _taggedTemplateLiteral(['\n  font-size:1.75em;\n  flex:3;\n'], ['\n  font-size:1.75em;\n  flex:3;\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  flex:1;\n  text-align:right;\n  font-size: 3.75em;\n'], ['\n  flex:1;\n  text-align:right;\n  font-size: 3.75em;\n']),
-    _templateObject6 = _taggedTemplateLiteral(['\n  text-align:left;\n  width:100px;\n  line-height:1em;\n'], ['\n  text-align:left;\n  width:100px;\n  line-height:1em;\n']);
+    _templateObject6 = _taggedTemplateLiteral(['\n  display:inline-block;\n  font-family:\'DoHyeon\';\n  font-size:1.2em;\n'], ['\n  display:inline-block;\n  font-family:\'DoHyeon\';\n  font-size:1.2em;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -63909,7 +63913,7 @@ var TeamName = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */
 
 var Goals = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].div(_templateObject5);
 
-var Text = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].p(_templateObject6);
+var IconSpan = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].span(_templateObject6);
 
 var Result = function Result(props) {
   var latestResult = props.latestResult;
@@ -63927,7 +63931,7 @@ var Result = function Result(props) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           TeamName,
           null,
-          latestResult.home_team
+          latestResult.home_team.short_name
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           Goals,
@@ -63941,7 +63945,7 @@ var Result = function Result(props) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           TeamName,
           null,
-          latestResult.away_team
+          latestResult.away_team.short_name
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           Goals,
@@ -63954,9 +63958,9 @@ var Result = function Result(props) {
       __WEBPACK_IMPORTED_MODULE_2__Reusable_checkMore__["a" /* default */],
       { to: 'details' },
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        Text,
+        IconSpan,
         null,
-        'check details'
+        ' >> '
       )
     )
   );
@@ -63973,7 +63977,7 @@ var Result = function Result(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_styled_components__ = __webpack_require__(1);
-var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  font-family:\'AvenirBC\';\n  align-items: center;\n  padding:8px;\n  justify-content: center;\n  flex:2;\n  font-size:1.875em;\n  background: #00529f;\n'], ['\n  display:flex;\n  font-family:\'AvenirBC\';\n  align-items: center;\n  padding:8px;\n  justify-content: center;\n  flex:2;\n  font-size:1.875em;\n  background: #00529f;\n']);
+var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  font-family:\'SSPB\';\n  align-items: center;\n  padding:8px;\n  justify-content: center;\n  flex:1;\n  font-size:1.875em;\n  background: #00529f;\n'], ['\n  display:flex;\n  font-family:\'SSPB\';\n  align-items: center;\n  padding:8px;\n  justify-content: center;\n  flex:1;\n  font-size:1.875em;\n  background: #00529f;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -64008,7 +64012,7 @@ var CheckMore = function CheckMore(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__league_table_item__ = __webpack_require__(156);
 var _templateObject = _taggedTemplateLiteral(['\n  width:100%;\n'], ['\n  width:100%;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow: row wrap;\n  justify-content:space-between;\n  align-items:center;\n  margin-bottom:20px;\n'], ['\n  display:flex;\n  flex-flow: row wrap;\n  justify-content:space-between;\n  align-items:center;\n  margin-bottom:20px;\n']),
-    _templateObject3 = _taggedTemplateLiteral(['\n  display:flex;\n  font-size:.9em;\n  color:#1e1e1e;\n  flex-flow:column nowrap;\n'], ['\n  display:flex;\n  font-size:.9em;\n  color:#1e1e1e;\n  flex-flow:column nowrap;\n']),
+    _templateObject3 = _taggedTemplateLiteral(['\n  display:flex;\n  color:#1e1e1e;\n  letter-spacing:1.1px;\n  flex-flow:column nowrap;\n'], ['\n  display:flex;\n  color:#1e1e1e;\n  letter-spacing:1.1px;\n  flex-flow:column nowrap;\n']),
     _templateObject4 = _taggedTemplateLiteral(['\n  height:50px;\n'], ['\n  height:50px;\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  padding:6px;\n  max-width:150px;\n  font-size:.875em;\n  text-transform:uppercase;\n  color: #00529f;\n  border:1px solid #00529f;\n'], ['\n  padding:6px;\n  max-width:150px;\n  font-size:.875em;\n  text-transform:uppercase;\n  color: #00529f;\n  border:1px solid #00529f;\n']);
 
@@ -64036,30 +64040,6 @@ var LeagueTable = function LeagueTable(props) {
     FixturesTable,
     null,
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      Container,
-      null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Image, { src: './assets/images/laliga_logo.png', title: 'la liga', alt: 'la liga' }),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        Selection,
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'option',
-          null,
-          'La Liga'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'option',
-          null,
-          'champion league'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'option',
-          null,
-          'copa del ray'
-        )
-      )
-    ),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       Table,
       null,
       leagueTable ? leagueTable.map(function (item, key) {
@@ -64084,7 +64064,7 @@ var LeagueTable = function LeagueTable(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:row nowrap;\n  padding:8px 4px;\n  align-items:center;\n  margin:2px 0;\n  justify-content:space-between;\n  flex:1 1 50%;\n  text-transform: uppercase;\n'], ['\n  display:flex;\n  flex-flow:row nowrap;\n  padding:8px 4px;\n  align-items:center;\n  margin:2px 0;\n  justify-content:space-between;\n  flex:1 1 50%;\n  text-transform: uppercase;\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  flex:1;\n  text-align:right;\n  &:first-child {\n    text-align:left;\n    flex:3;\n  }\n'], ['\n  flex:1;\n  text-align:right;\n  &:first-child {\n    text-align:left;\n    flex:3;\n  }\n']);
+    _templateObject2 = _taggedTemplateLiteral(['\n  flex:.5;\n  &:nth-child(2) {\n    flex:3;\n  }\n'], ['\n  flex:.5;\n  &:nth-child(2) {\n    flex:3;\n  }\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -64102,12 +64082,18 @@ var LeagueTableItem = function LeagueTableItem(props) {
       lost = _props$leagueTable.lost,
       matches = _props$leagueTable.matches,
       points = _props$leagueTable.points,
-      won = _props$leagueTable.won;
+      won = _props$leagueTable.won,
+      position = _props$leagueTable.position;
 
 
   if (club.short_name === 'Real Madrid') return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     LeagueItem,
     { style: { background: '#00529f', color: 'white' } },
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      ItemField,
+      null,
+      position
+    ),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       ItemField,
       null,
@@ -64143,6 +64129,11 @@ var LeagueTableItem = function LeagueTableItem(props) {
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     LeagueItem,
     null,
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      ItemField,
+      null,
+      position
+    ),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       ItemField,
       null,
@@ -64188,11 +64179,11 @@ var LeagueTableItem = function LeagueTableItem(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_dateConverter__ = __webpack_require__(28);
-var _templateObject = _taggedTemplateLiteral(['\n  margin-bottom:35px;\n  flex:1 1 245px;\n  max-width:280px;\n\n  padding: 0 5px;\n  display:flex;\n  flex-direction:column;\n  color:#1e1e1e;\n'], ['\n  margin-bottom:35px;\n  flex:1 1 245px;\n  max-width:280px;\n\n  padding: 0 5px;\n  display:flex;\n  flex-direction:column;\n  color:#1e1e1e;\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  font-size: .75em;\n  text-transform: uppercase;\n'], ['\n  font-size: .75em;\n  text-transform: uppercase;\n']),
-    _templateObject3 = _taggedTemplateLiteral(['\n  color:#00529f;\n  font-family: \'AvenirB\';\n'], ['\n  color:#00529f;\n  font-family: \'AvenirB\';\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n  font-family: \'AvenirR\';\n  font-weight:bold;\n'], ['\n  font-family: \'AvenirR\';\n  font-weight:bold;\n']),
-    _templateObject5 = _taggedTemplateLiteral(['\n  font-size: 1.3em;\n  line-height:1em;\n  padding:6px 0;\n'], ['\n  font-size: 1.3em;\n  line-height:1em;\n  padding:6px 0;\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  margin-bottom:35px;\n  flex:1 1 245px;\n  max-width:280px;\n  padding: 0 5px;\n  display:flex;\n  flex-direction:column;\n  color:#1e1e1e;\n'], ['\n  margin-bottom:35px;\n  flex:1 1 245px;\n  max-width:280px;\n  padding: 0 5px;\n  display:flex;\n  flex-direction:column;\n  color:#1e1e1e;\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  font-size: .9em;\n  text-transform: uppercase;\n'], ['\n  font-size: .9em;\n  text-transform: uppercase;\n']),
+    _templateObject3 = _taggedTemplateLiteral(['\n  color:#00529f;\n  font-family: \'SSPBK\';\n'], ['\n  color:#00529f;\n  font-family: \'SSPBK\';\n']),
+    _templateObject4 = _taggedTemplateLiteral(['\n  color:#d8d8d8;\n'], ['\n  color:#d8d8d8;\n']),
+    _templateObject5 = _taggedTemplateLiteral(['\n  font-size: 1.3em;\n  line-height:1em;\n  padding:6px 0;\n  font-family:\'SSPL\';\n'], ['\n  font-size: 1.3em;\n  line-height:1em;\n  padding:6px 0;\n  font-family:\'SSPL\';\n']),
     _templateObject6 = _taggedTemplateLiteral(['\n  border-bottom:0px solid #00529f;\n  transition: border .15s;\n'], ['\n  border-bottom:0px solid #00529f;\n  transition: border .15s;\n']),
     _templateObject7 = _taggedTemplateLiteral(['\n  color:inherit;\n  &:hover ', ' {\n    border-bottom:3px solid #00529f;\n    transition: border .15s;\n  }\n'], ['\n  color:inherit;\n  &:hover ', ' {\n    border-bottom:3px solid #00529f;\n    transition: border .15s;\n  }\n']);
 
@@ -64269,7 +64260,7 @@ var SmallNews = function SmallNews(props) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Reusable_PageHeader__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Reusable_PageHeader__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fixtures_upcoming_table__ = __webpack_require__(159);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_router_dom__ = __webpack_require__(3);
@@ -64329,8 +64320,8 @@ var FixturesUpcoming = function FixturesUpcoming(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_dateConverter__ = __webpack_require__(28);
-var _templateObject = _taggedTemplateLiteral(['\n  display:inline-block;\n  font-size:1em;\n  font-weight:lighter;\n  flex:1;\n  text-transform: uppercase;\n  color:#c0c0c0;\n  text-align:left;\n  position:relative;\n  &:first-child {\n    flex:2;\n  }\n  &:last-child {\n    flex:1.4;\n  }\n  &:before {\n    content:\'\';\n    position:absolute;\n    width:30px;\n    height:2px;\n    bottom:-2px;\n    left:0;\n    background:#1140a4;\n  }\n'], ['\n  display:inline-block;\n  font-size:1em;\n  font-weight:lighter;\n  flex:1;\n  text-transform: uppercase;\n  color:#c0c0c0;\n  text-align:left;\n  position:relative;\n  &:first-child {\n    flex:2;\n  }\n  &:last-child {\n    flex:1.4;\n  }\n  &:before {\n    content:\'\';\n    position:absolute;\n    width:30px;\n    height:2px;\n    bottom:-2px;\n    left:0;\n    background:#1140a4;\n  }\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  color:#1e1e1e;\n  flex:1;\n  text-transform: uppercase;\n  &:first-child {\n    flex:2;\n  }\n  &:last-child {\n    flex:1.4;\n  }\n'], ['\n  color:#1e1e1e;\n  flex:1;\n  text-transform: uppercase;\n  &:first-child {\n    flex:2;\n  }\n  &:last-child {\n    flex:1.4;\n  }\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  font-family:\'SSPBK\';\n  display:inline-block;\n  font-size:1em;\n  font-weight:lighter;\n  flex:1;\n  text-transform: uppercase;\n  color:#c0c0c0;\n  text-align:left;\n  position:relative;\n  &:first-child {\n    flex:2;\n  }\n  &:last-child {\n    flex:1.4;\n  }\n  &:before {\n    content:\'\';\n    position:absolute;\n    width:30px;\n    height:2px;\n    bottom:-2px;\n    left:0;\n    background:#1140a4;\n  }\n'], ['\n  font-family:\'SSPBK\';\n  display:inline-block;\n  font-size:1em;\n  font-weight:lighter;\n  flex:1;\n  text-transform: uppercase;\n  color:#c0c0c0;\n  text-align:left;\n  position:relative;\n  &:first-child {\n    flex:2;\n  }\n  &:last-child {\n    flex:1.4;\n  }\n  &:before {\n    content:\'\';\n    position:absolute;\n    width:30px;\n    height:2px;\n    bottom:-2px;\n    left:0;\n    background:#1140a4;\n  }\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  font-size:1.05em;\n  color:#1e1e1e;\n  flex:1;\n  text-transform: uppercase;\n  &:first-child {\n    flex:2;\n  }\n  &:last-child {\n    flex:1.4;\n  }\n'], ['\n  font-size:1.05em;\n  color:#1e1e1e;\n  flex:1;\n  text-transform: uppercase;\n  &:first-child {\n    flex:2;\n  }\n  &:last-child {\n    flex:1.4;\n  }\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  width:100%;\n  display:flex;\n  flex-flow:row wrap;\n  justify-content:space-between;\n  &:first-child {\n    margin-bottom:10px;\n  }\n  &:not(:first-child) {\n    padding:4px 0;\n  }\n'], ['\n  width:100%;\n  display:flex;\n  flex-flow:row wrap;\n  justify-content:space-between;\n  &:first-child {\n    margin-bottom:10px;\n  }\n  &:not(:first-child) {\n    padding:4px 0;\n  }\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -64416,10 +64407,10 @@ var Fixtures = function Fixtures(props) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Reusable_PageHeader__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Reusable_PageHeader__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__latest_news_item__ = __webpack_require__(161);
-var _templateObject = _taggedTemplateLiteral(['\n  width:100%;\n  margin:60px 0 40px 0;\n'], ['\n  width:100%;\n  margin:60px 0 40px 0;\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  width:100%;\n  margin:60px 0 20px 0;\n'], ['\n  width:100%;\n  margin:60px 0 20px 0;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:row wrap;\n  justify-content: space-between;\n'], ['\n  display:flex;\n  flex-flow:row wrap;\n  justify-content: space-between;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -64468,11 +64459,11 @@ var LatestNews = function LatestNews(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_styled_components__ = __webpack_require__(1);
 var _templateObject = _taggedTemplateLiteral(['\n  flex: 1 1 365px;\n  min-width: 300px;\n  color:#1e1e1e;\n  padding:10px;\n'], ['\n  flex: 1 1 365px;\n  min-width: 300px;\n  color:#1e1e1e;\n  padding:10px;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  overflow:hidden;\n  flex:1;\n  display:flex;\n  justify-content:center;\n  align-items:center;\n  max-height:150px;\n'], ['\n  overflow:hidden;\n  flex:1;\n  display:flex;\n  justify-content:center;\n  align-items:center;\n  max-height:150px;\n']),
-    _templateObject3 = _taggedTemplateLiteral(['\n  display:flex;\n  justify-content:flex-start;\n  flex:1;\n  font-family:\'AvenirR\';\n'], ['\n  display:flex;\n  justify-content:flex-start;\n  flex:1;\n  font-family:\'AvenirR\';\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n  display:inline-block;\n  text-transform: uppercase;\n  font-size:.75em;\n  font-family:\'AvenirD\';\n  margin-bottom:10px;\n  letter-spacing:1px;\n'], ['\n  display:inline-block;\n  text-transform: uppercase;\n  font-size:.75em;\n  font-family:\'AvenirD\';\n  margin-bottom:10px;\n  letter-spacing:1px;\n']),
+    _templateObject3 = _taggedTemplateLiteral(['\n  display:flex;\n  justify-content:flex-start;\n  flex:1;\n'], ['\n  display:flex;\n  justify-content:flex-start;\n  flex:1;\n']),
+    _templateObject4 = _taggedTemplateLiteral(['\n  display:inline-block;\n  text-transform: uppercase;\n  font-size:.9em;\n  font-family:\'SSPB\';\n  margin-bottom:10px;\n'], ['\n  display:inline-block;\n  text-transform: uppercase;\n  font-size:.9em;\n  font-family:\'SSPB\';\n  margin-bottom:10px;\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  font-size:1.55em;\n  line-height:1.1em;\n  margin-bottom:3px;\n'], ['\n  font-size:1.55em;\n  line-height:1.1em;\n  margin-bottom:3px;\n']),
-    _templateObject6 = _taggedTemplateLiteral(['\n  display:inline-block;\n  font-family:\'AvenirD\';\n  font-size:.72em;\n  margin-bottom:12px;\n'], ['\n  display:inline-block;\n  font-family:\'AvenirD\';\n  font-size:.72em;\n  margin-bottom:12px;\n']),
-    _templateObject7 = _taggedTemplateLiteral(['\n  font-size:.9em;\n  padding-bottom:15px;\n  font-family:\'AvenirR\';\n  line-height:1.2em;\n  text-align:justify;\n'], ['\n  font-size:.9em;\n  padding-bottom:15px;\n  font-family:\'AvenirR\';\n  line-height:1.2em;\n  text-align:justify;\n']),
+    _templateObject6 = _taggedTemplateLiteral(['\n  display:inline-block;\n  font-family:\'SSP\';\n  font-size:.85em;\n  margin-bottom:12px;\n'], ['\n  display:inline-block;\n  font-family:\'SSP\';\n  font-size:.85em;\n  margin-bottom:12px;\n']),
+    _templateObject7 = _taggedTemplateLiteral(['\n  padding-bottom:15px;\n  line-height:1.2em;\n  text-align:justify;\n'], ['\n  padding-bottom:15px;\n  line-height:1.2em;\n  text-align:justify;\n']),
     _templateObject8 = _taggedTemplateLiteral(['\n  width:100%;\n  align-self: center;\n'], ['\n  width:100%;\n  align-self: center;\n']),
     _templateObject9 = _taggedTemplateLiteral(['\n  border-bottom:0px solid #00529f;\n  transition: border .15s;\n'], ['\n  border-bottom:0px solid #00529f;\n  transition: border .15s;\n']),
     _templateObject10 = _taggedTemplateLiteral(['\n  color:inherit;\n  padding:15px 0;\n  &:hover ', ' {\n    border-bottom:3px solid #00529f;\n    transition: border .15s;\n  }\n'], ['\n  color:inherit;\n  padding:15px 0;\n  &:hover ', ' {\n    border-bottom:3px solid #00529f;\n    transition: border .15s;\n  }\n']);
@@ -64568,13 +64559,14 @@ var LatestNewsItem = function LatestNewsItem(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__poll_list__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Reusable_button__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Reusable_PageHeader__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Reusable_button__ = __webpack_require__(14);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _templateObject = _taggedTemplateLiteral(['\n  flex:.4 1 300px;\n  margin-right:20px;\n'], ['\n  flex:.4 1 300px;\n  margin-right:20px;\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  background: #00529f;\n  padding:20px;\n'], ['\n  background: #00529f;\n  padding:20px;\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  padding:15px;\n  color:#fff;\n  background: #00529f;\n'], ['\n  padding:15px;\n  color:#fff;\n  background: #00529f;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  text-transform: uppercase;\n  font-size:.9em;\n'], ['\n  text-transform: uppercase;\n  font-size:.9em;\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n  margin-top:10px;\n  font-family: \'AvenirD\';\n  font-size: 1.375em;\n'], ['\n  margin-top:10px;\n  font-family: \'AvenirD\';\n  font-size: 1.375em;\n']),
+    _templateObject4 = _taggedTemplateLiteral(['\n  font-family: \'SSPB\';\n  font-size: 1.4em;\n'], ['\n  font-family: \'SSPB\';\n  font-size: 1.4em;\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  margin-top:15px;\n  display:flex;\n  flex-flow:column nowrap;\n  color:#1e1e1e;\n'], ['\n  margin-top:15px;\n  display:flex;\n  flex-flow:column nowrap;\n  color:#1e1e1e;\n']);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -64584,6 +64576,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
 
 
 
@@ -64622,11 +64615,6 @@ var StrawPoll = function (_Component) {
           Header,
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            Category,
-            null,
-            'straw poll'
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             Title,
             null,
             topic
@@ -64639,7 +64627,7 @@ var StrawPoll = function (_Component) {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { style: { display: 'flex' } },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Reusable_button__["a" /* default */], { name: 'Vote', fullWidth: true, colorBlue: true })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Reusable_button__["a" /* default */], { name: 'Vote', fullWidth: true, colorBlue: true })
           )
         )
       );
@@ -64691,7 +64679,7 @@ var PollList = function PollList(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
-var _templateObject = _taggedTemplateLiteral(['\n  font-size:1.125em;\n  margin-top:15px;\n'], ['\n  font-size:1.125em;\n  margin-top:15px;\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  font-size:1.05em;\n  margin-top:15px;\n'], ['\n  font-size:1.05em;\n  margin-top:15px;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  display:none;\n  &:checked ~label:after {\n    content:"\u2714";\n    z-index:1;\n    position:absolute;\n    color:white;\n    font-size:.9em;\n    left:0;\n    top:-3px;\n    width:22px;\n    height:22px;\n    text-align:center;\n    border-radius:2px;\n    border:2px solid #00529f;\n    background:#00529f;\n  }\n'], ['\n  display:none;\n  &:checked ~label:after {\n    content:"\u2714";\n    z-index:1;\n    position:absolute;\n    color:white;\n    font-size:.9em;\n    left:0;\n    top:-3px;\n    width:22px;\n    height:22px;\n    text-align:center;\n    border-radius:2px;\n    border:2px solid #00529f;\n    background:#00529f;\n  }\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  display:block;\n  cursor:pointer;\n  position:relative;\n  padding-left:35px;\n  &:before {\n    content:\'\';\n    position:absolute;\n    left:0;\n    top:-3px;\n    width:22px;\n    height:22px;\n    border:2px solid #e1e1e1;\n    border-radius:2px;\n  }\n'], ['\n  display:block;\n  cursor:pointer;\n  position:relative;\n  padding-left:35px;\n  &:before {\n    content:\'\';\n    position:absolute;\n    left:0;\n    top:-3px;\n    width:22px;\n    height:22px;\n    border:2px solid #e1e1e1;\n    border-radius:2px;\n  }\n']);
 
@@ -64734,8 +64722,8 @@ var PollListItem = function PollListItem(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__next_match_item__ = __webpack_require__(166);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Reusable_PageHeader__ = __webpack_require__(13);
-var _templateObject = _taggedTemplateLiteral(['\n  flex:1;\n    margin-right:20px;\n'], ['\n  flex:1;\n    margin-right:20px;\n']);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Reusable_PageHeader__ = __webpack_require__(9);
+var _templateObject = _taggedTemplateLiteral(['\n  flex:1;\n  margin-right:20px;\n'], ['\n  flex:1;\n  margin-right:20px;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -64765,16 +64753,19 @@ var NextMatch = function NextMatch(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
-var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  width:100%;\n  min-width:320px;\n  align-items:center;\n  background: #00529f;\n  height:170px;\n  font-family:\'DoHyeon\';\n  justify-content:center;\n'], ['\n  display:flex;\n  width:100%;\n  min-width:320px;\n  align-items:center;\n  background: #00529f;\n  height:170px;\n  font-family:\'DoHyeon\';\n  justify-content:center;\n']),
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(3);
+var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  width:100%;\n  min-width:320px;\n  align-items:center;\n  background: #00529f;\n  height:170px;\n  font-family:\'SSPBK\';\n  justify-content:center;\n'], ['\n  display:flex;\n  width:100%;\n  min-width:320px;\n  align-items:center;\n  background: #00529f;\n  height:170px;\n  font-family:\'SSPBK\';\n  justify-content:center;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:column nowrap;\n  justify-content: center;\n  flex:6;\n'], ['\n  display:flex;\n  flex-flow:column nowrap;\n  justify-content: center;\n  flex:6;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  height:80px;\n  align-self: center;\n'], ['\n  height:80px;\n  align-self: center;\n']),
     _templateObject4 = _taggedTemplateLiteral(['\n  text-transform: uppercase;\n  display:block;\n  margin-top:12px;\n  font-size:.95em;\n  letter-spacing:1px;\n  text-align:center;\n  word-break:none;\n'], ['\n  text-transform: uppercase;\n  display:block;\n  margin-top:12px;\n  font-size:.95em;\n  letter-spacing:1px;\n  text-align:center;\n  word-break:none;\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:column nowrap;\n  justify-content:center;\n'], ['\n  display:flex;\n  flex-flow:column nowrap;\n  justify-content:center;\n']),
-    _templateObject6 = _taggedTemplateLiteral(['\n  font-family:\'AvenirR\';\n  font-size:.8em;\n  margin:0 auto;\n  text-transform: \'capitalize\';\n  line-height:1.5em;\n'], ['\n  font-family:\'AvenirR\';\n  font-size:.8em;\n  margin:0 auto;\n  text-transform: \'capitalize\';\n  line-height:1.5em;\n']),
+    _templateObject6 = _taggedTemplateLiteral(['\n  font-family:\'SSP\';\n  font-size:.8em;\n  margin:0 auto;\n  text-transform: \'capitalize\';\n  line-height:1.5em;\n'], ['\n  font-family:\'SSP\';\n  font-size:.8em;\n  margin:0 auto;\n  text-transform: \'capitalize\';\n  line-height:1.5em;\n']),
     _templateObject7 = _taggedTemplateLiteral(['\n  text-align:center;\n  position:relative;\n  font-size:1.1em;\n  display:block;\n  &:nth-child(3) {\n    padding-bottom:16px;\n    &:before {\n      content: \'\';\n      position:absolute;\n      width:25px;\n      height:1px;\n      background: white;\n      transform: translateX(-50%);\n      left:50%;\n      bottom:7px;\n    }\n  }\n'], ['\n  text-align:center;\n  position:relative;\n  font-size:1.1em;\n  display:block;\n  &:nth-child(3) {\n    padding-bottom:16px;\n    &:before {\n      content: \'\';\n      position:absolute;\n      width:25px;\n      height:1px;\n      background: white;\n      transform: translateX(-50%);\n      left:50%;\n      bottom:7px;\n    }\n  }\n']),
-    _templateObject8 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:row nowrap;\n  justify-content:center;\n  flex:7;\n  align-items:flex-start;\n'], ['\n  display:flex;\n  flex-flow:row nowrap;\n  justify-content:center;\n  flex:7;\n  align-items:flex-start;\n']);
+    _templateObject8 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:row nowrap;\n  justify-content:center;\n  flex:7;\n  align-items:flex-start;\n'], ['\n  display:flex;\n  flex-flow:row nowrap;\n  justify-content:center;\n  flex:7;\n  align-items:flex-start;\n']),
+    _templateObject9 = _taggedTemplateLiteral(['\n  text-decoration: underline;\n'], ['\n  text-decoration: underline;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
 
 
 
@@ -64794,6 +64785,8 @@ var Fixtures = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */
 var FixturesInfo = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].span(_templateObject7);
 
 var TeamWrapper = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].div(_templateObject8);
+
+var LinkTo = Object(__WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */])(_templateObject9);
 
 var NextMatchItem = function NextMatchItem(props) {
   var _props$data = props.data,
@@ -64845,8 +64838,8 @@ var NextMatchItem = function NextMatchItem(props) {
           FixturesInfo,
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'u',
-            null,
+            LinkTo,
+            { to: '/live' },
             'Centrum meczowe'
           )
         )
@@ -64881,9 +64874,10 @@ var NextMatchItem = function NextMatchItem(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_dateConverter__ = __webpack_require__(28);
 var _templateObject = _taggedTemplateLiteral(['\n  flex:.6 1 400px;\n'], ['\n  flex:.6 1 400px;\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  background: #ee324e;\n  padding:20px;\n'], ['\n  background: #ee324e;\n  padding:20px;\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  padding:15px;\n  color:#fff;\n  background: #00529f;\n'], ['\n  padding:15px;\n  color:#fff;\n  background: #00529f;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  text-transform: uppercase;\n  font-size:.9em;\n'], ['\n  text-transform: uppercase;\n  font-size:.9em;\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n  margin-top:10px;\n  font-family: \'AvenirD\';\n  font-size: 1.375em;\n'], ['\n  margin-top:10px;\n  font-family: \'AvenirD\';\n  font-size: 1.375em;\n']);
+    _templateObject4 = _taggedTemplateLiteral(['\n  font-family: \'SSPB\';\n  font-size: 1.4em;\n'], ['\n  font-family: \'SSPB\';\n  font-size: 1.4em;\n']),
+    _templateObject5 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  margin-top:30px;\n  color:#1e1e1e;\n'], ['\n  display:flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  margin-top:30px;\n  color:#1e1e1e;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -64899,6 +64893,8 @@ var Category = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */
 
 var Title = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].h4(_templateObject4);
 
+var Content = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].div(_templateObject5);
+
 var Injuries = function Injuries(props) {
   var injuriesData = props.injuriesData;
 
@@ -64910,44 +64906,44 @@ var Injuries = function Injuries(props) {
       Header,
       null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        Category,
-        null,
-        'injuries'
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         Title,
         null,
-        'Currently there is not any player with injury'
+        'Injuries and suspensions'
       )
     ),
-    injuriesData.map(function (item, key) {
-      var player = item.player,
-          type = item.type,
-          return_date = item.return_date;
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      Content,
+      null,
+      injuriesData.map(function (item, key) {
+        var player = item.player,
+            type = item.type,
+            return_date = item.return_date;
 
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { style: { color: '#1e1e1e' }, key: key },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'p',
-          null,
-          'Name: ',
-          player.name
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'p',
-          null,
-          'Type: ',
-          type
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'p',
-          null,
-          'Possible return date: ',
-          __WEBPACK_IMPORTED_MODULE_2__helpers_dateConverter__["a" /* dateConverter */].toDateOnly(new Date(return_date))
-        )
-      );
-    })
+
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { key: key, style: { marginBottom: 10 } },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            'Name: ',
+            player.name
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            'Type: ',
+            type
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            'Possible return date: ',
+            __WEBPACK_IMPORTED_MODULE_2__helpers_dateConverter__["a" /* dateConverter */].toDateOnly(new Date(return_date))
+          )
+        );
+      })
+    )
   );
 };
 
@@ -64964,7 +64960,7 @@ var Injuries = function Injuries(props) {
 var _templateObject = _taggedTemplateLiteral(['\n  margin-top:20px;\n  background: #00529f;\n  padding:20px;\n'], ['\n  margin-top:20px;\n  background: #00529f;\n  padding:20px;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  text-transform: uppercase;\n  line-height: 1.4em;\n'], ['\n  text-transform: uppercase;\n  line-height: 1.4em;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  font-size: 1.1em;\n  display:block;\n'], ['\n  font-size: 1.1em;\n  display:block;\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n  font-family: \'AvenirB\';\n  font-size: 1.875em;\n  display:block;\n'], ['\n  font-family: \'AvenirB\';\n  font-size: 1.875em;\n  display:block;\n']),
+    _templateObject4 = _taggedTemplateLiteral(['\n  font-family: \'SSPB\';\n  font-size: 1.875em;\n  display:block;\n'], ['\n  font-family: \'SSPB\';\n  font-size: 1.875em;\n  display:block;\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  margin-top:10px;\n  list-style-type: none;\n  font-family: \'socialtype\';\n  font-size: 5em;\n  margin-left:-5px;\n'], ['\n  margin-top:10px;\n  list-style-type: none;\n  font-family: \'socialtype\';\n  font-size: 5em;\n  margin-left:-5px;\n']),
     _templateObject6 = _taggedTemplateLiteral(['\n  display:inline-block;\n  &:hover a {\n    color:#febe10;\n  }\n  a {\n    line-height:.8em;\n  }\n'], ['\n  display:inline-block;\n  &:hover a {\n    color:#febe10;\n  }\n  a {\n    line-height:.8em;\n  }\n']);
 
@@ -65060,7 +65056,7 @@ var SocialMedia = function SocialMedia(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Live_match_squad__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Live_match_commentary__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Article_article_comments__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Reusable_wrapper__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Reusable_wrapper__ = __webpack_require__(10);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _templateObject = _taggedTemplateLiteral(['\n  width:calc(100% - 20px);\n'], ['\n  width:calc(100% - 20px);\n']),
@@ -65204,7 +65200,7 @@ var Live = function (_Component) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           ImageWrapper,
           null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Image, { src: './assets/images/ballPit.jpg', alt: 'pit' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Image, { src: './img/ballPit.jpg', alt: 'pit' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Live_match_summary__["a" /* default */], null)
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -65657,7 +65653,7 @@ var EventItem = function EventItem(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Reusable_button__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Reusable_wrapper__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Reusable_wrapper__ = __webpack_require__(10);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _templateObject = _taggedTemplateLiteral(['\n  flex:8;\n  width:100%;\n  margin-left:5px;\n'], ['\n  flex:8;\n  width:100%;\n  margin-left:5px;\n']),
@@ -65738,12 +65734,14 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 var List = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */].ul(_templateObject);
 
 var Comments = function Comments(props) {
+  var comments = props.comments;
+
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     List,
     null,
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Article_comments_list_item__["a" /* default */], null),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Article_comments_list_item__["a" /* default */], null),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Article_comments_list_item__["a" /* default */], null)
+    comments.map(function (item, key) {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Article_comments_list_item__["a" /* default */], { comment: item, key: key });
+    })
   );
 };
 
@@ -65762,15 +65760,15 @@ var Comments = function Comments(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_icons_fa___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_icons_fa__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:row nowrap;\n  justify-content:space-between;\n  &:not(:last-child) {\n    margin-bottom:50px;\n  }\n'], ['\n  display:flex;\n  flex-flow:row nowrap;\n  justify-content:space-between;\n  &:not(:last-child) {\n    margin-bottom:50px;\n  }\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  margin-left:10px;\n'], ['\n  margin-left:10px;\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:row nowrap;\n  justify-content:flex-start;\n  &:not(:last-child) {\n    margin-bottom:50px;\n  }\n'], ['\n  display:flex;\n  flex-flow:row nowrap;\n  justify-content:flex-start;\n  &:not(:last-child) {\n    margin-bottom:50px;\n  }\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  margin-left:10px;\n  flex:1;\n'], ['\n  margin-left:10px;\n  flex:1;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  display:flex;\n  justify-content:space-between;\n  align-items:baseline;\n'], ['\n  display:flex;\n  justify-content:space-between;\n  align-items:baseline;\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n  font-family:\'AvenirD\';\n'], ['\n  font-family:\'AvenirD\';\n']),
+    _templateObject4 = _taggedTemplateLiteral(['\n  font-family:\'SSPB\';\n'], ['\n  font-family:\'SSPB\';\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  font-size:.8em;\n  letter-spacing:.6px;\n'], ['\n  font-size:.8em;\n  letter-spacing:.6px;\n']),
-    _templateObject6 = _taggedTemplateLiteral(['\n  padding:8px 0;\n'], ['\n  padding:8px 0;\n']),
+    _templateObject6 = _taggedTemplateLiteral(['\n  padding:8px 0;\n  font-size:1.05em;\n'], ['\n  padding:8px 0;\n  font-size:1.05em;\n']),
     _templateObject7 = _taggedTemplateLiteral(['\n  margin-top:6px;\n  display:flex;\n  flex-flow:row nowrap;\n  align-items:center;\n  justify-content:flex-start;\n\n'], ['\n  margin-top:6px;\n  display:flex;\n  flex-flow:row nowrap;\n  align-items:center;\n  justify-content:flex-start;\n\n']),
     _templateObject8 = _taggedTemplateLiteral(['\n  display:inline-block;\n  margin-left:3px;\n  position:relative;\n  top:-1px;\n'], ['\n  display:inline-block;\n  margin-left:3px;\n  position:relative;\n  top:-1px;\n']),
-    _templateObject9 = _taggedTemplateLiteral(['\n  background:none;\n  font-size:.85em;\n  outline:none;\n  position:relative;\n  padding:3px;\n  border:none;\n  color:rgb(169,169,169);\n  cursor:pointer;\n  &:not(:last-child) {\n    margin-right:8px;\n    &:after {\n      position: absolute;\n      content:\'\';\n      right:-4px;\n      top:3px;\n      height:15px;\n      width:1px;\n      background:#e0e0e0;\n    }\n  }\n  &:hover {\n    color:#00529f;\n  }\n'], ['\n  background:none;\n  font-size:.85em;\n  outline:none;\n  position:relative;\n  padding:3px;\n  border:none;\n  color:rgb(169,169,169);\n  cursor:pointer;\n  &:not(:last-child) {\n    margin-right:8px;\n    &:after {\n      position: absolute;\n      content:\'\';\n      right:-4px;\n      top:3px;\n      height:15px;\n      width:1px;\n      background:#e0e0e0;\n    }\n  }\n  &:hover {\n    color:#00529f;\n  }\n']);
+    _templateObject9 = _taggedTemplateLiteral(['\n  background:none;\n  font-size:.85em;\n  outline:none;\n  position:relative;\n  padding:3px;\n  border:none;\n  color:rgb(169,169,169);\n  cursor:pointer;\n  &:not(:last-child) {\n    margin-right:8px;\n    &:after {\n      position: absolute;\n      content:\'\';\n      right:-4px;\n      top:3px;\n      height:15px;\n      width:2px;\n      background:#e0e0e0;\n    }\n  }\n  &:hover {\n    color:#00529f;\n  }\n'], ['\n  background:none;\n  font-size:.85em;\n  outline:none;\n  position:relative;\n  padding:3px;\n  border:none;\n  color:rgb(169,169,169);\n  cursor:pointer;\n  &:not(:last-child) {\n    margin-right:8px;\n    &:after {\n      position: absolute;\n      content:\'\';\n      right:-4px;\n      top:3px;\n      height:15px;\n      width:2px;\n      background:#e0e0e0;\n    }\n  }\n  &:hover {\n    color:#00529f;\n  }\n']);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -65815,10 +65813,15 @@ var SingleComment = function (_Component) {
   _createClass(SingleComment, [{
     key: 'render',
     value: function render() {
+      var _props$comment = this.props.comment,
+          user = _props$comment.user,
+          content = _props$comment.content,
+          create_date = _props$comment.create_date;
+
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         ListItem,
         null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__article_user__["a" /* default */], null),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__article_user__["a" /* default */], { image: user.image }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           Article,
           null,
@@ -65828,21 +65831,18 @@ var SingleComment = function (_Component) {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               UserName,
               null,
-              'Xaoo'
+              user.name
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               Added,
               null,
-              '13 hours ago'
+              create_date
             )
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             Content,
             null,
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nunc orci, commodo lobortis libero vestibulum, molestie gravida elit. ',
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-            ' Nulla sed massa libero. Pellentesque tempor mauris nunc, vitae lacinia ante lobortis eget. Nulla vitae justo ut leo vehicula suscipit. Vivamus ullamcorper felis dui, vitae feugiat augue scelerisque et.'
+            content
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             Footer,
@@ -65920,7 +65920,7 @@ exports.IconContext = React.createContext && React.createContext(exports.Default
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:column;\n  position:relative;\n  color:#1e1e1e;\n  width:100%;\n'], ['\n  display:flex;\n  flex-flow:column;\n  position:relative;\n  color:#1e1e1e;\n  width:100%;\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow:column;\n  position:relative;\n  color:#1e1e1e;\n  width:100%;\n  margin-bottom:100px;\n'], ['\n  display:flex;\n  flex-flow:column;\n  position:relative;\n  color:#1e1e1e;\n  width:100%;\n  margin-bottom:100px;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  margin-top:40px;\n  padding:0 5px;\n'], ['\n  display:flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  margin-top:40px;\n  padding:0 5px;\n']);
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -65960,7 +65960,8 @@ var SingleArticle = function (_Component) {
       articleID: null,
       article: null,
       latest: [],
-      neighbours: []
+      neighbours: [],
+      comments: []
     };
     return _this;
   }
@@ -65969,35 +65970,39 @@ var SingleArticle = function (_Component) {
     key: 'componentDidUpdate',
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(prevProps) {
-        var currentID, prevID, article, neighbours;
+        var currentID, prevID, article, neighbours, comments;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                window.scrollTo(0, 0);
-
                 currentID = Number(this.props.match.params.id), prevID = Number(prevProps.match.params.id);
 
                 if (!(currentID !== prevID)) {
-                  _context.next = 10;
+                  _context.next = 13;
                   break;
                 }
 
-                _context.next = 5;
+                _context.next = 4;
                 return __WEBPACK_IMPORTED_MODULE_7__helpers_api__["a" /* API */].get('articles_show_article/' + currentID);
 
-              case 5:
+              case 4:
                 article = _context.sent;
-                _context.next = 8;
+                _context.next = 7;
                 return __WEBPACK_IMPORTED_MODULE_7__helpers_api__["a" /* API */].get('articles_show_neighbours/' + currentID);
 
-              case 8:
+              case 7:
                 neighbours = _context.sent;
-
-
-                this.setState({ article: article, neighbours: neighbours });
+                _context.next = 10;
+                return __WEBPACK_IMPORTED_MODULE_7__helpers_api__["a" /* API */].get('comments_get_article_comments/' + currentID);
 
               case 10:
+                comments = _context.sent;
+
+
+                this.setState({ article: article, neighbours: neighbours, comments: comments });
+                window.scrollTo(0, 0);
+
+              case 13:
               case 'end':
                 return _context.stop();
             }
@@ -66015,7 +66020,7 @@ var SingleArticle = function (_Component) {
     key: 'componentDidMount',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
-        var currentID, article, latest, neighbours;
+        var currentID, article, latest, neighbours, comments;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -66038,11 +66043,16 @@ var SingleArticle = function (_Component) {
 
               case 10:
                 neighbours = _context2.sent;
+                _context2.next = 13;
+                return __WEBPACK_IMPORTED_MODULE_7__helpers_api__["a" /* API */].get('comments_get_article_comments/' + currentID);
+
+              case 13:
+                comments = _context2.sent;
 
 
-                this.setState({ article: article, latest: latest, neighbours: neighbours, loadingStatus: false });
+                this.setState({ article: article, latest: latest, neighbours: neighbours, comments: comments, loadingStatus: false });
 
-              case 12:
+              case 15:
               case 'end':
                 return _context2.stop();
             }
@@ -66060,17 +66070,22 @@ var SingleArticle = function (_Component) {
     key: 'render',
     value: function render() {
       if (this.state.loadingStatus) return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Reusable_loader__["a" /* default */], null);
-      var image = this.state.article.image;
+      var _state = this.state,
+          article = _state.article,
+          latest = _state.latest,
+          neighbours = _state.neighbours,
+          comments = _state.comments;
+
 
       return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
         Main,
         null,
-        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Article_article_image__["a" /* default */], { article: this.state.article }),
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Article_article_image__["a" /* default */], { article: article }),
         __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           Container,
           null,
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Article_article__["a" /* default */], { article: this.state.article, neighbours: this.state.neighbours }),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Article_article_aside__["a" /* default */], { latest: this.state.latest })
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Article_article__["a" /* default */], { article: article, neighbours: neighbours, comments: comments }),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Article_article_aside__["a" /* default */], { latest: latest })
         )
       );
     }
@@ -66118,7 +66133,8 @@ var Wrapper = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */]
 
 var Article = function Article(props) {
   var article = props.article,
-      neighbours = props.neighbours;
+      neighbours = props.neighbours,
+      comments = props.comments;
 
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     ArticleWrapper,
@@ -66142,7 +66158,7 @@ var Article = function Article(props) {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         Wrapper,
         null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__article_comments__["a" /* default */], null)
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__article_comments__["a" /* default */], { comments: comments })
       )
     )
   );
@@ -66163,7 +66179,7 @@ var Article = function Article(props) {
 var _templateObject = _taggedTemplateLiteral(['\n  flex:1;\n  padding-top:5px;\n  margin-bottom:330px;\n'], ['\n  flex:1;\n  padding-top:5px;\n  margin-bottom:330px;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n position: sticky;\n top:42%;\n text-align: right;\n line-height:1.5;\n'], ['\n position: sticky;\n top:42%;\n text-align: right;\n line-height:1.5;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  display:block;\n  margin-top:15px;\n'], ['\n  display:block;\n  margin-top:15px;\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n  color:#00529f;\n  display:inline-block;\n  text-transform: uppercase;\n  font-family:\'AvenirD\';\n  border-bottom:1px solid #e0e0e0;\n  padding:0 0 12px 20px;\n  &:hover {\n    text-decoration:underline;\n  }\n'], ['\n  color:#00529f;\n  display:inline-block;\n  text-transform: uppercase;\n  font-family:\'AvenirD\';\n  border-bottom:1px solid #e0e0e0;\n  padding:0 0 12px 20px;\n  &:hover {\n    text-decoration:underline;\n  }\n']);
+    _templateObject4 = _taggedTemplateLiteral(['\n  color:#00529f;\n  display:inline-block;\n  text-transform: uppercase;\n  font-family:\'SSPB\';\n  border-bottom:1px solid #e0e0e0;\n  padding:0 0 12px 20px;\n  &:hover {\n    text-decoration:underline;\n  }\n'], ['\n  color:#00529f;\n  display:inline-block;\n  text-transform: uppercase;\n  font-family:\'SSPB\';\n  border-bottom:1px solid #e0e0e0;\n  padding:0 0 12px 20px;\n  &:hover {\n    text-decoration:underline;\n  }\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -66368,7 +66384,7 @@ var Content = function Content(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_related_list__ = __webpack_require__(187);
 var _templateObject = _taggedTemplateLiteral(['\n  margin-top:50px;\n  margin-bottom:30px;\n'], ['\n  margin-top:50px;\n  margin-bottom:30px;\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  font-family:\'AvenirD\';\n  font-size:1.4em;\n  margin-bottom:12px;\n'], ['\n  font-family:\'AvenirD\';\n  font-size:1.4em;\n  margin-bottom:12px;\n']);
+    _templateObject2 = _taggedTemplateLiteral(['\n  font-family:\'SSPB\';\n  font-size:1.4em;\n  margin-bottom:12px;\n'], ['\n  font-family:\'SSPB\';\n  font-size:1.4em;\n  margin-bottom:12px;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -66405,7 +66421,7 @@ var Related = function Related(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__article_related_list_item__ = __webpack_require__(188);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Reusable_wrapper__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Reusable_wrapper__ = __webpack_require__(10);
 
 
 
@@ -66417,7 +66433,7 @@ var RelatedList = function RelatedList(props) {
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     __WEBPACK_IMPORTED_MODULE_2__Reusable_wrapper__["a" /* default */],
     null,
-    neighbours.reverse().map(function (item, key) {
+    neighbours.map(function (item, key) {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__article_related_list_item__["a" /* default */], { article: item, key: key });
     })
   );
@@ -66441,14 +66457,14 @@ var _templateObject = _taggedTemplateLiteral(['\n  flex:1 1 50%;\n  max-width:26
     _templateObject3 = _taggedTemplateLiteral(['\n  height:200px;\n'], ['\n  height:200px;\n']),
     _templateObject4 = _taggedTemplateLiteral(['\n  padding:14px 0;\n'], ['\n  padding:14px 0;\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  display:block;\n  font-size:.85em;\n  text-transform:uppercase;\n'], ['\n  display:block;\n  font-size:.85em;\n  text-transform:uppercase;\n']),
-    _templateObject6 = _taggedTemplateLiteral(['\n  font-family: \'AvenirD\';\n'], ['\n  font-family: \'AvenirD\';\n']),
+    _templateObject6 = _taggedTemplateLiteral(['\n  font-family: \'SSPB\';\n'], ['\n  font-family: \'SSPB\';\n']),
     _templateObject7 = _taggedTemplateLiteral(['\n  display:flex;\n  justify-content:space-between;\n  flex-flow: row nowrap;\n  align-items:center;\n'], ['\n  display:flex;\n  justify-content:space-between;\n  flex-flow: row nowrap;\n  align-items:center;\n']),
     _templateObject8 = _taggedTemplateLiteral(['\n  border-bottom:0px solid #00529f;\n  transition: border .15s;\n'], ['\n  border-bottom:0px solid #00529f;\n  transition: border .15s;\n']),
     _templateObject9 = _taggedTemplateLiteral(['\n  color:inherit;\n  &:hover ', ' {\n    border-bottom:3px solid #00529f;\n    transition: border .15s;\n  }\n'], ['\n  color:inherit;\n  &:hover ', ' {\n    border-bottom:3px solid #00529f;\n    transition: border .15s;\n  }\n']),
     _templateObject10 = _taggedTemplateLiteral(['\n  flex:1;\n  display:flex;\n  flex-flow: row nowrap;\n  jutsify-content:space-between;\n  align-items:center;\n'], ['\n  flex:1;\n  display:flex;\n  flex-flow: row nowrap;\n  jutsify-content:space-between;\n  align-items:center;\n']),
     _templateObject11 = _taggedTemplateLiteral(['\n  flex:1;\n  display:flex;\n  align-items:center;\n  justify-content: flex-end;\n'], ['\n  flex:1;\n  display:flex;\n  align-items:center;\n  justify-content: flex-end;\n']),
     _templateObject12 = _taggedTemplateLiteral(['\n  margin-top:-2px;\n  display:flex;\n  justify-content:center;\n  min-width:35px;\n  min-height:35px;\n  max-width:35px;\n  max-height:35px;\n  margin-right:10px;\n  overflow:hidden;\n  align-self:flex-start;\n  border-radius:100%;\n'], ['\n  margin-top:-2px;\n  display:flex;\n  justify-content:center;\n  min-width:35px;\n  min-height:35px;\n  max-width:35px;\n  max-height:35px;\n  margin-right:10px;\n  overflow:hidden;\n  align-self:flex-start;\n  border-radius:100%;\n']),
-    _templateObject13 = _taggedTemplateLiteral(['\n  height:40px;\n'], ['\n  height:40px;\n']),
+    _templateObject13 = _taggedTemplateLiteral(['\n  height:35px;\n'], ['\n  height:35px;\n']),
     _templateObject14 = _taggedTemplateLiteral(['\n  display:inline-block;\n  margin-left:4px;\n  font-size:.9em;\n'], ['\n  display:inline-block;\n  margin-left:4px;\n  font-size:.9em;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -66536,7 +66552,7 @@ var RelatedListItem = function RelatedListItem(props) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           ImageContainer,
           null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ImageAuthor, { src: image, title: user.name, alt: user.name })
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ImageAuthor, { src: user.image, title: user.name, alt: user.name })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'span',
@@ -66570,8 +66586,8 @@ var RelatedListItem = function RelatedListItem(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_icons_go__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_icons_go___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_icons_go__);
-var _templateObject = _taggedTemplateLiteral(['\n  background:white;\n  color:#1e1e1e;\n  margin-bottom:50px;\n'], ['\n  background:white;\n  color:#1e1e1e;\n  margin-bottom:50px;\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  display:block;\n  font-family:\'AvenirB\';\n  font-size:2.5em;\n'], ['\n  display:block;\n  font-family:\'AvenirB\';\n  font-size:2.5em;\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  background:white;\n  color:#1e1e1e;\n  margin-bottom:40px;\n'], ['\n  background:white;\n  color:#1e1e1e;\n  margin-bottom:40px;\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  display:block;\n  font-family:\'SSPBK\';\n  font-size:2.6em;\n'], ['\n  display:block;\n  font-family:\'SSPBK\';\n  font-size:2.6em;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  margin-top:15px;\n  display:flex;\n  justify-content:flex-start;\n  flex-flow: row nowrap;\n'], ['\n  margin-top:15px;\n  display:flex;\n  justify-content:flex-start;\n  flex-flow: row nowrap;\n']),
     _templateObject4 = _taggedTemplateLiteral(['\n  display:flex;\n  align-items:center;\n  &:not(:last-child) {\n    margin-right:6px;\n  }\n  svg {\n    color:#00529f;\n  }\n'], ['\n  display:flex;\n  align-items:center;\n  &:not(:last-child) {\n    margin-right:6px;\n  }\n  svg {\n    color:#00529f;\n  }\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  display:inline-block;\n  margin-left:4px;\n  font-size:.95em;\n'], ['\n  display:inline-block;\n  margin-left:4px;\n  font-size:.95em;\n']);
@@ -66680,7 +66696,7 @@ var ArticleImage = function ArticleImage(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_aside_list__ = __webpack_require__(192);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Reusable_button__ = __webpack_require__(14);
 var _templateObject = _taggedTemplateLiteral(['\n  width:27%;\n  padding-left:5px;\n'], ['\n  width:27%;\n  padding-left:5px;\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  font-size:1.4em;\n  font-family:\'AvenirD\';\n'], ['\n  font-size:1.4em;\n  font-family:\'AvenirD\';\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  font-size:1.4em;\n  font-family:\'SSPB\';\n'], ['\n  font-size:1.4em;\n  font-family:\'SSPB\';\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  display:flex;\n  width:100%;\n'], ['\n  display:flex;\n  width:100%;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -66827,7 +66843,7 @@ var AsideItem = function AsideItem(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__logo__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__searchbar__ = __webpack_require__(195);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__navigation__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__wrapper__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__wrapper__ = __webpack_require__(10);
 var _templateObject = _taggedTemplateLiteral(['\n  padding: 15px 0;\n  background:#fff;\n  border-bottom:1px solid #ededed;\n  display: flex;\n  width:100%;\n  align-items: center;\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  position:sticky;\n  top:0;\n  z-index:999;\n'], ['\n  padding: 15px 0;\n  background:#fff;\n  border-bottom:1px solid #ededed;\n  display: flex;\n  width:100%;\n  align-items: center;\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  position:sticky;\n  top:0;\n  z-index:999;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -66869,10 +66885,10 @@ var Header = function Header() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_icons_fa___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_icons_fa__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _templateObject = _taggedTemplateLiteral(['\n  flex:.9;\n  display:block;\n  border:none;\n  outline:none;\n  transition: background .4s;\n  background:#ee324e;\n  font-weight:lighter;\n  height:68px;\n  padding:6px 15px;\n  color:#ffffff;\n  font-size:1.3em;\n  &::placeholder {\n    color:#1e1e1e;\n  }\n  &:-ms-input-placeholder { /* Internet Explorer 10-11 */\n    color:white;\n  }\n\n  &::-ms-input-placeholder { /* Microsoft Edge */\n    color:white;\n  }\n'], ['\n  flex:.9;\n  display:block;\n  border:none;\n  outline:none;\n  transition: background .4s;\n  background:#ee324e;\n  font-weight:lighter;\n  height:68px;\n  padding:6px 15px;\n  color:#ffffff;\n  font-size:1.3em;\n  &::placeholder {\n    color:#1e1e1e;\n  }\n  &:-ms-input-placeholder { /* Internet Explorer 10-11 */\n    color:white;\n  }\n\n  &::-ms-input-placeholder { /* Microsoft Edge */\n    color:white;\n  }\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  padding:0 10px;\n  background:#ee324e;\n'], ['\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  padding:0 10px;\n  background:#ee324e;\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  flex:1.9;\n  display:block;\n  border:none;\n  outline:none;\n  transition: background .4s;\n  background:#ee324e;\n  font-weight:lighter;\n  height:68px;\n  padding:6px 15px;\n  color:#ffffff;\n  font-size:1.3em;\n  &::placeholder {\n    color:#ffffff;;\n  }\n  &:-ms-input-placeholder { /* Internet Explorer 10-11 */\n    color:#ffffff;\n  }\n\n  &::-ms-input-placeholder { /* Microsoft Edge */\n    color:#ffffff;\n  }\n'], ['\n  flex:1.9;\n  display:block;\n  border:none;\n  outline:none;\n  transition: background .4s;\n  background:#ee324e;\n  font-weight:lighter;\n  height:68px;\n  padding:6px 15px;\n  color:#ffffff;\n  font-size:1.3em;\n  &::placeholder {\n    color:#ffffff;;\n  }\n  &:-ms-input-placeholder { /* Internet Explorer 10-11 */\n    color:#ffffff;\n  }\n\n  &::-ms-input-placeholder { /* Microsoft Edge */\n    color:#ffffff;\n  }\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  cursor:pointer;\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  padding:0 10px;\n  background:#ee324e;\n'], ['\n  cursor:pointer;\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  padding:0 10px;\n  background:#ee324e;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  flex:.1;\n  display:flex;\n  cursor:pointer;\n  align-items:center;\n  justify-content:center;\n  background:#ee324e;\n'], ['\n  flex:.1;\n  display:flex;\n  cursor:pointer;\n  align-items:center;\n  justify-content:center;\n  background:#ee324e;\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n  font-size:1.5em;\n  position:relative;\n  top:-2px;\n'], ['\n  font-size:1.5em;\n  position:relative;\n  top:-2px;\n']),
+    _templateObject4 = _taggedTemplateLiteral(['\n  font-size:2em;\n  position:relative;\n  top:-2px;\n'], ['\n  font-size:2em;\n  position:relative;\n  top:-2px;\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  position:fixed;\n  left:0;\n  top:0;\n  width:100%;\n  display:none;\n  flex-flow: row nowrap;\n  justify-content:flex-start;\n'], ['\n  position:fixed;\n  left:0;\n  top:0;\n  width:100%;\n  display:none;\n  flex-flow: row nowrap;\n  justify-content:flex-start;\n']),
     _templateObject6 = _taggedTemplateLiteral(['\n  display:none;\n  &:checked ~ ', ' {\n    display:flex;\n  }\n'], ['\n  display:none;\n  &:checked ~ ', ' {\n    display:flex;\n  }\n']);
 
@@ -66931,7 +66947,7 @@ var Searchbar = function (_Component) {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               ExitIcon,
               null,
-              'x'
+              '\u2715'
             )
           )
         )
@@ -66953,11 +66969,11 @@ var Searchbar = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styled_components__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(3);
-var _templateObject = _taggedTemplateLiteral(['\n  font-family: \'DoHyeon\';\n  color:#1e1e1e;\n  font-size: .95em;\n  text-transform: uppercase;\n'], ['\n  font-family: \'DoHyeon\';\n  color:#1e1e1e;\n  font-size: .95em;\n  text-transform: uppercase;\n']),
+var _templateObject = _taggedTemplateLiteral(['\n  font-family: \'SSPBK\';\n  color:#1e1e1e;\n  font-size: .95em;\n  text-transform: uppercase;\n'], ['\n  font-family: \'SSPBK\';\n  color:#1e1e1e;\n  font-size: .95em;\n  text-transform: uppercase;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  list-style:none;\n'], ['\n  list-style:none;\n']),
-    _templateObject3 = _taggedTemplateLiteral(['\n  color:inherit;\n  padding:0 10px;\n  &:hover {\n    color:#ee324e;\n  }\n'], ['\n  color:inherit;\n  padding:0 10px;\n  &:hover {\n    color:#ee324e;\n  }\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n  background:#ee324e;\n  color:#ffffff;\n  padding:8px;\n'], ['\n  background:#ee324e;\n  color:#ffffff;\n  padding:8px;\n']),
-    _templateObject5 = _taggedTemplateLiteral(['\n  display:inline-block;\n  line-height:1.1;\n  padding-right:6px;\n  margin-right:6px;\n  border-right:1px solid rgba(255,255,255,.65);\n'], ['\n  display:inline-block;\n  line-height:1.1;\n  padding-right:6px;\n  margin-right:6px;\n  border-right:1px solid rgba(255,255,255,.65);\n']),
+    _templateObject3 = _taggedTemplateLiteral(['\n  color:inherit;\n  padding:0 15px;\n  &:hover {\n    color:#ee324e;\n  }\n'], ['\n  color:inherit;\n  padding:0 15px;\n  &:hover {\n    color:#ee324e;\n  }\n']),
+    _templateObject4 = _taggedTemplateLiteral(['\n  background:#ee324e;\n  color:#ffffff;\n  padding:8px;\n  font-family: \'SSP\';\n'], ['\n  background:#ee324e;\n  color:#ffffff;\n  padding:8px;\n  font-family: \'SSP\';\n']),
+    _templateObject5 = _taggedTemplateLiteral(['\n  display:inline-block;\n  line-height:1.1;\n  text-transform: lowercase;\n  padding-right:6px;\n  margin-right:6px;\n  border-right:1px solid rgba(255,255,255,.65);\n'], ['\n  display:inline-block;\n  line-height:1.1;\n  text-transform: lowercase;\n  padding-right:6px;\n  margin-right:6px;\n  border-right:1px solid rgba(255,255,255,.65);\n']),
     _templateObject6 = _taggedTemplateLiteral(['\n  display:inline-block;\n  letter-spacing:1.2px;\n'], ['\n  display:inline-block;\n  letter-spacing:1.2px;\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -67062,10 +67078,10 @@ var Navigation = function Navigation() {
 var _templateObject = _taggedTemplateLiteral(['\n  width:100%;\n'], ['\n  width:100%;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n  display:flex;\n  flex-flow: row wrap;\n  background:#ededed;\n  padding: 35px 80px 100px;\n  margin-bottom:1px;\n  text-transform: uppercase;\n'], ['\n  display:flex;\n  flex-flow: row wrap;\n  background:#ededed;\n  padding: 35px 80px 100px;\n  margin-bottom:1px;\n  text-transform: uppercase;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  margin-top:15px;\n  flex:1;\n  color:#474747;\n'], ['\n  margin-top:15px;\n  flex:1;\n  color:#474747;\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n  color:#1e1e1e;\n  font-family: \'AvenirB\';\n  font-size: 1.1em;\n  display:inline-block;\n  position:relative\n  &:before {\n    content:\'\';\n    position:absolute;\n    width:30px;\n    height:3px;\n    background:#ee324e;\n    left:0;\n    bottom:-4px;\n  }\n'], ['\n  color:#1e1e1e;\n  font-family: \'AvenirB\';\n  font-size: 1.1em;\n  display:inline-block;\n  position:relative\n  &:before {\n    content:\'\';\n    position:absolute;\n    width:30px;\n    height:3px;\n    background:#ee324e;\n    left:0;\n    bottom:-4px;\n  }\n']),
+    _templateObject4 = _taggedTemplateLiteral(['\n  color:#1e1e1e;\n  font-family: \'SSPB\';\n  font-size: 1.1em;\n  display:inline-block;\n  position:relative\n  &:before {\n    content:\'\';\n    position:absolute;\n    width:30px;\n    height:3px;\n    background:#ee324e;\n    left:0;\n    bottom:-4px;\n  }\n'], ['\n  color:#1e1e1e;\n  font-family: \'SSPB\';\n  font-size: 1.1em;\n  display:inline-block;\n  position:relative\n  &:before {\n    content:\'\';\n    position:absolute;\n    width:30px;\n    height:3px;\n    background:#ee324e;\n    left:0;\n    bottom:-4px;\n  }\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  list-style-type: none;\n  margin-top:15px;\n'], ['\n  list-style-type: none;\n  margin-top:15px;\n']),
     _templateObject6 = _taggedTemplateLiteral(['\n  font-size:.875em;\n  line-height:1.4em;\n'], ['\n  font-size:.875em;\n  line-height:1.4em;\n']),
-    _templateObject7 = _taggedTemplateLiteral(['\n  color:inherit;\n  &:hover {\n    color:#ee324e;\n  }\n'], ['\n  color:inherit;\n  &:hover {\n    color:#ee324e;\n  }\n']),
+    _templateObject7 = _taggedTemplateLiteral(['\n  color:inherit;\n  font-size:1.1em;\n  &:hover {\n    color:#ee324e;\n  }\n'], ['\n  color:inherit;\n  font-size:1.1em;\n  &:hover {\n    color:#ee324e;\n  }\n']),
     _templateObject8 = _taggedTemplateLiteral(['\n  background:#d8d8d8;\n  padding:18px;\n  text-align:center;\n'], ['\n  background:#d8d8d8;\n  padding:18px;\n  text-align:center;\n']),
     _templateObject9 = _taggedTemplateLiteral(['\n  text-transform:uppercase;\n  font-size: .6875em;\n  letter-spacing:1px;\n  color:#1e1e1e;\n'], ['\n  text-transform:uppercase;\n  font-size: .6875em;\n  letter-spacing:1px;\n  color:#1e1e1e;\n']);
 

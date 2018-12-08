@@ -4,11 +4,11 @@ import styled from 'styled-components';
 
 const Details = styled.div`
   display:flex;
-  font-family:'AvenirBC';
+  font-family:'SSPB';
   align-items: center;
   padding:8px;
   justify-content: center;
-  flex:2;
+  flex:1;
   font-size:1.875em;
   background: #00529f;
 `

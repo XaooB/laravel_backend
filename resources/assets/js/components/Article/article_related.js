@@ -8,7 +8,7 @@ const Section = styled.section`
 `
 
 const Title = styled.h3`
-  font-family:'AvenirD';
+  font-family:'SSPB';
   font-size:1.4em;
   margin-bottom:12px;
 `

@@ -28,7 +28,7 @@ const Container = styled.div`
 `
 
 const RestNewsAndPolls = styled.section`
-  flex:2;
+  flex:2 1 600px;
   order:1;
   margin-right:10px;
 `
@@ -51,7 +51,8 @@ const Polls = styled.section`
 `
 
 const TableAndSocial = styled.section`
-  flex:.9;
+  margin-top:-12px;
+  flex:.9 1 300px;
   order:2;
   padding:0 10px;
 `
@@ -79,6 +80,7 @@ class Home extends Component {
       injuriesData: []
     };
   }
+
   async componentDidMount() {
     const mainArticle = await API.get('articles_latest_main/1'),
           articles = await API.get('articles_latest/22'),
@@ -86,7 +88,7 @@ class Home extends Component {
           leagueTable = await API.get('leaguescoreboard_get_league_scoreboard/2018-2019/PD'),
           latestResult = await API.get('latestmatchresult_get_latest_match_result'),
           pollData = await API.get('surveys_latest/1'),
-          injuriesData = await API.get('injuriessuspensions_actual_injuries');
+          injuriesData = await API.get('injuriessuspensions_actual');
 
     this.setState({ mainArticle, articles, schedule, leagueTable, latestResult, pollData, injuriesData, loadingStatus: false });
   }
@@ -95,8 +97,8 @@ class Home extends Component {
     const { mainArticle, articles, schedule, leagueTable, latestResult, pollData, injuriesData, loadingStatus } = this.state;
 
     if(loadingStatus) return <Loader />
-    const lastestNewsBig = articles.slice(0, 9),
-          smallNews = articles.slice(10, 19),
+    const lastestNewsBig = articles.slice(0, 6),
+          smallNews = articles.slice(7, 16),
           nextMatch = schedule[0],
           upcomingMatches = schedule.slice(1, 4);
 

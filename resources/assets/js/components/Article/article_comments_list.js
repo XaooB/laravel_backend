@@ -9,11 +9,12 @@ const List = styled.ul`
 `
 
 const Comments = props => {
+  const {comments} = props;
   return (
     <List>
-      <SingleComment />
-      <SingleComment />
-      <SingleComment />
+      {comments.map((item, key) => {
+        return <SingleComment comment = {item} key={key} />
+      })}
     </List>
   )
 }

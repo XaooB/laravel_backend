@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 
 const Input = styled.input`
-  flex:.9;
+  flex:1.9;
   display:block;
   border:none;
   outline:none;
@@ -15,18 +15,19 @@ const Input = styled.input`
   color:#ffffff;
   font-size:1.3em;
   &::placeholder {
-    color:#1e1e1e;
+    color:#ffffff;;
   }
   &:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color:white;
+    color:#ffffff;
   }
 
   &::-ms-input-placeholder { /* Microsoft Edge */
-    color:white;
+    color:#ffffff;
   }
 `
 
 const Search = styled.label`
+  cursor:pointer;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -44,7 +45,7 @@ const Exit = styled.label`
 `
 
 const ExitIcon = styled.span`
-  font-size:1.5em;
+  font-size:2em;
   position:relative;
   top:-2px;
 `
@@ -75,7 +76,7 @@ class Searchbar extends Component {
         <Checkbox type='checkbox' htmlFor='search' id='search' />
         <Wrapper>
           <Input placeholder='Search for articles..' type='text' />
-          <Exit htmlFor='search' name='search'><ExitIcon>x</ExitIcon></Exit>
+          <Exit htmlFor='search' name='search'><ExitIcon>✕</ExitIcon></Exit>
         </Wrapper>
       </Fragment>
     )

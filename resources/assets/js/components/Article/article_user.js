@@ -19,9 +19,10 @@ const Image = styled.img`
 `
 
 const User = props => {
+  const {image} = props;
   return (
     <ImageContainer>
-      <Image src='https://i.imgur.com/IlUh0PX.png' alt='users avatar' title='username' />
+      <Image src={image} title='' alt='' />
     </ImageContainer>
   )
 }

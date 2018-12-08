@@ -5,7 +5,7 @@ import LatestNewsItem from './latest_news_item';
 
 const Section = styled.section`
   width:100%;
-  margin:60px 0 40px 0;
+  margin:60px 0 20px 0;
 `
 
 const Wrapper = styled.div`

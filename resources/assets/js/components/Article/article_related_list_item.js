@@ -30,7 +30,7 @@ const Category = styled.span`
 `
 
 const Title = styled.h3`
-  font-family: 'AvenirD';
+  font-family: 'SSPB';
 `
 
 const Footer = styled.footer`
@@ -83,7 +83,7 @@ const ImageContainer = styled.figure`
 `
 
 const ImageAuthor = styled.img`
-  height:40px;
+  height:35px;
 `
 
 const Count = styled.span`
@@ -112,7 +112,7 @@ const RelatedListItem = props => {
       <Footer>
         <Author>
           <ImageContainer>
-            <ImageAuthor src={image} title={user.name} alt={user.name} />
+            <ImageAuthor src={user.image} title={user.name} alt={user.name} />
           </ImageContainer>
           <span>{user.name}</span>
         </Author>

@@ -13,19 +13,18 @@ const LeagueItem = styled.div`
 `
 
 const ItemField = styled.div`
-  flex:1;
-  text-align:right;
-  &:first-child {
-    text-align:left;
+  flex:.5;
+  &:nth-child(2) {
     flex:3;
   }
 `
 
 const LeagueTableItem = props => {
-  const { club, draw, lost, matches, points, won } = props.leagueTable;
+  const { club, draw, lost, matches, points, won, position } = props.leagueTable;
 
   if(club.short_name === 'Real Madrid') return (
     <LeagueItem style={{background: '#00529f', color:'white'}}>
+      <ItemField>{ position }</ItemField>
       <ItemField>{ club.short_name }</ItemField>
       <ItemField>{ matches }</ItemField>
       <ItemField>{ won }</ItemField>
@@ -37,6 +36,7 @@ const LeagueTableItem = props => {
 
   return (
     <LeagueItem>
+      <ItemField>{ position }</ItemField>
       <ItemField>{ club.short_name }</ItemField>
       <ItemField>{ matches }</ItemField>
       <ItemField>{ won }</ItemField>

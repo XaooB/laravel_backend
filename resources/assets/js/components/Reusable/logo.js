@@ -8,10 +8,14 @@ const Wrapper = styled.div`
   justify-content:center;
   align-items:center;
   width:42px;
-  height:30px;
+  height:36px;
+  font-size:1.1em;
   color:white;
   margin-right:5px;
-  font-family: 'AvenirD';
+  font-family: 'SSPBK';
+  & + span {
+    color:#d8d8d8;
+  }
 `
 
 const LogoText = styled.span`
@@ -22,7 +26,7 @@ const LogoText = styled.span`
 const LinkTo = styled(Link)`
   display:flex;
   align-items:center;
-  font-family: "Arial";
+  font-family: "SSP";
   color:#1e1e1e;
   &:hover ${Wrapper} + span {
     color:#ee324e;

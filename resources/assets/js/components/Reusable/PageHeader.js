@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 const Header = styled.div`
   margin-top:30px;
-  margin-bottom:45px;
+  margin-bottom:35px;
 `
 
 const Title = styled.h3`
-  font-family: 'AvenirB';
-  font-size: 2.5em;
+  font-family: 'SSPBK';
+  font-size: 2.35em;
   padding-left:16px;
   color:#1e1e1e;
   text-transform: uppercase;

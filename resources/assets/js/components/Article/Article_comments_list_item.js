@@ -6,7 +6,7 @@ import { FaHeart, FaReply, FaBan } from 'react-icons/fa';
 const ListItem = styled.li`
   display:flex;
   flex-flow:row nowrap;
-  justify-content:space-between;
+  justify-content:flex-start;
   &:not(:last-child) {
     margin-bottom:50px;
   }
@@ -14,6 +14,7 @@ const ListItem = styled.li`
 
 const Article = styled.article`
   margin-left:10px;
+  flex:1;
 `
 
 const Header = styled.header`
@@ -23,7 +24,7 @@ const Header = styled.header`
 `
 
 const UserName = styled.span`
-  font-family:'AvenirD';
+  font-family:'SSPB';
 `
 
 const Added = styled.span`
@@ -33,6 +34,7 @@ const Added = styled.span`
 
 const Content = styled.p`
   padding:8px 0;
+  font-size:1.05em;
 `
 
 const Footer = styled.footer`
@@ -68,7 +70,7 @@ const FooterItem = styled.button`
       right:-4px;
       top:3px;
       height:15px;
-      width:1px;
+      width:2px;
       background:#e0e0e0;
     }
   }
@@ -79,15 +81,16 @@ const FooterItem = styled.button`
 
 class SingleComment extends Component {
   render() {
+    const {user, content, create_date} = this.props.comment;
     return (
       <ListItem>
-        <User />
+        <User image = {user.image}/>
         <Article>
           <Header>
-            <UserName>Xaoo</UserName>
-            <Added>13 hours ago</Added>
+            <UserName>{user.name}</UserName>
+            <Added>{create_date}</Added>
           </Header>
-          <Content>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nunc orci, commodo lobortis libero vestibulum, molestie gravida elit. <br/><br/> Nulla sed massa libero. Pellentesque tempor mauris nunc, vitae lacinia ante lobortis eget. Nulla vitae justo ut leo vehicula suscipit. Vivamus ullamcorper felis dui, vitae feugiat augue scelerisque et.</Content>
+          <Content>{content}</Content>
           <Footer>
             <FooterItem>
               <FaHeart />

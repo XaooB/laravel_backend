@@ -9,13 +9,13 @@ const Wrapper = styled.div`
   min-width:320px;
   flex-flow: row wrap;
   text-transform: uppercase;
-  font-family:'AvenirBC';
+  font-family:'SSPBK';
 `
 
 const Teams = styled.div`
   display:flex;
   flex-flow:column nowrap;
-  flex:5;
+  flex:7;
 `
 
 const Item = styled.div`
@@ -43,10 +43,10 @@ const Goals = styled.div`
   font-size: 3.75em;
 `
 
-const Text = styled.p`
-  text-align:left;
-  width:100px;
-  line-height:1em;
+const IconSpan = styled.span`
+  display:inline-block;
+  font-family:'DoHyeon';
+  font-size:1.2em;
 `
 
 const Result = props => {
@@ -56,16 +56,16 @@ const Result = props => {
     <Wrapper>
       <Teams>
         <Item>
-          <TeamName>{ latestResult.home_team }</TeamName>
+          <TeamName>{ latestResult.home_team.short_name }</TeamName>
           <Goals>{ latestResult.home_team_score }</Goals>
         </Item>
         <Item>
-          <TeamName>{ latestResult.away_team }</TeamName>
+          <TeamName>{ latestResult.away_team.short_name }</TeamName>
           <Goals>{ latestResult.away_team_score }</Goals>
         </Item>
       </Teams>
         <CheckMore to='details'>
-          <Text>check details</Text>
+          <IconSpan> >> </IconSpan>
         </CheckMore>
     </Wrapper>
   )

@@ -10,12 +10,13 @@ const Section = styled.section`
 `
 
 const Title = styled.h3`
-  font-size:1.4em;
-  font-family:'AvenirD';
+  font-size:1.5em;
+  font-family:'SSPB';
   margin-bottom:12px;
 `
 
 const CommentSection = props => {
+  const { comments } = props;
   return (
     <Section>
       <Title>Comments</Title>
@@ -23,7 +24,7 @@ const CommentSection = props => {
         <User />
         <Form />
       </Wrapper>
-      <CommentsList />
+      <CommentsList comments = {comments}/>
     </Section>
   )
 };

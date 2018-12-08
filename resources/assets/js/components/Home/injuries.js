@@ -7,8 +7,9 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.header`
-  background: #ee324e;
-  padding:20px;
+  padding:15px;
+  color:#fff;
+  background: #00529f;
 `
 
 const Category = styled.p`
@@ -17,9 +18,16 @@ const Category = styled.p`
 `
 
 const Title = styled.h4`
-  margin-top:10px;
-  font-family: 'AvenirD';
-  font-size: 1.375em;
+  font-family: 'SSPB';
+  font-size: 1.4em;
+`
+
+const Content = styled.div`
+  display:flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin-top:30px;
+  color:#1e1e1e;
 `
 
 const Injuries = props => {
@@ -28,17 +36,19 @@ const Injuries = props => {
   return (
     <Wrapper>
       <Header>
-        <Category>injuries</Category>
-        <Title>Currently there is not any player with injury</Title>
+        <Title>Injuries and suspensions</Title>
       </Header>
+      <Content>
       {injuriesData.map((item, key) => {
         const {player, type, return_date} = item;
-        return <div style={{color:'#1e1e1e'}} key={key}>
+
+        return <div key={key} style={{marginBottom:10}}>
             <p>Name: {player.name}</p>
             <p>Type: {type}</p>
             <p>Possible return date: {dateConverter.toDateOnly(new Date(return_date))}</p>
           </div>
       })}
+      </Content>
     </Wrapper>
   )
 }

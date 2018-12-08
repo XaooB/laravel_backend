@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { dateConverter } from '../../helpers/dateConverter';
 
 const Title = styled.span`
+  font-family:'SSPBK';
   display:inline-block;
   font-size:1em;
   font-weight:lighter;
@@ -29,6 +30,7 @@ const Title = styled.span`
 `
 
 const TableField = styled.div`
+  font-size:1.05em;
   color:#1e1e1e;
   flex:1;
   text-transform: uppercase;

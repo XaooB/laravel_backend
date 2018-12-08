@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Container = styled.section`
   display:flex;
@@ -8,7 +9,7 @@ const Container = styled.section`
   align-items:center;
   background: #00529f;
   height:170px;
-  font-family:'DoHyeon';
+  font-family:'SSPBK';
   justify-content:center;
 `
 
@@ -41,7 +42,7 @@ const Team = styled.div`
 `
 
 const Fixtures = styled.div`
-  font-family:'AvenirR';
+  font-family:'SSP';
   font-size:.8em;
   margin:0 auto;
   text-transform: 'capitalize';
@@ -76,6 +77,10 @@ const TeamWrapper = styled.div`
   align-items:flex-start;
 `
 
+const LinkTo = styled(Link)`
+  text-decoration: underline;
+`
+
 const NextMatchItem = props => {
   const { date, league, club, location } = props.data;
 
@@ -92,7 +97,7 @@ const NextMatchItem = props => {
           <FixturesInfo>{league}</FixturesInfo>
           <FixturesInfo>{new Date(date).toLocaleString()}</FixturesInfo>
           <FixturesInfo>{location === 'HOME' ? 'Mecz domowy' : 'Mecz wyjazdowy' }</FixturesInfo>
-          <FixturesInfo><u>Centrum meczowe</u></FixturesInfo>
+          <FixturesInfo><LinkTo to='/live'>Centrum meczowe</LinkTo></FixturesInfo>
         </Fixtures>
       </Result>
       <TeamWrapper>

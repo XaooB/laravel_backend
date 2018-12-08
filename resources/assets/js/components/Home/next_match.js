@@ -5,7 +5,7 @@ import PageHeader from '../Reusable/PageHeader';
 
 const Section = styled.section`
   flex:1;
-    margin-right:20px;
+  margin-right:20px;
 `
 
 const NextMatch = props => {

@@ -4,28 +4,23 @@
 }
 
 @font-face {
-  font-family: 'AvenirR';
-  src: url('/fonts/Avenir/AvenirNextLTPro-Regular.otf') format('opentype');
+  font-family: 'SSP';
+  src: url('/fonts/SourceSans/sourcesanspro-regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'AvenirHC';
-  src: url('/fonts/Avenir/AvenirNextLTPro-HeavyCn.otf') format('opentype');
+  font-family: 'SSPBK';
+  src: url('/fonts/SourceSans/sourcesanspro-black.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'AvenirB';
-  src: url('/fonts/Avenir/AvenirNextLTPro-Bold.otf') format('opentype');
+  font-family: 'SSPB';
+  src: url('/fonts/SourceSans/sourcesanspro-bold.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'AvenirBC';
-  src: url('/fonts/Avenir/AvenirNextLTPro-BoldCn.otf') format('opentype');
-}
-
-@font-face {
-  font-family: 'AvenirD';
-  src: url('/fonts/Avenir/AvenirNextLTPro-Demi.otf') format('opentype');
+  font-family: 'SSPL';
+  src: url('/fonts/SourceSans/sourcesanspro-light.ttf') format('truetype');
 }
 
 @font-face {

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ListItem = styled.li`
-  font-size:1.125em;
+  font-size:1.05em;
   margin-top:15px;
 `
 

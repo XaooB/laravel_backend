@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PollList from './poll_list';
+import PageHeader from '../../components/Reusable/PageHeader'
 import Button from '../Reusable/button';
 
 const Wrapper = styled.div`
@@ -9,8 +10,9 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.header`
+  padding:15px;
+  color:#fff;
   background: #00529f;
-  padding:20px;
 `
 
 const Category = styled.p`
@@ -19,9 +21,8 @@ const Category = styled.p`
 `
 
 const Title = styled.h4`
-  margin-top:10px;
-  font-family: 'AvenirD';
-  font-size: 1.375em;
+  font-family: 'SSPB';
+  font-size: 1.4em;
 `
 
 const Form = styled.form`
@@ -38,7 +39,6 @@ class StrawPoll extends Component {
     return (
       <Wrapper>
         <Header>
-          <Category>straw poll</Category>
           <Title>{ topic }</Title>
         </Header>
         <Form>

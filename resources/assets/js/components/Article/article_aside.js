@@ -10,7 +10,7 @@ const Wrapper = styled.aside`
 
 const Header = styled.h3`
   font-size:1.4em;
-  font-family:'AvenirD';
+  font-family:'SSPB';
 `
 
 const Centered = styled.div`

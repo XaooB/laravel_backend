@@ -22,16 +22,14 @@ const Container = styled.div`
   display:flex;
   justify-content:flex-start;
   flex:1;
-  font-family:'AvenirR';
 `
 
 const Category = styled.span`
   display:inline-block;
   text-transform: uppercase;
-  font-size:.75em;
-  font-family:'AvenirD';
+  font-size:.9em;
+  font-family:'SSPB';
   margin-bottom:10px;
-  letter-spacing:1px;
 `
 
 const Title = styled.h3`
@@ -42,15 +40,13 @@ const Title = styled.h3`
 
 const Added = styled.span`
   display:inline-block;
-  font-family:'AvenirD';
-  font-size:.72em;
+  font-family:'SSP';
+  font-size:.85em;
   margin-bottom:12px;
 `
 
 const Summary = styled.p`
-  font-size:.9em;
   padding-bottom:15px;
-  font-family:'AvenirR';
   line-height:1.2em;
   text-align:justify;
 `

@@ -5,13 +5,13 @@ import { GoCommentDiscussion, GoHeart } from 'react-icons/go';
 const Header = styled.header`
   background:white;
   color:#1e1e1e;
-  margin-bottom:50px;
+  margin-bottom:40px;
 `
 
 const Title = styled.h2`
   display:block;
-  font-family:'AvenirB';
-  font-size:2.5em;
+  font-family:'SSPBK';
+  font-size:2.6em;
 `
 
 const Wrapper = styled.div`

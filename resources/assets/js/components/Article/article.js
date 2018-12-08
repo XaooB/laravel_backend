@@ -28,7 +28,7 @@ const Wrapper = styled.section`
 `
 
 const Article = props => {
-  const {article, neighbours} = props;
+  const {article, neighbours, comments} = props;
   return (
     <ArticleWrapper>
       <Section>
@@ -42,7 +42,7 @@ const Article = props => {
       <Section>
         <CommentFeatures />
         <Wrapper>
-          <CommentSection />
+          <CommentSection comments = {comments}/>
         </Wrapper>
       </Section>
     </ArticleWrapper>

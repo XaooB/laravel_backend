@@ -16,8 +16,8 @@ const Container = styled.div`
 
 const Table = styled.div`
   display:flex;
-  font-size:.9em;
   color:#1e1e1e;
+  letter-spacing:1.1px;
   flex-flow:column nowrap;
 `
 
@@ -39,14 +39,6 @@ const LeagueTable = props => {
 
   return (
     <FixturesTable>
-      <Container>
-        <Image src='./assets/images/laliga_logo.png' title='la liga' alt='la liga' />
-        <Selection>
-          <option>La Liga</option>
-          <option>champion league</option>
-          <option>copa del ray</option>
-        </Selection>
-      </Container>
       <Table>
         { leagueTable ? leagueTable.map((item, key) => {
           return <LeagueTableItem leagueTable = { item } key={ key } />

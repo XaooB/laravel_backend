@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Article = styled.article`
   position:relative;
   width:100%;
-  max-height:650px;
+  max-height:500px;
 `
 
 const Image = styled.img`
@@ -13,7 +13,7 @@ const Image = styled.img`
 `
 
 const ImageWrapper = styled.figure`
-  max-height: 650px;
+  max-height: 500px;
   overflow:hidden;
   position:relative;
   &:before {
@@ -40,17 +40,17 @@ const HeaderWrapper = styled.div`
   max-width:550px;
   min-width:300px;
   position:absolute;
+  font-family:'SSPBK';
 `
 
 const Category = styled.span`
-  font-family:'AvenirB';
   text-transform: uppercase;
   color:#febe10;
+  font-size: 1.05em;
 `
 
 const Title = styled.h2`
   font-size: 2.1em;
-  font-family: 'AvenirB';
   letter-spacing:1.5px;
   line-height: 1.2em;
   color:#ffffff;
@@ -64,9 +64,8 @@ const Hover = styled.span`
 
 const LinkTo = styled(Link)`
   color:inherit;
-  &:hover ${Hover} {
-    border-bottom:4px solid #febe10;
-    transition: border .15s;
+  &:hover ${HeaderWrapper} {
+    border-left: 4px solid #febe10;
   }
 `
 

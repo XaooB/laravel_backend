@@ -7,7 +7,7 @@ const RelatedList = props => {
 
   return (
     <Wrapper>
-      {neighbours.reverse().map((item, key) => {
+      {neighbours.map((item, key) => {
         return <RelatedListItem article={item} key={key} />
       })}
     </Wrapper>

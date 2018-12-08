@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Nav = styled.nav`
-  font-family: 'DoHyeon';
+  font-family: 'SSPBK';
   color:#1e1e1e;
   font-size: .95em;
   text-transform: uppercase;
@@ -15,7 +15,7 @@ const List = styled.ul`
 
 const ListLink = styled(Link)`
   color:inherit;
-  padding:0 10px;
+  padding:0 15px;
   &:hover {
     color:#ee324e;
   }
@@ -25,11 +25,13 @@ const ApiRoute = styled.a`
   background:#ee324e;
   color:#ffffff;
   padding:8px;
+  font-family: 'SSP';
 `
 
 const GoogleIcon = styled.span`
   display:inline-block;
   line-height:1.1;
+  text-transform: lowercase;
   padding-right:6px;
   margin-right:6px;
   border-right:1px solid rgba(255,255,255,.65);

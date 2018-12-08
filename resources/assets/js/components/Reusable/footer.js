@@ -23,7 +23,7 @@ const NavItem = styled.div`
 
 const Category = styled.h5`
   color:#1e1e1e;
-  font-family: 'AvenirB';
+  font-family: 'SSPB';
   font-size: 1.1em;
   display:inline-block;
   position:relative
@@ -50,6 +50,7 @@ const ListItem = styled.li`
 
 const LinkTo = styled(Link)`
   color:inherit;
+  font-size:1.1em;
   &:hover {
     color:#ee324e;
   }

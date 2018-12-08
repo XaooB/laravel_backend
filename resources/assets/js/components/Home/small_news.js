@@ -8,7 +8,6 @@ const Article = styled.article`
   margin-bottom:35px;
   flex:1 1 245px;
   max-width:280px;
-
   padding: 0 5px;
   display:flex;
   flex-direction:column;
@@ -16,24 +15,24 @@ const Article = styled.article`
 `
 
 const CategoryAndDate = styled.div`
-  font-size: .75em;
+  font-size: .9em;
   text-transform: uppercase;
 `
 
 const Category = styled.span`
   color:#00529f;
-  font-family: 'AvenirB';
+  font-family: 'SSPBK';
 `
 
 const Added = styled.span`
-  font-family: 'AvenirR';
-  font-weight:bold;
+  color:#d8d8d8;
 `
 
 const Title = styled.h3`
   font-size: 1.3em;
   line-height:1em;
   padding:6px 0;
+  font-family:'SSPL';
 `
 
 const Hover = styled.span`
