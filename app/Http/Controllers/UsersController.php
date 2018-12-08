@@ -51,9 +51,17 @@ class UsersController extends Controller
 
     public function get_user($id)
     {
-        $user = $id;
-        $this->buildUserData($user);
-        return response()->json($user);
+        if(isset($_SESSION['iduser']))
+        {
+            if($id != $_SESSION['iduser'])
+            {
+                $user = $id;
+                $this->buildUserData($user);
+                return response()->json($user);
+            }
+            return response()->json($_SESSION);
+        }
+        return response()->json(['status' => false]);
     }
 
     public function get_user_by_name($login)
