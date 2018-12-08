@@ -66887,6 +66887,7 @@ var Header = function Header(props) {
 function mapStateToProps(_ref) {
   var auth = _ref.auth;
 
+  console.log('mapStateToProps:', auth);
   return {
     auth: auth
   };
@@ -67018,6 +67019,8 @@ var ListItem = __WEBPACK_IMPORTED_MODULE_1_styled_components__["a" /* default */
 var Navigation = function Navigation(props) {
   var user = props.auth.user;
 
+
+  console.log('Użytkownik w komponencie Nav:', user);
 
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     Nav,
