@@ -198,15 +198,18 @@ class UsersController extends Controller
 
     public function get_notifications(Request $request)
     {
-        $id = null;
-        $id = DB::table('users')->select('id')->where('id', $_SESSION['iduser'])->value('id');
-        if($id && $request->from && $request->to)
+        if(isset($_SESSION['iduser']))
         {
-            $notifications = Notifications::where('idUser', $id)->limit($request->from, $request->to);
-            foreach ($notifications as $key => $notification) {
-                $this->buildUserData($notification->idUser);
+            $id = $_SESSION['iduser'];
+            if($id && $request->from && $request->count)
+            {
+                $notifications = Notifications::where('idUser', $id)->skip($request->from)->take($request->count);
+                foreach ($notifications as $key => $notification) {
+                    $this->buildUserData($notification->idUser);
+                }
             }
         }
+        
     }
 
     // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------

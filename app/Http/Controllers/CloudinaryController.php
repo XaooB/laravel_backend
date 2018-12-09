@@ -17,7 +17,8 @@ class CloudinaryController extends Controller
     $currentImageId = explode('/' . $table . '/', $currentUrl);
     Cloudder::destroyImage($currentUrl);
     Cloudder::delete(substr($currentImageId[1], 0, -4), ['folder' => $table]);*/
-    if(DB::table($table)->where($column, $id)->update(['Image' => $image_url]))
+    DB::table($table)->where($column, $id)->update(['Image' => $image_url]);
+    if($table == 'users')
         $_SESSION['image'] = $image_url;
 	}
 

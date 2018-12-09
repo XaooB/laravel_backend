@@ -128,10 +128,19 @@ class FootballAPIConnector
 			// UPDATE
 			if(DB::table('clubs')->where('idClub', $team->id)->count())
 			{
-				Clubs::where('idClub', $team->id)->update([
+				if($team->crestUrl != null)
+				{
+					Clubs::where('idClub', $team->id)->update([
 					'Name' => $team->name,
 					'ShortName' =>$team->shortName,
 					'Image' => $team->crestUrl]);
+				}
+				else
+				{
+					Clubs::where('idClub', $team->id)->update([
+					'Name' => $team->name,
+					'ShortName' =>$team->shortName]);
+				}
 			}
 			// INSERT
 			else
