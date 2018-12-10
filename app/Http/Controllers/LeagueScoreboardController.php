@@ -8,7 +8,7 @@ use App\LeagueScoreboard;
 use App\Http\Resources\LeagueScoreboard as LeagueScoreboardResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
-use App\ExternalAPI\FootballAPIConnector;
+use App\Http\Controllers\FootballAPIController;
 use App\Http\Controllers\ClubsController;
 
 class LeagueScoreboardController extends Controller
@@ -21,9 +21,9 @@ class LeagueScoreboardController extends Controller
     public function index()
     {
         // Spain League - Primera Division
-        FootballAPIConnector::getLeagueScoreboard_PD_ExternalAPI('https://api.football-data.org/v2/competitions/PD/standings', env('APP_FootballAPIToken'));
+        FootballAPIController::getLeagueScoreboard_PD_ExternalAPI('https://api.football-data.org/v2/competitions/PD/standings', env('APP_FootballAPIToken'));
         // Europe League - UEFA Champions League
-        FootballAPIConnector::getLeagueScoreboard_CL_ExternalAPI('https://api.football-data.org/v2/competitions/CL/standings', env('APP_FootballAPIToken'));    }
+        FootballAPIController::getLeagueScoreboard_CL_ExternalAPI('https://api.football-data.org/v2/competitions/CL/standings', env('APP_FootballAPIToken'));    }
 
     public function get_league_scoreboard($season, $league)
     {

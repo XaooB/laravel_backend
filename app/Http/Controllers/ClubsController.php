@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Clubs;
 use App\Http\Resources\Clubs as ClubsResource;
 use App\Http\Controllers\Auth;
-use App\ExternalAPI\FootballAPIConnector;
+use App\Http\Controllers\FootballAPIController;
 use Illuminate\Support\Facades\DB;
 
 class ClubsController extends Controller
@@ -28,9 +28,9 @@ class ClubsController extends Controller
         //$clubs = Clubs::all();
         //return response()->json(ClubsResource::collection($clubs));
         // Spain League Clubs
-        FootballAPIConnector::getClubs_ExternalAPI('https://api.football-data.org/v2/competitions/PD/teams', 'a526814bc45a452ea371bec3ec82baaf');
+        FootballAPIController::getClubs_ExternalAPI('https://api.football-data.org/v2/competitions/PD/teams', 'a526814bc45a452ea371bec3ec82baaf');
         // UEFA Champions League Clubs
-        FootballAPIConnector::getClubs_ExternalAPI('https://api.football-data.org/v2/competitions/CL/teams', 'a526814bc45a452ea371bec3ec82baaf');
+        FootballAPIController::getClubs_ExternalAPI('https://api.football-data.org/v2/competitions/CL/teams', 'a526814bc45a452ea371bec3ec82baaf');
     }
 
     /**

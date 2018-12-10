@@ -8,7 +8,7 @@ use App\UpcomingMatches;
 use App\Http\Resources\UpcomingMatches as UpcomingMatchesResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
-use App\ExternalAPI\FootballAPIConnector;
+use App\Http\Controllers\FootballAPIController;
 use App\Http\Controllers\ClubsController;
 
 class UpcomingMatchesController extends Controller
@@ -21,7 +21,7 @@ class UpcomingMatchesController extends Controller
     public function index()
     {
         // Upcoming Matches
-        FootballAPIConnector::getUpcomingMatches_ExternalAPI('https://api.football-data.org/v2/teams/86/matches?status=SCHEDULED', env('APP_FootballAPIToken'));
+        FootballAPIController::getUpcomingMatches_ExternalAPI('https://api.football-data.org/v2/teams/86/matches?status=SCHEDULED', env('APP_FootballAPIToken'));
     }
 
     public function get_upcoming_matches($count)

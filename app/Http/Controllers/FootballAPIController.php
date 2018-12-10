@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\ExternalAPI;
+namespace App\Http\Controllers;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
@@ -16,7 +16,7 @@ use App\Players;
 use App\Http\Resources\Players as PlayersResource;
 use Illuminate\Support\Facades\DB;
 
-class FootballAPIConnector
+class FootballAPIController
 {
 	private static function getDataFromURL($url, $token)
 	{

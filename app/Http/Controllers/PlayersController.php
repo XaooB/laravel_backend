@@ -8,7 +8,7 @@ use App\Players;
 use App\Http\Resources\Players as PlayersResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
-use App\ExternalAPI\FootballAPIConnector;
+use App\Http\Controllers\FootballAPIController;
 use App\Http\Controllers\CloudinaryController;
 
 class PlayersController extends Controller
@@ -32,7 +32,7 @@ class PlayersController extends Controller
         //$players = Players::all();
         //return response()->json(PlayersResource::collection($players));
         // My Team Squad
-        FootballAPIConnector::getPlayers_ExternalAPI('https://api.football-data.org/v2/teams/' . env("APP_FootallAPIMyTeamID"), 'a526814bc45a452ea371bec3ec82baaf');
+        FootballAPIController::getPlayers_ExternalAPI('https://api.football-data.org/v2/teams/' . env("APP_FootallAPIMyTeamID"), 'a526814bc45a452ea371bec3ec82baaf');
     }
 
     public function get_squad()

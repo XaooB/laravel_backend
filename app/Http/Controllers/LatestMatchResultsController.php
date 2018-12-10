@@ -8,7 +8,7 @@ use App\LatestMatchResults;
 use App\Http\Resources\LatestMatchResults as LatestMatchResultsResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
-use App\ExternalAPI\FootballAPIConnector;
+use App\Http\Controllers\FootballAPIController;
 use App\Http\Controllers\ClubsController;
 
 class LatestMatchResultsController extends Controller
@@ -21,7 +21,7 @@ class LatestMatchResultsController extends Controller
     public function index()
     {
         // Latest Match Result
-        FootballAPIConnector::getLatestMatchResult_ExternalAPI('https://api.football-data.org/v2/teams/86/matches?status=FINISHED', env('APP_FootballAPIToken'), 'FINISHED');
+        FootballAPIController::getLatestMatchResult_ExternalAPI('https://api.football-data.org/v2/teams/86/matches?status=FINISHED', env('APP_FootballAPIToken'), 'FINISHED');
     }
 
     public function get_latest_match_result(Request $request)
