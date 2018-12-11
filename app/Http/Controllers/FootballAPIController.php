@@ -242,6 +242,7 @@ class FootballAPIController
 				$latestMatchResult->idClubAway = $match->awayTeam->id;
 				$latestMatchResult->HomeClubScore = $match->score->fullTime->homeTeam;
 				$latestMatchResult->AwayClubScore = $match->score->fullTime->awayTeam;
+				$latestMatchResult->Type = $type;
 				$latestMatchResult->save();
 			}
 		}
