@@ -25,16 +25,16 @@ class CommentsController extends Controller
     }
 
     // Nesting whole comments in article -> only for normal users
-    public function buildComment($articleID, $mainCommentID, &$commentPart, $values)
+    public function buildComment($articleID, $mainCommentID, &$commentPart, $values, $type)
     {
-        $comments = DB::table('comments')->select('idComment as idcomment', 'idUser as user', 'Content as content', 'created_at as create_date', 'updated_at as modify_date', 'idSubReference as comments')->where('idReference', $articleID)->where('idSubReference', $mainCommentID)->whereIn('comments.Visible', $values)->orderBy('idSubReference', 'asc')->get();
+        $comments = DB::table('comments')->select('idComment as idcomment', 'idUser as user', 'Content as content', 'created_at as create_date', 'updated_at as modify_date', 'idSubReference as comments')->where('idReference', $articleID)->where('idSubReference', $mainCommentID)->where('Type', $type)->whereIn('comments.Visible', $values)->orderBy('idSubReference', 'asc')->get();
         foreach ($comments as $key => $comment) {
             UsersController::buildUserData($comment->user);
             array_push($commentPart, $comment);
             $subCommentsCount= DB::table('comments')->where('idReference', $articleID)->where('idSubReference', $comment->idcomment)->whereIn('comments.Visible', $values)->count();
             if($subCommentsCount > 0) {
                 $comment->comments = array();
-                $this->buildComment($articleID, $comment->idcomment, $comment->comments, $values);
+                $this->buildComment($articleID, $comment->idcomment, $comment->comments, $values, $type);
             }
             else $comment->comments = null;
         }
@@ -44,7 +44,7 @@ class CommentsController extends Controller
     public function get_article_comments($id)
     {
         $articleComments = array();
-        $this->buildComment($id, 0, $articleComments, [1]);
+        $this->buildComment($id, 0, $articleComments, [1], 'article');
         return response()->json($articleComments);
     }
 
@@ -69,23 +69,23 @@ class CommentsController extends Controller
         if($request->idarticle != null && $request->idreference != null && $request->content != null){
             $idUser = $_SESSION['iduser'];
             $comments = new Comments;
-            $comments->idArticle = $request->idarticle;
+            $comments->idReference = $request->idarticle;
             $comments->idUser = $_SESSION['iduser'];
-            $comments->idReference = $request->idreference;
+            $comments->idSubReference = $request->idreference;
             $comments->Content = $request->content;
-            if($comments->save()) { 
+            $comments->Type = 'article';
+            if($comments->save() && $request->idreference != 0) { 
                 $notification = new Notifications;
-                $notification->idUser = $_SESSION['iduser'];
+                $notification->idUser = DB::table('comments')->where('idReference', $request->idreference)->value('idUser');
                 $notification->idReference = $request->idreference;
-                $notification->idComment = DB::table('comments')->select('idComment')->where('idReference', $request->idarticle)->where('idUser', $idUser)->where('idSubReference', $request->idreference)->value('idComment');
+                $notification->idComment = DB::table('comments')->select('idComment')->where('idReference', $request->idarticle)->where('idUser', $_SESSION['iduser'])->where('idSubReference', $request->idreference)->value('idComment');
+                $notification->Type = 'article';
                 $notification->save();
-                return response()->json(['message' => 'success']); 
+                return response()->json(['status' => true, 'message' => 'success']);
             }
-            return response()->json(['status' => false]);
+            return response()->json(['status' => false, 'message' => 'failed']);
         }
-        return response()->json([
-            'status' => false,
-            'message' => 'connection failure']);
+        return response()->json(['status' => false, 'message' => 'connection fail']);
     }
 
     /**
@@ -123,7 +123,7 @@ class CommentsController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        if($request->name != null && $request->content != null){
+        if($request->content != null){
             if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', '=', 1)->update(['Content' => $request->content])) { return response()->json(['message' => 'success']); }
             else { return response()->json(['status' => false]); }
         }
@@ -156,7 +156,7 @@ class CommentsController extends Controller
     public function staff_get_article_comments($id)
     {
         $articleComments = array();
-        $this->buildComment($id, 0, $articleComments, [0,1]);
+        $this->buildComment($id, 0, $articleComments, [0,1], 'article');
         return response()->json($articleComments);
     }
 
