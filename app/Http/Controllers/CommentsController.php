@@ -67,7 +67,8 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->idarticle != null && $request->idreference != null && $request->content != null){
+        if($request->idarticle != null && $request->idreference != null && $request->content != null)
+        {
             $idUser = $_SESSION['iduser'];
             $comments = new Comments;
             $comments->idReference = $request->idarticle;
@@ -75,13 +76,18 @@ class CommentsController extends Controller
             $comments->idSubReference = $request->idreference;
             $comments->Content = $request->content;
             $comments->Type = 'article';
-            if($comments->save() && $request->idreference != 0) { 
-                $notification = new Notifications;
-                $notification->idUser = DB::table('comments')->where('idComment', $request->idreference)->value('idUser');
-                $notification->idReference = $request->idreference;
-                $notification->Type = 'article';
-                $notification->save();
-                return response()->json(['status' => true, 'message' => 'success']);
+            if($comments->save())
+            {
+                if($request->idreference != 0) {
+                    $notification = new Notifications;
+                    $notification->idUser = DB::table('comments')->where('idComment', $request->idreference)->value('idUser');
+                    $notification->idReference = $request->idreference;
+                    $notification->Type = 'article';
+                    $notification->save();
+                    return response()->json(['status' => true, 'message' => 'success']);
+                }
+                else
+                    return response()->json(['status' => true, 'message' => 'success']);
             }
             return response()->json(['status' => false, 'message' => 'failed']);
         }
