@@ -79,7 +79,6 @@ class CommentsController extends Controller
                 $notification = new Notifications;
                 $notification->idUser = DB::table('comments')->where('idReference', $request->idreference)->value('idUser');
                 $notification->idReference = $request->idreference;
-                $notification->idComment = DB::table('comments')->select('idComment')->where('idReference', $request->idarticle)->where('idUser', $_SESSION['iduser'])->where('idSubReference', $request->idreference)->value('idComment');
                 $notification->Type = 'article';
                 $notification->save();
                 return response()->json(['status' => true, 'message' => 'success']);
