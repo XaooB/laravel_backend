@@ -38,7 +38,7 @@ class LoginController extends Controller
      */
     //protected $redirectTo = '/home';
 
-    protected $access_token = "";
+    protected $email = "";
 
     /**
      * Create a new controller instance.
@@ -68,7 +68,7 @@ class LoginController extends Controller
                     'reason' => DB::table('user_blockades')->select('Reason')->where('idUser', DB::table('users')->select('id')->where('provider_id', $user->id)->value('id'))->value('Reason')]);
             }
         $authUser = $this->findOrCreateUser($user, $provider);
-        $userData = DB::table('users')->select('users.id', 'users.Name', 'users.Email', 'users.Image', 'privileges.Name as Privileges', 'statuses.Name as Status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->join('statuses', 'users.idStatus', '=', 'statuses.idStatus')->where('remember_token', $this->access_token)->first();
+        $userData = DB::table('users')->select('users.id', 'users.Name', 'users.Email', 'users.Image', 'privileges.Name as Privileges', 'statuses.Name as Status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->join('statuses', 'users.idStatus', '=', 'statuses.idStatus')->where('Email', $this->email)->first();
         $_SESSION['iduser'] = $userData->id;
         $_SESSION['name'] = $userData->Name;
         $_SESSION['email'] = $userData->Email;
@@ -83,32 +83,23 @@ class LoginController extends Controller
 
     public function findOrCreateUser($user)
     {
-        $authUser = User::where('provider_id', $user->id)->first();
-        // if user do exist in database
-        if($authUser) { 
-            $this->access_token = $user->token;
-            User::where('provider_id', $user->id)->update(['remember_token' => $user->token]);
-            return $authUser; }
-        // if user doesnt exist in database
-        else {
+        if(User::where('Email', $user->email)->count())
+        {
+            //
+        }
+        else
+        {
             User::create([
                 'name' => explode('@', $user->email)[0],
-                'password' => null,
                 'email' => $user->email,
                 'provider' => 'GOOGLE', //'provider' => strtoupper($provider),
                 'provider_id' => $user->id,
                 'image' => $user->avatar,
                 'idprivilege' => 1,
                 'idstatus' => 1]);
-            User::where('provider_id', $user->id)->update(['remember_token' => $user->token]);
-            $authUser = User::where('provider_id', $user->id)->first();
-            if($authUser) { 
-                $id = User::select('id')->where('provider_id', $user->id)->value('id');
-                File::MakeDirectory(public_path('images') . '/users/' . $id);
-                $this->access_token = $user->token;
-                return $authUser; 
-            }
         }
+        $this->email = $user->email;
+        return $user; 
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

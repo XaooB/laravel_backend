@@ -16,14 +16,12 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('Name', 45)->unique();
-            $table->string('Password', 256)->nullable()->default(null);
             $table->string('Email', 90)->unique();
             $table->string('Image', 256)->default('http://pw-inz.cba.pl/inz_be/public/images/default_icon.png');
             $table->string('provider')->nullable();
             $table->string('provider_id')->nullable();
             $table->unsignedInteger('idPrivilege')->default(1);
             $table->unsignedInteger('idStatus')->default(1);
-            $table->rememberToken();
             $table->timestamps();
             $table->foreign('idPrivilege')->references('idPrivilege')->on('privileges')->onDelete('cascade');
             $table->foreign('idStatus')->references('idStatus')->on('statuses')->onDelete('cascade');
