@@ -9,6 +9,7 @@ use App\Http\Resources\Comments as CommentsResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UsersController;
+use App\Notifications;
 
 if(!isset($_SESSION)) { session_start(); } 
 
