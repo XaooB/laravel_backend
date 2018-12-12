@@ -77,7 +77,7 @@ class CommentsController extends Controller
             $comments->Type = 'article';
             if($comments->save() && $request->idreference != 0) { 
                 $notification = new Notifications;
-                $notification->idUser = DB::table('comments')->where('idReference', $request->idreference)->value('idUser');
+                $notification->idUser = DB::table('comments')->where('idComment', $request->idreference)->value('idUser');
                 $notification->idReference = $request->idreference;
                 $notification->Type = 'article';
                 $notification->save();
