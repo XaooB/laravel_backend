@@ -17,8 +17,9 @@ class CloudinaryController extends Controller
     $currentImageId = explode('/' . $table . '/', $currentUrl);
     Cloudder::destroyImage($currentUrl);
     Cloudder::delete(substr($currentImageId[1], 0, -4), ['folder' => $table]);*/
+    $image_url = ValidatorController::insertStringInsideString($image_url, 's', 4);
     DB::table($table)->where($column, $id)->update(['Image' => $image_url]);
-    if($table == 'users')
+    if($table == 'users' && isset($_SESSION['iduser']))
         $_SESSION['image'] = $image_url;
 	}
 
