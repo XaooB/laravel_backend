@@ -55,7 +55,7 @@ Route::group(['middleware' => 'apiresponse'], function() {
     Route::get('articles_most_viewed/{count}', 'ArticlesController@most_viewed')->name('articles.most_viewed');
     Route::get('articles_show_article/{id}', 'ArticlesController@show_article')->name('articles.show_article');
     Route::get('articles_show_neighbours/{id}', 'ArticlesController@show_neighbours')->name('articles.show_neighbours');
-    Route::get('articles_filtrate', 'ArticlesController@filtrate')->name('articles.filtrate');
+    Route::get('articles_filtrate/{count}', 'ArticlesController@filtrate')->name('articles.filtrate');
     // Comments routes
     Route::resource('comments', 'CommentsController')->only(['index']);
     Route::get('comments_get_comments/{id}', 'CommentsController@get_comments')->name('comments.get_comments');
@@ -98,7 +98,7 @@ Route::group(['middleware' => 'apiresponse'], function() {
     Route::get('latestmatchresult_get_latest_match_result', 'LatestMatchResultsController@get_latest_match_result')->name('latestmatchresult.get_latest_match_result');
 });
 
-// Secure API using token
+// Secure API using SESSION
 Route::group(['middleware' => 'apiauth'], function() {
     // Users routes
     Route::resource('users', 'UsersController')->except(['index']);
@@ -110,7 +110,7 @@ Route::group(['middleware' => 'apiauth'], function() {
     Route::resource('usersurveyanswers', 'UserSurveyAnswersController')->except(['index']);
     Route::get('usersurveyanswers_get_user_answer_to_survey/{id_user}/{id_survey}', 'UserSurveyAnswersController@get_user_answer_to_survey')->name('usersurveyanswers.get_user_answer_to_survey');
     // User article likes routes
-    Route::resource('userarticlelikes', 'UserArticleLikesController')->except(['index']);
+    Route::resource('userarticlelikes', 'UserLikesController')->except(['index']);
 
     // Restrict routes to Root/Admin or Moderator/Redactor privileges
     Route::group(['middleware' => 'checkprivilege', 'privileges' => ['root', 'administrator', 'moderator', 'redaktor']], function() {

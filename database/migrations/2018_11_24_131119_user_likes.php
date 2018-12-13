@@ -15,7 +15,7 @@ class UserArticleLikes extends Migration
     {
         Schema::create('user_likes', function (Blueprint $table) {
             $table->unsignedInteger('idUser');
-            $table->unsignedInteger('idArticle');
+            $table->unsignedInteger('idReference');
             $table->string('Type', 45);
             $table->string('Reaction', 15);
             $table->timestamps();
