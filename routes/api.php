@@ -37,8 +37,8 @@ Route::get('glogin',array('as'=>'glogin','uses'=>'UsersController@googleLogin'))
 Route::get('google-user',array('as'=>'user.glist','uses'=>'UsersController@listGoogleUser')) ;
 */
 
-Route::post('test', function() {
-    return response()->json($_POST);
+Route::get('test', function() {
+    
 });
 
 // Use middleware to allow Client-side use API

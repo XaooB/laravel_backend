@@ -20,6 +20,7 @@ use Session;
 use DateTime;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\CloudinaryController;
+use App\Http\Controllers\ValidatorController;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -145,9 +146,10 @@ class UsersController extends Controller
             CloudinaryController::uploadImage($path, $image_name, 'users', 'id', $_SESSION['iduser']);
             $msg = 'success';
         }
-        if($request->name != null)
+        $data = json_decode($request->getContent(), true);
+        if(ValidatorController::checkString($data['name']))
         {
-            if(User::where('Name', $request->name)->count() == 0 && User::where('id', $id)->where('id', $_SESSION['iduser'])->update(['Name' => $request->name]))
+            if(User::where('Name', $data['name'])->count() == 0 && User::where('id', $id)->where('id', $_SESSION['iduser'])->update(['Name' => $data['name']]))
             { $_SESSION['name'] = $request->name; $msg = 'success'; }
             else 
             { return response()->json(['message' => 'user with same name already exists']); }
@@ -180,20 +182,6 @@ class UsersController extends Controller
             }
         else 
             {return response()->json(['message' => 'connection failure']);}
-    }
-
-    public function get_images(Request $request)
-    {
-        if($_SESSION['iduser'] != null && $_SESSION['iduser'] != null && DB::table('users')->where('id', $_SESSION['iduser'])->count()){
-            $id = DB::table('users')->select('id')->where('id', $_SESSION['iduser'])->value('id');
-            $dir = public_path('images') . '/users/' . $id;
-            $userImages = array_diff(scandir($dir), array('.', '..'));
-            $images['images'] = array();
-            foreach ($userImages as $key => $image) {
-                array_push($images['images'], env("APP_PUBLIC_PATH", "http://pw-inz.cba.pl/inz_be/public") . '/images/users/' . $id . '/' . $image);
-            }
-            return response()->json($images);
-        }
     }
 
     public function get_notifications(Request $request)
@@ -328,45 +316,4 @@ class UsersController extends Controller
         }
         return response()->json(['message' => 'connection failure']);
     }
-
-    /*
-    public function googleLogin(Request $request)  
-    {
-        $google_redirect_url = route('glogin');
-        $gClient = new \Google_Client();
-        $gClient->setApplicationName(config('services.google.app_name'));
-        $gClient->setClientId(config('services.google.client_id'));
-        $gClient->setClientSecret(config('services.google.client_secret'));
-        $gClient->setRedirectUri($google_redirect_url);
-        $gClient->setDeveloperKey(config('services.google.api_key'));
-        $gClient->setScopes(array(
-             'https://www.googleapis.com/auth/plus.me',
-             'https://www.googleapis.com/auth/userinfo.email',
-             'https://www.googleapis.com/auth/userinfo.profile',));
-         $google_oauthV2 = new \Google_Service_Oauth2($gClient);
-        if ($request->get('code'))
-        {
-            $gClient->authenticate($request->get('code'));
-             $request->session()->put('token', $gClient->getAccessToken());
-        }
-        if ($request->session()->get('token')) { $gClient->setAccessToken($request->session()->get('token'));}
-        if ($gClient->getAccessToken())
-        {
-            $guser = $google_oauthV2->userinfo->get();  
-            $request->session()->put('name', $guser['name']);
-            if ($user =User::where('email',$guser['email'])->first()){ logged your user via auth login}
-            else{ register your user with response data }               
-            return redirect()->route('user.glist');          
-        } 
-        else
-        {
-            $authUrl = $gClient->createAuthUrl();
-            return redirect()->to($authUrl);
-        }
-    }
-    public function listGoogleUser(Request $request){
-        $users = User::orderBy('id','DESC')->paginate(5);
-        return view('users.list',compact('users'))->with('i', ($request->input('page', 1) - 1) * 5);;
-    }
-    */
 }

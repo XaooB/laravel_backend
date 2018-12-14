@@ -45,7 +45,8 @@ class UserLikesController extends Controller
     {
         $reaction = 'like'; // $request->reaction
         $type = 'article' // $request->type
-        if(in_array($reaction, $this->reactions) && $type != null && $request->idreference != null)
+        $data = json_decode($request->getContent(), true);
+        if(in_array($reaction, $this->reactions) && isset($type) && isset($request->idreference))
         {
             $userLike = new UserLikes;
             $userLike->idUser = $_SESSION['iduser'];
@@ -53,7 +54,10 @@ class UserLikesController extends Controller
             $userLike->Type = $type;
             $userLike->Reaction = $reaction;
             $userLike->save();
+            return response()->json(['status' => true, 'error' => '']);
         }
+        else
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     /**
@@ -92,11 +96,11 @@ class UserLikesController extends Controller
         if(in_array($reaction, $this->reactions))
         {
             if(UserLikes::where('idUser', $_SESSION['iduser'])->where('idReference', $id)->where('Type', $type)->update(['Reaction' => $reaction]))
-                return response()->json(['status' => true, 'message' => 'success']);
+                return response()->json(['status' => true, 'error' => '']);
             else
-                return response()->json(['status' => true, 'message' => 'failed']);
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
-        return response()->json(['status' => false, 'message' => 'connection fail']);
+        return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     /**
@@ -107,9 +111,11 @@ class UserLikesController extends Controller
      */
     public function destroy($id)
     {
+        $reaction = 'like'; // $request->reaction
+        $type = 'article'; // $request->type
         if(UserLikes::where('idUser', $_SESSION['iduser'])->where('Type', $type)->where('idReference', $id)->delete())
-            return response()->json(['status' => true, 'message' => 'success']);
+            return response()->json(['status' => true, 'error' => '']);
         else
-            return response()->json(['status' => true, 'message' => 'failed']);
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 }

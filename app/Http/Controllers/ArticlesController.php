@@ -56,6 +56,8 @@
                 $this->buildArticleData($articles, [1], 'articles.Main', [1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
                 return response()->json($articles);
             }
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         public function latest($count)
@@ -66,6 +68,8 @@
                 $this->buildArticleData($articles, [1], 'articles.Main', [0], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
                 return response()->json($articles);
             }
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         public function most_viewed($count)
@@ -76,6 +80,8 @@
                 $this->buildArticleData($articles, [1], 'articles.Main', [0], 'articles.Views', 'desc', $count, null, 'articles.Title', '');
                 return response()->json($articles);
             }
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         public function show_article($id)
@@ -88,7 +94,7 @@
                 return response()->json($articles);
             }
             else
-                return response()->json(['message' => 'wrong article id']);
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         public static function BuildNeighboursData($ids)
@@ -100,8 +106,8 @@
 
         public function show_neighbours($id)
         {
-            $idPrev = DB::table('articles')->select('idArticle')->where('idArticle', '<', $id)->orderBy('idArticle', 'desc')->where('articles.Visible', '!=', 0)->limit(1)->value('idArticle');
-            $idNext = DB::table('articles')->select('idArticle')->where('idArticle', '>', $id)->orderBy('idArticle', 'asc')->where('articles.Visible', '!=', 0)->limit(1)->value('idArticle');
+            $idPrev = DB::table('articles')->select('idArticle')->where('idArticle', '<', $id)->orderBy('idArticle', 'desc')->where('articles.Visible', 1)->limit(1)->value('idArticle');
+            $idNext = DB::table('articles')->select('idArticle')->where('idArticle', '>', $id)->orderBy('idArticle', 'asc')->where('articles.Visible', 1)->limit(1)->value('idArticle');
             if($idPrev && $idNext)
             {
                 $ids = [$idPrev, $id, $idNext];
@@ -110,30 +116,34 @@
             }
             elseif($idPrev)
             {
-                $idNext = DB::table('articles')->select('idArticle')->where('idArticle', '<', $idPrev)->orderBy('idArticle', 'desc')->where('articles.Visible', '!=', 0)->limit(1)->value('idArticle');
+                $idNext = DB::table('articles')->select('idArticle')->where('idArticle', '<', $idPrev)->orderBy('idArticle', 'desc')->where('articles.Visible', 1)->limit(1)->value('idArticle');
                 $ids = [$idPrev, $id, $idNext];
                 $articles = $this->BuildNeighboursData($ids);
                 return response()->json($articles);
             }
             elseif($idNext)
             {
-                $idPrev = DB::table('articles')->select('idArticle')->where('idArticle', '>', $idNext)->orderBy('idArticle', 'asc')->where('articles.Visible', '!=', 0)->limit(1)->value('idArticle');
+                $idPrev = DB::table('articles')->select('idArticle')->where('idArticle', '>', $idNext)->orderBy('idArticle', 'asc')->where('articles.Visible', 1)->limit(1)->value('idArticle');
                 $ids = [$idPrev, $id, $idNext];
                 $articles = $this->BuildNeighboursData($ids);
                 return response()->json($articles);
             }
-            return response()->json(['status' => false]);
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         public function filtrate($count, Request $request)
         {
-            if($request->phrase != null)
+            $data = json_decode($request->getContent(), true);
+            if(isset($data['phrase']))
             {
-                $fixedPhrase = $this->escapeLike($request->phrase);
+                $fixedPhrase = $this->escapeLike($data['phrase']);
                 $articles = array();
                 $this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', $fixedPhrase);
                 return response()->json($articles);
             }
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         /**
@@ -154,35 +164,39 @@
          */
         public function store(Request $request)
         {
-            if($request->category != null && $request->title != null && $request->content != null && $request->image != null)
+            $data = json_decode($request->getContent(), true);
+            if(isset($data['category']) && isset($data['title']) && isset($data['content']) && isset($data['image']))
             {
                 $articles = new Articles;
-                $articles->idCategory = DB::table('categories')->select('idCategory')->where('Name', $request->category)->value('idCategory');
+                $articles->idCategory = DB::table('categories')->select('idCategory')->where('Name', $data['category'])->value('idCategory');
                 $articles->idUser = $_SESSION['iduser'];
-                $articles->Title = $request->title;
-                $articles->Content = $request->content;
+                $articles->Title = $data['title'];
+                $articles->Content = $data['content'];
                 $articles->Views = 1;
-                if($request->main == true) { $articles->Main = 1; } else { $articles->Main = 0; }
+                $articles->Main = $request->main ? 1 : 0; 
                 if(Articles::where('Title', '=' , $articles->Title)->where('idCategory', '=' , $articles->idCategory)->where('idUser', '=' , $articles->idUser)->exists()) 
-                    {return response()->json(['status' => false]);}
-                else 
+                {
+                    return response()->json(['status' => false, 'error' => 'wrong data']);
+                }
+                else
+                {
+                    if($articles->save())
                     {
-                        if($articles->save()) 
-                        {
-                            $id = DB::table('articles')->select('idArticle')->where('Title', $articles->Title)->where('idUser', $articles->idUser)->where('Content', $articles->Content)->value('idArticle');
-                            $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
-                            $destinationFolder = public_path('images') . '/articles/';
-                            $request->file('image')->move($destinationFolder, $image_name);
-                            $path = $destinationFolder . $image_name;
-                            CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id);
-                            return response()->json(['message' => 'success']);
-                        }
-                        else
-                        { return response()->json(['status' => false]); } 
+                        $id = DB::table('articles')->select('idArticle')->where('Title', $articles->Title)->where('idUser', $articles->idUser)->where('Content', $articles->Content)->value('idArticle');
+                        $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
+                        $destinationFolder = public_path('images') . '/articles/';
+                        $request->file('image')->move($destinationFolder, $image_name);
+                        $path = $destinationFolder . $image_name;
+                        CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id);
+                        return response()->json(['status' => true, 'error' => '']);
                     }
-                return response()->json(['status' => false]);
+                    else
+                        return response()->json(['status' => false, 'error' => 'wrong data']);
+                }
+                return response()->json(['status' => false, 'error' => 'wrong data']);
             }
-            return response()->json(['status' => false]);
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         /**
@@ -220,25 +234,29 @@
                 Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
                 <input type="hidden" name="_method" value="PUT">
             */
-            if($request->category != null && $request->title != null && $request->content)
+            $data = json_decode($request->getContent(), true);
+            if(isset($data['category']) && isset($data['title']) && isset($data['content']))
             {
-                if($request->file('image') != null) {
+                if(isset($data['image']))
+                {
                     $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
                     $destinationFolder = public_path('images') . '/articles/';
                     $request->file('image')->move($destinationFolder, $image_name);
                     $path = $destinationFolder . $image_name;
                     CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id); 
                 }
-                if($request->main == true) { $articleMain = 1; } else { $articleMain = 0; }
-                if(Articles::where('idArticle', '=' , $id)->where('Visible', '!=', 0)->update([
-                    'idCategory' => DB::table('categories')->select('idCategory')->where('Name', $request->category)->value('idCategory'),
-                    'Title' => $request->title,
-                    'Content' => $request->content,
+                $articleMain = $request->main ? 1 : 0;
+                if(Articles::where('idArticle', '=' , $id)->where('Visible', 1)->update([
+                    'idCategory' => DB::table('categories')->select('idCategory')->where('Name', $data['category'])->value('idCategory'),
+                    'Title' => $data['title'],
+                    'Content' => $data['content'],
                     'Main' => $articleMain]))
-                    { return response()->json(['message' => 'success']); }
-                return response()->json(['status' => false]);
+                    return response()->json(['status' => true, 'error' => '']);
+                else
+                    return response()->json(['status' => false, 'error' => 'wrong data']);
             }
-            return response()->json(['status' => flase]);
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         /**
@@ -249,11 +267,10 @@
          */
         public function destroy(Request $request, $id)
         {
-            $iduser = $_SESSION['iduser'];
-            if(Articles::where('idArticle', '=' , $id)->where('idUser', '=' , $iduser)->where('Visible', '!=', 0)->update(['Visible' => 0])) {return response()->json(['message' => 'success']);}
-            else {return response()->json([
-                'status' => false,
-                'message' => 'connection failure']);}
+            if(Articles::where('idArticle', '=' , $id)->where('idUser', '=' , $_SESSION['iduser'])->where('Visible', 1)->update(['Visible' => 0])) 
+                return response()->json(['status' => true, 'error' => '']);
+            else 
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -268,7 +285,7 @@
                 return response()->json($articles);
             }
             else
-                return response()->json(['message' => 'wrong article id']);
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         // (only Content)
@@ -278,19 +295,23 @@
                 Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
                 <input type="hidden" name="_method" value="PUT">
             */
-            if($request->content)
+            $data = json_decode($request->getContent(), true);
+            if($data['content'])
             {
-                if(Articles::where('idArticle', '=' , $id)->update(['Content' => $request->content])) return response()->json(['message' => 'success']);
-                else return response()->json(['message' => 'connection failure']);
+                if(Articles::where('idArticle', '=' , $id)->update(['Content' => $data['content']])) 
+                    return response()->json(['status' => true, 'error' => '']);
+                else 
+                    return response()->json(['status' => false, 'error' => 'wrong data']);
             }
-            return response()->json(['status' => false]);
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
-        public function staff_change_article_visibility(Request $request, $id)
+        public function staff_change_article_visibility($id)
         {
-            if(Articles::where('idArticle', $id)->where('Visible', '!=', $request->visible)->update(['Visible' => $request->visible]))
-                return response()->json(['message' => 'success']);
+            if(DB::table('articles')->where('idArticle', $id)->update(['Visible' => DB::raw('ABS(Visible-1)')]))
+                return response()->json(['status' => true, 'error' => '']);
             else
-                return response()->json(['status' => false]);
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
     }

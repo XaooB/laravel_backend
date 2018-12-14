@@ -67,30 +67,30 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->idarticle != null && $request->idreference != null && $request->content != null)
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['idreference']) && (isset($data['idsubreference']) || $data['idsubreference'] == 0) && (isset($data['content']) && strlen($data['content']) <= 500))
         {
-            $idUser = $_SESSION['iduser'];
             $comments = new Comments;
-            $comments->idReference = $request->idarticle;
+            $comments->idReference = $data['idreference'];
             $comments->idUser = $_SESSION['iduser'];
-            $comments->idSubReference = $request->idreference;
-            $comments->Content = $request->content;
+            $comments->idSubReference = $data['idsubreference'];
+            $comments->Content = $data['content'];
             $comments->Type = 'article';
             if($comments->save())
             {
-                if($request->idreference > 0)
+                if($data['idsubreference'] > 0)
                 {
                     $notification = new Notifications;
-                    $notification->idUser = DB::table('comments')->where('idComment', $request->idreference)->value('idUser');
-                    $notification->idReference = $request->idreference;
+                    $notification->idUser = DB::table('comments')->where('idComment', $data['idsubreference'])->value('idUser');
+                    $notification->idReference = $data['idsubreference'];
                     $notification->Type = 'article';
                     $notification->save();
                 }
-                return response()->json(['status' => true, 'message' => 'success']);
+                return response()->json(['status' => true, 'error' => 'wrong data']);
             }
-            return response()->json(['status' => false, 'message' => 'failed']);
+            return response()->json(['status' => false, 'error' => 'wrong data']);
         }
-        return response()->json(['status' => false, 'message' => 'connection fail']);
+        return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     /**
@@ -128,13 +128,15 @@ class CommentsController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        if($request->content != null){
-            if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', '=', 1)->update(['Content' => $request->content])) { return response()->json(['message' => 'success']); }
-            else { return response()->json(['status' => false]); }
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['content']) && strlen($data['content']) <= 500){
+            if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', 1)->update(['Content' => $data['content']]))
+                return response()->json(['status' => true, 'error' => '']);
+            else 
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
-        return response()->json([
-            'status' => false,
-            'message' => 'connection failure']);
+        else
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     /**
@@ -149,11 +151,10 @@ class CommentsController extends Controller
             Aby wysłać dane (usunięcie) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="DELETE">
         */
-        if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', '=', 1)->update(['Visible' => 0]))  {return response()->json(['message' => 'success']);}
-        else { return response()->json(['status' => false]); }
-        return response()->json([
-            'status' => false,
-            'message' => 'connection failure']);
+        if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', 1)->update(['Visible' => 0]))  
+            return response()->json(['status' => true, 'error' => '']);
+        else 
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------
