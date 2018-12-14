@@ -48,13 +48,13 @@ class FootballAPIController
 			if(DB::table('league_scoreboards')->where('idClub', $clubStanding->team->id)->where('League', $competitionCode)->where('Season', $season)->count())
 			{
 				LeagueScoreboard::where('idClub', $clubStanding->team->id)->where('League', $competitionCode)->where('Season', $season)->update([
-                	'Position' => $clubStanding->position,
-                	'Matches' => $clubStanding->playedGames,
-                	'Won' => $clubStanding->won,
-                	'Draw' => $clubStanding->draw,
-                	'Lost' => $clubStanding->lost,
-                	'Points' => $clubStanding->points,
-                	'Group' => $group]);
+					'Position' => $clubStanding->position,
+					'Matches' => $clubStanding->playedGames,
+					'Won' => $clubStanding->won,
+					'Draw' => $clubStanding->draw,
+					'Lost' => $clubStanding->lost,
+					'Points' => $clubStanding->points,
+					'Group' => $group]);
 			}
 			// INSERT
 			else
@@ -91,13 +91,13 @@ class FootballAPIController
 				if(DB::table('league_scoreboards')->where('idClub', $clubStanding->team->id)->where('League', $competitionCode)->where('Season', $season)->count())
 				{
 					LeagueScoreboard::where('idClub', $clubStanding->team->id)->where('League', $competitionCode)->where('Season', $season)->update([
-                		'Position' => $clubStanding->position,
-                		'Matches' => $clubStanding->playedGames,
-                		'Won' => $clubStanding->won,
-                		'Draw' => $clubStanding->draw,
-                		'Lost' => $clubStanding->lost,
-                		'Points' => $clubStanding->points,
-                		'Group' => $group]);
+						'Position' => $clubStanding->position,
+						'Matches' => $clubStanding->playedGames,
+						'Won' => $clubStanding->won,
+						'Draw' => $clubStanding->draw,
+						'Lost' => $clubStanding->lost,
+						'Points' => $clubStanding->points,
+						'Group' => $group]);
 				}
 				// INSERT
 				else
@@ -131,15 +131,15 @@ class FootballAPIController
 				if($team->crestUrl != null)
 				{
 					Clubs::where('idClub', $team->id)->update([
-					'Name' => $team->name,
-					'ShortName' =>$team->shortName,
-					'Image' => $team->crestUrl]);
+						'Name' => $team->name,
+						'ShortName' =>$team->shortName,
+						'Image' => $team->crestUrl]);
 				}
 				else
 				{
 					Clubs::where('idClub', $team->id)->update([
-					'Name' => $team->name,
-					'ShortName' =>$team->shortName]);
+						'Name' => $team->name,
+						'ShortName' =>$team->shortName]);
 				}
 			}
 			// INSERT

@@ -38,7 +38,9 @@ Route::get('google-user',array('as'=>'user.glist','uses'=>'UsersController@listG
 */
 
 Route::get('test', function() {
-    
+    $data = DB::table('survey_sets')->where('idSurvey', 10)->pluck('idSurveySet');
+    var_dump(json_decode(json_encode($data), True));
+    return;
 });
 
 // Use middleware to allow Client-side use API
@@ -74,7 +76,6 @@ Route::group(['middleware' => 'apiresponse'], function() {
     Route::get('surveysets_get_latest', 'SurveySetsController@get_latest')->name('surveysets.get_latest');
     // User survey answers routes
     Route::resource('usersurveyanswers', 'UserSurveyAnswersController')->only(['index']);
-    Route::get('usersurveyanswers_get_users_answers_to_survey_count/{id_survey}', 'UserSurveyAnswersController@get_users_answers_to_survey_count')->name('usersurveyanswers.get_users_answers_to_survey_count');
     // Surveys routes
     Route::resource('surveys', 'SurveysController')->only(['index']);
     Route::get('surveys_get_survey/{id}', 'SurveysController@get_survey')->name('surveys.get_survey');
@@ -108,7 +109,7 @@ Route::group(['middleware' => 'apiauth'], function() {
     Route::resource('comments', 'CommentsController')->except(['index']);
     // User survey answers routes
     Route::resource('usersurveyanswers', 'UserSurveyAnswersController')->except(['index']);
-    Route::get('usersurveyanswers_get_user_answer_to_survey/{id_user}/{id_survey}', 'UserSurveyAnswersController@get_user_answer_to_survey')->name('usersurveyanswers.get_user_answer_to_survey');
+    Route::get('usersurveyanswers_get_user_answer_to_survey/{id_survey}', 'UserSurveyAnswersController@get_user_answer_to_survey')->name('usersurveyanswers.get_user_answer_to_survey');
     // User article likes routes
     Route::resource('userarticlelikes', 'UserLikesController')->except(['index']);
 

@@ -119,15 +119,15 @@ class InjuriesSuspensionsController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        if(InjuriesSuspensions::where('idInjurySuspension', '=' , $id)->update([
-            'idUser' => $request->iduser,
-            'idPlayer' => $request->idplayer,
-            'Type' => $request->type,
-            'Description' => $request->description,
-            'ReturnDate' => $request->returndate
-        ])) {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'failure']);}
-    }
+            if(InjuriesSuspensions::where('idInjurySuspension', '=' , $id)->update([
+                'idUser' => $request->iduser,
+                'idPlayer' => $request->idplayer,
+                'Type' => $request->type,
+                'Description' => $request->description,
+                'ReturnDate' => $request->returndate
+            ])) {return response()->json(['message' => 'success']);}
+                else {return response()->json(['message' => 'failure']);}
+            }
 
     /**
      * Remove the specified resource from storage.
@@ -141,7 +141,7 @@ class InjuriesSuspensionsController extends Controller
             Aby wysłać dane (usunięcie) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="DELETE">
         */
-        if(InjuriesSuspensions::where('idInjurySuspension', '=' , $id)->where('idUser', '=' , $request->iduser)->delete()) {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'failure']);}
+            if(InjuriesSuspensions::where('idInjurySuspension', '=' , $id)->where('idUser', '=' , $request->iduser)->delete()) {return response()->json(['message' => 'success']);}
+            else {return response()->json(['message' => 'failure']);}
+        }
     }
-}

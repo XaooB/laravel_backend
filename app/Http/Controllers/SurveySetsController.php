@@ -21,7 +21,7 @@ class SurveySetsController extends Controller
     {
         $surveyAnswers = DB::table('survey_sets')->leftJoin('user_survey_answers', 'user_survey_answers.idSurveySet', '=', 'survey_sets.idSurveySet')->select('survey_sets.idSurveySet as idsurveyset', 'survey_sets.Answer as answer', DB::raw('count(user_survey_answers.idSurveySet) as users_anwsers_count'))->groupBy('survey_sets.idSurveySet', 'survey_sets.Answer', 'user_survey_answers.idSurveySet')->where('survey_sets.idSurvey', $surveyID)->get();
         foreach ($surveyAnswers as $key => $surveyAnswer) {
-            array_push($survey, array('idsurveyset' => $surveyAnswer->idsurveyset, 'answer' => $surveyAnswer->answer, 'users_answers_cout' => $surveyAnswer->users_anwsers_count));
+            array_push($survey, array('idsurveyset' => $surveyAnswer->idsurveyset, 'answer' => $surveyAnswer->answer, 'answers_count' => $surveyAnswer->users_anwsers_count));
         }
     }
 
@@ -32,12 +32,12 @@ class SurveySetsController extends Controller
      */
     public function index()
     {
-        $surveys = DB::table('surveys')->select( 'idSurvey as idsurvey', 'Topic as topic')->get();
+        /*$surveys = DB::table('surveys')->select( 'idSurvey as idsurvey', 'Topic as topic')->get();
         foreach ($surveys as $key => $survey) {
             $survey->answers = array();
             $this->getAnswers($survey->answers, $survey->idsurvey);
         }
-        return response()->json($surveys);
+        return response()->json($surveys);*/
     }
 
     public function get_survey_set($id)
@@ -48,7 +48,7 @@ class SurveySetsController extends Controller
 
     public function get_latest()
     {
-        $latestSurvey = DB::table('surveys')->select('idSurvey as idsurvey', 'Topic as topic')->orderBy('idSurvey', 'desc')->take(1)->get();
+        $latestSurvey = DB::table('surveys')->select('idSurvey as idsurvey', 'Topic as topic')->orderBy('idSurvey', 'desc')->first();
         $latestSurvey[0]->answers = array();
         $this->getAnswers($latestSurvey[0]->answers, $latestSurvey[0]->idsurvey);
         return response()->json($latestSurvey[0]);
@@ -74,18 +74,28 @@ class SurveySetsController extends Controller
      */
     public function store(Request $request)
     {
-        foreach ($request->answer as $key => $answer) {
-            if(SurveySets::where('idSurvey', '=' , $request->idsurvey)->where('Answer', '=' , $answer)->exists()) 
-                {return response()->json(['message' => 'failure']);}
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['answer']))
+        {
+            foreach ($data['answer'] as $key => $answer)
+            {
+                if(SurveySets::where('idSurvey', $request->idsurvey)->where('Answer', $answer)->exists()) 
+                    return response()->json(['status' => false, 'error' => 'wrong data']);
+            }
+            foreach ($data['answer'] as $key => $answer)
+            {
+                $survey_set = new SurveySets;
+                $survey_set->idSurvey = $request->idsurvey;
+                $survey_set->Answer = $answer;
+                if($survey_set->save()) 
+                    { }
+                else
+                    return response()->json(['status' => false, 'error' => 'wrong data']);
+            }
+            return response()->json(['status' => true, 'error' => '']);
         }
-        foreach ($request->answer as $key => $answer) {
-            $survey_set = new SurveySets;
-            $survey_set->idSurvey = $request->idsurvey;
-            $survey_set->Answer = $answer;
-            if($survey_set->save()) {}
-            else {return response()->json(['message' => 'connection failure']);}
-        }
-        return response()->json(['message' => 'success']);
+        else
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     /**
@@ -123,8 +133,15 @@ class SurveySetsController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        if(SurveySets::where('idSurveySet', '=' , $id)->update(['Answer' => $request->answer])) {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'connection failure']);}
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['answer']))
+        {
+            if(SurveySets::where('idSurveySet', '=' , $id)->update(['Answer' => $data['answer']])) 
+                return response()->json(['status' => true, 'error' => '']);
+            else 
+                return response()->json(['status' => false, 'error' => 'wrong data']);
+        }
+        
     }
 
     /**
@@ -139,7 +156,9 @@ class SurveySetsController extends Controller
             Aby wysłać dane (usunięcie) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="DELETE">
         */
-        if(SurveySets::where('idSurveySet', '=' , $id)->delete()) {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'connection failure']);}
+        if(SurveySets::where('idSurveySet', '=' , $id)->delete()) 
+            return response()->json(['status' => true, 'error' => '']);
+        else 
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 }

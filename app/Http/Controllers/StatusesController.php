@@ -41,14 +41,20 @@ class StatusesController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->status != null){
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['status']))
             $statuses = new Statuses;
-            $statuses->Name = $request->status;
-            if(Statuses::where('Name', '=' , $statuses->Name)->exists()) { return response()->json(['message' => 'failure']); }
-            else {if($statuses->save()) { return response()->json(['message' => 'success']);} }
-            return response()->json(['message' => 'connection failure']);
+            $statuses->Name = $data['status'];
+            if(Statuses::where('Name', $statuses->Name)->exists()) 
+                return response()->json(['status' => false, 'error' => 'wrong data']);
+            else
+            {
+                if($statuses->save())
+                    return response()->json(['status' => true, 'error' => '']);
+            }
         }
-        return response()->json(['message' => 'failure']);
+        else
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     /**
@@ -86,8 +92,12 @@ class StatusesController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        if(Privileges::where('idStatus', '=' , $id)->update(['Name' => $request->status])) {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'failure']);}
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['status']))
+        if(Privileges::where('idStatus', $id)->update(['Name' => $data['status']]))
+            return response()->json(['status' => true, 'error' => '']);
+        else 
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     /**
@@ -102,7 +112,9 @@ class StatusesController extends Controller
             Aby wysłać dane (usunięcie) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="DELETE">
         */
-        if(Players::where('idStatus', '=' , $id)->delete()) {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'failure']);}
+        if(Players::where('idStatus', $id)->delete()) 
+            return response()->json(['status' => true, 'error' => '']);
+        else 
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 }

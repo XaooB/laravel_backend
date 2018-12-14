@@ -60,11 +60,23 @@ class SurveysController extends Controller
      */
     public function store(Request $request)
     {
-        $surveys = new Surveys;
-        $surveys->Topic = $request->topic;
-        if(Surveys::where('Topic', '=' , $request->topic)->exists()) {return response()->json(['message' => 'failure']);}
-        else {if($surveys->save()) {return response()->json(['message' => 'success']);}}
-        return response()->json(['message' => 'connection failure']);
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['topic']))
+        {
+            $surveys = new Surveys;
+            $surveys->Topic = $data['topic'];
+            if(Surveys::where('Topic', '=' , $request->topic)->exists()) 
+                return response()->json(['status' => false, 'error' => 'wrong data']);
+            else 
+            {
+                if($surveys->save())
+                    return response()->json(['status' => true, 'error' => '']);
+            }
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
+        }
+        else
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     /**
@@ -102,8 +114,15 @@ class SurveysController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        if(Surveys::where('idSurvey', '=' , $id)->update(['Topic' => $request->topic])) {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'connection failure']);}
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['topic']))
+        {
+            if(Surveys::where('idSurvey', $id)->update(['Topic' => $data['topic']]))
+                return response()->json(['status' => true, 'error' => '']);
+            else 
+                return response()->json(['status' => false, 'error' => 'wrong data']);
+        }
+        else
     }
 
     /**
@@ -118,8 +137,10 @@ class SurveysController extends Controller
             Aby wysłać dane (usunięcie) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="DELETE">
         */
-        if(Surveys::where('idSurvey', '=' , $id)->delete()) {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'connection failure']);}
+        if(Surveys::where('idSurvey', $id)->delete()) 
+            return response()->json(['status' => false, 'error' => 'wrong data']);
+        else 
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 }
 

@@ -85,16 +85,18 @@ class ClubsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->image != null)
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['image']))
         {
             $image_name = 'clubs' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
             $destinationFolder = public_path('images') . '/clubs/';
             $request->file('image')->move($destinationFolder, $image_name);
             $path = $destinationFolder . $image_name;
             CloudinaryController::uploadImage($path, $image_name, 'clubs', 'idClub', $id);
-            return response()->json(['message' => 'success']);
+            return response()->json(['status' => true, 'error' => '']);
         }
-        else { return response()->json(['status' => false]); }
+        else 
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     /**

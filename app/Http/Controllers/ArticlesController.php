@@ -1,42 +1,42 @@
 <?php
 
-    namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
-    use Illuminate\Http\Request;
-    use App\Http\Requests;
-    use App\Articles;
-    use App\Http\Resources\Articles as ArticlesResource;
-    use App\Http\Controllers\Auth;
-    use Illuminate\Support\Facades\DB;
-    use App\Http\Controllers\UsersController;
-    use App\Http\Controllers\CloudinaryController;
+use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Articles;
+use App\Http\Resources\Articles as ArticlesResource;
+use App\Http\Controllers\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\CloudinaryController;
 
-    if(!isset($_SESSION)) { session_start(); } 
+if(!isset($_SESSION)) { session_start(); } 
 
-    class ArticlesController extends Controller
+class ArticlesController extends Controller
+{
+    public static function buildArticleData(&$articles, $whereVisible, $whereInColumn, $whereInValues, $orderColumn, $orderValue, $quantity, $articleID, $filterColumn, $phrase)
     {
-        public static function buildArticleData(&$articles, $whereVisible, $whereInColumn, $whereInValues, $orderColumn, $orderValue, $quantity, $articleID, $filterColumn, $phrase)
+        if($articleID == null)
         {
-            if($articleID == null)
+            $articles = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->leftJoin('user_likes', 'user_likes.idReference', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idReference')->whereIn('articles.Visible', $whereVisible)->whereIn($whereInColumn, $whereInValues)->where($filterColumn, 'like', '%' . $phrase . '%')->orderBy($orderColumn, $orderValue)->limit($quantity)->get();
+            foreach ($articles as $key => $article) 
             {
-                $articles = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->leftJoin('user_likes', 'user_likes.idReference', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idReference')->whereIn('articles.Visible', $whereVisible)->whereIn($whereInColumn, $whereInValues)->where($filterColumn, 'like', '%' . $phrase . '%')->orderBy($orderColumn, $orderValue)->limit($quantity)->get();
-                foreach ($articles as $key => $article) 
-                {
-                    if(substr($article->content, -1) == '.') $article->content .= '..'; else $article->content .= '...';
-                    UsersController::buildUserData($article->user);
-                }
-            }
-            else
-            {
-                $articles = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->leftJoin('user_likes', 'user_likes.idReference', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idReference')->whereIn('articles.Visible', $whereVisible)->whereIn($whereInColumn, $whereInValues)->where('articles.idArticle', $articleID)->first();
-                UsersController::buildUserData($articles->user);
+                if(substr($article->content, -1) == '.') $article->content .= '..'; else $article->content .= '...';
+                UsersController::buildUserData($article->user);
             }
         }
+        else
+        {
+            $articles = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->leftJoin('user_likes', 'user_likes.idReference', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idReference')->whereIn('articles.Visible', $whereVisible)->whereIn($whereInColumn, $whereInValues)->where('articles.idArticle', $articleID)->first();
+            UsersController::buildUserData($articles->user);
+        }
+    }
 
-        public static function escapeLike($str) 
-        {
-            return str_replace(['\\', '%', '_'], ['\\\\', '\%', '\_'], $str);
-        }
+    public static function escapeLike($str) 
+    {
+        return str_replace(['\\', '%', '_'], ['\\\\', '\%', '\_'], $str);
+    }
 
         /**
          * Display a listing of the resource.
@@ -100,7 +100,7 @@
         public static function BuildNeighboursData($ids)
         {
             $articles = array();
-                self::buildArticleData($articles, [1], 'articles.idArticle', $ids, 'articles.idArticle', 'asc', 3, null, 'articles.Title', '');
+            self::buildArticleData($articles, [1], 'articles.idArticle', $ids, 'articles.idArticle', 'asc', 3, null, 'articles.Title', '');
             return $articles;
         }
 
@@ -174,7 +174,7 @@
                 $articles->Content = $data['content'];
                 $articles->Views = 1;
                 $articles->Main = $request->main ? 1 : 0; 
-                if(Articles::where('Title', '=' , $articles->Title)->where('idCategory', '=' , $articles->idCategory)->where('idUser', '=' , $articles->idUser)->exists()) 
+                if(Articles::where('Title', $articles->Title)->where('idCategory', $articles->idCategory)->where('idUser', $articles->idUser)->exists()) 
                 {
                     return response()->json(['status' => false, 'error' => 'wrong data']);
                 }
@@ -234,30 +234,30 @@
                 Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
                 <input type="hidden" name="_method" value="PUT">
             */
-            $data = json_decode($request->getContent(), true);
-            if(isset($data['category']) && isset($data['title']) && isset($data['content']))
-            {
-                if(isset($data['image']))
+                $data = json_decode($request->getContent(), true);
+                if(isset($data['category']) && isset($data['title']) && isset($data['content']))
                 {
-                    $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
-                    $destinationFolder = public_path('images') . '/articles/';
-                    $request->file('image')->move($destinationFolder, $image_name);
-                    $path = $destinationFolder . $image_name;
-                    CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id); 
+                    if(isset($data['image']))
+                    {
+                        $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
+                        $destinationFolder = public_path('images') . '/articles/';
+                        $request->file('image')->move($destinationFolder, $image_name);
+                        $path = $destinationFolder . $image_name;
+                        CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id); 
+                    }
+                    $articleMain = $request->main ? 1 : 0;
+                    if(Articles::where('idArticle', '=' , $id)->where('Visible', 1)->update([
+                        'idCategory' => DB::table('categories')->select('idCategory')->where('Name', $data['category'])->value('idCategory'),
+                        'Title' => $data['title'],
+                        'Content' => $data['content'],
+                        'Main' => $articleMain]))
+                        return response()->json(['status' => true, 'error' => '']);
+                        else
+                            return response()->json(['status' => false, 'error' => 'wrong data']);
+                    }
+                    else
+                        return response()->json(['status' => false, 'error' => 'wrong data']);
                 }
-                $articleMain = $request->main ? 1 : 0;
-                if(Articles::where('idArticle', '=' , $id)->where('Visible', 1)->update([
-                    'idCategory' => DB::table('categories')->select('idCategory')->where('Name', $data['category'])->value('idCategory'),
-                    'Title' => $data['title'],
-                    'Content' => $data['content'],
-                    'Main' => $articleMain]))
-                    return response()->json(['status' => true, 'error' => '']);
-                else
-                    return response()->json(['status' => false, 'error' => 'wrong data']);
-            }
-            else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
-        }
 
         /**
          * Remove the specified resource from storage.
@@ -295,23 +295,23 @@
                 Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
                 <input type="hidden" name="_method" value="PUT">
             */
-            $data = json_decode($request->getContent(), true);
-            if($data['content'])
-            {
-                if(Articles::where('idArticle', '=' , $id)->update(['Content' => $data['content']])) 
-                    return response()->json(['status' => true, 'error' => '']);
-                else 
+                $data = json_decode($request->getContent(), true);
+                if($data['content'])
+                {
+                    if(Articles::where('idArticle', '=' , $id)->update(['Content' => $data['content']])) 
+                        return response()->json(['status' => true, 'error' => '']);
+                    else 
+                        return response()->json(['status' => false, 'error' => 'wrong data']);
+                }
+                else
                     return response()->json(['status' => false, 'error' => 'wrong data']);
             }
-            else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
-        }
 
-        public function staff_change_article_visibility($id)
-        {
-            if(DB::table('articles')->where('idArticle', $id)->update(['Visible' => DB::raw('ABS(Visible-1)')]))
-                return response()->json(['status' => true, 'error' => '']);
-            else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+            public function staff_change_article_visibility($id)
+            {
+                if(DB::table('articles')->where('idArticle', $id)->update(['Visible' => DB::raw('ABS(Visible-1)')]))
+                    return response()->json(['status' => true, 'error' => '']);
+                else
+                    return response()->json(['status' => false, 'error' => 'wrong data']);
+            }
         }
-    }

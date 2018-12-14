@@ -42,14 +42,20 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->category != null){
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['category']))
+        {
             $categories = new Categories;
-            $categories->Name = $request->category;
-            if(Categories::where('Name', '=' , $categories->category)->exists()) { return response()->json(['message' => 'connection failure']); }
-            else {if($categories->save()) { return response()->json(['message' => 'success']);} }
-            return response()->json(['message' => 'failure']);
+            $categories->Name = $data['category'];
+            if(Categories::where('Name', $data['category'])->exists()) 
+                return response()->json(['status' => false, 'error' => 'wrong data']);
+            else
+            {
+                if($categories->save())
+                    return response()->json(['status' => true, 'error' => '']);
+            }
         }
-        return response()->json(['message' => 'connection failure']);
+        return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     /**
@@ -87,12 +93,17 @@ class CategoriesController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        if($request->category != null){
-            if(Categories::where('idCategory', '=' , $id)->update(['Name' => $request->category])) { return response()->json(['message' => 'success']); }
-        else { return response()->json(['message' => 'failure']); }
+            $data = json_decode($request->getContent(), true);
+            if(isset($data['category']))
+            {
+                if(Categories::where('idCategory', $id)->update(['Name' => $data['category']]))
+                    return response()->json(['status' => true, 'error' => '']);
+                else
+                    return response()->json(['status' => false, 'error' => 'wrong data']);
+            }
+            else 
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
-        return response()->json(['message' => 'connection failure']);
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -106,7 +117,9 @@ class CategoriesController extends Controller
             Aby wysłać dane (usunięcie) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="DELETE">
         */
-        if(Categories::where('idCategory', '=' , $id)->delete()) {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'failure']);}
+            if(Categories::where('idCategory', $id)->delete())
+                return response()->json(['status' => true, 'error' => '']);
+            else 
+                return response()->json(['status' => false, 'error' => 'wrong data']);
+        }
     }
-}

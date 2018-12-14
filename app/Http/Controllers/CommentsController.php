@@ -86,11 +86,14 @@ class CommentsController extends Controller
                     $notification->Type = 'article';
                     $notification->save();
                 }
-                return response()->json(['status' => true, 'error' => 'wrong data']);
+                else
+                    return response()->json(['status' => true, 'error' => 'wrong data']);
             }
-            return response()->json(['status' => false, 'error' => 'wrong data']);
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
-        return response()->json(['status' => false, 'error' => 'wrong data']);
+        else
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     /**
@@ -128,16 +131,16 @@ class CommentsController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        $data = json_decode($request->getContent(), true);
-        if(isset($data['content']) && strlen($data['content']) <= 500){
-            if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', 1)->update(['Content' => $data['content']]))
-                return response()->json(['status' => true, 'error' => '']);
-            else 
+            $data = json_decode($request->getContent(), true);
+            if(isset($data['content']) && strlen($data['content']) <= 500){
+                if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', 1)->update(['Content' => $data['content']]))
+                    return response()->json(['status' => true, 'error' => '']);
+                else 
+                    return response()->json(['status' => false, 'error' => 'wrong data']);
+            }
+            else
                 return response()->json(['status' => false, 'error' => 'wrong data']);
         }
-        else
-            return response()->json(['status' => false, 'error' => 'wrong data']);
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -151,26 +154,26 @@ class CommentsController extends Controller
             Aby wysłać dane (usunięcie) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="DELETE">
         */
-        if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', 1)->update(['Visible' => 0]))  
-            return response()->json(['status' => true, 'error' => '']);
-        else 
-            return response()->json(['status' => false, 'error' => 'wrong data']);
-    }
+            if(Comments::where('idComment', '=' , $id)->where('idUser', $_SESSION['iduser'])->where('Visible', 1)->update(['Visible' => 0]))  
+                return response()->json(['status' => true, 'error' => '']);
+            else 
+                return response()->json(['status' => false, 'error' => 'wrong data']);
+        }
 
     // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------
     // $id = article id -> only for staff
-    public function staff_get_article_comments($id)
-    {
-        $articleComments = array();
-        $this->buildComment($id, 0, $articleComments, [0,1], 'article');
-        return response()->json($articleComments);
-    }
+        public function staff_get_article_comments($id)
+        {
+            $articleComments = array();
+            $this->buildComment($id, 0, $articleComments, [0,1], 'article');
+            return response()->json($articleComments);
+        }
 
-    public function staff_change_comment_visibility(Request $request, $id)
-    {
-        if(Comments::where('idComment', $id)->where('Visible', '!=', $request->visible)->update(['Visible' => $request->visible]))
-            return response()->json(['message' => 'success']);
-        else
-            return response()->json(['status' => false]);
+        public function staff_change_comment_visibility(Request $request, $id)
+        {
+            if(DB::table('comments')->where('idComment', $id)->update(['Visible' => DB::raw('ABS(Visible-1)')]))
+                return response()->json(['status' => true, 'error' => '']);
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
+        }
     }
-}

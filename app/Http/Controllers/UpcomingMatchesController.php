@@ -26,6 +26,7 @@ class UpcomingMatchesController extends Controller
 
     public function get_upcoming_matches($count)
     {
+        $upcoming_matches = array();
         $upcoming_matches = DB::table('upcoming_matches')->select('League as league', 'Date as date', 'Location as location', 'idClub as club')->where('upcoming_matches.Date', '>', DB::raw('NOW()'))->orderBy('upcoming_matches.Date', 'asc')->limit($count)->get();
         foreach ($upcoming_matches as $key => $match) {
             ClubsController::buildClubData($match->club);

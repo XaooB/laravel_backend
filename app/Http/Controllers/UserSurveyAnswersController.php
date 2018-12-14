@@ -9,6 +9,8 @@ use App\Http\Resources\UserSurveyAnswers as UserSurveyAnswersResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 
+if(!isset($_SESSION)) { session_start(); } 
+
 class UserSurveyAnswersController extends Controller
 {
     /**
@@ -21,31 +23,17 @@ class UserSurveyAnswersController extends Controller
         //
     }
 
-    public function get_user_answer_to_survey($id_user, $id_survey)
+    public function get_user_answer_to_survey($id_survey)
     {
         $dataArray = array();
-        $survey_set = DB::table('survey_sets')->select('idSurveySet')->where('idSurvey', '=', $id_survey)->pluck('idSurveySet');
-        $user_answerId = DB::table('user_survey_answers')->select('idSurveySet')->whereIn('idSurveySet', $survey_set)->where('idUser', $id_user)->value('idSurveySet');
+        $survey_set = DB::table('survey_sets')->select('idSurveySet')->where('idSurvey', $id_survey)->pluck('idSurveySet');
+        $user_answerId = DB::table('user_survey_answers')->select('idSurveySet')->whereIn('idSurveySet', $survey_set)->where('idUser', $_SESSION['iduser'])->value('idSurveySet');
         $user_answer = DB::table('survey_sets')->select('Answer')->where('idSurveySet', '=', $user_answerId)->value('Answer');
-        $date = DB::table('user_survey_answers')->select('created_at')->whereIn('idSurveySet', $survey_set)->where('idUser', $id_user)->value('created_at');
+        $date = DB::table('user_survey_answers')->select('created_at')->whereIn('idSurveySet', $survey_set)->where('idUser', $_SESSION['iduser'])->value('created_at');
         $data = array(
             'user_answer' => $user_answer,
             'date' => $date);
         array_push($dataArray, $data);
-        return response()->json($dataArray);
-    }
-
-    public function get_users_answers_to_survey_count($id_survey)
-    {
-        $dataArray = array();
-        $currentIndex = 0;
-        $survey_setIds = DB::table('survey_sets')->select('idSurveySet')->where('idSurvey', '=', $id_survey)->pluck('idSurveySet');
-        $survey_setAnswers = DB::table('survey_sets')->select('Answer')->where('idSurvey', '=', $id_survey)->pluck('Answer');
-        foreach ($survey_setIds as $key => $surveySetId) {
-            $userSurveyAnswersCount = DB::table('user_survey_answers')->where('idSurveySet', '=', $surveySetId)->count();
-            $dataOne = array('answer' => $survey_setAnswers[$currentIndex++], 'count' => $userSurveyAnswersCount);
-            array_push($dataArray, $dataOne);
-        }
         return response()->json($dataArray);
     }
 
@@ -113,9 +101,9 @@ class UserSurveyAnswersController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-        if(UserSurveyAnswers::where('idUser', '=' , $id)->update(['idSurveySet' => $request->idsurveyset])) {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'connection failure']);}
-    }
+            if(UserSurveyAnswers::where('idUser', '=' , $id)->update(['idSurveySet' => $request->idsurveyset])) {return response()->json(['message' => 'success']);}
+            else {return response()->json(['message' => 'connection failure']);}
+        }
 
     /**
      * Remove the specified resource from storage.
