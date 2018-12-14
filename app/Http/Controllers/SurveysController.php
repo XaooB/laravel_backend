@@ -121,6 +121,7 @@ class SurveysController extends Controller
                 return response()->json(['status' => false, 'error' => 'wrong data']);
         }
         else
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     /**
