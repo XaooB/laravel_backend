@@ -72,8 +72,6 @@ class SurveysController extends Controller
                 if($surveys->save())
                     return response()->json(['status' => true, 'error' => '']);
             }
-            else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
         else
             return response()->json(['status' => false, 'error' => 'wrong data']);
