@@ -28,7 +28,7 @@ class CommentsController extends Controller
     // Nesting whole comments in article -> only for normal users
     public function buildComment($articleID, $mainCommentID, &$commentPart, $values, $type)
     {
-        $comments = DB::table('comments')->select('idComment as idcomment', 'idUser as user', 'Content as content', 'created_at as create_date', 'updated_at as modify_date', 'idSubReference as comments')->where('idReference', $articleID)->where('idSubReference', $mainCommentID)->where('Type', $type)->whereIn('comments.Visible', $values)->orderBy('idSubReference', 'desc')->get();
+        $comments = DB::table('comments')->select('idComment as idcomment', 'idUser as user', 'Content as content', 'created_at as create_date', 'updated_at as modify_date', 'idSubReference as comments')->where('idReference', $articleID)->where('idSubReference', $mainCommentID)->where('Type', $type)->whereIn('comments.Visible', $values)->orderBy('idComment', 'desc')->get();
         foreach ($comments as $key => $comment) {
             UsersController::buildUserData($comment->user);
             array_push($commentPart, $comment);
@@ -87,7 +87,7 @@ class CommentsController extends Controller
                     $notification->save();
                 }
                 else
-                    return response()->json(['status' => true, 'error' => 'wrong data']);
+                    return response()->json(['status' => true, 'error' => '']);
             }
             else
                 return response()->json(['status' => false, 'error' => 'wrong data']);
