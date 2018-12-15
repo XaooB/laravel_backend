@@ -35,7 +35,7 @@ class CommentsController extends Controller
             $subCommentsCount= DB::table('comments')->where('idReference', $articleID)->where('idSubReference', $comment->idcomment)->whereIn('comments.Visible', $values)->count();
             if($subCommentsCount > 0) {
                 $comment->comments = array();
-                $this->buildComment($articleID, $comment->idcomment, $comment->comments, $values, $type, 'idSubReference', 'asc');
+                $this->buildComment($articleID, $comment->idcomment, $comment->comments, $values, $type, 'idComment', 'asc');
             }
             else $comment->comments = null;
         }
