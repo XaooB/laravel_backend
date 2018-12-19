@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\UserLikes;
-use App\Http\Resources\UserSurveyAnswers as UserSurveyAnswersResource;
+use App\Http\Resources\UserLikes as UserLikesResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -44,10 +44,12 @@ class UserLikesController extends Controller
     public function store(Request $request)
     {
         $reaction = 'like'; // $request->reaction
-        $type = 'article' // $request->type
+        $type = 'article'; // $request->type
         $data = json_decode($request->getContent(), true);
-        if(in_array($reaction, $this->reactions) && isset($type) && isset($request->idreference))
+        if(in_array($reaction, $this->reactions) && isset($type) && isset($data['idreference']))
         {
+            if(DB::table('user_likes')->where('Type', 'article')->where('Reaction', 'like')->where('idReference', $data['idreference'])->where('idUser', $_SESSION['iduser'])->count())
+                return response()->json(['status' => false, 'error' => 'wrong data']);
             $userLike = new UserLikes;
             $userLike->idUser = $_SESSION['iduser'];
             $userLike->idReference = $request->idreference;

@@ -111,7 +111,7 @@ Route::group(['middleware' => 'apiauth'], function() {
     Route::resource('usersurveyanswers', 'UserSurveyAnswersController')->except(['index']);
     Route::get('usersurveyanswers_get_user_answer_to_survey/{id_survey}', 'UserSurveyAnswersController@get_user_answer_to_survey')->name('usersurveyanswers.get_user_answer_to_survey');
     // User article likes routes
-    Route::resource('userarticlelikes', 'UserLikesController')->except(['index']);
+    Route::resource('userlikes', 'UserLikesController')->except(['index']);
 
     // Restrict routes to Root/Admin or Moderator/Redactor privileges
     Route::group(['middleware' => 'checkprivilege', 'privileges' => ['root', 'administrator', 'moderator', 'redaktor']], function() {

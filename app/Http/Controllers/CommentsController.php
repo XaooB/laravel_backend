@@ -76,6 +76,7 @@ class CommentsController extends Controller
             $comments->idSubReference = $data['idsubreference'];
             $comments->Content = $data['content'];
             $comments->Type = 'article';
+            $comments->updated_at = null;
             if($comments->save())
             {
                 if($data['idsubreference'] > 0)

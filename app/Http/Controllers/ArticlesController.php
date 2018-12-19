@@ -91,7 +91,24 @@ class ArticlesController extends Controller
                 $articles = '';
                 $this->buildArticleData($articles, [1], 'Main', [0, 1], 'articles.idArticle', 'asc', 1, $id, 'articles.Title', '');
                 Articles::where('idArticle', $id)->increment('Views', 1);
-                return response()->json($articles);
+                if(isset($_SESSION['iduser']))
+                {
+                    if(DB::table('user_likes')->where('Type', 'article')->where('Reaction', 'like')->where('idReference', $id)->where('idUser', $_SESSION['iduser'])->count())
+                    {
+                        $articles->liked = true;
+                        return response()->json($articles);
+                    }
+                    else
+                    {
+                        $articles->liked = false;
+                        return response()->json($articles);
+                    }
+                }
+                else
+                {
+                    $articles->liked = false;
+                    return response()->json($articles);
+                }
             }
             else
                 return response()->json(['status' => false, 'error' => 'wrong data']);
