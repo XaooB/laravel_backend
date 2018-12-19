@@ -86,6 +86,7 @@ class CommentsController extends Controller
                     $notification->idReference = $data['idsubreference'];
                     $notification->Type = 'article';
                     $notification->save();
+                    return response()->json(['status' => true, 'error' => '']);
                 }
                 else
                     return response()->json(['status' => true, 'error' => '']);
