@@ -16,6 +16,7 @@ class Privileges extends Migration
         Schema::create('privileges', function (Blueprint $table) {
             $table->increments('idPrivilege');
             $table->string('Name');
+            $table->tinyInteger('Tier');
             $table->timestamps();
         });
     }

@@ -16,7 +16,8 @@ class Privileges extends Resource
     {
         return [
             'idprivilege' => $this->idPrivilege,
-            'name' => $this->Name
+            'name' => $this->Name,
+            'tier' => $this->Tier
         ];
     }
 }
