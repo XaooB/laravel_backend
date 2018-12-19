@@ -13,7 +13,7 @@ return [
     */
    
     'supportsCredentials' => false,
-    'allowedOrigins' => ['portal-wertykalny.herokuapp.com'],
+    'allowedOrigins' => ['*'], //portal-wertykalny.herokuapp.com
     'allowedOriginsPatterns' => [],
     'allowedHeaders' => ['*'],
     'allowedMethods' => ['*'],
