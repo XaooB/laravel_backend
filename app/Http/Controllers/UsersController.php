@@ -191,13 +191,18 @@ class UsersController extends Controller
             $id = $_SESSION['iduser'];
             if($id && $request->from && $request->count)
             {
+                $notifications = array();
                 $notifications = Notifications::where('idUser', $id)->skip($request->from)->take($request->count);
                 foreach ($notifications as $key => $notification) {
                     $this->buildUserData($notification->idUser);
                 }
+                return response()->json($notifications);
             }
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
-        
+        else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------
