@@ -188,14 +188,10 @@ class UsersController extends Controller
     {
         if(isset($_SESSION['iduser']))
         {
-            $id = $_SESSION['iduser'];
-            if($id && $request->from && $request->count)
+            if($request->from && $request->count)
             {
                 $notifications = array();
-                $notifications = Notifications::where('idUser', $id)->skip($request->from)->take($request->count);
-                foreach ($notifications as $key => $notification) {
-                    $this->buildUserData($notification->idUser);
-                }
+                $notifications = DB::table('notifications')->select('idReference as reference')->groupBy('idReference')->get();
                 return response()->json($notifications);
             }
             else

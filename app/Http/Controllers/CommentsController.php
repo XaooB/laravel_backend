@@ -77,12 +77,13 @@ class CommentsController extends Controller
             $comments->Content = $data['content'];
             $comments->Type = 'article';
             $comments->updated_at = null;
+            $userID = DB::table('comments')->where('idReference', $comments->idSubReference)->value('idUser');
             if($comments->save())
             {
-                if($data['idsubreference'] > 0)
+                if($data['idsubreference'] > 0 && $_SESSION['iduser'] != $userID)
                 {
                     $notification = new Notifications;
-                    $notification->idUser = DB::table('comments')->where('idComment', $data['idsubreference'])->value('idUser');
+                    $notification->idUser = $userID;
                     $notification->idReference = $data['idsubreference'];
                     $notification->Type = 'article';
                     $notification->save();
