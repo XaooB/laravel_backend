@@ -84,7 +84,7 @@ class CommentsController extends Controller
                 {
                     $notification = new Notifications;
                     $notification->idUser = $userID;
-                    $notification->idReference = $data['idsubreference'];
+                    $notification->idReference = $data['idreference'];
                     $notification->Type = 'article';
                     $notification->save();
                     return response()->json(['status' => true, 'error' => '']);
