@@ -28,15 +28,6 @@ Route::group(['middleware' => ['web']], function () {
     });
 });
 
-/*
-Route::post('login', 'PassportController@login');
-Route::post('register', 'PassportController@register');
-Route::group(['middleware' => 'auth:api'], function(){Route::post('get-details', 'PassportController@get_details');});
-
-Route::get('glogin',array('as'=>'glogin','uses'=>'UsersController@googleLogin')) ;
-Route::get('google-user',array('as'=>'user.glist','uses'=>'UsersController@listGoogleUser')) ;
-*/
-
 Route::get('test', function() {
     $data = DB::table('survey_sets')->where('idSurvey', 10)->pluck('idSurveySet');
     var_dump(json_decode(json_encode($data), True));
