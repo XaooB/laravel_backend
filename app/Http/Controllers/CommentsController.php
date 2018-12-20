@@ -77,7 +77,7 @@ class CommentsController extends Controller
             $comments->Content = $data['content'];
             $comments->Type = 'article';
             $comments->updated_at = null;
-            $userID = DB::table('comments')->where('idReference', $comments->idSubReference)->value('idUser');
+            $userID = DB::table('comments')->where('idReference', $data['idsubreference'])->value('idUser');
             if($comments->save())
             {
                 if($data['idsubreference'] > 0 && $_SESSION['iduser'] != $userID)
