@@ -188,14 +188,9 @@ class UsersController extends Controller
     {
         if(isset($_SESSION['iduser']))
         {
-            if($request->from && $request->count)
-            {
-                $notifications = array();
-                $notifications = DB::table('notifications')->select('idReference as reference')->groupBy('idReference')->get();
-                return response()->json($notifications);
-            }
-            else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+            $notifications = array();
+            $notifications = DB::table('notifications')->select('idReference as reference')->groupBy('idReference')->get();
+            return response()->json($notifications);
         }
         else
                 return response()->json(['status' => false, 'error' => 'wrong data']);
