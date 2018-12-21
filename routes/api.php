@@ -88,6 +88,7 @@ Route::group(['middleware' => 'apiresponse'], function() {
     // Latest matche result routes
     Route::resource('latestmatchresult', 'LatestMatchResultsController')->only(['index']);
     Route::get('latestmatchresult_get_latest_match_result', 'LatestMatchResultsController@get_latest_match_result')->name('latestmatchresult.get_latest_match_result');
+    Route::get('latestmatchresult_get_live_match_result', 'LatestMatchResultsController@get_live_match_result')->name('latestmatchresult.get_live_match_result');
 });
 
 // Secure API using SESSION
