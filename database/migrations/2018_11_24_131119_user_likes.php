@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UserArticleLikes extends Migration
+class UserLikes extends Migration
 {
     /**
      * Run the migrations.
@@ -19,8 +19,8 @@ class UserArticleLikes extends Migration
             $table->string('Type', 45);
             $table->string('Reaction', 15);
             $table->timestamps();
-            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');;
-            $table->foreign('idArticle')->references('idArticle')->on('articles')->onDelete('cascade');;
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('idReference')->references('idArticle')->on('articles')->onDelete('cascade');
         });
     }
 

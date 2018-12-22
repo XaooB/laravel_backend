@@ -29,12 +29,14 @@ class UsersController extends Controller
     public static function buildUserData(&$user)
     {
         $userID = $user;
-        if(DB::table('users')->where('id', $userID)->count())
+        if(DB::table('users')->where('id', $userID)->count() > 0)
         {
             $user = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at as create_date')->where('id', '=', $userID)->first();
-            if(DB::table('removals')->where('id', $userID)->count())
+            if($user->status == 'usunięty')
             {
-               $user[0]->name .= '(deleted)';
+                $user->email = null;
+                $user->name = 'użytkownik usunięty';
+                $user->image = null;
             }
         }
     }
@@ -46,7 +48,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'statuses.Name as status', 'users.created_at as create_date')->get();
+        $users = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'statuses.Name as status', 'users.created_at as create_date')->whereIn('statuses.Name', ['aktywny', 'zablokowany'])->get();
         return response()->json($users);
     }
 
@@ -62,7 +64,12 @@ class UsersController extends Controller
             }
             return response()->json($_SESSION);
         }
-        return response()->json(['status' => false]);
+        else
+        {
+            $user = $id;
+            $this->buildUserData($user);
+            return response()->json($user);
+        }
     }
 
     public function get_user_by_name($login)
@@ -136,7 +143,8 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $msg = 'failure';
+        $status = false;
+        $msg = '';
         if($request->file('image') != null)
         {
             $image_name = 'users' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
@@ -144,17 +152,25 @@ class UsersController extends Controller
             $request->file('image')->move($destinationFolder, $image_name);
             $path = $destinationFolder . $image_name;
             CloudinaryController::uploadImage($path, $image_name, 'users', 'id', $_SESSION['iduser']);
-            $msg = 'success';
+            $status = true;
+            $msg .= 'image updated.';
         }
         $data = json_decode($request->getContent(), true);
         if(ValidatorController::checkString($data['name']))
         {
             if(User::where('Name', $data['name'])->count() == 0 && User::where('id', $id)->where('id', $_SESSION['iduser'])->update(['Name' => $data['name']]))
-            { $_SESSION['name'] = $request->name; $msg = 'success'; }
+            { 
+                $_SESSION['name'] = $request->name;
+                $status = true;
+                $msg .= 'name updated.';
+            }
             else 
-            { return response()->json(['message' => 'user with same name already exists']); }
+            { 
+                $status = false;
+                $msg .= 'wrong name data.';
+            }
         }
-        return response()->json(['message' => $msg]);
+        return response()->json(['status' => $status, 'error' => $msg]);
     }
 
     /**
@@ -166,22 +182,12 @@ class UsersController extends Controller
     public function destroy(Request $request, $id) // ZMIENIC
     {
         if(User::where('id', $id)->where('id', $_SESSION['iduser'])->count()) 
-            {
-                $user = User::where('id', $id)->where('id', $_SESSION['iduser'])->get();
-                $userRemoval = new Removals;
-                $userRemoval->id = $user[0]->id;
-                $userRemoval->provider = $user[0]->provider;
-                $userRemoval->provider_id = $user[0]->provider_id;
-                if($userRemoval->save())
-                {
-                    DB::table('users')->where('id', $_SESSION['iduser'])->update(['idStatus' => DB::table('statuses'->where('Name', 'usunięty')->value('idStatus'))]);
-                    return response()->json(['message' => 'user data removed.']); 
-                }
-                else
-                    {return response()->json(['message' => 'connection failure']);}
-            }
+        {
+            DB::table('users')->where('id', $_SESSION['iduser'])->update(['idStatus' => DB::table('statuses'->where('Name', 'usunięty')->value('idStatus'))]);
+            return response()->json(['status' => true, 'error' => '']);
+        }
         else 
-            {return response()->json(['message' => 'connection failure']);}
+            return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
     public function get_notifications(Request $request)
@@ -200,27 +206,27 @@ class UsersController extends Controller
 
     public function change_user_status(Request $request, $id)
     {
-        $msg = 'failure';
-        $staffPrivilege = $_SESSION['privileges'];
-        $userPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.id', $id)->value('privileges.Name');
+        $status = false;
+        $staffPrivilege = $_SESSION['tier'];
+        $userPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Tier')->where('users.id', $id)->value('privileges.Name');
         $ids = $_SESSION['iduser'];
-        $msg = $this->change_user_property($id, 'statuses', 'idStatus', $request->status, $ids, $request->reason, $staffPrivilege, $userPrivilege);
-        return response()->json(['message' => $msg]);
+        $status = $this->change_user_property($id, 'statuses', 'idStatus', $request->status, $ids, $request->reason, $staffPrivilege, $userPrivilege);
+        return response()->json(['status' => $status]);
     }
 
     public function change_user_privilege(Request $request, $id)
     {
-        $msg = 'failure';
-        $staffPrivilege = $_SESSION['privileges'];
-        $userPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Name')->where('users.id', $id)->value('privileges.Name');
+        $status = false;
+        $staffPrivilege = $_SESSION['tier'];
+        $userPrivilege = DB::table('users')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->select('privileges.Tier')->where('users.id', $id)->value('privileges.Name');
         $ids = $_SESSION['iduser'];
-        $msg = $this->change_user_property($id, 'privileges', 'idPrivilege', $request->privilege,  $ids, null, $staffPrivilege, $userPrivilege);
-        return response()->json(['message' => $msg]);
+        $status = $this->change_user_property($id, 'privileges', 'idPrivilege', $request->privilege,  $ids, null, $staffPrivilege, $userPrivilege);
+        return response()->json(['status' => $status]);
     }
     
     public function change_user_property($id, $table, $property, $data, $idstaff, $reason, $staffPrivilege, $userPrivilege)
     {
-        if($staffPrivilege == 'root' || ($staffPrivilege == 'administrator' && $userPrivilege != 'root'))
+        if($staffPrivilege > $userPrivilege)
         {
             $dataID = DB::table($table)->select($property)->where('Name', $data)->value($property);
             if(!User::where($property, $dataID)->where('id', $id)->count())
@@ -236,10 +242,13 @@ class UsersController extends Controller
                         $userChange->idStaff = $idstaff;
                         $userChange->ValueBefore = $propertyBefore;
                         $userChange->ValueAfter = $propertyAfter;
-                        if($userChange->save()) { return 'success'; }
-                        else { return 'failure'; }
+                        if($userChange->save()) 
+                            return true;
+                        else 
+                            return false;
                     }
-                    else { return 'failure'; }
+                    else 
+                        return false;
                 }
                 elseif($table == 'statuses')
                 {
@@ -251,26 +260,22 @@ class UsersController extends Controller
                         $userBlock->idStaff = $idstaff;
                         $userBlock->Value = $dataID;
                         $userBlock->Reason = $reason;
-                        if($userBlock->save()) { return 'success'; }
-                        else { return 'failure'; }
+                        if($userBlock->save()) 
+                            return true;
+                        else 
+                            return false;
                     }
-                    else { return 'failure'; }
+                    else 
+                        return false;
                 }
-                else { return 'failure'; }
+                else 
+                    return false;
             }
-            else { return 'already set'; }
+            else 
+                return false;
         }
         else
-            return response()->json(['message' => 'access denied']);
-    }
-
-    public function get_removal_history()
-    {
-        $removals = DB::table('removals')->select('id as user', 'created_at as removal_date')->get();
-        foreach ($removals as $key => $removal) {
-            $this->buildUserData($removal->user);
-        }
-        return response()->json($removals);
+            return false
     }
 
     public function get_blockades()
@@ -310,6 +315,6 @@ class UsersController extends Controller
         {
             return response()->json($this->buildChanges(1, 1));
         }
-        return response()->json(['message' => 'connection failure']);
+        return response()->json(['status' => false, 'error' => 'failure']);
     }
 }

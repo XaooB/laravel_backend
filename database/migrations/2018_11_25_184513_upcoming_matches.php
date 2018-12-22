@@ -16,9 +16,9 @@ class UpcomingMatches extends Migration
         Schema::create('upcoming_matches', function (Blueprint $table) {
             $table->increments('id');
             $table->string('League', 45);
-            $table->timestamp('Date', 256);
+            $table->timestamp('Date');
             $table->string('Location', 90);
-            $table->string('idClub', 256);
+            $table->unsignedInteger('idClub');
             $table->timestamps();
             $table->foreign('idClub')->references('idClub')->on('clubs')->onDelete('cascade');
         });

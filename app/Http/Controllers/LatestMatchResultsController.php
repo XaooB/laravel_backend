@@ -40,6 +40,12 @@ class LatestMatchResultsController extends Controller
         FootballAPIController::getLatestMatchResult_ExternalAPI('https://api.football-data.org/v2/teams/86/matches?status=FINISHED', env('APP_FootballAPIToken'), 'FINISHED');
     }
 
+    public function live()
+    {
+    	// Live Match Result
+        FootballAPIController::getLatestMatchResult_ExternalAPI('https://api.football-data.org/v2/teams/86/matches?status=LIVE', env('APP_FootballAPIToken'), 'LIVE');
+    }
+
     public function get_latest_match_result()
     {
         $this->buildMatchData($latest_match, 'FINISHED', 1);

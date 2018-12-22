@@ -13,7 +13,7 @@ class InjuriesSuspensions extends Migration
      */
     public function up()
     {
-        Schema::create('Injuries_Suspensions', function (Blueprint $table) {
+        Schema::create('injuries_suspensions', function (Blueprint $table) {
             $table->increments('idInjurySuspension');
             $table->unsignedInteger('idUser');
             $table->unsignedInteger('idPlayer');
@@ -33,6 +33,6 @@ class InjuriesSuspensions extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Injuries_Suspensions');
+        Schema::dropIfExists('injuries_suspensions');
     }
 }

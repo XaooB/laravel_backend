@@ -21,6 +21,7 @@ class Notifications extends Migration
             $table->tinyInteger('Readed');
             $table->timestamps();
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
+			$table->foreign('idReference')->references('idComment')->on('comments')->onDelete('cascade');
         });
     }
 

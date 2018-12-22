@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('Name', 45)->unique();
             $table->string('Email', 90)->unique();
-            $table->string('Image', 256)->default('http://pw-inz.cba.pl/inz_be/public/images/default_icon.png');
+            $table->string('Image', 256)->nullable();
             $table->string('provider')->nullable();
             $table->string('provider_id')->nullable();
             $table->unsignedInteger('idPrivilege')->default(1);

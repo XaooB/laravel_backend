@@ -205,6 +205,8 @@ class FootballAPIController
 	{
 		$data = self::getDataFromURL($url, $token);
 		$matches = $data->matches;
+		if($data->count == 0)
+			return;
 		foreach ($matches as $key => $match) {
 			// UPDATE
 			if(DB::table('latest_match_results')->where('id', $match->id)->count())

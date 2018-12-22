@@ -20,9 +20,9 @@ class CreateArticlesTable extends Migration
             $table->string('Title', 90);
             $table->string('Image', 256)->nullable();
             $table->longText('Content');
-            $table->unsignedInteger('Views');
-            $table->tinyInteger('Visible');
-            $table->tinyInteger('Main');
+            $table->unsignedInteger('Views')->nullable();
+            $table->tinyInteger('Visible')->default(1);
+            $table->tinyInteger('Main')->default(0);
             $table->timestamps();
             $table->foreign('idCategory')->references('idCategory')->on('categories')->onDelete('cascade');
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');

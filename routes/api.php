@@ -150,7 +150,6 @@ Route::group(['middleware' => 'apiauth'], function() {
     // Restrict routes only to Root/Admin privileges
     Route::group(['middleware' => 'checkprivilege', 'privileges' => ['root', 'administrator']], function() {
         Route::put('users_change_user_privilege/{id}', 'UsersController@change_user_privilege')->name('users.change_user_privilege');
-        Route::get('users_get_removal_history', 'UsersController@get_removal_history')->name('users.get_removal_history');
         // Privileges routes
         Route::resource('privileges', 'PrivilegesController')->except(['index']);
         // Statuses routes

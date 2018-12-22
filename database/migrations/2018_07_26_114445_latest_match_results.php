@@ -24,7 +24,8 @@ class LatestMatchResults extends Migration
             $table->string('AwayClubScore', 256);
             $table->string('Type', 45);
             $table->timestamps();
-            $table->foreign('idClub')->references('idClub')->on('clubs')->onDelete('cascade');
+            $table->foreign('idClubHome')->references('idClub')->on('clubs')->onDelete('cascade');
+			$table->foreign('idClubAway')->references('idClub')->on('clubs')->onDelete('cascade');
         });
     }
 
