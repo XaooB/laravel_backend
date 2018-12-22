@@ -15,7 +15,6 @@ class InjuriesSuspensions extends Migration
     {
         Schema::create('injuries_suspensions', function (Blueprint $table) {
             $table->increments('idInjurySuspension');
-            $table->unsignedInteger('idUser');
             $table->unsignedInteger('idPlayer');
             $table->string('Type', 32);
             $table->string('Description', 256);
