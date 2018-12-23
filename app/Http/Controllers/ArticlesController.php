@@ -247,34 +247,30 @@ class ArticlesController extends Controller
          */
         public function update(Request $request, $id)
         {
-            /*
-                Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
-                <input type="hidden" name="_method" value="PUT">
-            */
-                $data = json_decode($request->getContent(), true);
-                if(isset($data['category']) && isset($data['title']) && isset($data['content']))
+        	$data = json_decode($request->getContent(), true);
+            if(isset($data['category']) && isset($data['title']) && isset($data['content']))
+            {
+                if(isset($data['image']))
                 {
-                    if(isset($data['image']))
-                    {
-                        $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
-                        $destinationFolder = public_path('images') . '/articles/';
-                        $request->file('image')->move($destinationFolder, $image_name);
-                        $path = $destinationFolder . $image_name;
-                        CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id); 
-                    }
-                    $articleMain = $request->main ? 1 : 0;
-                    if(Articles::where('idArticle', '=' , $id)->where('Visible', 1)->update([
-                        'idCategory' => DB::table('categories')->select('idCategory')->where('Name', $data['category'])->value('idCategory'),
-                        'Title' => $data['title'],
-                        'Content' => $data['content'],
-                        'Main' => $articleMain]))
-                        return response()->json(['status' => true, 'error' => '']);
-                        else
-                            return response()->json(['status' => false, 'error' => 'wrong data']);
-                    }
-                    else
-                        return response()->json(['status' => false, 'error' => 'wrong data']);
+                    $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
+                    $destinationFolder = public_path('images') . '/articles/';
+                    $request->file('image')->move($destinationFolder, $image_name);
+                    $path = $destinationFolder . $image_name;
+                    CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id); 
                 }
+                $articleMain = $request->main ? 1 : 0;
+                if(Articles::where('idArticle', '=' , $id)->where('Visible', 1)->update([
+                    'idCategory' => DB::table('categories')->select('idCategory')->where('Name', $data['category'])->value('idCategory'),
+                    'Title' => $data['title'],
+                    'Content' => $data['content'],
+                    'Main' => $articleMain]))
+                	return response()->json(['status' => true, 'error' => '']);
+                else
+                    return response()->json(['status' => false, 'error' => 'wrong data']);
+            }
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
+        }
 
         /**
          * Remove the specified resource from storage.

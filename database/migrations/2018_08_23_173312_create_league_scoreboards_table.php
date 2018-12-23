@@ -16,13 +16,13 @@ class CreateLeagueScoreboardsTable extends Migration
         Schema::create('league_scoreboards', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('idClub')->nullable();
-            $table->tinyInteger('Position', 3)->nullable();
-            $table->tinyInteger('Matches', 3)->nullable();
-            $table->tinyInteger('Won', 3)->nullable();
-            $table->tinyInteger('Draw', 3)->nullable();
-            $table->tinyInteger('Lost', 3)->nullable();
-            $table->tinyInteger('Points', 3)->nullable();
-            $table->string('Season', 9)->nullable();
+            $table->tinyInteger('Position')->nullable();
+            $table->tinyInteger('Matches')->nullable();
+            $table->tinyInteger('Won')->nullable();
+            $table->tinyInteger('Draw')->nullable();
+            $table->tinyInteger('Lost')->nullable();
+            $table->tinyInteger('Points')->nullable();
+            $table->string('Season')->nullable();
             $table->string('League', 4)->nullable();
             $table->string('Group', 8)->nullable();
             $table->foreign('idClub')->references('idClub')->on('clubs')->onDelete('cascade');

@@ -20,7 +20,6 @@ class InjuriesSuspensions extends Migration
             $table->string('Description', 256);
             $table->dateTime('ReturnDate');
             $table->timestamps();
-            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('idPlayer')->references('idPlayer')->on('players')->onDelete('cascade');
         });
     }
