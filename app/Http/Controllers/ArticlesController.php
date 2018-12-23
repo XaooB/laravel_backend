@@ -250,7 +250,7 @@ class ArticlesController extends Controller
         	$data = json_decode($request->getContent(), true);
             if(isset($data['category']) && isset($data['title']) && isset($data['content']))
             {
-                if(isset($request->file('image')))
+                if($request->file('image') != null)
                 {
                     $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
                     $destinationFolder = public_path('images') . '/articles/';
