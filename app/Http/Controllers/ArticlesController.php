@@ -250,7 +250,7 @@ class ArticlesController extends Controller
         	$data = json_decode($request->getContent(), true);
             if(isset($data['category']) && isset($data['title']) && isset($data['content']))
             {
-                if(isset($data['image']))
+                if(isset($request->file('image')))
                 {
                     $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
                     $destinationFolder = public_path('images') . '/articles/';
@@ -258,7 +258,7 @@ class ArticlesController extends Controller
                     $path = $destinationFolder . $image_name;
                     CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id); 
                 }
-                $articleMain = $request->main ? 1 : 0;
+                $articleMain = $data['main'] ? 1 : 0;
                 if(Articles::where('idArticle', '=' , $id)->where('Visible', 1)->update([
                     'idCategory' => DB::table('categories')->select('idCategory')->where('Name', $data['category'])->value('idCategory'),
                     'Title' => $data['title'],

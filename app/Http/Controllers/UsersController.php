@@ -275,7 +275,7 @@ class UsersController extends Controller
                 return false;
         }
         else
-            return false
+            return false;
     }
 
     public function get_blockades()
