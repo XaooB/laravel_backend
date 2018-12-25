@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommentsTable extends Migration
+class MatchesChats extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,15 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
-            $table->increments('idComment');
+        Schema::create('matches_chats', function (Blueprint $table) {
+            $table->increments('idMatchChat');
             $table->unsignedInteger('idReference');
-            $table->unsignedInteger('idSubReference')->nullable();
-            $table->string('Type', 45);
             $table->unsignedInteger('idUser');
             $table->text('Content');
             $table->boolean('Visible')->default(1);
             $table->timestamps();
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
-			$table->foreign('idReference')->references('idArticle')->on('articles')->onDelete('cascade');
+            $table->foreign('idReference')->references('id')->on('matches')->onDelete('cascade');
         });
     }
 
@@ -34,6 +32,6 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('matches_chats');
     }
 }

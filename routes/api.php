@@ -82,13 +82,14 @@ Route::group(['middleware' => 'apiresponse'], function() {
     // League scorebaord routes
     Route::resource('leaguescoreboard', 'LeagueScoreboardController')->only(['index']);
     Route::get('leaguescoreboard_get_league_scoreboard/{season}/{league}', 'LeagueScoreboardController@get_league_scoreboard')->name('leaguescoreboard.get_league_scoreboard');
-    // Upcoming matches routes
-    Route::resource('upcomingmatches', 'UpcomingMatchesController')->only(['index']);
-    Route::get('upcomingmatches_get_upcoming_matches/{count}', 'UpcomingMatchesController@get_upcoming_matches')->name('upcomingmatches.get_upcoming_matches');
-    // Latest matche result routes
-    Route::resource('latestmatchresult', 'LatestMatchResultsController')->only(['index']);
-    Route::get('latestmatchresult_get_latest_match_result', 'LatestMatchResultsController@get_latest_match_result')->name('latestmatchresult.get_latest_match_result');
-    Route::get('latestmatchresult_get_live_match_result', 'LatestMatchResultsController@get_live_match_result')->name('latestmatchresult.get_live_match_result');
+    // Matches routes
+    Route::get('matches_get_scheduled_matches/{count}', 'MatchesController@get_scheduled_matches')->name('matches.get_scheduled_matches');
+    Route::get('matches_get_live_match', 'MatchesController@get_live_match')->name('matches.get_live_match');
+    Route::get('matches_get_finished_match', 'MatchesController@get_finished_match')->name('matches.get_finished_match');
+
+    Route::get('matches_update_scheduled_matches', 'MatchesController@update_scheduled_matches')->name('matches.update_scheduled_matches');
+    Route::get('matches_update_live_match', 'MatchesController@update_live_match')->name('matches.update_live_match');
+    Route::get('matches_update_finished_matches', 'MatchesController@update_finished_matches')->name('matches.update_finished_matches');
 });
 
 // Secure API using SESSION

@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UpcomingMatches extends Model
+class MatchesChats extends Model
 {
     protected $fillable = [
-    	'id', 'League', 'Date', 'Location','idClub', 
+        'Content', 'updated_at',
     ];
 }

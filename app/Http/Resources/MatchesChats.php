@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UpcomingMatches extends JsonResource
+class MatchesChats extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,12 @@ class UpcomingMatches extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'league' => $this->League,
-            'date' => $this->Date,
-            'location' => $this->Location,
-            'opponent' => $this->idClub
+            'idmatchchat' => $this->idMatchChat,
+            'user' => $this->idUser,
+            'content' => $this->Content,
+            'visible' => $this->Visible,
+            'create_date' =>$this->created_at,
+            'modify_date' =>$this->updated_at
         ];
     }
 }

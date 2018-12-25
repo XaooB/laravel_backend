@@ -8,10 +8,8 @@ use App\LeagueScoreboard;
 use App\Http\Resources\LeagueScoreboard as LeagueScoreboardResource;
 use App\Clubs;
 use App\Http\Resources\Clubs as ClubsResource;
-use App\UpcomingMatches;
-use App\Http\Resources\UpcomingMatches as UpcomingMatchesResource;
-use App\LatestMatchResults;
-use App\Http\Resources\LatestMatchResults as LatestMatchResultsResource;
+use App\Matches;
+use App\Http\Resources\Matches as MatchesResource;
 use App\Players;
 use App\Http\Resources\Players as PlayersResource;
 use Illuminate\Support\Facades\DB;
@@ -155,53 +153,54 @@ class FootballAPIController
 		}
 	}
 
-	public static function getUpcomingMatches_ExternalAPI($url, $token)
+	public static function getScheduledMatches_ExternalAPI($url, $token, $type)
 	{
 		$data = self::getDataFromURL($url, $token);
 		$matches = $data->matches;
 		foreach ($matches as $key => $match) {
 			// UPDATE
-			if(DB::table('upcoming_matches')->where('id', $match->id)->count())
+			if(DB::table('matches')->where('id', $match->id)->count())
 			{
 				if($match->homeTeam->id == env("APP_FootallAPIMyTeamID"))
-				{
 					$matchLocation = 'HOME';
-					$matchClubID = $match->awayTeam->id;
-				}
 				else 
-				{
 					$matchLocation = 'AWAY';
-					$matchClubID = $match->homeTeam->id;
-				}
-				UpcomingMatches::where('id', $match->id)->update([
+				$matchHomeTeam = $match->homeTeam->id;
+				$matchAwayTeam = $match->awayTeam->id;
+				Matches::where('id', $match->id)->update([
 					'League' => $match->competition->name,
 					'Date' => substr($match->utcDate, 0, 10) . ' ' . substr($match->utcDate, 11, 8),
 					'Location' => $matchLocation,
-					'idClub' => $matchClubID]);
+					'idClubHome' => $matchHomeTeam,
+					'idClubAway' => $matchAwayTeam,
+					'Type' => $type]);
 			}
 			// INSERT
 			else
 			{
-				$upcomingMatch = new UpcomingMatches;
-				$upcomingMatch->id = $match->id;
-				$upcomingMatch->League = $match->competition->name;
-				$upcomingMatch->Date = substr($match->utcDate, 0, 10) . ' ' . substr($match->utcDate, 11, 8);
+				$scheduledMatches = new Matches;
+				$scheduledMatches->id = $match->id;
+				$scheduledMatches->League = $match->competition->name;
+				$scheduledMatches->Date = substr($match->utcDate, 0, 10) . ' ' . substr($match->utcDate, 11, 8);
+				$scheduledMatches->idClubHome = $match->homeTeam->id;
+				$scheduledMatches->idClubAway = $match->awayTeam->id;
+				$scheduledMatches->Type = $type;
 				if($match->homeTeam->id == env("APP_FootallAPIMyTeamID"))
-				{
-					$upcomingMatch->Location = 'HOME';
-					$upcomingMatch->idClub = $match->awayTeam->id;
-				}
+					$scheduledMatches->Location = 'HOME';
 				else 
-				{
-					$upcomingMatch->Location = 'AWAY';
-					$upcomingMatch->idClub = $match->homeTeam->id;
-				}
-				$upcomingMatch->save();
+					$scheduledMatches->Location = 'AWAY';
+				$scheduledMatches->save();
 			}
 		}
 	}
 
-	public static function getLatestMatchResult_ExternalAPI($url, $token, $type)
+	public static function getLiveMatch_ExternalAPI($url, $token, $type)
+	{
+		$data = self::getDataFromURL($url, $token);
+		$matches = $data->matches;
+	}
+
+	public static function getFinishedMatches_ExternalAPI($url, $token, $type)
 	{
 		$data = self::getDataFromURL($url, $token);
 		$matches = $data->matches;
@@ -209,7 +208,7 @@ class FootballAPIController
 			return;
 		foreach ($matches as $key => $match) {
 			// UPDATE
-			if(DB::table('latest_match_results')->where('id', $match->id)->count())
+			if(DB::table('matches')->where('id', $match->id)->count())
 			{
 				if($match->homeTeam->id == env("APP_FootallAPIMyTeamID"))
 					$matchLocation = 'HOME';
@@ -219,7 +218,7 @@ class FootballAPIController
 				$matchAwayClubID = $match->awayTeam->id;
 				$matchHomeClubScore = $match->score->fullTime->homeTeam;
 				$matchAwayClubScore = $match->score->fullTime->awayTeam;
-				LatestMatchResults::where('id', $match->id)->update([
+				Matches::where('id', $match->id)->update([
 					'League' => $match->competition->name,
 					'Date' => substr($match->utcDate, 0, 10) . ' ' . substr($match->utcDate, 11, 8),
 					'Location' => $matchLocation,
@@ -232,20 +231,20 @@ class FootballAPIController
 			// INSERT
 			else
 			{
-				$latestMatchResult = new LatestMatchResults;
-				$latestMatchResult->id = $match->id;
-				$latestMatchResult->League = $match->competition->name;
-				$latestMatchResult->Date = substr($match->utcDate, 0, 10) . ' ' . substr($match->utcDate, 11, 8);
+				$finishedMatches = new Matches;
+				$finishedMatches->id = $match->id;
+				$finishedMatches->League = $match->competition->name;
+				$finishedMatches->Date = substr($match->utcDate, 0, 10) . ' ' . substr($match->utcDate, 11, 8);
 				if($match->homeTeam->id == env("APP_FootallAPIMyTeamID"))
-					$latestMatchResult->Location = 'HOME';
+					$finishedMatches->Location = 'HOME';
 				else 
-					$latestMatchResult->Location = 'AWAY';
-				$latestMatchResult->idClubHome = $match->homeTeam->id;
-				$latestMatchResult->idClubAway = $match->awayTeam->id;
-				$latestMatchResult->HomeClubScore = $match->score->fullTime->homeTeam;
-				$latestMatchResult->AwayClubScore = $match->score->fullTime->awayTeam;
-				$latestMatchResult->Type = $type;
-				$latestMatchResult->save();
+					$finishedMatches->Location = 'AWAY';
+				$finishedMatches->idClubHome = $match->homeTeam->id;
+				$finishedMatches->idClubAway = $match->awayTeam->id;
+				$finishedMatches->HomeClubScore = $match->score->fullTime->homeTeam;
+				$finishedMatches->AwayClubScore = $match->score->fullTime->awayTeam;
+				$finishedMatches->Type = $type;
+				$finishedMatches->save();
 			}
 		}
 	}
