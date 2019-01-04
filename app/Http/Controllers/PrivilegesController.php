@@ -43,6 +43,7 @@ class PrivilegesController extends Controller
     {
         $data = json_decode($request->getContent(), true);
         if(isset($data['privilege']))
+        {
             $privileges = new Privileges;
             $privileges->Name = $data['privilege'];
             if(Privileges::where('Name', $privileges->Name)->exists()) 
