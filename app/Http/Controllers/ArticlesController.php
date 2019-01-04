@@ -176,7 +176,7 @@ class ArticlesController extends Controller
             if(isset($data['category']) && isset($data['title']) && isset($data['content']) && isset($data['image']))
             {
                 $articles = new Articles;
-                $articles->idCategory = DB::table('categories')->select('idCategory')->where('Name', $data['category'])->value('idCategory');
+                $articles->idCategory = $data['category'];
                 $articles->idUser = $_SESSION['iduser'];
                 $articles->Title = $data['title'];
                 $articles->Content = $data['content'];
@@ -299,23 +299,23 @@ class ArticlesController extends Controller
                 Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
                 <input type="hidden" name="_method" value="PUT">
             */
-                $data = json_decode($request->getContent(), true);
-                if($data['content'])
-                {
-                    if(Articles::where('idArticle', '=' , $id)->update(['Content' => $data['content']])) 
-                        return response()->json(['status' => true, 'error' => '']);
-                    else 
-                        return response()->json(['status' => false, 'error' => 'wrong data']);
-                }
-                else
-                    return response()->json(['status' => false, 'error' => 'wrong data']);
-            }
-
-            public function staff_change_article_visibility($id)
+            $data = json_decode($request->getContent(), true);
+            if($data['content'])
             {
-                if(DB::table('articles')->where('idArticle', $id)->update(['Visible' => DB::raw('ABS(Visible-1)')]))
+                if(Articles::where('idArticle', '=' , $id)->update(['Content' => $data['content']])) 
                     return response()->json(['status' => true, 'error' => '']);
-                else
+                else 
                     return response()->json(['status' => false, 'error' => 'wrong data']);
             }
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
+
+        public function staff_change_article_visibility($id)
+        {
+            if(DB::table('articles')->where('idArticle', $id)->update(['Visible' => DB::raw('ABS(Visible-1)')]))
+                return response()->json(['status' => true, 'error' => '']);
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data']);
+        }
+    }

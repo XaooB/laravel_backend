@@ -43,15 +43,17 @@ class SurveySetsController extends Controller
     public function get_survey_set($id)
     {
         $survey_set = DB::table('survey_sets')->select('survey_sets.idSurveySet as idsurveyset', 'survey_sets.Answer as answer')->where('survey_sets.idSurvey', $id)->get();
+        foreach ($survey_set as $key => $answer) {
+        }
         return response()->json($survey_set);
     }
 
     public function get_latest()
     {
         $latestSurvey = DB::table('surveys')->select('idSurvey as idsurvey', 'Topic as topic')->orderBy('idSurvey', 'desc')->first();
-        $latestSurvey[0]->answers = array();
-        $this->getAnswers($latestSurvey[0]->answers, $latestSurvey[0]->idsurvey);
-        return response()->json($latestSurvey[0]);
+        $latestSurvey->answers = array();
+        $this->getAnswers($latestSurvey->answers, $latestSurvey->idsurvey);
+        return response()->json($latestSurvey);
     }
 
     // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------

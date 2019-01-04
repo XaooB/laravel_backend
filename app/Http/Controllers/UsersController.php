@@ -228,14 +228,13 @@ class UsersController extends Controller
     {
         if($staffPrivilege > $userPrivilege)
         {
-            $dataID = DB::table($table)->select($property)->where('Name', $data)->value($property);
             if(!User::where($property, $dataID)->where('id', $id)->count())
             {
                 if($table == 'privileges')
                 {
                     $propertyBefore = DB::table('users')->select('idPrivilege')->where('id', $id)->value('idPrivilege');
                     $propertyAfter = DB::table('privileges')->select('idPrivilege')->where('Name', $data)->value('idPrivilege');
-                    if(User::where('id', $id)->update([$property => $dataID])) 
+                    if(User::where('id', $id)->update([$property => $data])) 
                     {
                         $userChange = new UserChanges;
                         $userChange->idUser = $id;
@@ -252,7 +251,7 @@ class UsersController extends Controller
                 }
                 elseif($table == 'statuses')
                 {
-                    if(User::where('id', $id)->update([$property => $dataID]))
+                    if(User::where('id', $id)->update([$property => $data]))
                     {
 
                         $userBlock = new UserBlockades;

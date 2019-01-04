@@ -129,9 +129,9 @@ Route::group(['middleware' => 'apiauth'], function() {
 
         Route::put('articles_staff/{id}', 'ArticlesController@staff_update')->name('articles.staff_update');
 
-        Route::put('articles_staff_change_article_visibility/{id}', 'ArticlesController@staff_change_article_visibility')->name('articles.staff_change_article_visibility');
+        Route::get('articles_staff_change_article_visibility/{id}', 'ArticlesController@staff_change_article_visibility')->name('articles.staff_change_article_visibility');
 
-        Route::put('comments_staff_change_comment_visibility/{id}', 'CommentsController@staff_change_comment_visibility')->name('comments.staff_change_article_visibility');
+        Route::get('comments_staff_change_comment_visibility/{id}', 'CommentsController@staff_change_comment_visibility')->name('comments.staff_change_article_visibility');
 
         Route::get('comments_staff_get_article_comments/{id}', 'CommentsController@staff_get_article_comments')->name('comments.staff_get_article_comments');
 
