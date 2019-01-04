@@ -44,7 +44,7 @@ class SurveySetsController extends Controller
     {
         $survey_set = DB::table('surveys')->select('idSurvey as idsurvey', 'Topic as topic')->where('idSurvey', $id)->first();
         $survey_set->answers = array();
-        $this->getAnswers($survey_set->answers, $survey_set->idsurveyset);
+        $this->getAnswers($survey_set->answers, $survey_set->idsurvey);
         return response()->json($survey_set);
     }
 
