@@ -42,7 +42,7 @@ class SurveySetsController extends Controller
 
     public function get_survey_set($id)
     {
-        $survey_sets = DB::table('survey_sets')->select('survey_sets.idSurveySet as idsurveyset', 'survey_sets.Answer as answer')->where('survey_sets.idSurvey', $id)->get();
+        $survey_sets = DB::table('survey_sets')->select('survey_sets.idSurveySet as idsurveyset', 'survey_sets.Answer as answer')->where('survey_sets.idSurvey', $id)->orderBy('survey_sets.idSurveySet', 'desc')->get();
         foreach ($survey_sets as $key => $survey_set) {
             $survey_set->answers = array();
             $this->getAnswers($survey_set->answers, $survey_set->idsurveyset);
