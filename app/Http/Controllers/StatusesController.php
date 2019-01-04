@@ -43,6 +43,7 @@ class StatusesController extends Controller
     {
         $data = json_decode($request->getContent(), true);
         if(isset($data['status']))
+        {
             $statuses = new Statuses;
             $statuses->Name = $data['status'];
             if(Statuses::where('Name', $statuses->Name)->exists()) 
