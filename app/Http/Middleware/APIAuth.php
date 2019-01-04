@@ -24,18 +24,11 @@ class APIAuth
         if(isset($_SESSION['iduser']))
         {
             if($_SESSION['status'] == 'aktywny')
-            {
-                $response = $next($request)
-                    ->header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
-                    ->header('Content-Type', 'application/json');
-                return $response;
-            }
+                return $next($request);
+            else
+                return response()->json(['status' => false, 'error' => 'sorry you are already blocked on this website']);
         }
         else
-        {
-            return response()->json([
-                'status' => false,
-                'message' => 'auth fail']);
-        }
+            return response()->json(['status' => false, 'error' => 'auth fail']);
     }
 }

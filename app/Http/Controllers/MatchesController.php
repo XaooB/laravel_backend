@@ -18,7 +18,7 @@ class MatchesController extends Controller
     {
         if($count == 1)
         {
-            $match = DB::table('matches')->select('idClubHome as home_team', 'HomeClubScore as home_team_score', 'idClubAway as away_team', 'AwayClubScore as away_team_score', 'League as league', 'Date as date')->where('Type', $type)->orderBy('Date', $orderValue)->first();
+            $match = DB::table('matches')->select('idClubHome as home_team', 'HomeClubScore as home_team_score', 'idClubAway as away_team', 'AwayClubScore as away_team_score', 'Location as location', 'League as league', 'Date as date')->where('Type', $type)->orderBy('Date', $orderValue)->first();
             ClubsController::buildClubData($match->home_team);
             ClubsController::buildClubData($match->away_team);
             if($type == 'SCHEDULED')
@@ -29,7 +29,7 @@ class MatchesController extends Controller
         }
         elseif($count > 1)
         {
-            $match = DB::table('matches')->select('idClubHome as home_team', 'HomeClubScore as home_team_score', 'idClubAway as away_team', 'AwayClubScore as away_team_score', 'League as league', 'Date as date')->where('Type', $type)->orderBy('Date', $orderValue)->limit($count)->get();
+            $match = DB::table('matches')->select('idClubHome as home_team', 'HomeClubScore as home_team_score', 'idClubAway as away_team', 'AwayClubScore as away_team_score', 'Location as location', 'League as league', 'Date as date')->where('Type', $type)->orderBy('Date', $orderValue)->limit($count)->get();
             foreach ($match as $key => $matchData) {
                 ClubsController::buildClubData($matchData->home_team);
                 ClubsController::buildClubData($matchData->away_team);

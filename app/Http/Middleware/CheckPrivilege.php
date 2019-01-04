@@ -26,17 +26,9 @@ class CheckPrivilege
                 return $next($request);
             }
             else
-            {
-                return response()->json([
-                'status' => false,
-                'message' => 'access denied, you do not have permission.']);
-            }
+                return response()->json(['status' => false, 'error' => 'access denied, you do not have permission']);
         }
         else
-        {
-            return response()->json([
-                'status' => false,
-                'message' => 'priv fail']);
-        }
+            return response()->json(['status' => false, 'error' => 'access denied, you do not have permission']);
     }
 }
