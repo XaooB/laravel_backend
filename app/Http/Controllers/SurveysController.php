@@ -31,8 +31,6 @@ class SurveysController extends Controller
 
     public function latest($count)
     {
-        //$survey = Surveys::orderBy('idSurvey', 'desc')->take($count)->get();
-        //return response()->json(SurveysResource::collection($survey));
         $surveys = DB::table('surveys')->select('idSurvey as idsurvey', 'Topic as topic', 'idSurvey as answers','created_at as create_date')->orderBy('idSurvey', 'desc')->take($count)->get();
         foreach ($surveys as $key => $survey) {
             SurveySetsController::buildSurveySetData($survey->answers);
