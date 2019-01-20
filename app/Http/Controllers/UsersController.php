@@ -88,8 +88,18 @@ class UsersController extends Controller
         }
         else
             return response()->json($_SESSION);
-        
 	}
+
+    public function panel_users()
+    {
+        $users = DB::table('users')->select('id')->where(DB::raw('DATEDIFF(NOW(), created_at)'), '<', 7)->pluck('id');
+        foreach ($users as $key => $user)
+        {
+            $this->buildUserData($user);
+        }
+        $users->count = User::count();
+        return response()->json($users);
+    }
 
     /**
      * Show the form for creating a new resource.

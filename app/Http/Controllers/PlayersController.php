@@ -32,7 +32,7 @@ class PlayersController extends Controller
         //$players = Players::all();
         //return response()->json(PlayersResource::collection($players));
         // My Team Squad
-        FootballAPIController::getPlayers_ExternalAPI('https://api.football-data.org/v2/teams/' . env("APP_FootallAPIMyTeamID"), 'a526814bc45a452ea371bec3ec82baaf');
+        FootballAPIController::getPlayers_ExternalAPI('https://api.football-data.org/v2/teams/' . env("APP_FootallAPIMyTeamID"), env('APP_FootballAPIToken'));
     }
 
     public function get_squad()

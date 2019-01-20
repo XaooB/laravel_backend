@@ -100,6 +100,12 @@ class CommentsController extends Controller
             return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
+    public function panel_comments()
+    {
+        $commentsCount = Comments::count();
+        return response()->json($commentsCount);
+    }
+
     /**
      * Display the specified resource.
      *

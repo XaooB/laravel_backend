@@ -154,6 +154,12 @@ class ArticlesController extends Controller
                 return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
+        public function panel_articles(Request $request)
+        {
+            $articlesByCategory = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->select('categories.Name as category', DB::raw('count(*) as articles_count'))->groupBy('categories.Name')->get();
+            return response()->json($articlesByCategory);
+        }
+
         /**
          * Show the form for creating a new resource.
          *

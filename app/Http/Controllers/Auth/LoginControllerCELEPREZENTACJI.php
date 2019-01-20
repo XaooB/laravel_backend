@@ -57,15 +57,31 @@ class LoginController extends Controller
 
     public function handleProviderCallback($provider, Request $request)
     {
+        // otrzymanie danych użytkownika od API Google+
         $user = Socialite::driver($provider)->stateless()->user();
-        if(DB::table('users')->join('statuses', 'users.idStatus', 'statuses.idStatus')->where('users.provider_id', $user->id)->where('statuses.Name', 'zablokowany')->count())
-            { 
-                return response()->json([
-                    'status' => false,
-                    'error' => 'sorry you are already blocked on this website, reason: ' . DB::table('user_blockades')->join('users', 'users.id', 'user_blockades.idUser')->select('Reason')->where('users.provider_id', $user->id)->value('Reason')]);
-            }
+        // metoda dodająca użytkownika, jeżeli zalogował sie po raz pierwszy
         $authUser = $this->findOrCreateUser($user, $provider);
-        $_SESSION['user'] = DB::table('users')->select('users.id', 'users.Name', 'users.Email', 'users.Image', 'privileges.Name as Privileges', 'privileges.Tier as Tier', 'statuses.Name as Status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->join('statuses', 'users.idStatus', '=', 'statuses.idStatus')->where('Email', $this->email)->first();
+        // sprawdzenie czy użytkownik nie jest aktualnie zablokowany
+        if(DB::table('users')->join('statuses', 'users.idStatus', 'statuses.idStatus')->where('users.provider_id', $user->id)->where('statuses.Name', 'zablokowany')->count())
+        { 
+            return response()->json([
+                'status' => false,
+                'error' => 'sorry you are already blocked on this website, reason: ' . DB::table('user_blockades')->join('users', 'users.id', 'user_blockades.idUser')->select('Reason')->where('users.provider_id', $user->id)->value('Reason')]);
+        }
+        $userData = DB::table('users')->select('users.id', 'users.Name', 'users.Email', 'users.Image', 'privileges.Name as Privileges', 'privileges.Tier as Tier', 'statuses.Name as Status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->join('statuses', 'users.idStatus', '=', 'statuses.idStatus')->where('Email', $this->email)->first();
+        // utworzenie sesji z danymi o użytkowniku
+        // wysłanie ciasteczki z identyfikatorem sesji
+        $_SESSION['iduser'] = $userData->id;
+        $_SESSION['name'] = $userData->Name;
+        $_SESSION['email'] = $userData->Email;
+        $_SESSION['image'] = $userData->Image;
+        $_SESSION['privileges'] = $userData->Privileges;
+        $_SESSION['tier'] = $userData->Tier;
+        $_SESSION['status'] = $userData->Status;
+        $_SESSION['articles_count'] = $userData->articles_count;
+        $_SESSION['comments_count'] = $userData->comments_count;
+        $_SESSION['crate_date'] = $userData->created_at;
+        // przekierowanie użytkownika do strony głównej aplikacji
         return redirect(env('APP_URL'));
     }
 
