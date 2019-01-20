@@ -90,7 +90,7 @@ class UsersController extends Controller
             return response()->json($_SESSION);
 	}
 
-    public function panel_users()
+    public function panel(Request $request)
     {
         $users = DB::table('users')->select('id')->where(DB::raw('DATEDIFF(NOW(), created_at)'), '<', 7)->pluck('id');
         foreach ($users as $key => $user)

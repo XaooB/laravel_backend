@@ -34,6 +34,10 @@ Route::get('test', function() {
     return;
 });
 
+Route::get('articles_panel', 'ArticlesController@panel')->name('articles.panel');
+Route::get('users_panel', 'UsersController@panel')->name('users.panel');
+Route::get('comments_panel', 'CommentsController@panel')->name('comments.panel');
+
 // Use middleware to allow Client-side use API
 Route::group(['middleware' => 'apiresponse'], function() {
     // Users routes
