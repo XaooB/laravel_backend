@@ -92,12 +92,9 @@ class UsersController extends Controller
 
     public function panel(Request $request)
     {
-        $users = DB::table('users')->select('id')->where(DB::raw('DATEDIFF(NOW(), created_at)'), '<', 7)->pluck('id');
-        foreach ($users as $key => $user)
-        {
-            $this->buildUserData($user);
-        }
-        $users->count = User::count();
+        $users = array();
+        $users = ->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at as create_date')->where(DB::raw('DATEDIFF(NOW(), created_at)'), '<', 7)->get();
+        array_push($users, User::count());
         return response()->json($users);
     }
 
