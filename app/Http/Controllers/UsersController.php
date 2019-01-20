@@ -94,10 +94,8 @@ class UsersController extends Controller
     {
         $users = array();
         $users = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at as create_date')->where(DB::raw('DATEDIFF(NOW(), users.created_at)'), '<', 7)->get();
-        //$users->put('total_users', User::count());
-        //return response()->json($users);
-        return response()->json($users, ['total_users' => User::count()]);
-    }
+        $users->push('total_users', User::count());
+        return response()->json($users);    }
 
     /**
      * Show the form for creating a new resource.
