@@ -103,7 +103,7 @@ class CommentsController extends Controller
     public function panel(Request $request)
     {
         $commentsCount = Comments::count();
-        return response()->json('comments_count' => $commentsCount);
+        return response()->json(['comments_count' => $commentsCount]);
     }
 
     /**
