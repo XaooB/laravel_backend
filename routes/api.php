@@ -49,7 +49,7 @@ Route::group(['middleware' => 'apiresponse'], function() {
     Route::resource('articles', 'ArticlesController')->only(['index']);
     Route::get('articles_latest/{count}', 'ArticlesController@latest')->name('articles.latest');
     Route::get('articles_latest_main/{count}', 'ArticlesController@latest_main')->name('articles.latest_main');
-    Route::get('articles_most_viewed/{count}', 'ArticlesController@most_viewed')->name('articles.most_viewed');
+    Route::get('articles_most_viewed/{count}/{interval}', 'ArticlesController@most_viewed')->name('articles.most_viewed');
     Route::get('articles_show_article/{id}', 'ArticlesController@show_article')->name('articles.show_article');
     Route::get('articles_show_neighbours/{id}', 'ArticlesController@show_neighbours')->name('articles.show_neighbours');
     Route::get('articles_filtrate/{count}', 'ArticlesController@filtrate')->name('articles.filtrate');

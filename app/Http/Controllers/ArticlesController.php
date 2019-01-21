@@ -65,19 +65,18 @@ class ArticlesController extends Controller
             if($count > 0)
             {
                 $articles = array();
-                $this->buildArticleData($articles, [1], 'articles.Main', [0], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+                $this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
                 return response()->json($articles);
             }
             else
                 return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
-        public function most_viewed($count)
+        public function most_viewed($count, $interval)
         {
             if($count > 0)
             {
-                $articles = array();
-                $this->buildArticleData($articles, [1], 'articles.Main', [0], 'articles.Views', 'desc', $count, null, 'articles.Title', '');
+                $articles = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->leftJoin('user_likes', 'user_likes.idReference', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idReference')->whereIn('articles.Visible', $whereVisible)->where(DB::raw('DATEDIFF(NOW(), users.created_at)'), '<', $interval)->get();         
                 return response()->json($articles);
             }
             else

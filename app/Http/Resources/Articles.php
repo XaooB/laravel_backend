@@ -22,7 +22,6 @@ class Articles extends Resource
             'image' => $this->Image,
             'content' => $this->Content,
             'views' => $this->Views,
-            'visible' => $this->Visible,
             'create_date' =>$this->created_at,
             'modify_date' =>$this->updated_at
         ];
