@@ -85,12 +85,14 @@ class ArticlesController extends Controller
 
         public function show_article($id)
         {
+            // sprawdzenie czy artykuł jest widoczny
             if(Articles::where('idArticle', $id)->where('Visible', 1)->count())
             {
                 $this->buildArticleData($articles, [1], 'Main', [0, 1], 'articles.idArticle', 'asc', 1, $id, 'articles.Title', '');
                 Articles::where('idArticle', $id)->increment('Views', 1);
                 if(isset($_SESSION['iduser']))
                 {
+                    // sprawdzenie czy użytkownik którego dane sesji zostały przesłane polubił dany artykuł
                     if(DB::table('user_likes')->where('Type', 'article')->where('Reaction', 'like')->where('idReference', $id)->where('idUser', $_SESSION['iduser'])->count())
                         $articles->liked = true;
                     else
@@ -113,7 +115,9 @@ class ArticlesController extends Controller
 
         public function show_neighbours($id)
         {
+            // pobranie ilości poprzednich artykułów względem tego o identyfikatorze przesłąnym w zapytaniu
             $idPrev = DB::table('articles')->select('idArticle')->where('idArticle', '<', $id)->orderBy('idArticle', 'desc')->where('articles.Visible', 1)->limit(1)->value('idArticle');
+            // pobranie ilości następnych artykułów względem tego o identyfikatorze przesłąnym w zapytaniu
             $idNext = DB::table('articles')->select('idArticle')->where('idArticle', '>', $id)->orderBy('idArticle', 'asc')->where('articles.Visible', 1)->limit(1)->value('idArticle');
             if($idPrev && $idNext)
             {
@@ -144,6 +148,7 @@ class ArticlesController extends Controller
             $data = json_decode($request->getContent(), true);
             if(isset($data['phrase']))
             {
+                // uniknięcie zagrożenia SQL Injection
                 $fixedPhrase = $this->escapeLike($data['phrase']);
                 $articles = array();
                 $this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', $fixedPhrase);
@@ -193,8 +198,10 @@ class ArticlesController extends Controller
                 }
                 else
                 {
+                    // wysłanie danych do bazy danych oraz sprawdzenie czy zostały one pomyślnie zapisane
                     if($articles->save())
                     {
+                        // zapisanie zdjęcia na zdalnym serwerze 
                         $id = DB::table('articles')->select('idArticle')->where('Title', $articles->Title)->where('idUser', $articles->idUser)->where('Content', $articles->Content)->value('idArticle');
                         $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
                         $destinationFolder = public_path('images') . '/articles/';
@@ -297,13 +304,8 @@ class ArticlesController extends Controller
                 return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
-        // (only Content)
         public function staff_update(Request $request, $id)
         {
-            /*
-                Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
-                <input type="hidden" name="_method" value="PUT">
-            */
             $data = json_decode($request->getContent(), true);
             if($data['content'])
             {

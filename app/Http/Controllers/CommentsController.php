@@ -102,8 +102,8 @@ class CommentsController extends Controller
 
     public function panel(Request $request)
     {
-        $commentsCount = Comments::count();
-        return response()->json(['total_comments' => $commentsCount]);
+        $commentsCount = DB::table('comments')->select(DB::raw('date(created_at) as day, count(*) as total_comments'))->gropBy(DB::raw('DAY(created_at)'))->get();
+        return response()->json($commentsCount);
     }
 
     /**
