@@ -23,7 +23,8 @@ class LeagueScoreboardController extends Controller
         // Spain League - Primera Division
         FootballAPIController::getLeagueScoreboard_PD_ExternalAPI('https://api.football-data.org/v2/competitions/PD/standings', env('APP_FootballAPIToken'));
         // Europe League - UEFA Champions League
-        FootballAPIController::getLeagueScoreboard_CL_ExternalAPI('https://api.football-data.org/v2/competitions/CL/standings', env('APP_FootballAPIToken'));    }
+        FootballAPIController::getLeagueScoreboard_CL_ExternalAPI('https://api.football-data.org/v2/competitions/CL/standings', env('APP_FootballAPIToken'));    
+    }
 
     public function get_league_scoreboard($season, $league)
     {
