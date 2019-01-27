@@ -167,9 +167,12 @@ class FootballAPIController
 					$matchLocation = 'AWAY';
 				$matchHomeTeam = $match->homeTeam->id;
 				$matchAwayTeam = $match->awayTeam->id;
+				$matchDate = date_create(substr($match->utcDate, 0, 10) . ' ' . substr($match->utcDate, 11, 8));
+				date_add($matchDate, date_interval_create_from_date_string('1 hours'));
+				$fixedDate = date_format($matchDate, 'Y-m-d H:i:s');
 				Matches::where('id', $match->id)->update([
 					'League' => $match->competition->name,
-					'Date' => substr($match->utcDate, 0, 10) . ' ' . substr($match->utcDate, 11, 8),
+					'Date' => $fixedDate,
 					'Location' => $matchLocation,
 					'idClubHome' => $matchHomeTeam,
 					'idClubAway' => $matchAwayTeam,
@@ -218,9 +221,12 @@ class FootballAPIController
 				$matchAwayClubID = $match->awayTeam->id;
 				$matchHomeClubScore = $match->score->fullTime->homeTeam;
 				$matchAwayClubScore = $match->score->fullTime->awayTeam;
+				$matchDate = date_create(substr($match->utcDate, 0, 10) . ' ' . substr($match->utcDate, 11, 8));
+				date_add($matchDate, date_interval_create_from_date_string('1 hours'));
+				$fixedDate = date_format($matchDate, 'Y-m-d H:i:s');
 				Matches::where('id', $match->id)->update([
 					'League' => $match->competition->name,
-					'Date' => substr($match->utcDate, 0, 10) . ' ' . substr($match->utcDate, 11, 8),
+					'Date' => $fixedDate,
 					'Location' => $matchLocation,
 					'idClubHome' => $matchHomeClubID,
 					'idClubAway' => $matchAwayClubID,
