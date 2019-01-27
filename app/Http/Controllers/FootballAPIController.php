@@ -200,7 +200,51 @@ class FootballAPIController
 	public static function getLiveMatch_ExternalAPI($url, $token, $type)
 	{
 		$data = self::getDataFromURL($url, $token);
-		$matches = $data->matches;
+		if($data->count == 0)
+			return;
+		$match = $data->matches[0];
+		// UPDATE
+		if(DB::table('matches')->where('id', $match->id)->count())
+		{
+			if($match->homeTeam->id == env("APP_FootallAPIMyTeamID"))
+				$matchLocation = 'HOME';
+			else 
+				$matchLocation = 'AWAY';
+			$matchHomeClubID = $match->homeTeam->id;
+			$matchAwayClubID = $match->awayTeam->id;
+			$matchHomeClubScore = $match->score->fullTime->homeTeam;
+			$matchAwayClubScore = $match->score->fullTime->awayTeam;
+			$matchDate = date_create(substr($match->utcDate, 0, 10) . ' ' . substr($match->utcDate, 11, 8));
+			date_add($matchDate, date_interval_create_from_date_string('1 hours'));
+			$fixedDate = date_format($matchDate, 'Y-m-d H:i:s');
+			Matches::where('id', $match->id)->update([
+				'League' => $match->competition->name,
+				'Date' => $fixedDate,
+				'Location' => $matchLocation,
+				'idClubHome' => $matchHomeClubID,
+				'idClubAway' => $matchAwayClubID,
+				'HomeClubScore' => $matchHomeClubScore,
+				'AwayClubScore' => $matchAwayClubScore,
+				'Type' => $type]);
+		}
+		// INSERT
+		else
+		{
+			$finishedMatches = new Matches;
+			$finishedMatches->id = $match->id;
+			$finishedMatches->League = $match->competition->name;
+			$finishedMatches->Date = substr($match->utcDate, 0, 10) . ' ' . substr($match->utcDate, 11, 8);
+			if($match->homeTeam->id == env("APP_FootallAPIMyTeamID"))
+				$finishedMatches->Location = 'HOME';
+			else 
+			$finishedMatches->Location = 'AWAY';
+			$finishedMatches->idClubHome = $match->homeTeam->id;
+			$finishedMatches->idClubAway = $match->awayTeam->id;
+			$finishedMatches->HomeClubScore = $match->score->fullTime->homeTeam;
+			$finishedMatches->AwayClubScore = $match->score->fullTime->awayTeam;
+			$finishedMatches->Type = $type;
+			$finishedMatches->save();
+		}
 	}
 
 	public static function getFinishedMatches_ExternalAPI($url, $token, $type)
