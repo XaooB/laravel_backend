@@ -109,10 +109,15 @@ class CommentsController extends Controller
         for($i; $i > $till; $i = date('Y-m-d',(strtotime( '-1 day', strtotime($i)))))
         {
             foreach ($commentsCount as $key => $commentCount) {
-                if($commentCount->day == $i)
-                    array_push($commentData, ['day' => $i, 'comments_count' => $commentCount->total_comments]);
+                if(in_array($i, $commentData))
+                {
+                    if($commentCount->day == $i)
+                        array_push($commentData, ['day' => $i, 'comments_count' => $commentCount->total_comments]);
+                    else
+                        array_push($commentData, ['day' => $i, 'comments_count' => 0]);
+                }
                 else
-                    array_push($commentData, ['day' => $i, 'comments_count' => 0]);
+                    break;  
             }
         }
         return response()->json($commentData);
