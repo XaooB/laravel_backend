@@ -112,7 +112,7 @@ class CommentsController extends Controller
             var_dump($data);
             if($data)
             {
-                array_push($commentData, ['day' => $i, 'comments_count' => $data->total_comments]);
+                //array_push($commentData, ['day' => $i, 'comments_count' => $data->total_comments]);
             }
             else
                 array_push($commentData, ['day' => $i, 'comments_count' => 0]);
