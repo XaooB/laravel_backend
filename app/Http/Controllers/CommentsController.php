@@ -111,7 +111,7 @@ class CommentsController extends Controller
         {
             foreach ($commentsCount as $key => $commentCount) {
                 if(in_array($i, $days))
-                    break;
+                {}
                 else
                 {
                     if($commentCount->day == $i)
