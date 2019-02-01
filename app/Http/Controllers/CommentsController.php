@@ -115,7 +115,7 @@ class CommentsController extends Controller
                     array_push($commentData, ['day' => $i, 'comments_count' => 0]);
             }
         }
-        return response()->json($commentsCount);
+        return response()->json($commentData);
     }
 
     /**
