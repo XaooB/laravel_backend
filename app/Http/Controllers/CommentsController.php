@@ -109,7 +109,6 @@ class CommentsController extends Controller
         $till = date('Y-m-d',(strtotime( '-7 day', strtotime($i))));
         for($i; $i > $till; $i = date('Y-m-d',(strtotime( '-1 day', strtotime($i)))))
         {
-            array_push($commentData, ['day' => $i, 'comments_count' => 0]);
             foreach ($commentsCount as $key => $commentCount) {
                 if(in_array($i, $days))
                     break;
