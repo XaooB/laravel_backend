@@ -100,28 +100,22 @@ class CommentsController extends Controller
             return response()->json(['status' => false, 'error' => 'wrong data']);
     }
 
-    public function panel(Request $request)
+    public function panel($days, Request $request)
     {
-        $commentsCount = DB::table('comments')->select(DB::raw('date(created_at) as day, count(*) as total_comments'))->where(DB::raw('DATEDIFF(NOW(), comments.created_at)'), '<', 7)->groupBy(DB::raw('day'))->get();
-        var_dump($commentsCount);
+        $commentsCount = DB::table('comments')->select(DB::raw('date(created_at) as day, count(*) as total_comments'))->where(DB::raw('DATEDIFF(NOW(), comments.created_at)'), '<', $days)->groupBy(DB::raw('day'))->get();
         $commentData = array();
-        $days = array();
         $i = date('Y-m-d', time());
-        $till = date('Y-m-d',(strtotime( '-7 day', strtotime($i))));
+        $till = date('Y-m-d',(strtotime('-' . $days . 'day', strtotime($i))));
         for($i; $i > $till; $i = date('Y-m-d',(strtotime( '-1 day', strtotime($i)))))
         {
-            foreach ($commentsCount as $key => $commentCount) {
-                if(in_array($i, $days))
-                {}
-                else
-                {
-                    if($commentCount->day == $i)
-                        array_push($commentData, ['day' => $i, 'comments_count' => $commentCount->total_comments]);
-                    else
-                        array_push($commentData, ['day' => $i, 'comments_count' => 0]);
-                    array_push($days, $i);
-                }
+            $data = $commentsCount->where('day', $i)->only('total_comments');
+            var_dump($data);
+            if($data)
+            {
+                array_push($commentData, ['day' => $i, 'comments_count' => 0]);
             }
+            else
+                array_push($commentData, ['day' => $i, 'comments_count' => 0]);
         }
         return response()->json($commentData);
     }
