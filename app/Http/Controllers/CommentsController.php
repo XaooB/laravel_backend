@@ -110,14 +110,14 @@ class CommentsController extends Controller
         {
             foreach ($commentsCount as $key => $commentCount) {
                 if(in_array($i, $commentData))
+                    break;
+                else
                 {
                     if($commentCount->day == $i)
                         array_push($commentData, ['day' => $i, 'comments_count' => $commentCount->total_comments]);
                     else
                         array_push($commentData, ['day' => $i, 'comments_count' => 0]);
-                }
-                else
-                    break;  
+                }  
             }
         }
         return response()->json($commentData);
