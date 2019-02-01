@@ -103,6 +103,18 @@ class CommentsController extends Controller
     public function panel(Request $request)
     {
         $commentsCount = DB::table('comments')->select(DB::raw('date(created_at) as day, count(*) as total_comments'))->where(DB::raw('DATEDIFF(NOW(), comments.created_at)'), '<', 7)->groupBy(DB::raw('day'))->get();
+        $commentData = array();
+        $i = date('Y-m-d', time());
+        $till = date('Y-m-d',(strtotime( '-7 day', strtotime($i))));
+        for($i; $i > $till; $i = date('Y-m-d',(strtotime( '-1 day', strtotime($i)))))
+        {
+            foreach ($commentsCount as $key => $commentCount) {
+                if($commentCount->day == $i)
+                    array_push($commentData, ['day' => $i, 'comments_count' => $commentCount->total_comments]);
+                else
+                    array_push($commentData, ['day' => $i, 'comments_count' => 0]);
+            }
+        }
         return response()->json($commentsCount);
     }
 
