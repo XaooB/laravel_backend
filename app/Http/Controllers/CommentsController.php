@@ -109,13 +109,8 @@ class CommentsController extends Controller
         for($i; $i > $till; $i = date('Y-m-d',(strtotime( '-1 day', strtotime($i)))))
         {
             $data = $commentsCount->where('day', $i);
-            var_dump($data);
-            if($data)
-            {
-                //array_push($commentData, ['day' => $i, 'comments_count' => $data->total_comments]);
-            }
-            else
-                array_push($commentData, ['day' => $i, 'comments_count' => 0]);
+            $count = isset($data->total_comments) ? $data->total_comments : 0;
+            array_push($commentData, ['day' => $i, 'comments_count' => $count]);
         }
         return response()->json($commentData);
     }
