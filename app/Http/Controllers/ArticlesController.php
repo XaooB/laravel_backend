@@ -45,7 +45,12 @@ class ArticlesController extends Controller
          */
         public function index()
         {
-            //
+            if(isset($_SESSION['iduser']))
+            {
+                $articles = array();
+                $this->buildArticleData($articles, [0, 1], 'articles.idUser', [$_SESSION['iduser']], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+                return response()->json($articles);
+            }
         }
 
         public function latest_main($count)
