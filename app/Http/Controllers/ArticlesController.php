@@ -48,7 +48,7 @@ class ArticlesController extends Controller
             if(isset($_SESSION['iduser']))
             {
                 $articles = array();
-                $this->buildArticleData($articles, [0, 1], 'articles.idUser', [$_SESSION['iduser']], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+                $this->buildArticleData($articles, [0, 1], 'articles.idUser', [$_SESSION['iduser']], 'articles.idArticle', 'desc', null, null, 'articles.Title', '');
                 return response()->json($articles);
             }
         }
