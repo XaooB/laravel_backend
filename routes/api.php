@@ -32,14 +32,27 @@ Route::group(['middleware' => ['web']], function () {
 Route::get('test', function(Request $request) {
     if(isset($request->token))
     {
-        $token = JWTAuth::getToken();
-        $apy = JWTAuth::getPayload($token)->toArray();
-        return response()->json($apy);
+        try 
+        {
+            $token = JWTAuth::getToken();
+            $apy = JWTAuth::getPayload($token)->toArray();
+            return response()->json($apy);
+        }
+        catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) 
+        {
+            return response()->json(['status' => false, 'error' => 'token expired'], $e->getStatusCode());
+        }
+        catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) 
+        {
+            return response()->json(['status' => false, 'error' => 'token invalid'], $e->getStatusCode());
+        }
+        catch (Tymon\JWTAuth\Exceptions\JWTException $e) 
+        {
+        return response()->json(['status' => false, 'error' => 'token absent'], $e->getStatusCode());
+        }
     }
     else
         return response()->json(['status' => false, 'error' => 'wrong token']);
-
-    
 });
 
 
