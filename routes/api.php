@@ -30,9 +30,16 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::get('test', function(Request $request) {
-    $token = JWTAuth::getToken();
-    $apy = JWTAuth::getPayload($token)->toArray();
-    return response()->json($apy);
+    if(isset($request->token))
+    {
+        $token = JWTAuth::getToken();
+        $apy = JWTAuth::getPayload($token)->toArray();
+        return response()->json($apy);
+    }
+    else
+        return response()->json(['status' => false, 'error' => 'wrong token']);
+
+    
 });
 
 

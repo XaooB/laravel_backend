@@ -29,6 +29,6 @@ class APIAuth
                 return response()->json(['status' => false, 'error' => 'sorry you are already blocked on this website']);
         }
         else
-            return response()->json(['status' => false, 'error' => 'auth fail']);
+            return response()->json(['status' => false, 'error' => 'authorization failed']);
     }
 }
