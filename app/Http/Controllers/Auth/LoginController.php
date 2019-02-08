@@ -13,6 +13,7 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Auth;
+use JWTAuth;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -79,7 +80,8 @@ class LoginController extends Controller
         $_SESSION['articles_count'] = $userData->articles_count;
         $_SESSION['comments_count'] = $userData->comments_count;
         $_SESSION['crate_date'] = $userData->created_at;
-        return redirect('https://portal-wertykalny.herokuapp.com/');
+        echo $token = JWTAuth::fromUser($userData);
+        //return redirect('https://portal-wertykalny.herokuapp.com/');
     }
 
     public function findOrCreateUser($user)

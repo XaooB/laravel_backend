@@ -167,7 +167,11 @@ return [
         // CORS
         Barryvdh\Cors\ServiceProvider::class,
 		
+		// Cloudinary
         JD\Cloudder\CloudderServiceProvider::class,
+		
+		// JWT
+		Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
     ],
 
     /*
@@ -218,6 +222,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
+		'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+		'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];
