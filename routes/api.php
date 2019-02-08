@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +30,9 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::get('test', function(Request $request) {
-    //$user = JWTAuth::parseToken()->toUser();
-    //return response()->json(compact('user'));
-    return response()->json(JWTAuth::toUser($request->token));
+    $token = JWTAuth::getToken();
+    $apy = JWTAuth::getPayload($token)->toArray();
+    return response()->json($apy);
 });
 
 
