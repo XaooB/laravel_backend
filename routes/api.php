@@ -31,7 +31,7 @@ Route::group(['middleware' => ['web']], function () {
 Route::get('test', function(Request $request) {
     //$user = JWTAuth::parseToken()->toUser();
     //return response()->json(compact('user'));
-    var_dump(JWTAuth::toUser($request->token))
+    var_dump(JWTAuth::toUser($request->token));
     return;
 });
 
