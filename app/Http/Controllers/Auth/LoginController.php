@@ -80,7 +80,7 @@ class LoginController extends Controller
         $_SESSION['articles_count'] = $userData->articles_count;
         $_SESSION['comments_count'] = $userData->comments_count;
         $_SESSION['crate_date'] = $userData->created_at;
-        echo $token = JWTAuth::fromUser($userData);
+        return response()->json(['token' => JWTAuth::fromUser($userData)]);
         //return redirect('https://portal-wertykalny.herokuapp.com/');
     }
 

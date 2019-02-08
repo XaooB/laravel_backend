@@ -29,9 +29,7 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::get('test', function() {
-    $data = DB::table('survey_sets')->where('idSurvey', 10)->pluck('idSurveySet');
-    var_dump(json_decode(json_encode($data), True));
-    return;
+    return response()->json(compact('user'));
 });
 
 
