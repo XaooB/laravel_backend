@@ -73,14 +73,14 @@ class LoginController extends Controller
         $customClaims = [
             'iduser' => $userData->id, 
             'name' => $userData->Name,
-            'email' = $userData->Email,
-            'image' = $userData->Image,
-            'privileges' = $userData->Privileges,
-            'tier' = $userData->Tier,
-            'status' = $userData->Status,
-            'articles_count' = $userData->articles_count,
-            'comments_count' = $userData->comments_count,
-            'crate_date' = $userData->created_at
+            'email' => $userData->Email,
+            'image' => $userData->Image,
+            'privileges' => $userData->Privileges,
+            'tier' => $userData->Tier,
+            'status' => $userData->Status,
+            'articles_count' => $userData->articles_count,
+            'comments_count' => $userData->comments_count,
+            'crate_date' => $userData->created_at
         ];
         $_SESSION['iduser'] = $userData->id;
         $_SESSION['name'] = $userData->Name;
