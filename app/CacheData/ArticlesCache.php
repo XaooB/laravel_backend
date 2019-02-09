@@ -36,6 +36,7 @@ class ArticlesCache
 		return cache()->remember($cacheKey, Carbon::now()->addMinutes(1), function() use($count) {
 			$data_articles = array();
 			$data_articles = $this->buildArticleData($articles, [1], 'articles.Main', [1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+			var_dump($data_articles);
 			return $data_articles;
 		});
 	}
