@@ -5,6 +5,7 @@ namespace App\CacheData;
 use App\Articles;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Http\Controllers\UsersController;
 
 class ArticlesCache
 {
