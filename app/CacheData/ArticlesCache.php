@@ -34,7 +34,9 @@ class ArticlesCache
 		$key = 'latest_main.{$count}';
 		$cacheKey = $this->getCacheKey($key);
 		return cache()->remember($cacheKey, Carbon::now()->addMinutes(1), function() use($count) {
-			return $this->buildArticleData($articles, [1], 'articles.Main', [1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+			$data_articles = array();
+			$data_articles = $this->buildArticleData($articles, [1], 'articles.Main', [1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+			return $data_articles;
 		});
 	}
 
@@ -43,13 +45,15 @@ class ArticlesCache
 		$key = 'latest.{$count}';
 		$cacheKey = $this->getCacheKey($key);
 		return cache()->remember($cacheKey, Carbon::now()->addMinutes(1), function() use($count) {
-			return $this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+			$data_articles = array();
+			$data_articles = $this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+			return $data_articles;
 		});
 	}
 
 	public function getCacheKey($key)
 	{
 		$key = strtoupper($key);
-		return self::CACHE_KEY . $key;
+		return self::CACHE_KEY . ".$key";
 	}
 }
