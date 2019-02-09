@@ -59,8 +59,8 @@ class ArticlesController extends Controller
             if($count > 0)
             {
                 //$articles = array();
-                //$this->buildArticleData($articles, [1], 'articles.Main', [1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
-                $articles = ArticlesCache::latest_main($count);
+                $this->buildArticleData($articles, [1], 'articles.Main', [1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+                //$articles = ArticlesCache::latest_main($count);
                 return response()->json($articles);
             }
             else
@@ -72,8 +72,8 @@ class ArticlesController extends Controller
             if($count > 0)
             {
                 //$articles = array();
-                //$this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
-                $articles = ArticlesCache::latest($count);
+                $this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+                //$articles = ArticlesCache::latest($count);
                 return response()->json($articles);
             }
             else
