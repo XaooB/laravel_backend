@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CloudinaryController;
+use Facades\App\CacheData\ArticlesCache;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -57,8 +58,9 @@ class ArticlesController extends Controller
         {
             if($count > 0)
             {
-                $articles = array();
-                $this->buildArticleData($articles, [1], 'articles.Main', [1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+                //$articles = array();
+                //$this->buildArticleData($articles, [1], 'articles.Main', [1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+                $articles = ArticlesCache::latest_main($count);
                 return response()->json($articles);
             }
             else
@@ -69,8 +71,9 @@ class ArticlesController extends Controller
         {
             if($count > 0)
             {
-                $articles = array();
-                $this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+                //$articles = array();
+                //$this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+                $articles = ArticlesCache::latest($count);
                 return response()->json($articles);
             }
             else
