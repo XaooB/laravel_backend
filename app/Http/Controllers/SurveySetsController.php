@@ -9,6 +9,7 @@ use App\Http\Resources\SurveySets as SurveySetsResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UserSurveyAnswersController;
+use Facades\App\CacheData\SurveysCache;
 
 class SurveySetsController extends Controller
 {
