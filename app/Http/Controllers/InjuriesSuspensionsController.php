@@ -19,18 +19,18 @@ class InjuriesSuspensionsController extends Controller
     {
         if($type == 'actual')
         {
-            $injuriesSuspensions = DB::table('injuries_suspensions')->whereRaw('ReturnDate > NOW()')->get();
+            $injuriesSuspensions = DB::table('injuries_suspensions')->select('idInjurySuspension as idinjurysuspension', 'idPlayer as player', 'Type as type', 'Description as description0', 'ReturnDate as return_date', 'created_at as create_date')->whereRaw('ReturnDate > NOW()')->get();
             foreach ($injuriesSuspensions as $key => $injurySuspension)
             {
-                PlayersController::buildPlayerData($injurySuspension->idPlayer);
+                PlayersController::buildPlayerData($injurySuspension->player);
             }
         }
         elseif($type == 'injury' || $type == 'suspension')
         {
-            $injuriesSuspensions = DB::table('injuries_suspensions')->where('Type', $type)->orderBy('idInjurySuspension', 'desc')->limit($count)->get();
+            $injuriesSuspensions = DB::table('injuries_suspensions')->select('idInjurySuspension as idinjurysuspension', 'idPlayer as player', 'Type as type', 'Description as description0', 'ReturnDate as return_date', 'created_at as create_date')->where('Type', $type)->orderBy('idInjurySuspension', 'desc')->limit($count)->get();
             foreach ($injuriesSuspensions as $key => $injurySuspension)
             {
-                PlayersController::buildPlayerData($injurySuspension->idPlayer);
+                PlayersController::buildPlayerData($injurySuspension->player);
             }
         }
         else
