@@ -50,9 +50,7 @@ class SurveySetsController extends Controller
 
     public function get_latest()
     {
-        $latestSurvey = DB::table('surveys')->select('idSurvey as idsurvey', 'Topic as topic')->orderBy('idSurvey', 'desc')->first();
-        $latestSurvey->answers = array();
-        $this->getAnswers($latestSurvey->answers, $latestSurvey->idsurvey);
+        $latestSurvey = SurveysCache::latest();
         return response()->json($latestSurvey);
     }
 
