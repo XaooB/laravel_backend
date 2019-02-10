@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PlayersController;
+use Facades\App\CacheData\InjuriesSuspensionsCache;
 
 
 class InjuriesSuspensionsController extends Controller
