@@ -112,6 +112,7 @@ Route::group(['middleware' => 'apiresponse'], function() {
     Route::get('matches_get_scheduled_matches/{count}', 'MatchesController@get_scheduled_matches')->name('matches.get_scheduled_matches');
     Route::get('matches_get_live_match', 'MatchesController@get_live_match')->name('matches.get_live_match');
     Route::get('matches_get_finished_match', 'MatchesController@get_finished_match')->name('matches.get_finished_match');
+    Route::get('matches_get_finished_matches/{count}', 'MatchesController@get_finished_matches')->name('matches.get_finished_matches');
 
     Route::get('matches_update_scheduled_matches', 'MatchesController@update_scheduled_matches')->name('matches.update_scheduled_matches');
     Route::get('matches_update_live_match', 'MatchesController@update_live_match')->name('matches.update_live_match');

@@ -10,9 +10,29 @@ use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\FootballAPIController;
 use App\Http\Controllers\ClubsController;
+use Facades\App\CacheData\LeagueScoreboardsCache;
 
 class LeagueScoreboardController extends Controller
 {
+    public static function buildScoreboardData(&$scoreboard, $season, $league)
+    {
+        if($league == 'CL')
+        {
+            $scoreboard = DB::table('league_scoreboards')->select('Group as group')->where('Season', $season)->where('League', $league)->groupBy('Group')->get();
+            foreach ($league_scoreboard as $key => $leagueClubs) {
+                $leagueClubs->standings = DB::table('league_scoreboards')->select('idClub as club', 'Position as position', 'Matches as matches', 'Won as won', 'Draw as draw', 'Lost as lost', 'Points as points')->where('Season', $season)->where('League', $league)->where('Group', $leagueClubs->group)->orderBy('Position', 'asc')->get();
+                foreach ($leagueClubs->standings as $key => $club) {
+                    ClubsController::buildClubData($club->club);
+                }
+            }
+        }
+        if($league == 'PD')
+            $scoreboard = DB::table('league_scoreboards')->select('idClub as club', 'Position as position', 'Matches as matches', 'Won as won', 'Draw as draw', 'Lost as lost', 'Points as points')->where('Season', $season)->where('League', $league)->orderBy('Position', 'asc')->get();
+        foreach ($scoreboard as $key => $team) {
+            ClubsController::buildClubData($team->club);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,21 +48,7 @@ class LeagueScoreboardController extends Controller
 
     public function get_league_scoreboard($season, $league)
     {
-        if($league == 'CL')
-        {
-            $league_scoreboard = DB::table('league_scoreboards')->select('Group as group')->where('Season', $season)->where('League', $league)->groupBy('Group')->get();
-            foreach ($league_scoreboard as $key => $leagueClubs) {
-                $leagueClubs->standings = DB::table('league_scoreboards')->select('idClub as club', 'Position as position', 'Matches as matches', 'Won as won', 'Draw as draw', 'Lost as lost', 'Points as points')->where('Season', $season)->where('League', $league)->where('Group', $leagueClubs->group)->orderBy('Position', 'asc')->get();
-                foreach ($leagueClubs->standings as $key => $club) {
-                    ClubsController::buildClubData($club->club);
-                }
-            }
-        }
-        if($league == 'PD')
-            $league_scoreboard = DB::table('league_scoreboards')->select('idClub as club', 'Position as position', 'Matches as matches', 'Won as won', 'Draw as draw', 'Lost as lost', 'Points as points')->where('Season', $season)->where('League', $league)->orderBy('Position', 'asc')->get();
-        foreach ($league_scoreboard as $key => $team) {
-            ClubsController::buildClubData($team->club);
-        }
+        $league_scoreboard = LeagueScoreboardsCache::league_scoreboard($season, $league);
         return response()->json($league_scoreboard);
     }
 

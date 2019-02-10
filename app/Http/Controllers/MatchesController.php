@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\FootballAPIController;
 use App\Http\Controllers\ClubsController;
+use Facades\App\CacheData\MatchesCache;
 
 class MatchesController extends Controller
 {
@@ -18,6 +19,10 @@ class MatchesController extends Controller
     {
         if($count == 1)
         {
+            if($type == 'LIVE' && DB::table('matches')->where('Type', 'LIVE')->count() > 0)
+                $type = 'LIVE';
+            else
+                $type = 'FINISHED';
             $match = DB::table('matches')->select('idClubHome as home_team', 'HomeClubScore as home_team_score', 'idClubAway as away_team', 'AwayClubScore as away_team_score', 'Location as location', 'League as league', 'Date as date', 'Type as type')->where('Type', $type)->orderBy('Date', $orderValue)->first();
             ClubsController::buildClubData($match->home_team);
             ClubsController::buildClubData($match->away_team);
@@ -74,22 +79,25 @@ class MatchesController extends Controller
 
     public function get_scheduled_matches($count)
     {
-        $this->buildMatchData($scheduled_matches, 'SCHEDULED', $count, 'asc');
+        $scheduled_matches = MatchesCache::scheduled_matches($count);
         return response()->json($scheduled_matches);
     }
 
     public function get_live_match()
     {
-        if(DB::table('matches')->where('Type', 'LIVE')->count() > 0)
-            $this->buildMatchData($live_match, 'LIVE', 1, 'desc');
-        else
-            $this->buildMatchData($live_match, 'FINISHED', 1, 'desc');
+        $live_match = MatchesCache::live_match();
         return response()->json($live_match);
     }
 
     public function get_finished_match()
     {
-        $this->buildMatchData($finished_match, 'FINISHED', 1, 'desc');
+        $finished_match = MatchesCache::finished_match();
+        return response()->json($finished_match);
+    }
+
+    public function get_finished_matches($count)
+    {
+        $finished_match = MatchesCache::finished_matches($count);
         return response()->json($finished_match);
     }
 
