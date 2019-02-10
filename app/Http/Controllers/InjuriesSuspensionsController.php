@@ -11,8 +11,27 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PlayersController;
 
+
 class InjuriesSuspensionsController extends Controller
 {
+    public static function buildInjurySuspensionData(&$injurysuspension, $type, $count)
+    {
+        if($type == 'actual')
+        {
+            $injuriesSuspensions = DB::table('injuries_suspensions')->whereRaw('ReturnDate > NOW()')->get();
+            foreach ($injuriesSuspensions as $key => $injurySuspension) 
+                PlayersController::buildPlayerData($injurySuspension->idPlayer);
+        }
+        elseif($count)
+        {
+            $injuriesSuspensions = DB::table('injuries_suspensions')->where('Type', $type)->orderBy('idInjurySuspension', 'desc')->limit($count)->get();
+            foreach ($injuriesSuspensions as $key => $injurySuspension)
+                PlayersController::buildPlayerData($injurySuspension->idPlayer);
+        }
+        else
+            $injurysuspension = array();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,35 +39,25 @@ class InjuriesSuspensionsController extends Controller
      */
     public function index()
     {
-        $injuriesSuspensions = InjuriesSuspensions::all();
-        foreach ($injuriesSuspensions as $key => $injurySuspension) {
-            PlayersController::buildPlayerData($injurySuspension->idPlayer);
-        }
-        return response()->json(InjuriesSuspensionsResource::collection($injuriesSuspensions));
+        //
     }
 
     public function latest_injuries($count)
     {
-        $injuriesSuspensions = DB::table('injuries_suspensions')->leftJoin('players', 'players.idPlayer', '=', 'injuries_suspensions.idPlayer')->select('players.Name as name', 'players.Number as number', 'players.Image as image', 'players.Position as position', 'injuries_suspensions.Description as description', 'injuries_suspensions.ReturnDate as return_date')->where('Type', '=', 'injury')->orderBy('idInjurySuspension', 'desc')->limit($count)->get();
+        $injuriesSuspensions = InjuriesSuspensionsCache::latest_injuries($count);
         return response()->json($injuriesSuspensions);
     }
 
     public function latest_suspensions($count)
     {
-        $injuriesSuspensions = DB::table('injuries_suspensions')->where('Type', '=', 'suspension')->orderBy('idInjurySuspension', 'desc')->limit($count)->get();
-        foreach ($injuriesSuspensions as $key => $injurySuspension) {
-            PlayersController::buildPlayerData($injurySuspension->idPlayer);
-        }
+        $injuriesSuspensions = InjuriesSuspensionsCache::latest_suspensions($count);
         return response()->json(InjuriesSuspensionsResource::collection($injuriesSuspensions));
     }
 
     public function actual()
     {
-        $injuries = DB::table('injuries_suspensions')->whereRaw('ReturnDate > NOW()')->get();
-        foreach ($injuries as $key => $injurySuspension) {
-            PlayersController::buildPlayerData($injurySuspension->idPlayer);
-        }
-        return response()->json(InjuriesSuspensionsResource::collection($injuries));
+        $injuriesSuspensions = InjuriesSuspensionsCache::actual();
+        return response()->json(InjuriesSuspensionsResource::collection($injuriesSuspensions));
     }
 
     // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------
