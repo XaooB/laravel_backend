@@ -45,7 +45,7 @@ class InjuriesSuspensionsController extends Controller
     public function latest_injuries($count)
     {
         $injuriesSuspensions = InjuriesSuspensionsCache::latest_injuries($count);
-        return response()->json($injuriesSuspensions);
+        return response()->json(InjuriesSuspensionsResource::collection($injuriesSuspensions));
     }
 
     public function latest_suspensions($count)
