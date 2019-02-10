@@ -15,22 +15,26 @@ use Facades\App\CacheData\InjuriesSuspensionsCache;
 
 class InjuriesSuspensionsController extends Controller
 {
-    public static function buildInjurySuspensionData(&$injurysuspension, $type, $count)
+    public static function buildInjurySuspensionData(&$injuriesSuspensions, $type, $count)
     {
         if($type == 'actual')
         {
             $injuriesSuspensions = DB::table('injuries_suspensions')->whereRaw('ReturnDate > NOW()')->get();
-            foreach ($injuriesSuspensions as $key => $injurySuspension) 
+            foreach ($injuriesSuspensions as $key => $injurySuspension)
+            {
                 PlayersController::buildPlayerData($injurySuspension->idPlayer);
+            }
         }
-        elseif($count)
+        elseif($type == 'injury' || $type == 'suspension')
         {
             $injuriesSuspensions = DB::table('injuries_suspensions')->where('Type', $type)->orderBy('idInjurySuspension', 'desc')->limit($count)->get();
             foreach ($injuriesSuspensions as $key => $injurySuspension)
+            {
                 PlayersController::buildPlayerData($injurySuspension->idPlayer);
+            }
         }
         else
-            $injurysuspension = array();
+            $injuriesSuspensions = array();
     }
 
     /**
@@ -46,19 +50,19 @@ class InjuriesSuspensionsController extends Controller
     public function latest_injuries($count)
     {
         $injuriesSuspensions = InjuriesSuspensionsCache::latest_injuries($count);
-        return response()->json(InjuriesSuspensionsResource::collection($injuriesSuspensions));
+        return response()->json($injuriesSuspensions);
     }
 
     public function latest_suspensions($count)
     {
         $injuriesSuspensions = InjuriesSuspensionsCache::latest_suspensions($count);
-        return response()->json(InjuriesSuspensionsResource::collection($injuriesSuspensions));
+        return response()->json($injuriesSuspensions);
     }
 
     public function actual()
     {
         $injuriesSuspensions = InjuriesSuspensionsCache::actual();
-        return response()->json(InjuriesSuspensionsResource::collection($injuriesSuspensions));
+        return response()->json($injuriesSuspensions);
     }
 
     // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -129,15 +133,16 @@ class InjuriesSuspensionsController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-            if(InjuriesSuspensions::where('idInjurySuspension', '=' , $id)->update([
-                'idUser' => $request->iduser,
-                'idPlayer' => $request->idplayer,
-                'Type' => $request->type,
-                'Description' => $request->description,
-                'ReturnDate' => $request->returndate
-            ])) {return response()->json(['message' => 'success']);}
-                else {return response()->json(['message' => 'failure']);}
-            }
+        if(InjuriesSuspensions::where('idInjurySuspension', '=' , $id)->update([
+            'idUser' => $_SESSION['iduser'],
+            'idPlayer' => $request->idplayer,
+            'Type' => $request->type,
+            'Description' => $request->description,
+            'ReturnDate' => $request->returndate])) 
+            return response()->json(['message' => 'success']);
+        else 
+            return response()->json(['message' => 'failure']);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -151,7 +156,9 @@ class InjuriesSuspensionsController extends Controller
             Aby wysłać dane (usunięcie) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="DELETE">
         */
-            if(InjuriesSuspensions::where('idInjurySuspension', '=' , $id)->where('idUser', '=' , $request->iduser)->delete()) {return response()->json(['message' => 'success']);}
-            else {return response()->json(['message' => 'failure']);}
-        }
+        if(InjuriesSuspensions::where('idInjurySuspension', '=' , $id)->where('idUser', '=' , $request->iduser)->delete()) 
+            return response()->json(['message' => 'success']);
+        else
+            return response()->json(['message' => 'failure']);
     }
+}

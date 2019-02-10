@@ -333,4 +333,4 @@ class ArticlesController extends Controller
             else
                 return response()->json(['status' => false, 'error' => 'wrong data']);
         }
-    }
+}
