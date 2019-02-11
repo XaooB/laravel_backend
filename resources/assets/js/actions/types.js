@@ -1,1 +1,15 @@
 export const FETCH_USER = 'FU';
+export const FETCH_ARTICLE = 'FA';
+export const ADD_COMMENT = 'AC';
+export const EDIT_COMMENT = 'EC';
+export const DELETE_COMMENT = 'DC';
+export const FETCH_COMMENTS = 'FC';
+export const ADD_COMMENT_STATUS = 'ACS';
+export const SELECTED_COMMENT_ID = 'SCI';
+export const INC_COMMENT_COUNT = 'ICC';
+export const DEC_COMMENT_COUNT = 'DCC';
+export const INC_LIKES_COUNT = 'ILC';
+export const DEC_LIKES_COUNT = 'DLC';
+export const DISABLE_LIKE_BUTTON = 'DLB';
+export const CHANGE_LIKE_STATUS = 'CLS';
+export const EDIT_COMMENT_STATUS = 'ESS';

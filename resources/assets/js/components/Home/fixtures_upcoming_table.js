@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { dateConverter } from '../../helpers/dateConverter';
+import dateConverter from '../../helpers/dateConverter';
 
 const Title = styled.span`
   font-family:'SSPBK';
@@ -66,12 +66,14 @@ const Fixtures = props => {
           <Title>opponent</Title>
         </TableRow>
           {schedule ? schedule.map((item, i) => {
-            const { league, date, club } = item;
+            const { home_team, away_team, league, date} = item,
+            teamName = location === 'HOME' ? away_team.short_name : home_team.short_name;
+
             return (
             <TableRow key={i}>
               <TableField>{ league }</TableField>
               <TableField>{ dateConverter.toDateOnly(date) }</TableField>
-              <TableField>{ club.short_name }</TableField>
+              <TableField>{ teamName }</TableField>
             </TableRow>)}
             ) : (
         <TableRow>

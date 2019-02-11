@@ -43,11 +43,11 @@ const Label = styled.label`
 `
 
 const PollListItem = props => {
-  const { answer, id_survey_set } = props.data;
+  const { answer, idsurveyset } = props.data;
   return (
     <ListItem>
-      <Input type='radio' id={ id_survey_set }  name='ans' />
-      <Label htmlFor={ id_survey_set }>{ answer }</Label>
+      <Input type='radio' id={ idsurveyset } name='ans' />
+      <Label htmlFor={ idsurveyset }>{ answer }</Label>
     </ListItem>
   )
 }

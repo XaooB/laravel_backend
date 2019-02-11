@@ -8,7 +8,7 @@ const List = styled.ul`
 `
 
 const PollList = props => <List> { props.pollData.answers.map(( item, key ) => {
-          return <ListItem key={key} data={ item } /> }) }
+      return <ListItem key={key} data={ item } /> }) }
 </List>
 
 export default PollList;

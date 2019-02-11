@@ -17,19 +17,18 @@ const Wrapper = styled.div`
 `
 
 const Spinner = styled.div`
-  margin-top:10px;
-  display: inline-block;
-  position: relative;
-  width: 256px
-  height: 256px;
-  & div {
-    position: absolute;
-    border: 4px solid #ee324e;
-    opacity: 1;
-    border-radius: 50%;
-    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-    &:nth-child(2) {
-      animation-delay: -0.5s;
+  margin-right:8px;
+  border: 12px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 12px solid #00529f;
+  width: 100px;
+  height: 100px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   }
   @keyframes lds-ripple {
@@ -54,7 +53,7 @@ const Spinner = styled.div`
 const Loader = () => {
   return (
     <Wrapper>
-      <Spinner><div></div><div></div></Spinner>
+      <Spinner></Spinner>
     </Wrapper>
   )
 }

@@ -4,6 +4,9 @@ import styled from 'styled-components';
 const Wrapper = styled.section`
   flex:1;
   padding-right:5px;
+  @media only screen and (max-width: 480px) {
+    display:none;
+  }
 `
 
 const Span = styled.div`
@@ -15,7 +18,7 @@ const Span = styled.div`
 const CommentFeatures = props => {
   return (
     <Wrapper>
-      <Span>sorting etc..</Span>
+      <Span></Span>
     </Wrapper>
   )
 }

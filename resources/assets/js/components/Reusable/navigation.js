@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Nav = styled.nav`
-  font-family: 'SSPBK';
   color:#1e1e1e;
-  font-size: .95em;
+  font-size: .9em;
+  font-weight:bold;
+  align-self:center;
   text-transform: uppercase;
 `
 
@@ -16,7 +17,9 @@ const List = styled.ul`
 const ListLink = styled(Link)`
   color:inherit;
   padding:0 15px;
+  transition: all .3s;
   &:hover {
+    transition: all .3s;
     color:#ee324e;
   }
 `
@@ -25,7 +28,27 @@ const ApiRoute = styled.a`
   background:#ee324e;
   color:#ffffff;
   padding:8px;
+  position:relative;
   font-family: 'SSP';
+`
+
+const UserNav = styled.div`
+  position:absolute;
+  width:100%;
+  padding:10px;
+  left:0;
+  bottom:0;
+  background:#ee324e;
+`
+
+const UserName = styled.span`
+  font-size:.9em;
+`
+
+const UserImage = styled.img`
+  display:inline-block;
+  height:30px;
+  border-radius:100%;
 `
 
 const GoogleIcon = styled.span`
@@ -43,36 +66,24 @@ const ListItem = styled.li`
 `
 
 const Navigation = props => {
-  const { user } = props.auth;
-
   return (
     <Nav>
       <List>
         <ListLink to='/news'>
-          <ListItem>news</ListItem>
+          <ListItem>wiadomości</ListItem>
         </ListLink>
         <ListLink to='/club'>
-          <ListItem>club</ListItem>
+          <ListItem>real madryt</ListItem>
         </ListLink>
         <ListLink to='/schedule'>
-          <ListItem>schedule</ListItem>
+          <ListItem>terminarz</ListItem>
         </ListLink>
         <ListLink to='/live'>
-          <ListItem>Live</ListItem>
+          <ListItem>na żywo</ListItem>
         </ListLink>
         <ListLink to='/contact'>
-          <ListItem>contact us</ListItem>
+          <ListItem>kontakt</ListItem>
         </ListLink>
-        {
-          !user.length ?
-          <ApiRoute href='/api/auth/google'>
-            <GoogleIcon>g+</GoogleIcon>
-            <ListItem>Sign In</ListItem>
-          </ApiRoute> :
-          <ApiRoute to='/user'>
-            Hello, {user.name}
-          </ApiRoute>
-        }
       </List>
     </Nav>
   )

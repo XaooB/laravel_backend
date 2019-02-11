@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import MatchSummary from '../../components/Live/match_summary';
 import Squad from '../../components/Live/match_squad';
 import Commentary from '../../components/Live/match_commentary';
+import Footer from '../../components/Reusable/footer'
 import CommentSection from '../../components/Article/article_comments';
 import Wrapper from '../../components/Reusable/wrapper';
 
@@ -163,22 +164,25 @@ const AWAY = [
 class Live extends Component {
   render() {
     return (
-        <Main>
-          <ImageWrapper>
-            <Image src='./img/ballPit.jpg' alt='pit' />
-            <MatchSummary />
-          </ImageWrapper>
-          <Section>
-            <Wrapper>
-              <Squad team='fc barcelona' squad={AWAY} />
-              <LiveCentre>
-                <Commentary />
+        <Fragment>
+          <Main>
+            <ImageWrapper>
+              <Image src='./img/ballPit.jpg' alt='pit' />
+              <MatchSummary />
+            </ImageWrapper>
+            <Section>
+              <Wrapper>
+                <Squad team='fc barcelona' squad={AWAY} />
+                <LiveCentre>
+                  <Commentary />
 
-              </LiveCentre>
-              <Squad team='real madrid' squad={HOME} />
-            </Wrapper>
-          </Section>
-        </Main>
+                </LiveCentre>
+                <Squad team='real madrid' squad={HOME} />
+              </Wrapper>
+            </Section>
+          </Main>
+          <Footer />
+        </Fragment>
     )
   }
 }

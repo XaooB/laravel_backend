@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import SingleComment from './Article_comments_list_item';
+import SingleComment from './article_comments_list_item';
 
 const List = styled.ul`
   list-style-type: none;
@@ -9,11 +9,12 @@ const List = styled.ul`
 `
 
 const Comments = props => {
-  const {comments} = props;
+  const {comments, user, articleID, error} = props;
+
   return (
     <List>
       {comments.map((item, key) => {
-        return <SingleComment comment = {item} key={key} />
+        return <SingleComment comment = {item} key={item.idcomment} user={user} articleID={articleID} error={error} />
       })}
     </List>
   )

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { dateConverter } from '../../helpers/dateConverter';
+import dateConverter from '../../helpers/dateConverter';
 
 
 const Article = styled.article`
@@ -50,7 +50,7 @@ const LinkTo = styled(Link)`
 
 const SmallNews = props => {
   const { category, title, create_date, idarticle } = props.data,
-          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-')}`;
+          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-').toLowerCase()}`;
 
   return (
     <Article>

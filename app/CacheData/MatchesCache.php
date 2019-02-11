@@ -11,6 +11,16 @@ class MatchesCache
 {
 	CONST CACHE_KEY = 'MATCHES';
 
+	public function next_match_date($count)
+	{
+		$key = 'scheduled.' . $count;
+		$cacheKey = $this->getCacheKey($key);
+		return cache()->remember($cacheKey, Carbon::now()->addMinutes(30), function() use($count) {
+			MatchesController::buildMatchData($scheduled, 'SCHEDULED', $count, 'asc');
+			return $scheduled;
+		});
+	}
+
 	public function scheduled_matches($count)
 	{
 		$key = 'scheduled.' . $count;

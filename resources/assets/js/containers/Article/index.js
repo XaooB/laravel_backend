@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import Article from '../../components/Article/article';
 import ArticleImage from '../../components/Article/article_image';
 import Aside from '../../components/Article/article_aside';
-import Loader from '../../components/Reusable/loader';
+import Footer from '../../components/Reusable/footer'
+import MiniLoader from '../../components/Reusable/mini_loader';
+import {connect} from 'react-redux';
+import {fetchComments, fetchArticle} from '../../actions/'
 
 //api calls
 import { API } from '../../helpers/api';
@@ -31,11 +34,9 @@ class SingleArticle extends Component {
 
     this.state = {
       loadingStatus: true,
-      articleID: null,
-      article: null,
+      article: [],
       latest: [],
-      neighbours: [],
-      comments: []
+      neighbours: []
     }
   }
 
@@ -44,41 +45,49 @@ class SingleArticle extends Component {
           prevID = Number(prevProps.match.params.id);
 
     if (currentID !== prevID) {
-      const article = await API.get(`articles_show_article/${currentID}`),
-            neighbours = await API.get(`articles_show_neighbours/${currentID}`),
-            comments = await API.get(`comments_get_article_comments/${currentID}`);
+      await this.props.fetchArticle(currentID)
+      const neighbours = await API.get(`articles_show_neighbours/${currentID}`);
 
-      this.setState({article, neighbours, comments})
+      this.setState({article: this.props.article, neighbours})
+      document.title = `${this.state.article.data.title}` //tmp solution
       window.scrollTo(0,0);
+    }
+
+    if(prevProps.article.data.comments_count !== this.props.article.data.comments_count) {
+      this.setState({article: this.props.article})
     }
   }
 
   async componentDidMount() {
     window.scrollTo(0,0);
 
-    const currentID = Number(this.props.match.params.id),
-          article = await API.get(`articles_show_article/${currentID}`),
-          latest = await API.get('articles_latest/10'),
-          neighbours = await API.get(`articles_show_neighbours/${currentID}`),
-          comments = await API.get(`comments_get_article_comments/${currentID}`)
+    const currentID = Number(this.props.match.params.id);
+    await this.props.fetchArticle(currentID);
+    const latest = await API.get('articles_latest/10'),
+          neighbours = await API.get(`articles_show_neighbours/${currentID}`);
 
-    this.setState({article, latest, neighbours, comments, loadingStatus: false });
+    this.setState({article: this.props.article, latest, neighbours, loadingStatus: false });
   }
 
   render() {
-    if(this.state.loadingStatus) return <Loader />
-    const { article, latest, neighbours, comments } = this.state;
+    if(this.state.loadingStatus) return <MiniLoader margin />
+    const {latest, neighbours} = this.state;
+    const article = this.state.article.data;
 
     return (
-      <Main>
-        <ArticleImage article = {article} />
-        <Container>
-          <Article article = {article} neighbours = {neighbours} comments = {comments} />
-          <Aside latest = {latest} />
-        </Container>
-      </Main>
-    )
+      <Fragment>
+        <Main>
+          <ArticleImage article={article} />
+          <Container>
+            <Article article={article} neighbours={neighbours} />
+            <Aside latest={latest} />
+          </Container>
+        </Main>
+        <Footer />
+      </Fragment>
+    );
   }
 }
 
-export default SingleArticle;
+const mapStateToProps = ({ article }) => ({ article });
+export default connect(mapStateToProps, { fetchComments, fetchArticle })(SingleArticle);

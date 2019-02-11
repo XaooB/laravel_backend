@@ -1,20 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
+import {FacebookShareButton, FacebookIcon,
+        GooglePlusShareButton, GooglePlusIcon,
+        TwitterShareButton, TwitterIcon} from 'react-share';
 
 const ArticleFooter = styled.footer`
-  font-family: 'socialtype';
-  font-size:3em;
-  line-height:0;
+  margin-top:10px;
 `
 
 const List = styled.ul`
   list-style-type:none;
+  display:flex;
+  flex-flow:row wrap;
+  justify-content:flex-end;
+  align-items:flex-start;
 `
 
 const ListItem = styled.li`
-  display:inline-block;
-  margin:0;
-  height:40px;
+  margin-top:10px;
+  cursor:pointer;
+  display:flex;
+  flex-flow:column nowrap;
+  align-items:center;
+  justify-content: center;
+  &:not(:last-child) {
+    margin-right:6px;
+  }
 `
 
 const ListLink = styled.a`
@@ -25,18 +36,33 @@ const ListLink = styled.a`
   }
 `
 
+const ShareCount = styled.span`
+  cursor:default;
+  font-size:15px;
+  color:#c8c8c8;
+  font-family:'SSP'
+`
+
 const Share = props => {
+  const {url} = props;
+
   return (
     <ArticleFooter>
       <List>
-        <ListItem>
-          <ListLink href='#'><span>a</span></ListLink>
+        <ListItem title='Udostępnij na Twitterze'>
+        <TwitterShareButton url={`https://portal-wertykalny.herokuapp.com${url}`}>
+          <TwitterIcon size={32} round={true} />
+        </TwitterShareButton>
         </ListItem>
-        <ListItem>
-          <ListLink href='#'><span>b</span></ListLink>
+        <ListItem title='Udostępnij na Facebooku'>
+          <FacebookShareButton url={`https://portal-wertykalny.herokuapp.com${url}`}>
+            <FacebookIcon size={32} round={true} />
+          </FacebookShareButton>
         </ListItem>
-        <ListItem>
-          <ListLink href='#'><span>c</span></ListLink>
+        <ListItem title='Udostępnij na Google+'>
+          <GooglePlusShareButton url={`https://portal-wertykalny.herokuapp.com${url}`}>
+            <GooglePlusIcon size={32} round={true} />
+          </GooglePlusShareButton>
         </ListItem>
       </List>
     </ArticleFooter>

@@ -17,10 +17,13 @@ const Btn = styled.button`
   }
 `
 
-const Button = props => <Btn
-  fullWidth={props.fullWidth}
-  colorBlue={props.colorBlue}
-  type='button'>{props.name}
-</Btn>;
+const Button = props => (
+  <Btn
+    fullWidth={props.fullWidth}
+    colorBlue={props.colorBlue}
+    type='button'
+    onClick={props.onClick}
+  >{props.name}</Btn>
+);
 
 export default Button;

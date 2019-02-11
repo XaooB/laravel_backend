@@ -4,10 +4,10 @@ import styled from 'styled-components';
 const ImageContainer = styled.figure`
   display:flex;
   justify-content:center;
-  min-width:65px;
-  min-height:65px;
-  max-width:65px;
-  max-height:65px;
+  min-width:55px;
+  min-height:55px;
+  max-width:55px;
+  max-height:55px;
   margin-right:10px;
   overflow:hidden;
   align-self:flex-start;
@@ -15,11 +15,12 @@ const ImageContainer = styled.figure`
 `
 
 const Image = styled.img`
-  height:70px;
+  height:55px;
 `
 
 const User = props => {
-  const {image} = props;
+  const {image} = props.user;
+
   return (
     <ImageContainer>
       <Image src={image} title='' alt='' />

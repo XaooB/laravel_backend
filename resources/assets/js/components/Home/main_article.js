@@ -71,7 +71,7 @@ const LinkTo = styled(Link)`
 
 const MainArticle = props => {
   const { image, category, idarticle,  title } = props.mainArticle[0],
-          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-')}`;
+          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-').toLowerCase()}`;
 
   return (
     <Article>

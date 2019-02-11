@@ -6,7 +6,10 @@ import Share from './article_share';
 const Wrapper = styled.section`
   flex:1;
   padding-top:5px;
-  margin-bottom:330px;
+  margin-bottom:32px;
+  @media only screen and (max-width: 480px) {
+    display:none;
+  }
 `
 
 const Sticky = styled.div`
@@ -23,6 +26,7 @@ const PublishedBy = styled.span`
 
 const LinkTo = styled(Link)`
   color:#00529f;
+  line-height:1.1;
   display:inline-block;
   text-transform: uppercase;
   font-family:'SSPB';
@@ -41,7 +45,7 @@ const Author = props => {
       <Sticky>
         <LinkTo to='/club'>{category}</LinkTo>
         <PublishedBy>posted by {user.name}, <br/> 3 hours ago</PublishedBy>
-        <Share />
+        <Share url={props.url} />
       </Sticky>
     </Wrapper>
   )

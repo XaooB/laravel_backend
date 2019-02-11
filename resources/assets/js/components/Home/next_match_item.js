@@ -82,14 +82,14 @@ const LinkTo = styled(Link)`
 `
 
 const NextMatchItem = props => {
-  const { date, league, club, location } = props.data;
+  const { away_team, home_team, date, league, location } = props.data;
 
   return (
     <Container>
       <TeamWrapper>
         <Team>
-          <Image src='https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg' />
-          <TeamName>real madrid</TeamName>
+          <Image src={home_team.image} />
+          <TeamName>{home_team.short_name}</TeamName>
         </Team>
       </TeamWrapper>
       <Result>
@@ -102,8 +102,8 @@ const NextMatchItem = props => {
       </Result>
       <TeamWrapper>
         <Team>
-          <Image src={club.image} />
-          <TeamName>{club.name}</TeamName>
+          <Image src={away_team.image} />
+          <TeamName>{away_team.short_name}</TeamName>
         </Team>
       </TeamWrapper>
     </Container>

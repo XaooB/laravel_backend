@@ -4,12 +4,11 @@ import styled from 'styled-components';
 const LeagueItem = styled.div`
   display:flex;
   flex-flow:row nowrap;
-  padding:8px 4px;
+  padding:8px 0;
   align-items:center;
   margin:2px 0;
   justify-content:space-between;
   flex:1 1 50%;
-  text-transform: uppercase;
 `
 
 const ItemField = styled.div`
@@ -24,7 +23,7 @@ const LeagueTableItem = props => {
   const { club, draw, lost, matches, points, won, position } = props.leagueTable;
 
   if(club.short_name === 'Real Madrid') return (
-    <LeagueItem style={{background: '#00529f', color:'white'}}>
+    <LeagueItem style={{ fontWeight: 'bold' }}>
       <ItemField>{ position }</ItemField>
       <ItemField>{ club.short_name }</ItemField>
       <ItemField>{ matches }</ItemField>

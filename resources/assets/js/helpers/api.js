@@ -1,7 +1,9 @@
+import axios from 'axios';
+
 export const API = {
   get: async function(route) {
     try {
-      const response = await fetch(`https://portal-wertykalny.herokuapp.com/api/${route}`,
+      const response = await fetch(`/api/${route}`,
         {
           method: 'GET', headers: {
               'Content-Type': 'application/json',

@@ -34,7 +34,7 @@ const Form = styled.form`
 
 class StrawPoll extends Component {
   render() {
-    const {topic} = this.props.pollData[0];
+    const {topic} = this.props.pollData;
 
     return (
       <Wrapper>
@@ -42,7 +42,7 @@ class StrawPoll extends Component {
           <Title>{ topic }</Title>
         </Header>
         <Form>
-          <PollList pollData={this.props.pollData[0]} />
+          <PollList pollData={this.props.pollData} />
           <div style={{display:'flex'}}>
             <Button name='Vote' fullWidth colorBlue />
           </div>

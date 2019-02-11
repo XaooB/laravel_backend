@@ -27,7 +27,11 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('week:matches_update')->weeklyOn(7, '23:00');
         $schedule->command('live:update')->everyMinute()->when(function () {
-            var_dump(MatchesCache::scheduled_matches(4));
+            $matches = MatchesCache::scheduled_matches(1);
+            if($matches[0]->Date)
+            {
+                
+            }
             return true;
         })->sendOutputTo(public_path('wyniki_cron.txt'));
     }

@@ -3,19 +3,18 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  background:#ee324e;
   display:flex;
   justify-content:center;
+  border-radius:6px;
   align-items:center;
   width:42px;
   height:36px;
-  font-size:1.1em;
+  background: rgb(238,50,78);
+  background: linear-gradient(125deg, rgba(238,50,78,1) 0%, rgba(232,75,105,1) 100%);
   color:white;
   margin-right:5px;
-  font-family: 'SSPBK';
-  & + span {
-    color:#d8d8d8;
-  }
+  font-size:.9em;
+  font-family: 'Verdana';
 `
 
 const LogoText = styled.span`
@@ -28,18 +27,14 @@ const LinkTo = styled(Link)`
   align-items:center;
   font-family: "SSP";
   color:#1e1e1e;
-  &:hover ${Wrapper} + span {
-    color:#ee324e;
-  }
 `
 
 const Logo = () => {
   return (
-    <LinkTo to='/'>
+    <LinkTo to="/">
       <Wrapper>
         <LogoText>RM</LogoText>
       </Wrapper>
-      <LogoText>Polska</LogoText>
     </LinkTo>
   )
 }

@@ -48,7 +48,7 @@ const LinkTo = styled(Link)`
 
 const AsideItem = props => {
   const { image, title, category, idarticle } = props.item,
-          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-')}`;
+          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-').toLowerCase()}`;
 
   return (
     <ListItem>

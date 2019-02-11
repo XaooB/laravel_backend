@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { dateConverter } from '../../helpers/dateConverter';
+import dateConverter from '../../helpers/dateConverter';
 
 const Wrapper = styled.div`
   flex:.6 1 400px;

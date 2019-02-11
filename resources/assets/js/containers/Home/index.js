@@ -8,6 +8,7 @@ import LatestNews from '../../components/Home/latest_news';
 import StrawPoll from '../../components/Home/Poll';
 import NextMatch from '../../components/Home/next_match';
 import Injuries from '../../components/Home/injuries';
+import Footer from '../../components/Reusable/footer'
 import SocialMedia from '../../components/Home/social_media';
 import Loader from '../../components/Reusable/loader';
 import styled from 'styled-components';
@@ -84,10 +85,10 @@ class Home extends Component {
   async componentDidMount() {
     const mainArticle = await API.get('articles_latest_main/1'),
           articles = await API.get('articles_latest/22'),
-          schedule = await API.get('upcomingmatches_get_upcoming_matches/4'),
+          schedule = await API.get('matches_get_scheduled_matches/4'),
           leagueTable = await API.get('leaguescoreboard_get_league_scoreboard/2018-2019/PD'),
-          latestResult = await API.get('latestmatchresult_get_latest_match_result'),
-          pollData = await API.get('surveys_latest/1'),
+          latestResult = await API.get('matches_get_finished_match'),
+          pollData = await API.get('surveysets_get_latest'),
           injuriesData = await API.get('injuriessuspensions_actual');
 
     this.setState({ mainArticle, articles, schedule, leagueTable, latestResult, pollData, injuriesData, loadingStatus: false });
@@ -126,6 +127,7 @@ class Home extends Component {
             <SocialMedia />
           </TableAndSocial>
         </Main>
+        <Footer />
       </Container>
     )
   }

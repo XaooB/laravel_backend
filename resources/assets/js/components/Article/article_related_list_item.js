@@ -4,19 +4,30 @@ import { Link } from 'react-router-dom';
 import { GoCommentDiscussion } from 'react-icons/go';
 
 const Article = styled.article`
-  flex:1 1 50%;
+  flex:1 1 160px;
   max-width:260px;
+  margin-bottom:10px;
+  &:not(:last-child) {
+    padding-right:2px;
+  }
+  @media only screen and (max-width: 900px) {
+    max-width:100%;
+  }
+  @media only screen and (max-width: 480px) {
+    font-size:14px;
+  }
 `
 
 const ImageWrapper = styled.figure`
   max-height:90px;
   display:flex;
-  justify-content:center;
   overflow:hidden;
 `
 
 const Image = styled.img`
-  height:200px;
+   width:100%;
+   height:100%;
+   align-self:center;
 `
 
 const Header = styled.header`
@@ -66,6 +77,7 @@ const Statistics = styled.div`
   display:flex;
   align-items:center;
   justify-content: flex-end;
+  cursor:default;
 `
 
 const ImageContainer = styled.figure`
@@ -94,7 +106,7 @@ const Count = styled.span`
 
 const RelatedListItem = props => {
   const { image, category, title, idarticle, comments_count, user } = props.article,
-          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-')}`;
+          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-').toLowerCase()}`;
 
   return (
     <Article>
@@ -116,7 +128,7 @@ const RelatedListItem = props => {
           </ImageContainer>
           <span>{user.name}</span>
         </Author>
-        <Statistics>
+        <Statistics title='komentarze'>
           <GoCommentDiscussion />
           <Count>{comments_count}</Count>
         </Statistics>
