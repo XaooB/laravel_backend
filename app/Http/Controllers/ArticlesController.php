@@ -153,12 +153,14 @@ class ArticlesController extends Controller
 
         public function filtrate($count, $phrase)
         {
-            $data = json_decode($request->getContent(), true);
-            // uniknięcie zagrożenia SQL Injection
-            $fixedPhrase = $this->escapeLike($data['phrase']);
-            $articles = array();
-            $this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', $fixedPhrase);
-            return response()->json($articles);
+            if(isset($phrase) && isset($count))
+            {
+                // uniknięcie zagrożenia SQL Injection
+                $fixedPhrase = $this->escapeLike($phrase);
+                $articles = array();
+                $this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', $fixedPhrase);
+                return response()->json($articles);
+            }
             else
                 return response()->json(['status' => false, 'error' => 'wrong data']);
         }
