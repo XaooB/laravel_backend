@@ -49,6 +49,12 @@ class CommentsController extends Controller
         return response()->json($comments);
     }
 
+    public function panel($days)
+    {
+        $articles = CommentsCache::panel($days);
+        return response()->json($panelData);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -99,30 +105,6 @@ class CommentsController extends Controller
         }
         else
             return response()->json(['status' => false, 'error' => 'wrong data']);
-    }
-
-    public function panel($days, Request $request)
-    {
-        $latestComments = DB::table('comments')->select('idComment as idcomment', 'idReference as idarticle', 'idUser as user', 'Content as content', 'created_at as create_date', 'updated_at as modify_date')->orderBy('comments.created_at', 'desc')->limit(3)->get();
-        foreach ($latestComments as $key => $comment) {
-            UsersController::buildUserData($comment->user);
-        }
-        $weekSum = DB::table('comments')->select(DB::raw('date(created_at) as day, count(*) as total_comments'))->where(DB::raw('DATEDIFF(NOW(), comments.created_at)'), '<', $days)->groupBy(DB::raw('day'))->get();
-        $weekSummary = array();
-        $to = date('Y-m-d', time());
-        $from = date('Y-m-d',(strtotime('-' . $days+1 . 'day', strtotime($to))));
-        for($from; $from <= $to; $from = date('Y-m-d',(strtotime( '+1 day', strtotime($from)))))
-        {
-            $data = $weekSum->where('day', $from)->first();
-            $count = isset($data->total_comments) ? $data->total_comments : 0;
-            array_push($weekSummary, ['day' => $from, 'comments_count' => $count]);
-        }
-        $panelData = [
-            'weekSummary' => $weekSummary,
-            'latestComments' => $latestComments->toArray(),
-            'totalUsers' => Comments::count()
-        ];
-        return response()->json($panelData);
     }
 
     /**
