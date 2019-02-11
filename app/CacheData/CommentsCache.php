@@ -44,8 +44,8 @@ class CommentsCache
         	}
         	$panelData = [
         	    'weekSummary' => $weekSummary,
-        	   'latestComments' => $latestComments->toArray(),
-        	    'totalUsers' => Comments::count()
+        	   	'latestComments' => $latestComments->toArray(),
+        	    'totalComments' => Comments::count()
         	];
 			return $panelData;
 		});
