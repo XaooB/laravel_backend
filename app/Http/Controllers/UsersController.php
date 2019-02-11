@@ -202,7 +202,7 @@ class UsersController extends Controller
         if(isset($_SESSION['iduser']))
         {
             $notifications = array();
-            $notifications = DB::table('notifications')->select('idReference as idarticle', 'idSubReference as idcomment')->where('idUser', $_SESSION['iduser'])->groupBy('idSubReference')->get();
+            $notifications = DB::table('notifications')->select('idReference as idarticle', 'idSubReference as idcomment')->where('idUser', $_SESSION['iduser'])->groupBy('idReference', 'idSubReference')->get();
             return response()->json($notifications);
         }
         else
