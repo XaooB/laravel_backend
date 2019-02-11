@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\CloudinaryController;
 use App\Http\Controllers\ValidatorController;
 use Facades\App\CacheData\UsersCache;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -90,6 +91,33 @@ class UsersController extends Controller
         else
             return response()->json($_SESSION);
 	}
+
+    public function check_token(Request $request)
+    {
+        if(isset($request->token))
+        {
+            try 
+            {
+                $token = JWTAuth::getToken();
+                $apy = JWTAuth::getPayload($token)->toArray();
+                return response()->json($apy);
+            }
+            catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) 
+            {
+                return response()->json(['status' => false, 'error' => 'token expired'], $e->getStatusCode());
+            }
+            catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) 
+            {
+                return response()->json(['status' => false, 'error' => 'token invalid'], $e->getStatusCode());
+            }
+            catch (Tymon\JWTAuth\Exceptions\JWTException $e) 
+            {
+            return response()->json(['status' => false, 'error' => 'token absent'], $e->getStatusCode());
+            }
+        }
+        else
+            return response()->json(['status' => false, 'error' => 'wrong token']);
+    }
 
     public function panel($days)
     {

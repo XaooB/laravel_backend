@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\UpdateLive::class
     ];
 
     /**
@@ -25,15 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->command('week:matches_update')->weeklyOn(7, '23:00');
-        $schedule->command('live:update')->everyMinute()->when(function () {
-            $matches = MatchesCache::scheduled_matches(1);
-            if($matches[0]->Date)
-            {
-                
-            }
-            return true;
-        })->sendOutputTo(public_path('wyniki_cron.txt'));
+        $schedule->command('schedule:update_live')->everyMinute()->runInBackground();
     }
 
     /**
@@ -43,8 +35,6 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
-
         require base_path('routes/console.php');
     }
 }

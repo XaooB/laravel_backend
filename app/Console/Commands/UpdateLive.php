@@ -3,22 +3,24 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Facades\App\CacheData\MatchesCache;
+use App\Http\Controllers\MatchesController;
 
-class WeeklyUpdate extends Command
+class UpdateLive extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'week:matches_update';
+    protected $signature = 'schedule:update_live';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Tygodniowa aktualizacja';
+    protected $description = 'Aktualizacja';
 
     /**
      * Create a new command instance.
@@ -37,10 +39,13 @@ class WeeklyUpdate extends Command
      */
     public function handle()
     {
-        // take matches for next week
-        $matches = DB::table('upcoming_matches')->where('Date', '>=', DB::raw('NOW()'))->where('Date', '<=', DB::raw('NOW() + INTERVAL 7 DAY'))->pluck('Date');
-        foreach ($matches as $key => $match) {
-            
+        $date = MatchesCache::next_match_date();
+        if($date != null)
+        {
+            MatchesController::update_live_match();
+            $this->info('pomyslnie zaktualizowano!');
         }
+        else
+            $this->info('brak meczu do aktualizacji!');
     }
 }

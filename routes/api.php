@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,29 +29,7 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::get('test', function(Request $request) {
-    if(isset($request->token))
-    {
-        try 
-        {
-            $token = JWTAuth::getToken();
-            $apy = JWTAuth::getPayload($token)->toArray();
-            return response()->json($apy);
-        }
-        catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) 
-        {
-            return response()->json(['status' => false, 'error' => 'token expired'], $e->getStatusCode());
-        }
-        catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) 
-        {
-            return response()->json(['status' => false, 'error' => 'token invalid'], $e->getStatusCode());
-        }
-        catch (Tymon\JWTAuth\Exceptions\JWTException $e) 
-        {
-        return response()->json(['status' => false, 'error' => 'token absent'], $e->getStatusCode());
-        }
-    }
-    else
-        return response()->json(['status' => false, 'error' => 'wrong token']);
+    return;
 });
 
 
@@ -69,6 +46,7 @@ Route::group(['middleware' => 'apiresponse'], function() {
     Route::get('users_get_user/{id}', 'UsersController@get_user')->name('users.get_user');
     Route::get('users_get_user_by_name/{login}', 'UsersController@get_user_by_name')->name('users.get_user_by_name');
     Route::get('users_check_user', 'UsersController@check_user')->name('users.check_user');
+    Route::get('users_check_token', 'UsersController@check_token')->name('users.check_token');
     // Articles routes
     Route::get('articles_latest/{count}', 'ArticlesController@latest')->name('articles.latest');
     Route::get('articles_latest_main/{count}', 'ArticlesController@latest_main')->name('articles.latest_main');
