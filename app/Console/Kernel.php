@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Facades\App\CacheData\MatchesCache;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +25,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('week:matches_update')->weeklyOn(7, '23:00');
+        //$schedule->command('week:matches_update')->weeklyOn(7, '23:00');
+        $schedule->command('live:update')->everyMinute()->when(function () {
+            var_dump(MatchesCache::scheduled_matches(4));
+            return true;
+        })->sendOutputTo(public_path('wyniki_cron.txt'));
     }
 
     /**
