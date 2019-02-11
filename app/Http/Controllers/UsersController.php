@@ -90,24 +90,25 @@ class UsersController extends Controller
             return response()->json($_SESSION);
 	}
 
-    public function panel(Request $request)
+    public function panel($days, Request $request)
     {
-        $users = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at as create_date')->orderBy('created_at', 'desc')->limit(3)->get();
-        $usersCount = DB::table('users')->select(DB::raw('date(created_at) as day, count(*) as total_users'))->where(DB::raw('DATEDIFF(NOW(), users.created_at)'), '<', $days)->groupBy(DB::raw('day'))->get();
-        $usersData = array();
-        $from = date('Y-m-d',(strtotime('-' . $days . 'day', strtotime($from))));
+        $latestUsers = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at as create_date')->orderBy('users.created_at', 'desc')->limit(3)->get();
+        $weekSum = DB::table('users')->select(DB::raw('date(created_at) as day, count(*) as total_users'))->where(DB::raw('DATEDIFF(NOW(), users.created_at)'), '<', $days)->groupBy(DB::raw('day'))->get();
+        $weekSummary = array();
         $to = date('Y-m-d', time());
-        for($from; $from > $to; $from = date('Y-m-d',(strtotime( '+1 day', strtotime($from)))))
+        $from = date('Y-m-d',(strtotime('-' . $days+1 . 'day', strtotime($to))));
+        for($from; $from <= $to; $from = date('Y-m-d',(strtotime( '+1 day', strtotime($from)))))
         {
-            $data = $usersCount->where('day', $from)->first();
-            $count = isset($data->total_comments) ? $data->total_comments : 0;
-            array_push($usersData, ['day' => $from, 'users_count' => $count]);
+            $data = $weekSum->where('day', $from)->first();
+            $count = isset($data->total_users) ? $data->total_users : 0;
+            array_push($weekSummary, ['day' => $from, 'users_count' => $count]);
         }
-        $totalUsers = 
-            $users
-            ->merge($usersData)
-            ->merge(['total_users' => User::count()]);
-        return response()->json($totalUsers);
+        $panelData = [
+            'weekSummary' => $weekSummary,
+            'latestUsers' => $latestUsers->toArray(),
+            'total_users' => User::count()
+        ];
+        return response()->json($panelData);
     }
 
     /**

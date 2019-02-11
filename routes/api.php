@@ -57,9 +57,10 @@ Route::get('test', function(Request $request) {
 
 
 // usunac jak bedzie przetestowane po stronie klienta
-Route::get('articles_panel', 'ArticlesController@panel')->name('articles.panel');
-Route::get('users_panel', 'UsersController@panel')->name('users.panel');
+Route::get('articles_panel/{days}', 'ArticlesController@panel')->name('articles.panel');
+Route::get('users_panel/{days}', 'UsersController@panel')->name('users.panel');
 Route::get('comments_panel/{days}', 'CommentsController@panel')->name('comments.panel');
+
 
 // Use middleware to allow Client-side use API
 Route::group(['middleware' => 'apiresponse'], function() {
@@ -147,17 +148,17 @@ Route::group(['middleware' => 'apiauth'], function() {
         Route::put('users_change_user_status/{id}', 'UsersController@change_user_status')->name('users.change_user_status');
         Route::get('users_get_blockades', 'UsersController@get_blockades')->name('users.get_blockades');
         Route::get('users_changes', 'UsersController@changes')->name('users.changes');
-        Route::get('users_panel', 'UsersController@panel')->name('users.panel');
+        //Route::get('users_panel', 'UsersController@panel')->name('users.panel');
 
         Route::get('articles_staff', 'ArticlesController@staff_index')->name('articles.staff_index');
         Route::get('articles_staff_show_article/{id}', 'ArticlesController@staff_show_article')->name('articles.staff_show_article');
         Route::put('articles_staff/{id}', 'ArticlesController@staff_update')->name('articles.staff_update');
         Route::get('articles_staff_change_article_visibility/{id}', 'ArticlesController@staff_change_article_visibility')->name('articles.staff_change_article_visibility');
-        Route::get('articles_panel', 'ArticlesController@panel')->name('articles.panel');
+        //Route::get('articles_panel', 'ArticlesController@panel')->name('articles.panel');
 
         Route::get('comments_staff_change_comment_visibility/{id}', 'CommentsController@staff_change_comment_visibility')->name('comments.staff_change_article_visibility');
         Route::get('comments_staff_get_article_comments/{id}', 'CommentsController@staff_get_article_comments')->name('comments.staff_get_article_comments');
-        Route::get('comments_panel/{days}', 'CommentsController@panel')->name('comments.panel');
+        //Route::get('comments_panel/{days}', 'CommentsController@panel')->name('comments.panel');
 
         Route::resource('leaguescoreboard', 'LeagueScoreboardController')->except(['index']);
 

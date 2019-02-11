@@ -103,17 +103,26 @@ class CommentsController extends Controller
 
     public function panel($days, Request $request)
     {
-        $commentsCount = DB::table('comments')->select(DB::raw('date(created_at) as day, count(*) as total_comments'))->where(DB::raw('DATEDIFF(NOW(), comments.created_at)'), '<', $days)->groupBy(DB::raw('day'))->get();
-        $commentData = array();
-        $from = date('Y-m-d',(strtotime('-' . $days . 'day', strtotime($from))));
-        $to = date('Y-m-d', time());
-        for($from; $from > $to; $from = date('Y-m-d',(strtotime( '+1 day', strtotime($from)))))
-        {
-            $data = $commentsCount->where('day', $from)->first();
-            $count = isset($data->total_comments) ? $data->total_comments : 0;
-            array_push($commentData, ['day' => $from, 'comments_count' => $count]);
+        $latestComments = DB::table('comments')->select('idComment as idcomment', 'idReference as idarticle', 'idUser as user', 'Content as content', 'created_at as create_date', 'updated_at as modify_date')->orderBy('comments.created_at', 'desc')->limit(3)->get();
+        foreach ($latestComments as $key => $comment) {
+            UsersController::buildUserData($comment->user);
         }
-        return response()->json($commentData);
+        $weekSum = DB::table('comments')->select(DB::raw('date(created_at) as day, count(*) as total_comments'))->where(DB::raw('DATEDIFF(NOW(), comments.created_at)'), '<', $days)->groupBy(DB::raw('day'))->get();
+        $weekSummary = array();
+        $to = date('Y-m-d', time());
+        $from = date('Y-m-d',(strtotime('-' . $days+1 . 'day', strtotime($to))));
+        for($from; $from <= $to; $from = date('Y-m-d',(strtotime( '+1 day', strtotime($from)))))
+        {
+            $data = $weekSum->where('day', $from)->first();
+            $count = isset($data->total_comments) ? $data->total_comments : 0;
+            array_push($weekSummary, ['day' => $from, 'comments_count' => $count]);
+        }
+        $panelData = [
+            'weekSummary' => $weekSummary,
+            'latestUsers' => $latestComments->toArray(),
+            'total_users' => Comments::count()
+        ];
+        return response()->json($panelData);
     }
 
     /**
