@@ -105,13 +105,13 @@ class CommentsController extends Controller
     {
         $commentsCount = DB::table('comments')->select(DB::raw('date(created_at) as day, count(*) as total_comments'))->where(DB::raw('DATEDIFF(NOW(), comments.created_at)'), '<', $days)->groupBy(DB::raw('day'))->get();
         $commentData = array();
-        $i = date('Y-m-d', time());
-        $till = date('Y-m-d',(strtotime('-' . $days . 'day', strtotime($i))));
-        for($i; $i > $till; $i = date('Y-m-d',(strtotime( '-1 day', strtotime($i)))))
+        $from = date('Y-m-d',(strtotime('-' . $days . 'day', strtotime($from))));
+        $to = date('Y-m-d', time());
+        for($from; $from > $to; $from = date('Y-m-d',(strtotime( '+1 day', strtotime($from)))))
         {
-            $data = $commentsCount->where('day', $i)->first();
+            $data = $commentsCount->where('day', $from)->first();
             $count = isset($data->total_comments) ? $data->total_comments : 0;
-            array_push($commentData, ['day' => $i, 'comments_count' => $count]);
+            array_push($commentData, ['day' => $from, 'comments_count' => $count]);
         }
         return response()->json($commentData);
     }

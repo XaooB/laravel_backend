@@ -97,9 +97,9 @@ class LoginController extends Controller
 
     public function findOrCreateUser($user)
     {
-        if(User::where('Email', $user->email)->count())
+        if(User::where('Email', $user->email)->count() > 0)
         {
-            //
+            User::where('Email', $user->email)->update(['provider' => 'GOOGLE']);
         }
         else
         {

@@ -92,9 +92,21 @@ class UsersController extends Controller
 
     public function panel(Request $request)
     {
-        $users = array();
-        $users = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at as create_date')->where(DB::raw('DATEDIFF(NOW(), users.created_at)'), '<', 7)->get();
-        $totalUsers = $users->merge(['total_users' => User::count()]);
+        $users = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at as create_date')->orderBy('created_at', 'desc')->limit(3)->get();
+        $usersCount = DB::table('users')->select(DB::raw('date(created_at) as day, count(*) as total_users'))->where(DB::raw('DATEDIFF(NOW(), users.created_at)'), '<', $days)->groupBy(DB::raw('day'))->get();
+        $usersData = array();
+        $from = date('Y-m-d',(strtotime('-' . $days . 'day', strtotime($from))));
+        $to = date('Y-m-d', time());
+        for($from; $from > $to; $from = date('Y-m-d',(strtotime( '+1 day', strtotime($from)))))
+        {
+            $data = $usersCount->where('day', $from)->first();
+            $count = isset($data->total_comments) ? $data->total_comments : 0;
+            array_push($usersData, ['day' => $from, 'users_count' => $count]);
+        }
+        $totalUsers = 
+            $users
+            ->merge($usersData)
+            ->merge(['total_users' => User::count()]);
         return response()->json($totalUsers);
     }
 
