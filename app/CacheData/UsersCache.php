@@ -30,7 +30,7 @@ class UsersCache
         	$panelData = [
         	    'weekSummary' => $weekSummary,
         	    'latestUsers' => $latestUsers->toArray(),
-        	    'total_users' => User::count()
+        	    'totalUsers' => User::count()
         	];
 			return $panelData;
 		});
