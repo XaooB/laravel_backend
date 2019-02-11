@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UsersController;
 use App\Notifications;
+use Facades\App\CacheData\CommentsCache;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -26,7 +27,7 @@ class CommentsController extends Controller
     }
 
     // Nesting whole comments in article -> only for normal users
-    public function buildComment($articleID, $mainCommentID, &$commentPart, $values, $type, $orderColumn, $orderValue)
+    public static function buildComment($articleID, $mainCommentID, &$commentPart, $values, $type, $orderColumn, $orderValue)
     {
         $comments = DB::table('comments')->select('idComment as idcomment', 'idUser as user', 'Content as content', 'created_at as create_date', 'updated_at as modify_date', 'idSubReference as comments')->where('idReference', $articleID)->where('idSubReference', $mainCommentID)->where('Type', $type)->whereIn('comments.Visible', $values)->orderBy($orderColumn, $orderValue)->get();
         foreach ($comments as $key => $comment) {
@@ -35,7 +36,7 @@ class CommentsController extends Controller
             $subCommentsCount= DB::table('comments')->where('idReference', $articleID)->where('idSubReference', $comment->idcomment)->whereIn('comments.Visible', $values)->count();
             if($subCommentsCount > 0) {
                 $comment->comments = array();
-                $this->buildComment($articleID, $comment->idcomment, $comment->comments, $values, $type, 'idComment', 'asc');
+                self::buildComment($articleID, $comment->idcomment, $comment->comments, $values, $type, 'idComment', 'asc');
             }
             else $comment->comments = null;
         }
@@ -44,9 +45,8 @@ class CommentsController extends Controller
     // $id = article id -> only for normal users
     public function get_article_comments($id)
     {
-        $articleComments = array();
-        $this->buildComment($id, 0, $articleComments, [1], 'article', 'idComment', 'desc');
-        return response()->json($articleComments);
+        $comments = CommentsCache::get_article_comments($id);
+        return response()->json($comments);
     }
 
     /**
@@ -194,7 +194,7 @@ class CommentsController extends Controller
         public function staff_get_article_comments($id)
         {
             $articleComments = array();
-            $this->buildComment($id, 0, $articleComments, [0,1], 'article', 'idComment', 'desc');
+            self::buildComment($id, 0, $articleComments, [0,1], 'article', 'idComment', 'desc');
             return response()->json($articleComments);
         }
 

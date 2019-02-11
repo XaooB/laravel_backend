@@ -58,8 +58,6 @@ class ArticlesController extends Controller
         {
             if($count > 0)
             {
-                //$articles = array();
-                //$this->buildArticleData($articles, [1], 'articles.Main', [1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
                 $articles = ArticlesCache::latest_main($count);
                 return response()->json($articles);
             }
@@ -71,9 +69,7 @@ class ArticlesController extends Controller
         {
             if($count > 0)
             {
-                //$articles = array();
-                $this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
-                //$articles = ArticlesCache::latest($count);
+                $articles = ArticlesCache::latest($count);
                 return response()->json($articles);
             }
             else
@@ -165,27 +161,10 @@ class ArticlesController extends Controller
                 return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
-        public function panel($days, Request $request)
+        public function panel($days)
         {
-            $articlesByCategory = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->select('categories.Name as category', DB::raw('count(*) as articles_count'))->groupBy('categories.Name')->get();
-            $this->buildArticleData($latestArticles, [0, 1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', 3, null, 'articles.Title', '');
-            $weekSum = DB::table('articles')->select(DB::raw('date(created_at) as day, count(*) as total_articles'))->where(DB::raw('DATEDIFF(NOW(), articles.created_at)'), '<', $days)->groupBy(DB::raw('day'))->get();
-            $weekSummary = array();
-            $to = date('Y-m-d', time());
-            $from = date('Y-m-d',(strtotime('-' . $days+1 . 'day', strtotime($to))));
-            for($from; $from <= $to; $from = date('Y-m-d',(strtotime( '+1 day', strtotime($from)))))
-            {
-                $data = $weekSum->where('day', $from)->first();
-                $count = isset($data->total_comments) ? $data->total_articles : 0;
-                array_push($weekSummary, ['day' => $from, 'articles_count' => $count]);
-            }
-            $panelData = [
-                'weekSummary' => $weekSummary,
-                'latestArticles' => $latestArticles->toArray(),
-                'articlesByCategory' => $articlesByCategory->toArray(),
-                'totalArticles' => Articles::count()
-            ];
-            return response()->json($panelData);
+            $articles = ArticlesCache::panel($days);
+            return response()->json($articles);
         }
 
         /**
