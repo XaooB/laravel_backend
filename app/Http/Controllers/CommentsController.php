@@ -119,8 +119,8 @@ class CommentsController extends Controller
         }
         $panelData = [
             'weekSummary' => $weekSummary,
-            'latestUsers' => $latestComments->toArray(),
-            'total_users' => Comments::count()
+            'latestComments' => $latestComments->toArray(),
+            'totalUsers' => Comments::count()
         ];
         return response()->json($panelData);
     }

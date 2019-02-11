@@ -167,6 +167,7 @@ class ArticlesController extends Controller
 
         public function panel($days, Request $request)
         {
+            $articlesByCategory = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->select('categories.Name as category', DB::raw('count(*) as articles_count'))->groupBy('categories.Name')->get();
             $this->buildArticleData($latestArticles, [0, 1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', 3, null, 'articles.Title', '');
             $weekSum = DB::table('articles')->select(DB::raw('date(created_at) as day, count(*) as total_articles'))->where(DB::raw('DATEDIFF(NOW(), articles.created_at)'), '<', $days)->groupBy(DB::raw('day'))->get();
             $weekSummary = array();
@@ -180,8 +181,9 @@ class ArticlesController extends Controller
             }
             $panelData = [
                 'weekSummary' => $weekSummary,
-                'latestUsers' => $latestArticles->toArray(),
-                'total_users' => Articles::count()
+                'latestArticles' => $latestArticles->toArray(),
+                'articlesByCategory' => $articlesByCategory->toArray(),
+                'totalArticles' => Articles::count()
             ];
             return response()->json($panelData);
         }
