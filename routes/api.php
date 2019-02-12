@@ -30,10 +30,17 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::get('test', function(Request $request) {
-    $VisitorsAndPageViews = Analytics::fetchVisitorsAndPageViews(Period::days(7));
-    $TotalVisitorsAndPageViews = Analytics::fetchTotalVisitorsAndPageViews(Period::days(7));
-    $MostVisitedPages = Analytics::fetchMostVisitedPages(Period::days(7), 7);
+    return;
+});
 
+// usunac jak bedzie przetestowane po stronie klienta
+Route::get('articles_panel/{days}', 'ArticlesController@panel')->name('articles.panel');
+Route::get('users_panel/{days}', 'UsersController@panel')->name('users.panel');
+Route::get('comments_panel/{days}', 'CommentsController@panel')->name('comments.panel');
+Route::get('analytics_panel/{days}', function($days) {
+    $VisitorsAndPageViews = Analytics::fetchVisitorsAndPageViews(Period::days($days));
+    $TotalVisitorsAndPageViews = Analytics::fetchTotalVisitorsAndPageViews(Period::days($days));
+    $MostVisitedPages = Analytics::fetchMostVisitedPages(Period::days($days), 3);
     $analyticsData = [
         'visitorsAndPageViews' => $VisitorsAndPageViews->toArray(),
         'totalVisitorsAndPageViews' => $TotalVisitorsAndPageViews->toArray(),
@@ -41,12 +48,6 @@ Route::get('test', function(Request $request) {
     ];
     return response()->json($analyticsData);
 });
-
-// usunac jak bedzie przetestowane po stronie klienta
-Route::get('articles_panel/{days}', 'ArticlesController@panel')->name('articles.panel');
-Route::get('users_panel/{days}', 'UsersController@panel')->name('users.panel');
-Route::get('comments_panel/{days}', 'CommentsController@panel')->name('comments.panel');
-
 
 // Use middleware to allow Client-side use API
 Route::group(['middleware' => 'apiresponse'], function() {
@@ -146,6 +147,18 @@ Route::group(['middleware' => 'apiauth'], function() {
         Route::get('comments_staff_change_comment_visibility/{id}', 'CommentsController@staff_change_comment_visibility')->name('comments.staff_change_article_visibility');
         Route::get('comments_staff_get_article_comments/{id}', 'CommentsController@staff_get_article_comments')->name('comments.staff_get_article_comments');
         //Route::get('comments_panel/{days}', 'CommentsController@panel')->name('comments.panel');
+
+        /*Route::get('analytics_panel/{days}', function(Request $request) use($days) {
+            $VisitorsAndPageViews = Analytics::fetchVisitorsAndPageViews(Period::days($days));
+            $TotalVisitorsAndPageViews = Analytics::fetchTotalVisitorsAndPageViews(Period::days($days));
+            $MostVisitedPages = Analytics::fetchMostVisitedPages(Period::days($days), 3);
+            $analyticsData = [
+                'visitorsAndPageViews' => $VisitorsAndPageViews->toArray(),
+                'totalVisitorsAndPageViews' => $TotalVisitorsAndPageViews->toArray(),
+                'mostVisitedPages' => $MostVisitedPages->toArray(),
+            ];
+            return response()->json($analyticsData);
+        });*/
 
         Route::resource('leaguescoreboard', 'LeagueScoreboardController')->except(['index']);
 
