@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Spatie\Analytics\Period;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::get('test', function(Request $request) {
+    $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+    dd($analyticsData);
     return;
 });
 

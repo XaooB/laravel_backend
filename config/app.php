@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -172,6 +172,9 @@ return [
 		
 		// JWT
 		Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+
+        //ANALITYCS
+        Spatie\Analytics\AnalyticsServiceProvider::class,
     ],
 
     /*
@@ -224,6 +227,7 @@ return [
         'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
 		'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
 		'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
     ],
 
 ];
