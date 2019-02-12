@@ -48,8 +48,12 @@ class ArticlesController extends Controller
         {
             if(isset($_SESSION['iduser']))
             {
-                $articles = array();
-                $this->buildArticleData($articles, [0, 1], 'articles.idUser', [$_SESSION['iduser']], 'articles.idArticle', 'desc', null, null, 'articles.Title', '');
+                $c = Articles::where('idUser', $_SESSION['iduser'])->count();
+                echo $c;
+                if($c > 0)
+                    $this->buildArticleData($articles, [0, 1], 'articles.idUser', [$_SESSION['iduser']], 'articles.idArticle', 'desc', null, null, 'articles.Title', '');
+                else
+                    $this->buildArticleData($articles, [0, 1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', null, null, 'articles.Title', '');
                 return response()->json($articles);
             }
         }
