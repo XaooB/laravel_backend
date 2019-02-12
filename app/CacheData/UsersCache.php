@@ -11,6 +11,15 @@ class UsersCache
 {
 	CONST CACHE_KEY = 'USERS';
 
+	public function index()
+	{
+		$key = 'index';
+		$cacheKey = $this->getCacheKey($key);
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(15), function() {
+			$users = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'statuses.Name as status', 'users.created_at as create_date')->where('privileges.Name', '!=', 'root')->whereIn('statuses.Name', ['aktywny', 'zablokowany'])->orderBy('idUser')->get();
+			return $users;
+		});
+	}
 	public function panel($days)
 	{
 		$key = 'panel.' . $days;

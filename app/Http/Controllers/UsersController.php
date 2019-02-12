@@ -50,7 +50,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'statuses.Name as status', 'users.created_at as create_date')->whereIn('statuses.Name', ['aktywny', 'zablokowany'])->get();
+        $users = UsersCache::index();
         return response()->json($users);
     }
 
