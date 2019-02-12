@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "concise-result-224616",
+  "private_key_id": "8def6488e4bf6746a4583541ab2652854d3668c1",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCok0hga63Izimm\n5KQgHclVwgvVjrakZ9xkzMBr5t5PPW+nHWBV47Vw9xyqg9QoGQeFMrOK+PeGQ9a4\n7AYcAG4pEWaIiJfIhJqUTK+M2WuAZ5zcgy3YCvoj1/n6eB17aQ/+QLRY2E3pslJ4\nDduOz+SC9mS7jXkNx3vHHE32CAsl3Zw7oyN0sUUBiqgSXFnCwpgRqCH14+njJYKB\np+98tTeVXtCgTDTmXLsArry+bl+fHDo4oqu9m3zscdSv0F45DV53vXA48RmSIBJk\nSPzf++CKUFfwNdpSj4iGW4L2+opaJ7NK+7OsQw3b5Mf/difnq+X6L7cbWGKtoRDx\noOx0UMcBAgMBAAECggEAEXb21eR6A/aV+qAv/9LOL9gTfUvUkMpg20GaQuOPjyKU\njXn959AYVWyImALh6UiUjqBu2PxLuqmPFqf/RwnlX9RZbNZH8WKJmEksm9lPqaUy\na2ccygfzG+ENmT02ArnjCgqelKDOS6KpqB35a/2OVWIdFBBHZR3QbVO5oP561zCI\nDWti7ny9MY5brRu6xG9wMyNTadZ60hHm/8g/WT3jjB1cCwGvimOKPxGom3sx/ek4\nIF4U3RgI+tE8Ln6RRX0E4RfyxPM84YK6TyW6lYR21VZs11/oK3xJ0Z64jfeVAorG\nKDtqKDGPcmCqo/PlBr2XUnXCR46TZ2We5nD1bbT1FQKBgQDfXndJb6F3DibyRiZ8\nF+z0J+NF+U8IQ9FFRxlvIfvWOFVua0GmKodS0NP8nUhwyqTUZ+FmJP/EWPXuIw1i\nYlrUeYLIHleH0ST6QCdVM0XKBYHX01eIgfMuGPHTpJ4V1RHB1mp0ZDhA+93lPLYk\nNHkF0iy2By6fm1dwZjB+lsb8JQKBgQDBM6XBAgxlGDIq+4+FYKAiJJYJ4CNUgRdw\nZTf+ilD8d7mf4IAgPVpWHPy+S6qweR7qKYov61DKicRi6FDwNHS/UiyF2o8+rstG\nEbYwrmpiWUle5M2FVPZg700eGRywduEmdRVFhG+FXNKPwEnevr26LVgCDnwXBSps\n5b7NNlg6rQKBgArwy5LzPstgDBRNz1DAs0B6O62PuolDGRr1ko9Y8MbbV4PjCQIk\njyBFTjzPT18G7e/hbq7cHRL28ITLfrpU6vIBSaCXq93hJpiDT+niawasImH53g23\nn7ugSSf+pieXmhkOcYRl7ENykrnJsXowf8UDOGFqFKSIrU26E6H/rJtpAoGBAKzW\nTHGXKImEFNVZCPMUFw2UV1lsV47wkYxuMKKZEIxbewco6tZsrJUfB4gh3whSwrJP\nCR2HUVZv2u100XuiIdNKayQv+zfjXVxI2glA71EeeUHYRHgEIwli60WCx6SiJRen\nZKk1KiNPf9sz9aG8V7TnfbURSje52lNjUMb62AFdAoGAacjebTKPVTSzWlvyUmp0\nQLydADUEV2ptAzGH6Ea62e8vFDLAuvdMz+YSB2hZxYGqRLqB1a8UuW/CiASbOYiR\njA0YoTz31rYkWvUyI8ei8FmpBWTBMYh1u87itBpi4CUrhadO+q3oCQQGwWnBuYvw\nsJMFRFtF/z+ADBG4mQr2JGU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "portal-wertykalny@concise-result-224616.iam.gserviceaccount.com",
+  "client_id": "102387012277394077500",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/portal-wertykalny%40concise-result-224616.iam.gserviceaccount.com"
+}
