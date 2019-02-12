@@ -26,9 +26,9 @@ class APIAuth
             if($_SESSION['status'] == 'aktywny')
                 return $next($request);
             else
-                return response()->json(['status' => false, 'error' => 'sorry you are already blocked on this website']);
+                return response()->json(['status' => false, 'error' => 'sorry you are already blocked on this website'], 401);
         }
         else
-            return response()->json(['status' => false, 'error' => 'authorization failed']);
+            return response()->json(['status' => false, 'error' => 'authorization failed'], 401);
     }
 }

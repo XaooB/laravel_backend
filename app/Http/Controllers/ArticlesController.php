@@ -66,7 +66,7 @@ class ArticlesController extends Controller
                 return response()->json($articles);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
         public function latest($count)
@@ -77,7 +77,7 @@ class ArticlesController extends Controller
                 return response()->json($articles);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
         public function most_viewed($count, $interval)
@@ -88,7 +88,7 @@ class ArticlesController extends Controller
                 return response()->json($articles);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
         public function show_article($id)
@@ -111,7 +111,7 @@ class ArticlesController extends Controller
                 return response()->json($articles);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
         public static function BuildNeighboursData($ids)
@@ -148,7 +148,7 @@ class ArticlesController extends Controller
                 return response()->json($articles);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
         public function filtrate($count, $phrase)
@@ -162,7 +162,7 @@ class ArticlesController extends Controller
                 return response()->json($articles);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
         public function panel($days)
@@ -201,7 +201,7 @@ class ArticlesController extends Controller
                 $articles->Main = $request->main ? 1 : 0; 
                 if(Articles::where('Title', $articles->Title)->where('idCategory', $articles->idCategory)->where('idUser', $articles->idUser)->exists()) 
                 {
-                    return response()->json(['status' => false, 'error' => 'wrong data']);
+                    return response()->json(['status' => false, 'error' => 'wrong data'], 204);
                 }
                 else
                 {
@@ -215,15 +215,15 @@ class ArticlesController extends Controller
                         $request->file('image')->move($destinationFolder, $image_name);
                         $path = $destinationFolder . $image_name;
                         CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id);
-                        return response()->json(['status' => true, 'error' => '']);
+                        return response()->json(['status' => true, 'error' => ''], 201);
                     }
                     else
-                        return response()->json(['status' => false, 'error' => 'wrong data']);
+                        return response()->json(['status' => false, 'error' => 'wrong data'], 204);
                 }
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
         /**
@@ -274,12 +274,12 @@ class ArticlesController extends Controller
                     'Title' => $data['title'],
                     'Content' => $data['content'],
                     'Main' => $articleMain]))
-                	return response()->json(['status' => true, 'error' => '']);
+                	return response()->json(['status' => true, 'error' => ''], 202);
                 else
-                    return response()->json(['status' => false, 'error' => 'wrong data']);
+                    return response()->json(['status' => false, 'error' => 'wrong data'], 204);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
         /**
@@ -291,9 +291,9 @@ class ArticlesController extends Controller
         public function destroy(Request $request, $id)
         {
             if(Articles::where('idArticle', '=' , $id)->where('idUser', '=' , $_SESSION['iduser'])->where('Visible', 1)->update(['Visible' => 0])) 
-                return response()->json(['status' => true, 'error' => '']);
+                return response()->json(['status' => true, 'error' => ''], 202);
             else 
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
         // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -308,7 +308,7 @@ class ArticlesController extends Controller
                 return response()->json($articles);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
         public function staff_update(Request $request, $id)
@@ -317,19 +317,19 @@ class ArticlesController extends Controller
             if($data['content'])
             {
                 if(Articles::where('idArticle', '=' , $id)->update(['Content' => $data['content']])) 
-                    return response()->json(['status' => true, 'error' => '']);
+                    return response()->json(['status' => true, 'error' => ''], 202);
                 else 
-                    return response()->json(['status' => false, 'error' => 'wrong data']);
+                    return response()->json(['status' => false, 'error' => 'wrong data'], 204);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
         public function staff_change_article_visibility($id)
         {
             if(DB::table('articles')->where('idArticle', $id)->update(['Visible' => DB::raw('ABS(Visible-1)')]))
-                return response()->json(['status' => true, 'error' => '']);
+                return response()->json(['status' => true, 'error' => ''], 202);
             else
-                return response()->json(['status' => false, 'error' => 'wrong data']);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 }
