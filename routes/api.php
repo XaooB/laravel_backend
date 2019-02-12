@@ -31,8 +31,7 @@ Route::group(['middleware' => ['web']], function () {
 
 Route::get('test', function(Request $request) {
     $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
-    dd($analyticsData);
-    return;
+    return response()->json($analyticsData);
 });
 
 // usunac jak bedzie przetestowane po stronie klienta
