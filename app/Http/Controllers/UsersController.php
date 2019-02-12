@@ -50,8 +50,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = UsersCache::index();
-        return response()->json($users);
+        //
     }
 
     public function get_user($id)
@@ -117,6 +116,12 @@ class UsersController extends Controller
         }
         else
             return response()->json(['status' => false, 'error' => 'wrong token']);
+    }
+
+    public function list($from, $quantity)
+    {
+        $users = UsersCache::list($from, $quantity);
+        return response()->json($users);
     }
 
     public function panel($days)

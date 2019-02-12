@@ -45,7 +45,7 @@ Route::get('analytics_panel/{days}', function($days) {
 // Use middleware to allow Client-side use API
 Route::group(['middleware' => 'apiresponse'], function() {
     // Users routes
-    Route::resource('users', 'UsersController')->only(['index']);
+    Route::get('users_list/{from}/{quantity}', 'UsersController@list')->name('users.list');
     Route::get('users_get_user/{id}', 'UsersController@get_user')->name('users.get_user');
     Route::get('users_get_user_by_name/{login}', 'UsersController@get_user_by_name')->name('users.get_user_by_name');
     Route::get('users_check_user', 'UsersController@check_user')->name('users.check_user');
