@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use Spatie\Analytics\Period;
+use Facades\App\CacheData\AnalyticsCache;
 
 /*
 |--------------------------------------------------------------------------
