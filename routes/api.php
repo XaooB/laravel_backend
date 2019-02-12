@@ -35,7 +35,6 @@ Route::get('test', function(Request $request) {
     return;
 });
 
-
 // usunac jak bedzie przetestowane po stronie klienta
 Route::get('articles_panel/{days}', 'ArticlesController@panel')->name('articles.panel');
 Route::get('users_panel/{days}', 'UsersController@panel')->name('users.panel');
