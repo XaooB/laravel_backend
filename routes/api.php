@@ -30,7 +30,15 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::get('test', function(Request $request) {
-    $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+    $VisitorsAndPageViews = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+    $TotalVisitorsAndPageViews = Analytics::fetchTotalVisitorsAndPageViews(Period::days(7));
+    $MostVisitedPages = Analytics::fetchMostVisitedPages(Period::days(7), 7);
+
+    $panelData = [
+        'visitorsAndPageViews' => $VisitorsAndPageViews->toArray(),
+        'totalVisitorsAndPageViews' => $TotalVisitorsAndPageViews->toArray(),
+        'mostVisitedPages' => $MostVisitedPages->toArray(),
+    ];
     return response()->json($analyticsData);
 });
 
