@@ -2,6 +2,7 @@
 
 namespace App\CacheData;
 
+use Analytics;
 use Spatie\Analytics\Period;
 use Carbon\Carbon;
 
