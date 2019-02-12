@@ -38,15 +38,8 @@ Route::get('articles_panel/{days}', 'ArticlesController@panel')->name('articles.
 Route::get('users_panel/{days}', 'UsersController@panel')->name('users.panel');
 Route::get('comments_panel/{days}', 'CommentsController@panel')->name('comments.panel');
 Route::get('analytics_panel/{days}', function($days) {
-    $VisitorsAndPageViews = Analytics::fetchVisitorsAndPageViews(Period::days($days));
-    $TotalVisitorsAndPageViews = Analytics::fetchTotalVisitorsAndPageViews(Period::days($days));
-    $MostVisitedPages = Analytics::fetchMostVisitedPages(Period::days($days), 3);
-    $analyticsData = [
-        'visitorsAndPageViews' => $VisitorsAndPageViews->toArray(),
-        'totalVisitorsAndPageViews' => $TotalVisitorsAndPageViews->toArray(),
-        'mostVisitedPages' => $MostVisitedPages->toArray(),
-    ];
-    return response()->json($analyticsData);
+    $analytics = AnalyticsCache::panel($days);
+    return response()->json($analytics);
 });
 
 // Use middleware to allow Client-side use API
@@ -148,16 +141,9 @@ Route::group(['middleware' => 'apiauth'], function() {
         Route::get('comments_staff_get_article_comments/{id}', 'CommentsController@staff_get_article_comments')->name('comments.staff_get_article_comments');
         //Route::get('comments_panel/{days}', 'CommentsController@panel')->name('comments.panel');
 
-        /*Route::get('analytics_panel/{days}', function(Request $request) use($days) {
-            $VisitorsAndPageViews = Analytics::fetchVisitorsAndPageViews(Period::days($days));
-            $TotalVisitorsAndPageViews = Analytics::fetchTotalVisitorsAndPageViews(Period::days($days));
-            $MostVisitedPages = Analytics::fetchMostVisitedPages(Period::days($days), 3);
-            $analyticsData = [
-                'visitorsAndPageViews' => $VisitorsAndPageViews->toArray(),
-                'totalVisitorsAndPageViews' => $TotalVisitorsAndPageViews->toArray(),
-                'mostVisitedPages' => $MostVisitedPages->toArray(),
-            ];
-            return response()->json($analyticsData);
+        /*Route::get('analytics_panel/{days}', function($days) {
+            $analytics = AnalyticsCache::panel($days);
+            return response()->json($analytics);
         });*/
 
         Route::resource('leaguescoreboard', 'LeagueScoreboardController')->except(['index']);
