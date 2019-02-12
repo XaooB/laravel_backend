@@ -15,7 +15,7 @@ class MatchesCache
 	{
 		$key = 'next_match_date';
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addMinutes(30), function() {
+		return cache()->remember($cacheKey, Carbon::now()->addMinutes(1), function() {
 			if(DB::table('matches')->select('Date')->where(DB::raw('Date BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 4 HOUR)'))->where('Type', 'SCHEDULED')->orderBy('Date', 'asc')->count() > 0)
 				$next_match_date = DB::table('matches')->select('Date')->where(DB::raw('Date BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 4 HOUR)'))->where('Type', 'SCHEDULED')->orderBy('Date', 'asc')->value('Date');
 			else

@@ -51,8 +51,8 @@ class CommentsController extends Controller
 
     public function panel($days)
     {
-        $articles = CommentsCache::panel($days);
-        return response()->json($panelData);
+        $comments = CommentsCache::panel($days);
+        return response()->json($comments);
     }
 
     /**
