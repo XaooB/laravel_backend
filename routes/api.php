@@ -34,7 +34,7 @@ Route::get('test', function(Request $request) {
     $TotalVisitorsAndPageViews = Analytics::fetchTotalVisitorsAndPageViews(Period::days(7));
     $MostVisitedPages = Analytics::fetchMostVisitedPages(Period::days(7), 7);
 
-    $panelData = [
+    $analyticsData = [
         'visitorsAndPageViews' => $VisitorsAndPageViews->toArray(),
         'totalVisitorsAndPageViews' => $TotalVisitorsAndPageViews->toArray(),
         'mostVisitedPages' => $MostVisitedPages->toArray(),
