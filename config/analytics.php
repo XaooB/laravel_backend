@@ -12,7 +12,7 @@ return [
      * to learn how to get this file. You can also pass the credentials as an array
      * instead of a file path.
      */
-    'service_account_credentials_json' => env('ANALYTICS_CREDENTIALS'),
+    'service_account_credentials_json' => storage_path('app/public/package.json'),
 
     /*
      * The amount of minutes the Google API responses will be cached.
