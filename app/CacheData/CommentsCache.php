@@ -30,7 +30,7 @@ class CommentsCache
 		return cache()->remember($cacheKey, Carbon::now()->addMinutes(1), function() use($days) {
 			$latestComments = DB::table('comments')->select('idComment as idcomment', 'idReference as idarticle', 'idUser as user', 'Content as content', 'created_at as create_date', 'updated_at as modify_date')->orderBy('comments.created_at', 'desc')->limit(3)->get();
         	foreach ($latestComments as $key => $comment) {
-        	    UsersController::buildUserData($comment->user);
+        	    UsersController::buildUserData($comment->user, 'id');
         	}
         	$weekSum = DB::table('comments')->select(DB::raw('date(created_at) as day, count(*) as total_comments'))->where(DB::raw('DATEDIFF(NOW(), comments.created_at)'), '<', $days)->groupBy(DB::raw('day'))->get();
         	$weekSummary = array();

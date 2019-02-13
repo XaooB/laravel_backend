@@ -28,12 +28,11 @@ if(!isset($_SESSION)) { session_start(); }
 
 class UsersController extends Controller
 {
-    public static function buildUserData(&$user)
+    public static function buildUserData(&$user, $whereColumn)
     {
-        $userID = $user;
-        if(DB::table('users')->where('id', $userID)->count() > 0)
+        if(DB::table('users')->where($whereColumn, $user)->count() > 0)
         {
-            $user = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at as create_date')->where('id', '=', $userID)->first();
+            $user = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at as create_date')->where('users.' . $whereColumn, $user)->first();
             if($user->status == 'usunięty')
             {
                 $user->email = null;
@@ -41,6 +40,8 @@ class UsersController extends Controller
                 $user->image = null;
             }
         }
+        else
+            $user = null;
     }
         
     /**
@@ -53,30 +54,25 @@ class UsersController extends Controller
         //
     }
 
-    public function get_user($id)
+    public function by_id($id)
     {
         if(isset($_SESSION['iduser']))
-        {
-            if($id != $_SESSION['iduser'])
-            {
-                $user = $id;
-                $this->buildUserData($user);
-                return response()->json($user);
-            }
-            return response()->json($_SESSION);
-        }
-        else
-        {
-            $user = $id;
-            $this->buildUserData($user);
-            return response()->json($user);
-        }
+            if($id == $_SESSION['iduser'])
+                return response()->json($_SESSION);
+        $user = UsersCache::by_id($id);
+        if($user == null)
+            return response()->json(['status' => false, 'error' => 'user not found'], 204);
+        return response()->json($user);
     }
 
-    public function get_user_by_name($login)
+    public function by_name($name)
     {
-        $user = DB::table('users')->select('id')->where('Name', $login)->value('id');
-        $this->buildUserData($user);
+        if(isset($_SESSION['name']))
+            if($name == $_SESSION['name'])
+                return response()->json($_SESSION);
+        $user = UsersCache::by_name($name);
+        if($user == null)
+            return response()->json(['status' => false, 'error' => 'user not found'], 204);
         return response()->json($user);
     }
 	
@@ -115,7 +111,7 @@ class UsersController extends Controller
             }
         }
         else
-            return response()->json(['status' => false, 'error' => 'wrong token']);
+            return response()->json(['status' => false, 'error' => 'token not found'], 204);
     }
 
     public function list($from, $quantity)
@@ -320,8 +316,8 @@ class UsersController extends Controller
     {
         $usersBlockades = DB::table('user_blockades')->join('statuses', 'statuses.idStatus', '=', 'user_blockades.Value')->select('idUser as user', 'idStaff as staff', 'statuses.Name as value', 'Reason as reason', 'user_blockades.created_at as date')->get();
         foreach ($usersBlockades as $key => $userBlockade) {
-            $this->buildUserData($userBlockade->user);
-            $this->buildUserData($userBlockade->staff);
+            $this->buildUserData($userBlockade->user, 'id');
+            $this->buildUserData($userBlockade->staff, 'id');
         }
         return response()->json($usersBlockades);
     }
@@ -333,8 +329,8 @@ class UsersController extends Controller
         else
             $changes = DB::table('user_changes')->join('privileges as priv1', 'priv1.idPrivilege', '=', 'user_changes.ValueBefore')->join('privileges as priv2', 'priv2.idPrivilege', '=', 'user_changes.ValueAfter')->select('idUser as user', 'idStaff as staff', 'priv1.Name as value_before', 'priv2.Name as value_after', 'user_changes.created_at as date')->where($column, $value)->get();
         foreach ($changes as $key => $change) {
-            $this->buildUserData($change->user);
-            $this->buildUserData($change->staff);
+            $this->buildUserData($change->user, 'id');
+            $this->buildUserData($change->staff, 'id');
         }
         return $changes;
     }

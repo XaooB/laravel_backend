@@ -11,6 +11,28 @@ class UsersCache
 {
 	CONST CACHE_KEY = 'USERS';
 
+	public function by_id($id)
+	{
+		$key = 'by_id.' . $id;
+		$cacheKey = $this->getCacheKey($key);
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(15), function() use($id) {
+			$user = $id;
+			UsersController::buildUserData($user, 'id');
+			return $user;
+		});
+	}
+
+	public function by_name($name)
+	{
+		$key = 'by_name.' . $name;
+		$cacheKey = $this->getCacheKey($key);
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(15), function() use($name) {
+			$user = $name;
+			UsersController::buildUserData($user, 'Name');
+			return $user;
+		});
+	}
+
 	public function list($from, $quantity)
 	{
 		$key = 'list.' . $from . '.' . $quantity;

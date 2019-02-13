@@ -24,13 +24,13 @@ class ArticlesController extends Controller
             foreach ($articles as $key => $article) 
             {
                 if(substr($article->content, -1) == '.') $article->content .= '..'; else $article->content .= '...';
-                UsersController::buildUserData($article->user);
+                UsersController::buildUserData($article->user, 'id');
             }
         }
         else
         {
             $articles = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->leftJoin('user_likes', 'user_likes.idReference', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.Main as main', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.Main', 'articles.created_at', 'articles.updated_at', 'comments.idReference')->whereIn('articles.Visible', $whereVisible)->whereIn($whereInColumn, $whereInValues)->where('articles.idArticle', $articleID)->first();
-            UsersController::buildUserData($articles->user);
+            UsersController::buildUserData($articles->user, 'id');
         }
     }
 
@@ -190,7 +190,7 @@ class ArticlesController extends Controller
         public function store(Request $request)
         {
             $data = json_decode($request->getContent(), true);
-            if(isset($data['category']) && isset($data['title']) && isset($data['content']) && isset($data['image']))
+            if(isset($data['category']) && isset($data['title']) && isset($data['content']) && $request->file('image') != null)
             {
                 $articles = new Articles;
                 $articles->idCategory = $data['category'];

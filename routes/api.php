@@ -46,8 +46,8 @@ Route::get('analytics_panel/{days}', function($days) {
 Route::group(['middleware' => 'apiresponse'], function() {
     // Users routes
     Route::get('users_list/{from}/{quantity}', 'UsersController@list')->name('users.list');
-    Route::get('users_get_user/{id}', 'UsersController@get_user')->name('users.get_user');
-    Route::get('users_get_user_by_name/{login}', 'UsersController@get_user_by_name')->name('users.get_user_by_name');
+    Route::get('users_by_id/{id}', 'UsersController@by_id')->name('users.by_id');
+    Route::get('users_by_name/{name}', 'UsersController@by_name')->name('users.by_name');
     Route::get('users_check_user', 'UsersController@check_user')->name('users.check_user');
     Route::get('users_check_token', 'UsersController@check_token')->name('users.check_token');
     // Articles routes

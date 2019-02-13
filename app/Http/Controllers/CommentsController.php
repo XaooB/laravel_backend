@@ -31,7 +31,7 @@ class CommentsController extends Controller
     {
         $comments = DB::table('comments')->select('idComment as idcomment', 'idUser as user', 'Content as content', 'created_at as create_date', 'updated_at as modify_date', 'idSubReference as comments')->where('idReference', $articleID)->where('idSubReference', $mainCommentID)->where('Type', $type)->whereIn('comments.Visible', $values)->orderBy($orderColumn, $orderValue)->get();
         foreach ($comments as $key => $comment) {
-            UsersController::buildUserData($comment->user);
+            UsersController::buildUserData($comment->user, 'id');
             array_push($commentPart, $comment);
             $subCommentsCount= DB::table('comments')->where('idReference', $articleID)->where('idSubReference', $comment->idcomment)->whereIn('comments.Visible', $values)->count();
             if($subCommentsCount > 0) {
