@@ -38,7 +38,7 @@ class MatchesCache
 	{
 		$key = 'live';
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addMinutes(30), function() {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(3), function() {
 			MatchesController::buildMatchData($live, 'LIVE', 1, 'desc');
 			return $live;
 		});
