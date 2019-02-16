@@ -223,7 +223,7 @@ class ArticlesController extends Controller
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
             }
             else
-                return response()->json(['status' => false, 'error' => $request], 204);
+                return response()->json(['status' => false, 'error' => $request]);
         }
 
         /**
