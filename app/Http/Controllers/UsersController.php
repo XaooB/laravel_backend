@@ -190,8 +190,7 @@ class UsersController extends Controller
             $status = true;
             $msg .= 'image updated.';
         }
-        $data = json_decode($request->getContent(), true);
-        if(ValidatorController::checkString($data['name']))
+        if(ValidatorController::checkString($request->name)
         {
             if(User::where('Name', $data['name'])->count() == 0 && User::where('id', $id)->where('id', $_SESSION['iduser'])->update(['Name' => $data['name']]))
             { 
