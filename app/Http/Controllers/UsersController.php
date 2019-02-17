@@ -192,7 +192,7 @@ class UsersController extends Controller
         }
         if(ValidatorController::checkString($request->name)
         {
-            if(User::where('Name', $data['name'])->count() == 0 && User::where('id', $id)->where('id', $_SESSION['iduser'])->update(['Name' => $data['name']]))
+            if(User::where('Name', $request->name)->count() == 0 && User::where('id', $id)->where('id', $_SESSION['iduser'])->update(['Name' => $request->name]))
             { 
                 $_SESSION['name'] = $request->name;
                 $status = true;
@@ -204,7 +204,7 @@ class UsersController extends Controller
                 $msg .= 'wrong name data.';
             }
         }
-        return response()->json(['status' => $status, 'error' => $msg]);
+        return response()->json(['status' => $status, 'error' => $msg], 200);
     }
 
     /**
