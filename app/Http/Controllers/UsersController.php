@@ -190,7 +190,7 @@ class UsersController extends Controller
             $status = true;
             $msg .= 'image updated.';
         }
-        if(ValidatorController::checkString($request->name)
+        if(ValidatorController::checkString($request->name))
         {
             if(User::where('Name', $request->name)->count() == 0 && User::where('id', $id)->where('id', $_SESSION['iduser'])->update(['Name' => $request->name]))
             { 
