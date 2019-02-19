@@ -113,8 +113,8 @@ Route::group(['middleware' => 'apiauth'], function() {
         // Players routes
         Route::resource('players', 'PlayersController')->except(['index']);
 
-        Route::get('users_panel', 'UsersController@panel')->name('users.panel');
-        Route::get('articles_panel', 'ArticlesController@panel')->name('articles.panel');
+        Route::get('users_panel/{days}', 'UsersController@panel')->name('users.panel');
+        Route::get('articles_panel/{days}', 'ArticlesController@panel')->name('articles.panel');
         Route::get('comments_panel/{days}', 'CommentsController@panel')->name('comments.panel');
 
         Route::get('analytics_panel/{days}', function($days) {
