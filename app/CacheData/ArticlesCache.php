@@ -15,7 +15,7 @@ class ArticlesCache
 	{
 		$key = 'latest_main.' . $count;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addMinutes(1), function() use($count) {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(5), function() use($count) {
 			ArticlesController::buildArticleData($articles_latest_main, [1], 'articles.Main', [1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
 			return $articles_latest_main;
 		});
@@ -25,7 +25,7 @@ class ArticlesCache
 	{
 		$key = 'latest_plain.' . $count;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addMinutes(1), function() use($count) {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(5), function() use($count) {
 			ArticlesController::buildArticleData($articles_latest, [1], 'articles.Main', [0], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
 			return $articles_latest;
 		});
