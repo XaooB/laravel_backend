@@ -42,12 +42,11 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        $data = json_decode($request->getContent(), true);
-        if(isset($data['category']))
+        if(isset($request->category))
         {
             $categories = new Categories;
-            $categories->Name = $data['category'];
-            if(Categories::where('Name', $data['category'])->exists()) 
+            $categories->Name = $request->category;
+            if(Categories::where('Name', $request->category)->exists()) 
                 return response()->json(['status' => false, 'error' => 'wrong data']);
             else
             {
@@ -93,10 +92,9 @@ class CategoriesController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
-            $data = json_decode($request->getContent(), true);
-            if(isset($data['category']))
+            if(isset($request->category))
             {
-                if(Categories::where('idCategory', $id)->update(['Name' => $data['category']]))
+                if(Categories::where('idCategory', $id)->update(['Name' => $request->category]))
                     return response()->json(['status' => true, 'error' => '']);
                 else
                     return response()->json(['status' => false, 'error' => 'wrong data']);

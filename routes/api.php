@@ -108,10 +108,10 @@ Route::group(['middleware' => 'apiauth'], function() {
 
     // Restrict routes to Root/Admin or Moderator/Redactor privileges
     Route::group(['middleware' => 'checkprivilege', 'privileges' => ['root', 'administrator', 'moderator', 'redaktor']], function() {
-    // Articles routes
-    Route::resource('articles', 'ArticlesController');
-    // Players routes
-    Route::resource('players', 'PlayersController')->except(['index']);
+        // Articles routes
+        Route::resource('articles', 'ArticlesController');
+        // Players routes
+        Route::resource('players', 'PlayersController')->except(['index']);
     });
 
     // Restrict routes to Root/Admin or Moderator privileges

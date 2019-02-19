@@ -48,9 +48,7 @@ class ArticlesController extends Controller
         {
             if(isset($_SESSION['iduser']))
             {
-                $c = Articles::where('idUser', $_SESSION['iduser'])->count();
-                echo $c;
-                if($c > 0)
+                if(Articles::where('idUser', $_SESSION['iduser'])->count() > 0)
                     $this->buildArticleData($articles, [0, 1], 'articles.idUser', [$_SESSION['iduser']], 'articles.idArticle', 'desc', null, null, 'articles.Title', '');
                 else
                     $this->buildArticleData($articles, [0, 1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', null, null, 'articles.Title', '');
@@ -190,7 +188,7 @@ class ArticlesController extends Controller
         public function store(Request $request)
         {
             //if(isset($data['category']) && isset($data['title']) && isset($data['content']) && $request->file('image') != null)
-            if($request->category && $request->title && $request->content && $request->file('image') != null)
+            if(isset($request->category) && isset($request->title) && isset($request->content) && $request->file('image') != null)
             {
                 $articles = new Articles;
                 $articles->idCategory = $request->category;
@@ -257,7 +255,7 @@ class ArticlesController extends Controller
          */
         public function update(Request $request, $id)
         {
-            if($request->category && $request->title && $request->content)
+            if(isset($request->category) && isset($request->title) && isset($request->content))
             {
                 if($request->file('image') != null)
                 {
@@ -267,8 +265,8 @@ class ArticlesController extends Controller
                     $path = $destinationFolder . $image_name;
                     CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id); 
                 }
-                $articleMain = $data['main'] ? 1 : 0;
-                if(Articles::where('idArticle', '=' , $id)->where('Visible', 1)->update([
+                $articleMain = $request->main ? 1 : 0;
+                if(Articles::where('idArticle', $id)->update([
                     'idCategory' => $request->category,
                     'Title' => $request->title,
                     'Content' => $request->content,
@@ -289,7 +287,7 @@ class ArticlesController extends Controller
          */
         public function destroy(Request $request, $id)
         {
-            if(Articles::where('idArticle', '=' , $id)->where('idUser', '=' , $_SESSION['iduser'])->where('Visible', 1)->update(['Visible' => 0])) 
+            if(Articles::where('idArticle', $id)->where('idUser', $_SESSION['iduser'])->delete()) 
                 return response()->json(['status' => true, 'error' => ''], 202);
             else 
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
@@ -312,7 +310,7 @@ class ArticlesController extends Controller
 
         public function staff_update(Request $request, $id)
         {
-            if($request->content)
+            if(isset($request->content))
             {
                 if(Articles::where('idArticle', '=' , $id)->update(['Content' => $data['content']])) 
                     return response()->json(['status' => true, 'error' => ''], 202);

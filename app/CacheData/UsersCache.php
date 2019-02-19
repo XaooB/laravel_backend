@@ -42,6 +42,7 @@ class UsersCache
 			return $users;
 		});
 	}
+	
 	public function panel($days)
 	{
 		$key = 'panel.' . $days;
