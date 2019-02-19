@@ -16,7 +16,7 @@ class CommentsCache
 	{
 		$key = 'article_comments.' . $id;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addMinutes(1), function() use($id) {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(5), function() use($id) {
 			$articleComments = array();
         	CommentsController::buildComment($id, 0, $articleComments, [1], 'article', 'idComment', 'desc');
         	return $articleComments;
