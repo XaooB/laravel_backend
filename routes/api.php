@@ -36,7 +36,9 @@ Route::get('test', function(Request $request) {
 // Use middleware to allow Client-side use API
 Route::group(['middleware' => 'apiresponse'], function() {
     // Users routes
+    Route::resource('users', 'UsersController')->only(['index']);
     Route::get('users_list/{from}/{quantity}', 'UsersController@list')->name('users.list');
+    Route::get('users_paginate/{count}', 'UsersController@paginate')->name('users.paginate');
     Route::get('users_by_id/{id}', 'UsersController@by_id')->name('users.by_id');
     Route::get('users_by_name/{name}', 'UsersController@by_name')->name('users.by_name');
     Route::get('users_check_user', 'UsersController@check_user')->name('users.check_user');

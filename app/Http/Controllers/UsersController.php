@@ -120,6 +120,15 @@ class UsersController extends Controller
         return response()->json($users);
     }
 
+    public function paginate($count, Request $request)
+    {
+        if(isset($request->page))
+            $users = UsersCache::paginate($count, $request->page);
+        else
+            $users = UsersCache::paginate($count, 1);
+        return response()->json($users);
+    }
+
     public function panel($days)
     {
         $users = UsersCache::panel($days);
