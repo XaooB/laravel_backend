@@ -174,7 +174,7 @@ class ArticlesController extends Controller
                 }
                 else
                 {
-                    if($articles->save())
+                    if($articles->save() && Articles::where('idCategory', '<>', $request->category)->where('idUser', '<>', $_SESSION['iduser'])->where('Title', '<>', $request->title)->where('Content', '<>', $request->content)->update('Main' => 0))
                     {
                         return response()->json(['status' => true, 'error' => ''], 201);
                     }
@@ -234,7 +234,7 @@ class ArticlesController extends Controller
                     'idCategory' => $request->category,
                     'Title' => $request->title,
                     'Content' => $request->content,
-                    'Main' => $articleMain,
+                    'Main' => DB::raw('(case when `idArticle` = ' . $id . ' then 1 when `idArticle` <> ' . $id . ' then 0 end)'),
                     'Image' => $articleImage]))
                 	return response()->json(['status' => true, 'error' => ''], 202);
                 else
