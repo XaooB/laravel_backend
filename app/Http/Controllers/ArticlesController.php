@@ -91,25 +91,12 @@ class ArticlesController extends Controller
 
         public function show_article($id)
         {
-            // sprawdzenie czy artykuł jest widoczny
-            if(Articles::where('idArticle', $id)->where('Visible', 1)->count())
-            {
-                $this->buildArticleData($articles, [1], 'Main', [0, 1], 'articles.idArticle', 'asc', 1, $id, 'articles.Title', '');
-                Articles::where('idArticle', $id)->increment('Views', 1);
-                if(isset($_SESSION['iduser']))
-                {
-                    // sprawdzenie czy użytkownik którego dane sesji zostały przesłane polubił dany artykuł
-                    if(DB::table('user_likes')->where('Type', 'article')->where('Reaction', 'like')->where('idReference', $id)->where('idUser', $_SESSION['iduser'])->count())
-                        $articles->liked = true;
-                    else
-                        $articles->liked = false;
-                }
-                else
-                    $articles->liked = false;
-                return response()->json($articles);
-            }
+            if(isset($_SESSION['iduser']))
+                $user = $_SESSION['iduser'];
             else
-                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
+                $user = 'none';
+            $articles = ArticlesCache::article($id, $user);
+            return response()->json($articles);
         }
 
         public static function BuildNeighboursData($ids)
@@ -121,32 +108,8 @@ class ArticlesController extends Controller
 
         public function show_neighbours($id)
         {
-            // pobranie ilości poprzednich artykułów względem tego o identyfikatorze przesłąnym w zapytaniu
-            $idPrev = DB::table('articles')->select('idArticle')->where('idArticle', '<', $id)->orderBy('idArticle', 'desc')->where('articles.Visible', 1)->limit(1)->value('idArticle');
-            // pobranie ilości następnych artykułów względem tego o identyfikatorze przesłąnym w zapytaniu
-            $idNext = DB::table('articles')->select('idArticle')->where('idArticle', '>', $id)->orderBy('idArticle', 'asc')->where('articles.Visible', 1)->limit(1)->value('idArticle');
-            if($idPrev && $idNext)
-            {
-                $ids = [$idPrev, $id, $idNext];
-                $articles = $this->BuildNeighboursData($ids);
-                return response()->json($articles);
-            }
-            elseif($idPrev)
-            {
-                $idNext = DB::table('articles')->select('idArticle')->where('idArticle', '<', $idPrev)->orderBy('idArticle', 'desc')->where('articles.Visible', 1)->limit(1)->value('idArticle');
-                $ids = [$idPrev, $id, $idNext];
-                $articles = $this->BuildNeighboursData($ids);
-                return response()->json($articles);
-            }
-            elseif($idNext)
-            {
-                $idPrev = DB::table('articles')->select('idArticle')->where('idArticle', '>', $idNext)->orderBy('idArticle', 'asc')->where('articles.Visible', 1)->limit(1)->value('idArticle');
-                $ids = [$idPrev, $id, $idNext];
-                $articles = $this->BuildNeighboursData($ids);
-                return response()->json($articles);
-            }
-            else
-                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
+            $articles = ArticlesCache::neighbours($id);
+            return response()->json($articles);
         }
 
         public function filtrate($count, $phrase)
