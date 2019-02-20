@@ -112,6 +112,11 @@ Route::group(['middleware' => 'apiauth'], function() {
     Route::group(['middleware' => 'checkprivilege', 'privileges' => ['root', 'administrator', 'moderator', 'redaktor']], function() {
         // Articles routes
         Route::resource('articles', 'ArticlesController');
+        Route::get('articles_staff', 'ArticlesController@staff_index')->name('articles.staff_index');
+        Route::get('articles_staff_show_article/{id}', 'ArticlesController@staff_show_article')->name('articles.staff_show_article');
+        Route::put('articles_staff/{id}', 'ArticlesController@staff_update')->name('articles.staff_update');
+        Route::post('articles_staff_change_article_visibility/{id}', 'ArticlesController@staff_change_article_visibility')->name('articles.staff_change_article_visibility');
+        Route::post('articles/staffChangeArticleMain/{id}', 'ArticlesController@staff_change_article_main')->name('articles.staff_change_article_main');
         // Players routes
         Route::resource('players', 'PlayersController')->except(['index']);
 
@@ -131,12 +136,6 @@ Route::group(['middleware' => 'apiauth'], function() {
         Route::put('users_change_user_status/{id}', 'UsersController@change_user_status')->name('users.change_user_status');
         Route::get('users_get_blockades', 'UsersController@get_blockades')->name('users.get_blockades');
         Route::get('users_changes', 'UsersController@changes')->name('users.changes');
-        
-
-        Route::get('articles_staff', 'ArticlesController@staff_index')->name('articles.staff_index');
-        Route::get('articles_staff_show_article/{id}', 'ArticlesController@staff_show_article')->name('articles.staff_show_article');
-        Route::put('articles_staff/{id}', 'ArticlesController@staff_update')->name('articles.staff_update');
-        Route::get('articles_staff_change_article_visibility/{id}', 'ArticlesController@staff_change_article_visibility')->name('articles.staff_change_article_visibility');
 
         Route::get('comments_staff_change_comment_visibility/{id}', 'CommentsController@staff_change_comment_visibility')->name('comments.staff_change_article_visibility');
         Route::get('comments_staff_get_article_comments/{id}', 'CommentsController@staff_get_article_comments')->name('comments.staff_get_article_comments');

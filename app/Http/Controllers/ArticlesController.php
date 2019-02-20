@@ -159,7 +159,6 @@ class ArticlesController extends Controller
                 $articles->Title = $request->title;
                 $articles->Content = $request->content;
                 $articles->Views = 1;
-                $articles->Main = $request->main ? 1 : 0; 
 
                 $image_name = 'articles' . $_SESSION['iduser'] . time() . $request->category . '.' . $request->file('image')->getClientOriginalExtension();
                 $destinationFolder = public_path('images') . '/articles/';
@@ -174,7 +173,7 @@ class ArticlesController extends Controller
                 }
                 else
                 {
-                    if($articles->save() && Articles::where('idCategory', '<>', $request->category)->where('idUser', '<>', $_SESSION['iduser'])->where('Title', '<>', $request->title)->where('Content', '<>', $request->content)->update(['Main' => 0]))
+                    if($articles->save())
                     {
                         return response()->json(['status' => true, 'error' => ''], 201);
                     }
@@ -229,12 +228,10 @@ class ArticlesController extends Controller
 
                     $articleImage = CloudinaryController::uploadImage($path, $image_name, 'articles'); 
                 }
-                $articleMain = $request->main ? 1 : 0;
                 if(Articles::where('idArticle', $id)->update([
                     'idCategory' => $request->category,
                     'Title' => $request->title,
                     'Content' => $request->content,
-                    'Main' => DB::raw('(case when `idArticle` = ' . $id . ' then 1 when `idArticle` <> ' . $id . ' then 0 end)'),
                     'Image' => $articleImage]))
                 	return response()->json(['status' => true, 'error' => ''], 202);
                 else
@@ -289,6 +286,14 @@ class ArticlesController extends Controller
         public function staff_change_article_visibility($id)
         {
             if(DB::table('articles')->where('idArticle', $id)->update(['Visible' => DB::raw('ABS(Visible-1)')]))
+                return response()->json(['status' => true, 'error' => ''], 202);
+            else
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
+        }
+
+        public function staff_change_article_main($id)
+        {
+            if(DB::table('articles')->where('idArticle', $id)->update(['Main' => DB::raw('(case when `idArticle` = ' . $id . ' then 1 when `idArticle` <> ' . $id . ' then 0 end)')]))
                 return response()->json(['status' => true, 'error' => ''], 202);
             else
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
