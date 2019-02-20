@@ -16,6 +16,6 @@ class CloudinaryController extends Controller
         Cloudder::upload($path, $image_name, ['folder' => $table]);
         list($width, $height) = getimagesize($path);
         $image_url = Cloudder::show(Cloudder::getPublicId(), ['width' => $width, 'height' => $height]);
-        return $image_url
+        return $image_url;
     }
 }
