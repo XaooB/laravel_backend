@@ -293,7 +293,7 @@ class ArticlesController extends Controller
 
         public function staff_change_article_main($id)
         {
-            if(DB::table('articles')->where('idArticle', $id)->update(['Main' => DB::raw('(case when `idArticle` = ' . $id . ' then 1 when `idArticle` <> ' . $id . ' then 0 end)')]))
+            if(DB::table('articles')->update(['Main' => DB::raw('(case when `idArticle` = ' . $id . ' then 1 when `idArticle` <> ' . $id . ' then 0 end)')]))
                 return response()->json(['status' => true, 'error' => ''], 202);
             else
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
