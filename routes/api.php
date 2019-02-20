@@ -112,11 +112,10 @@ Route::group(['middleware' => 'apiauth'], function() {
     Route::group(['middleware' => 'checkprivilege', 'privileges' => ['root', 'administrator', 'moderator', 'redaktor']], function() {
         // Articles routes
         Route::resource('articles', 'ArticlesController');
-        Route::get('articles_staff', 'ArticlesController@staff_index')->name('articles.staff_index');
-        Route::get('articles_staff_show_article/{id}', 'ArticlesController@staff_show_article')->name('articles.staff_show_article');
-        Route::put('articles_staff/{id}', 'ArticlesController@staff_update')->name('articles.staff_update');
-        Route::post('articles_staff_change_article_visibility/{id}', 'ArticlesController@staff_change_article_visibility')->name('articles.staff_change_article_visibility');
-        Route::post('articles/staffChangeArticleMain/{id}', 'ArticlesController@staff_change_article_main')->name('articles.staff_change_article_main');
+        Route::get('articles/staffShowArticle/{id}', 'ArticlesController@staffShowArticle')->name('articles.staffShowArticle');
+        Route::put('articles/staff/{id}', 'ArticlesController@staffUpdate')->name('articles.staffUpdate');
+        Route::post('articles/staffChangeArticleVisibility/{id}', 'ArticlesController@staffChangeArticleVisibility')->name('articles.staffChangeArticleVisibility');
+        Route::post('articles/staffChangeArticleMain/{id}', 'ArticlesController@staffChangeArticleMain')->name('articles.staffChangeArticleMain');
         // Players routes
         Route::resource('players', 'PlayersController')->except(['index']);
 
