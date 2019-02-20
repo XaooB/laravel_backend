@@ -160,22 +160,22 @@ class ArticlesController extends Controller
                 $articles->Content = $request->content;
                 $articles->Views = 1;
                 $articles->Main = $request->main ? 1 : 0; 
+
+                $image_name = 'articles' . $_SESSION['iduser'] . time() . $request->category . '.' . $request->file('image')->getClientOriginalExtension();
+                $destinationFolder = public_path('images') . '/articles/';
+                $request->file('image')->move($destinationFolder, $image_name);
+                $path = $destinationFolder . $image_name;
+
+                $articles->Image = CloudinaryController::uploadImage($path, $image_name, 'articles');
+
                 if(Articles::where('Title', $articles->Title)->where('idCategory', $articles->idCategory)->where('idUser', $articles->idUser)->exists()) 
                 {
                     return response()->json(['status' => false, 'error' => 'wrong data'], 204);
                 }
                 else
                 {
-                    // wysłanie danych do bazy danych oraz sprawdzenie czy zostały one pomyślnie zapisane
                     if($articles->save())
                     {
-                        // zapisanie zdjęcia na zdalnym serwerze 
-                        $id = DB::table('articles')->select('idArticle')->where('Title', $articles->Title)->where('idUser', $articles->idUser)->where('Content', $articles->Content)->value('idArticle');
-                        $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
-                        $destinationFolder = public_path('images') . '/articles/';
-                        $request->file('image')->move($destinationFolder, $image_name);
-                        $path = $destinationFolder . $image_name;
-                        CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id);
                         return response()->json(['status' => true, 'error' => ''], 201);
                     }
                     else
@@ -222,18 +222,20 @@ class ArticlesController extends Controller
             {
                 if($request->file('image') != null)
                 {
-                    $image_name = 'articles' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
+                    $image_name = 'articles' . $_SESSION['iduser'] . time() . $request->category . '.' . $request->file('image')->getClientOriginalExtension();
                     $destinationFolder = public_path('images') . '/articles/';
                     $request->file('image')->move($destinationFolder, $image_name);
                     $path = $destinationFolder . $image_name;
-                    CloudinaryController::uploadImage($path, $image_name, 'articles', 'idArticle', $id); 
+
+                    $articleImage = CloudinaryController::uploadImage($path, $image_name, 'articles'); 
                 }
                 $articleMain = $request->main ? 1 : 0;
                 if(Articles::where('idArticle', $id)->update([
                     'idCategory' => $request->category,
                     'Title' => $request->title,
                     'Content' => $request->content,
-                    'Main' => $articleMain]))
+                    'Main' => $articleMain,
+                    'Image' => $articleImage]))
                 	return response()->json(['status' => true, 'error' => ''], 202);
                 else
                     return response()->json(['status' => false, 'error' => 'wrong data'], 204);

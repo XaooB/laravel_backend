@@ -191,13 +191,19 @@ class UsersController extends Controller
         $msg = '';
         if($request->file('image') != null)
         {
+
             $image_name = 'users' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
-            $destinationFolder = public_path('images') . '/users/';
+            $destinationFolder = public_path('images') . '/articles/';
             $request->file('image')->move($destinationFolder, $image_name);
             $path = $destinationFolder . $image_name;
-            CloudinaryController::uploadImage($path, $image_name, 'users', 'id', $_SESSION['iduser']);
-            $status = true;
-            $msg .= 'image updated.';
+
+            $userImage = CloudinaryController::uploadImage($path, $image_name, 'users');
+            if(User::where('id', $id)->where('id', $_SESSION['iduser'])->update(['Image' => $userImage]))
+            {  
+                $_SESSION['image'] = $userImage;
+                $status = true;
+                $msg .= 'image updated.';
+            }
         }
         if(ValidatorController::checkString($request->name))
         {
