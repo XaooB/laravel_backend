@@ -174,7 +174,7 @@ class ArticlesController extends Controller
                 }
                 else
                 {
-                    if($articles->save() && Articles::where('idCategory', '<>', $request->category)->where('idUser', '<>', $_SESSION['iduser'])->where('Title', '<>', $request->title)->where('Content', '<>', $request->content)->update('Main' => 0))
+                    if($articles->save() && Articles::where('idCategory', '<>', $request->category)->where('idUser', '<>', $_SESSION['iduser'])->where('Title', '<>', $request->title)->where('Content', '<>', $request->content)->update(['Main' => 0]))
                     {
                         return response()->json(['status' => true, 'error' => ''], 201);
                     }
