@@ -15,7 +15,7 @@ class ArticlesCache
 	{
 		$key = 'article.' . $id . '.' . $user;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(5), function() use($id, $user) {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($id, $user) {
             if(Articles::where('idArticle', $id)->where('Visible', 1)->count())
             {
                 ArticlesController::buildArticleData($article, [1], 'Main', [0, 1], 'articles.idArticle', 'asc', 1, $id, 'articles.Title', '');
@@ -39,7 +39,7 @@ class ArticlesCache
 	{
 		$key = 'latest_main.' . $count;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(5), function() use($count) {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($count) {
 			ArticlesController::buildArticleData($articles_latest_main, [1], 'articles.Main', [1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
 			return $articles_latest_main;
 		});
@@ -49,7 +49,7 @@ class ArticlesCache
 	{
 		$key = 'latest_plain.' . $count;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(5), function() use($count) {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($count) {
 			ArticlesController::buildArticleData($articles_latest, [1], 'articles.Main', [0], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
 			return $articles_latest;
 		});
@@ -86,7 +86,7 @@ class ArticlesCache
 	{
 		$key = 'neighbours.' . $id;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(5), function() use($id) {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($id) {
             $idPrev = DB::table('articles')->select('idArticle')->where('idArticle', '<', $id)->orderBy('idArticle', 'desc')->where('articles.Visible', 1)->limit(1)->value('idArticle');
             $idNext = DB::table('articles')->select('idArticle')->where('idArticle', '>', $id)->orderBy('idArticle', 'asc')->where('articles.Visible', 1)->limit(1)->value('idArticle');
             if($idPrev && $idNext)

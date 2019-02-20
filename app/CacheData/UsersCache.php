@@ -15,7 +15,7 @@ class UsersCache
 	{
 		$key = 'by_id.' . $id;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(5), function() use($id) {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($id) {
 			$user = $id;
 			UsersController::buildUserData($user, 'id');
 			return $user;
@@ -26,7 +26,7 @@ class UsersCache
 	{
 		$key = 'by_name.' . $name;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(5), function() use($name) {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($name) {
 			$user = $name;
 			UsersController::buildUserData($user, 'Name');
 			return $user;
@@ -37,7 +37,7 @@ class UsersCache
 	{
 		$key = 'list.' . $from . '.' . $quantity;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(5), function() use($from, $quantity) {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($from, $quantity) {
 			$users = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'statuses.Name as status', 'users.created_at as create_date')->where('privileges.Name', '!=', 'root')->whereIn('statuses.Name', ['aktywny', 'zablokowany'])->orderBy('idUser', 'desc')->skip($from)->take($quantity)->get();
 			return $users;
 		});
@@ -47,7 +47,7 @@ class UsersCache
 	{
 		$key = 'paginate.' . $count . '.' . $page;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(5), function() use($count, $page) {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($count, $page) {
 			$users = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'statuses.Name as status', 'users.created_at as create_date')->where('privileges.Name', '!=', 'root')->whereIn('statuses.Name', ['aktywny', 'zablokowany'])->orderBy('idUser', 'desc')->paginate($count);
 			return $users;
 		});
