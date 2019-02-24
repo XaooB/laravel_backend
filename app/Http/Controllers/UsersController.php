@@ -219,6 +219,8 @@ class UsersController extends Controller
                 $msg .= 'wrong name data.';
             }
         }
+        if($status)
+            UsersCache::removeFromCache($id);
         return response()->json(['status' => $status, 'error' => $msg], 200);
     }
 

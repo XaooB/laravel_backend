@@ -15,7 +15,7 @@ class UsersCache
 	{
 		$key = 'by_id.' . $id;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($id) {
+		return cache()->remember($cacheKey, Carbon::now()->addHours(1), function() use($id) {
 			$user = $id;
 			UsersController::buildUserData($user, 'id');
 			return $user;
@@ -82,5 +82,12 @@ class UsersCache
 	{
 		$key = strtoupper($key);
 		return self::CACHE_KEY . '.' . $key;
+	}
+
+	public function removeFromCache($id)
+	{
+		$key = 'by_id.' . $id;
+		$cacheKey = $this->getCacheKey($key);
+		return cache()->forget($cacheKey);
 	}
 }
