@@ -15,7 +15,6 @@ class ArticlesCache
 	{
 		$key = 'article.' . $id . '.' . $user;
 		$cacheKey = $this->getCacheKey($key);
-        echo $cacheKey;
 		return cache()->remember($cacheKey, Carbon::now()->addHours(1), function() use($id, $user) {
             if(Articles::where('idArticle', $id)->where('Visible', 1)->count())
             {
