@@ -15,7 +15,8 @@ class ArticlesCache
 	{
 		$key = 'article.' . $id . '.' . $user;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($id, $user) {
+        echo $cacheKey;
+		return cache()->remember($cacheKey, Carbon::now()->addHours(1), function() use($id, $user) {
             if(Articles::where('idArticle', $id)->where('Visible', 1)->count())
             {
                 ArticlesController::buildArticleData($article, [1], 'Main', [0, 1], 'articles.idArticle', 'asc', 1, $id, 'articles.Title', '');
@@ -111,4 +112,11 @@ class ArticlesCache
 		$key = strtoupper($key);
 		return self::CACHE_KEY . '.' . $key;
 	}
+
+    public function removeFromCache($id)
+    {
+        $key = 'by_id.' . $id;
+        $cacheKey = $this->getCacheKey($key);
+        return cache()->forget($cacheKey);
+    }
 }

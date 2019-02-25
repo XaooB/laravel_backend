@@ -22,16 +22,25 @@ class ArticlesController extends Controller
         if($articleID == null)
         {
             $articles = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->leftJoin('user_likes', 'user_likes.idReference', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.Main as main', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.Main', 'articles.created_at', 'articles.updated_at', 'comments.idReference')->whereIn('articles.Visible', $whereVisible)->whereIn($whereInColumn, $whereInValues)->where($filterColumn, 'like', '%' . $phrase . '%')->orderBy($orderColumn, $orderValue)->limit($quantity)->get();
-            foreach ($articles as $key => $article) 
+            /*foreach ($articles as $key => $article) 
             {
                 if(substr($article->content, -1) == '.') $article->content .= '..'; else $article->content .= '...';
                 $article->user = UsersCache::by_id($article->user);
-            }
+            }*/
         }
         else
         {
             $articles = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->leftJoin('user_likes', 'user_likes.idReference', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.Main as main', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.Main', 'articles.created_at', 'articles.updated_at', 'comments.idReference')->whereIn('articles.Visible', $whereVisible)->whereIn($whereInColumn, $whereInValues)->where('articles.idArticle', $articleID)->first();
-            $articles->user = UsersCache::by_id($articles->user);
+            //$articles->user = UsersCache::by_id($articles->user);
+        }
+    }
+
+    public static function addUsersData(&$articles)
+    {
+        foreach ($articles as $key => $article) 
+        {
+            if(substr($article->content, -1) == '.') $article->content .= '..'; else $article->content .= '...';
+            $article->user = UsersCache::by_id($article->user);
         }
     }
 
@@ -62,6 +71,7 @@ class ArticlesController extends Controller
             if($count > 0)
             {
                 $articles = ArticlesCache::latest_main($count);
+                $articles[0]->user = UsersCache::by_id($articles[0]->user);
                 return response()->json($articles);
             }
             else
@@ -73,17 +83,7 @@ class ArticlesController extends Controller
             if($count > 0)
             {
                 $articles = ArticlesCache::latest($count);
-                return response()->json($articles);
-            }
-            else
-                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
-        }
-
-        public function most_viewed($count, $interval)
-        {
-            if($count > 0)
-            {
-                $articles = DB::table('articles')->join('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->leftJoin('user_likes', 'user_likes.idReference', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->groupBy('articles.idArticle', 'categories.Name', 'articles.idUser', 'articles.Title', 'articles.Image', 'articles.Content', 'articles.Views', 'articles.Visible', 'articles.created_at', 'articles.updated_at', 'comments.idReference')->whereIn('articles.Visible', [1])->where(DB::raw('DATEDIFF(NOW(), articles.created_at)'), '<', $interval)->get();         
+                $this->addUsersData($articles);
                 return response()->json($articles);
             }
             else
@@ -97,6 +97,7 @@ class ArticlesController extends Controller
             else
                 $user = 'none';
             $articles = ArticlesCache::article($id, $user);
+            $articles->user = UsersCache::by_id($articles->user);
             return response()->json($articles);
         }
 
@@ -110,6 +111,7 @@ class ArticlesController extends Controller
         public function show_neighbours($id)
         {
             $articles = ArticlesCache::neighbours($id);
+            $this->addUsersData($articles);
             return response()->json($articles);
         }
 
@@ -121,6 +123,7 @@ class ArticlesController extends Controller
                 $fixedPhrase = $this->escapeLike($phrase);
                 $articles = array();
                 $this->buildArticleData($articles, [1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', $count, null, 'articles.Title', $fixedPhrase);
+                $this->addUsersData($articles);
                 return response()->json($articles);
             }
             else
@@ -264,6 +267,7 @@ class ArticlesController extends Controller
             {
                 $articles = '';
                 $this->buildArticleData($articles, [0, 1], 'articles.Main', [0, 1], 'articles.idArticle', 'asc', 1, $id, 'articles.Title', '');
+                $this->addUsersData($articles);
                 Articles::where('idArticle', $id)->increment('Views', 1);
                 return response()->json($articles);
             }

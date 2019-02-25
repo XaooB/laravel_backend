@@ -30,12 +30,12 @@ class CommentsController extends Controller
     // Nesting whole comments in article -> only for normal users
     public static function buildComment($articleID, $mainCommentID, &$commentPart, $values, $type, $orderColumn, $orderValue)
     {
-        $comments = DB::table('comments')->select('idComment as idcomment', 'idUser as user', 'Content as content', 'created_at as create_date', 'updated_at as modify_date', 'idSubReference as comments')->where('idReference', $articleID)->where('idSubReference', $mainCommentID)->where('Type', $type)->whereIn('comments.Visible', $values)->orderBy($orderColumn, $orderValue)->get();
+        $comments = DB::table('comments As c')->select('c.idComment as idcomment', 'c.idUser as user', 'c.Content as content', 'c.created_at as create_date', 'c.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idSubReference = c.idComment and comments.Visible = 1) as comments'))->where('c.idReference', $articleID)->where('c.idSubReference', $mainCommentID)->where('c.Type', $type)->whereIn('c.Visible', $values)->orderBy('c.' . $orderColumn, $orderValue)->get();
         foreach ($comments as $key => $comment) {
             $comment->user = UsersCache::by_id($comment->user);
             array_push($commentPart, $comment);
-            $subCommentsCount= DB::table('comments')->where('idReference', $articleID)->where('idSubReference', $comment->idcomment)->whereIn('comments.Visible', $values)->count();
-            if($subCommentsCount > 0) {
+            //$subCommentsCount= DB::table('comments')->where('idReference', $articleID)->where('idsubreference', $comment->idcomment)->whereIn('comments.Visible', $values)->count();
+            if($comment->comments > 0) {
                 $comment->comments = array();
                 self::buildComment($articleID, $comment->idcomment, $comment->comments, $values, $type, 'idComment', 'asc');
             }
