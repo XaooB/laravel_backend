@@ -8,6 +8,7 @@ use App\Categories;
 use App\Http\Resources\Categories as CategoriesResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Cookie;
+use Facades\App\CacheData\CategoriesCache;
 
 class CategoriesController extends Controller
 {
@@ -18,8 +19,8 @@ class CategoriesController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Categories::all();
-        return response()->json(CategoriesResource::collection($categories));
+        $categories = CategoriesCache::index();
+        return response()->json($categories);
     }
 
     // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------
