@@ -106,6 +106,16 @@ class ArticlesCache
 		});
 	}
 
+    public function by_category($column, $categories, $count)
+    {
+        $key = 'by_category.' . $count;
+        $cacheKey = $this->getCacheKey($key);
+        return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($column, $categories, $count) {
+            ArticlesController::buildArticleData($articles, [1], 'articles.' . $column, $categories, 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+            return $articles;
+        });
+    }
+
 	public function getCacheKey($key)
 	{
 		$key = strtoupper($key);

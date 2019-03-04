@@ -134,12 +134,14 @@ class ArticlesController extends Controller
         {
             if(isset($request->categories) && $count > 0)
             {
-                $this->buildArticleData($articles, [1], 'articles.idCategory', $request->categories, 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
+                $articles = ArticlesCache::by_category('idCategory', $request->categories, $count);
                 $this->addUsersData($articles);
                 return response()->json($articles);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
+                $articles = ArticlesCache::by_category('Main', [0, 1], $count);
+                $this->addUsersData($articles);
+                return response()->json($articles);
         }
 
         public function panel($days)
