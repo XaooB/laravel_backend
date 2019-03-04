@@ -114,7 +114,7 @@ class ArticlesCache
         }
         $key = 'by_category.' . $keyCategories . $count ;
         $cacheKey = $this->getCacheKey($key);
-        return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($column, $categories, $count) {
+        return cache()->remember($cacheKey, Carbon::now()->addMinutes(1), function() use($column, $categories, $count) {
             ArticlesController::buildArticleData($articles, [1], 'articles.' . $column, $categories, 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
             return $articles;
         });
