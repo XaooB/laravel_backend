@@ -55,15 +55,9 @@ class ArticlesController extends Controller
          * @return \Illuminate\Http\Response
          */
         public function index()
-        {
-            if(isset($_SESSION['iduser']))
-            {
-                if(Articles::where('idUser', $_SESSION['iduser'])->count() > 0)
-                    $this->buildArticleData($articles, [0, 1], 'articles.idUser', [$_SESSION['iduser']], 'articles.idArticle', 'desc', null, null, 'articles.Title', '');
-                else
-                    $this->buildArticleData($articles, [0, 1], 'articles.Main', [0, 1], 'articles.idArticle', 'desc', null, null, 'articles.Title', '');
-                return response()->json($articles);
-            }
+        {   
+            $this->buildArticleData($articles, [0, 1], 'articles.idUser', [$_SESSION['iduser']], 'articles.idArticle', 'desc', null, null, 'articles.Title', '');
+            return response()->json($articles);
         }
 
         public function latest_main($count)
