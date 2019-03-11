@@ -113,8 +113,8 @@ Route::group(['middleware' => 'apiauth'], function() {
     Route::group(['middleware' => 'checkprivilege', 'privileges' => ['root', 'administrator', 'moderator', 'redaktor']], function() {
         // Articles routes
         Route::resource('articles', 'ArticlesController');
-        Route::get('articles/staff_show_article/{id}', 'ArticlesController@staff_show_article')->name('articles.staff_show_article');
-        Route::put('articles/staff/{id}', 'ArticlesController@staff_update')->name('articles.staff_update');
+        Route::get('articles_staff_show_article/{id}', 'ArticlesController@staff_show_article')->name('articles.staff_show_article');
+        Route::put('articles_staff/{id}', 'ArticlesController@staff_update')->name('articles.staff_update');
         Route::post('articles_staff_change_visibility/{id}', 'ArticlesController@staff_change_visibility')->name('articles.staff_change_visibility');
         Route::post('articles_staff_change_main/{id}', 'ArticlesController@staff_change_main')->name('articles.staff_change_main');
         // Players routes
