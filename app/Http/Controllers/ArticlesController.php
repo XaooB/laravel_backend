@@ -269,7 +269,7 @@ class ArticlesController extends Controller
 
         // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------
 
-        public function staffShowArticle($id)
+        public function staff_show_article($id)
         {
             if(Articles::where('idArticle', $id)->count())
             {
@@ -283,7 +283,7 @@ class ArticlesController extends Controller
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
-        public function staffUpdate(Request $request, $id)
+        public function staff_update(Request $request, $id)
         {
             if(isset($request->content))
             {
@@ -296,7 +296,7 @@ class ArticlesController extends Controller
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
-        public function staffChangeArticleVisibility($id)
+        public function staff_change_visibility($id)
         {
             if(DB::table('articles')->where('idArticle', $id)->update(['Visible' => DB::raw('ABS(Visible-1)')]))
                 return response()->json(['status' => true, 'error' => ''], 202);
@@ -304,7 +304,7 @@ class ArticlesController extends Controller
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
-        public function staffChangeArticleMain($id)
+        public function staff_change_main($id)
         {
             if(DB::table('articles')->update(['Main' => DB::raw('(case when `idArticle` = ' . $id . ' then 1 when `idArticle` <> ' . $id . ' then 0 end)')]))
                 return response()->json(['status' => true, 'error' => ''], 202);

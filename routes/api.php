@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Facades\App\CacheData\AnalyticsCache;
 
+if(!isset($_SESSION)) { session_start(); } 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,8 +25,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/google', 'Auth\LoginController@redirectToProvider')->name('login');
     Route::get('auth/google/callback', 'Auth\LoginController@handleProviderCallback');
     Route::get('auth/google/logout', function() {
-        session_start();
-        session_destroy();
 		return redirect('https://portal-wertykalny.herokuapp.com/');
     });
 });
@@ -113,10 +113,10 @@ Route::group(['middleware' => 'apiauth'], function() {
     Route::group(['middleware' => 'checkprivilege', 'privileges' => ['root', 'administrator', 'moderator', 'redaktor']], function() {
         // Articles routes
         Route::resource('articles', 'ArticlesController');
-        Route::get('articles/staffShowArticle/{id}', 'ArticlesController@staffShowArticle')->name('articles.staffShowArticle');
-        Route::put('articles/staff/{id}', 'ArticlesController@staffUpdate')->name('articles.staffUpdate');
-        Route::post('articles/staffChangeArticleVisibility/{id}', 'ArticlesController@staffChangeArticleVisibility')->name('articles.staffChangeArticleVisibility');
-        Route::post('articles/staffChangeArticleMain/{id}', 'ArticlesController@staffChangeArticleMain')->name('articles.staffChangeArticleMain');
+        Route::get('articles/staff_show_article/{id}', 'ArticlesController@staff_show_article')->name('articles.staff_show_article');
+        Route::put('articles/staff/{id}', 'ArticlesController@staff_update')->name('articles.staff_update');
+        Route::post('articles_staff_change_visibility/{id}', 'ArticlesController@staff_change_visibility')->name('articles.staff_change_visibility');
+        Route::post('articles_staff_change_main/{id}', 'ArticlesController@staff_change_main')->name('articles.staff_change_main');
         // Players routes
         Route::resource('players', 'PlayersController')->except(['index']);
 
