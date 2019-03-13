@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof \Symfony\Component\HttpFoundation\File\Exception\FileException) {
         // create a validator and validate to throw a new ValidationException
-        return Validator::make($request->all(), [$request->file('image') => 'size:2048'])->validate();
+        return Validator::make($request->all(), ['image' => 'size:2048'])->validate();
     }
         return parent::render($request, $exception);
     }
