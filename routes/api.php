@@ -25,6 +25,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/google', 'Auth\LoginController@redirectToProvider')->name('login');
     Route::get('auth/google/callback', 'Auth\LoginController@handleProviderCallback');
     Route::get('auth/google/logout', function() {
+        session_destroy();
 		return redirect('https://portal-wertykalny.herokuapp.com/');
     });
 });
