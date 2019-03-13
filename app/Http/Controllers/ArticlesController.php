@@ -12,6 +12,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CloudinaryController;
 use Facades\App\CacheData\ArticlesCache;
 use Facades\App\CacheData\UsersCache;
+use App\Http\Controllers\ValidatorController;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -163,7 +164,8 @@ class ArticlesController extends Controller
         public function store(Request $request)
         {
             //if(isset($data['category']) && isset($data['title']) && isset($data['content']) && $request->file('image') != null)
-            if(isset($request->category) && isset($request->title) && isset($request->content) && $request->file('image') != null)
+            $check_file_msg = "";
+            if(isset($request->category) && isset($request->title) && isset($request->content) && ValidatorController::checkUploadFile($request->file('image'), $check_file_msg))
             {
                 $articles = new Articles;
                 $articles->idCategory = $request->category;
@@ -195,7 +197,7 @@ class ArticlesController extends Controller
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
             }
             else
-                return response()->json(['status' => false, 'error' => $request]);
+                return response()->json(['status' => false, 'error' => 'wrong data ' . $check_file_msg]);
         }
 
         /**
@@ -231,7 +233,7 @@ class ArticlesController extends Controller
         {
             if(isset($request->category) && isset($request->title) && isset($request->content))
             {
-                if($request->file('image') != null)
+                if(ValidatorController::checkUploadFile($request->file('image'), $check_file_msg))
                 {
                     $image_name = 'articles' . $_SESSION['iduser'] . time() . $request->category . '.' . $request->file('image')->getClientOriginalExtension();
                     $destinationFolder = public_path('images') . '/articles/';
@@ -240,17 +242,17 @@ class ArticlesController extends Controller
 
                     $articleImage = CloudinaryController::uploadImage($path, $image_name, 'articles'); 
                 }
+                else
+                    return response()->json(['status' => false, 'error' => 'wrong data'], 204);
                 if(Articles::where('idArticle', $id)->update([
                     'idCategory' => $request->category,
                     'Title' => $request->title,
                     'Content' => $request->content,
                     'Image' => $articleImage]))
                 	return response()->json(['status' => true, 'error' => ''], 202);
-                else
-                    return response()->json(['status' => false, 'error' => 'wrong data'], 204);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
+                return response()->json(['status' => false, 'error' => 'wrong data ' . $check_file_msg]);
         }
 
         /**

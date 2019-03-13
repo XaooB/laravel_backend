@@ -30,7 +30,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 });
 
-Route::get('test', function(Request $request) {
+Route::post('test', function(Request $request) {
     return;
 });
 

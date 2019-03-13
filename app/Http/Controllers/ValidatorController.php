@@ -18,4 +18,22 @@ class ValidatorController extends Controller
 	{
 		return $str = substr($originalString, 0, $position) . $insertString . substr($originalString, $position);
 	}
+
+	public static function checkUploadFile($file, &$msg)
+	{
+		if($file != null)
+		{
+			if((($file->getSize() / 1024) / 1024) < 2)
+			{
+				$msg = "file is valid";
+				return true;
+			}
+			else
+				$msg = "file is too large"
+			return false;
+		}
+		else
+			$msg = "file does not exist"
+		return false;
+	}
 }
