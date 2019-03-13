@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Facades\App\CacheData\AnalyticsCache;
+use App\Http\Controllers\ValidatorController;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -31,6 +32,8 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::post('test', function(Request $request) {
+    print_r($request->file('image')->getSize());
+    //ValidatorController::checkUploadFile($request->file('image'), $msg);
     return;
 });
 

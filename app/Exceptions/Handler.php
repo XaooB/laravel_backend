@@ -46,8 +46,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        //if ($exception instanceof AuthenticationException) 
-         //   { return response()->json(['errors' => ['status' => 401, 'message' => ‘Unauthenticated’,]], 401); }
+        if ($exception instanceof \Symfony\Component\HttpFoundation\File\Exception\FileException) {
+        // create a validator and validate to throw a new ValidationException
+        return Validator::make($request->all(), [
+            $request->file('image') => 'required|file|size:2048',
+        ])->validate();
+    }
         return parent::render($request, $exception);
     }
 }

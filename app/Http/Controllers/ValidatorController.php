@@ -25,6 +25,7 @@ class ValidatorController extends Controller
 		{
 			if((($file->getSize() / 1024) / 1024) < 2)
 			{
+				print_r($file->getSize());
 				$msg = "file is valid";
 				return true;
 			}
