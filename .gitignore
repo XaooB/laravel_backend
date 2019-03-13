@@ -1,6 +1,8 @@
 /node_modules
 /storage/*.key
 /vendor
+/resources
+/public
 /.idea
 /.vscode
 /.vagrant
