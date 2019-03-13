@@ -30,7 +30,6 @@ class ValidatorController extends Controller
 			}
 			else
 				$msg = "file is too large"
-			return false;
 		}
 		else
 			$msg = "file does not exist"
