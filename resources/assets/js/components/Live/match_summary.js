@@ -6,9 +6,10 @@ const Wrapper = styled.section`
   left:50%;
   transform: translateX(-50%);
   z-index:99;
-  top:220px;
+  top:190px;
   display:flex;
-  width:600px;
+  min-width:400px;
+  max-width:600px;
   justify-content: space-between;
   flex-flow: row wrap;
   font-family:'DoHyeon';
@@ -33,7 +34,7 @@ const Scorer = styled.span`
   display:block;
   font-size:.85em;
   letter-spacing:1.5px;
-  font-family: 'AvenirR';
+  font-family: 'SSPL';
 `
 
 const Goalscorers = styled.div`
@@ -64,7 +65,7 @@ const TeamName = styled.span`
 `
 
 const Fixtures = styled.div`
-  font-family:'AvenirR';
+  font-family:'SSPL';
   font-size:.8em;
   text-transform:uppercase;
   margin:0 auto;

@@ -20,7 +20,7 @@ const Action = styled.span`
   color:#ee324e;
   text-align:center;
   padding:0 3px;
-  font-family:'AvenirBC';
+  font-family:'SSPBK';
   &:nth-child(odd) {
     color:inherit;
   }
@@ -34,7 +34,7 @@ const TextWrapper = styled.div`
 `
 
 const ActionCategory = styled.span`
-  font-family:'AvenirB';
+  font-family:'SSPB';
   font-size:.8em
   display:block;
   color:#ee324e;

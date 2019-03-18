@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import MiniLoader from '../Reusable/mini_loader';
 import { makeWidthFlexible, RadialChart } from 'react-vis';
 import ReactChartkick, { PieChart } from 'react-chartkick';
 import Chart from 'chart.js';
@@ -31,20 +32,35 @@ class Categories extends Component {
     super(props);
 
     this.state = {
-      data: [],
+      categories: [],
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const requestCategories = await fetch('/api/categories');
+    const categories = await requestCategories.json();
 
+    this.setState({
+      categories
+    })
   }
 
   render() {
+    const { categories } = this.state;
+
     return (
       <FlexWrapper>
-        <PieChart
-          data={fakeData}
-        />
+        {
+          categories ?
+          (
+            <PieChart
+              data={fakeData}
+            />
+          ) : (
+            <MiniLoader margin={20} />
+          )
+        }
+
       </FlexWrapper>
     )
   }

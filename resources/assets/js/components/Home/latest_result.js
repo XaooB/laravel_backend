@@ -13,7 +13,6 @@ const LatestResult = props => {
 
   return (
     <Section>
-      <PageHeader title='ostatni' />
       <Result latestResult= { latestResult }/>
     </Section>
   )

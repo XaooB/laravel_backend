@@ -30,28 +30,28 @@ const SubTitle = styled.span`
 
 ReactChartkick.addAdapter(Chart);
 
-const Visits = () => (
-  <FlexWrapper>
-    <Title>Wyświetlenia</Title>
-    <SubTitle>Unikatowa liczba dziennych wyświetleń</SubTitle>
-    <LineChart
-      data={{
-        '2019-01-21': 34,
-        '2019-01-22': 21,
-        '2019-01-23': 15,
-        '2019-01-24': 51,
-        '2019-01-25': 22,
-        '2019-01-26': 66,
-        '2019-01-27': 81,
-      }
-    }
-      colors={['#1c232e']}
-      xtitle="Dzień tygodnia"
-      ytitle="Wyświetlenia"
-      messages={{ empty: 'Brak danych' }}
-    />
-  </FlexWrapper>
-)
+const Visits = props => {
+  const { uniqueVisits } = props;
+  const month = ['styczeń', 'luty', 'marzec', 'kwiecień', 'maj', 'czerwiec', 'lipiec', 'sierpień', 'wrzesień', 'październik', 'listopad', 'grudzień'];
+  const newArray = uniqueVisits.totalVisitorsAndPageViews
+    .map( item => ({[new Date(item.date.date).getDate() + ' ' + month[new Date(item.date.date).getMonth()]]: item.pageViews}))
+    .sort()
+    .reduce((obj1, obj2) => Object.assign(obj1, obj2), {})
+
+  return (
+    <FlexWrapper>
+      <Title>Wyświetlenia</Title>
+      <SubTitle>Unikatowa liczba dziennych wyświetleń</SubTitle>
+      <LineChart
+        data={newArray}
+        colors={['#1c232e']}
+        xtitle='Dzień tygodnia'
+        ytitle="Wyświetlenia"
+        messages={{ empty: 'Brak danych' }}
+      />
+    </FlexWrapper>
+  )
+}
 
 
 export default Visits;

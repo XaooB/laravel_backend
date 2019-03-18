@@ -20,7 +20,7 @@ const Spinner = styled.div`
   margin-right:8px;
   border: 12px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 12px solid #00529f;
+  border-top: 12px solid #3f3f3f;
   width: 100px;
   height: 100px;
   -webkit-animation: spin 2s linear infinite; /* Safari */

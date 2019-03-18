@@ -1,28 +1,34 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const Wrapper = styled.footer`
-  width:100%;
+const Wrapper = styled.div`
+  margin-top:100px;
 `
 
-const FooterNav = styled.div`
+const FooterNav = styled.nav`
+  max-width:1300px;
+  margin: 0 auto;
+  padding: 40px 0 75px 0;
   display:flex;
   flex-flow: row wrap;
+`
+
+const FooterBackground = styled.footer`
   background:#ededed;
-  padding: 35px 80px 100px;
   margin-bottom:1px;
-  text-transform: uppercase;
+  padding-right:55px;
 `
 
 const NavItem = styled.div`
-  margin-top:15px;
   flex:1;
   color:#474747;
+  padding:15px 10px;
 `
 
 const Category = styled.h5`
   color:#1e1e1e;
+  text-transform: uppercase;
   font-family: 'SSPB';
   font-size: 1.1em;
   display:inline-block;
@@ -32,7 +38,7 @@ const Category = styled.h5`
     position:absolute;
     width:30px;
     height:3px;
-    background:#ee324e;
+    background:#FEBE10;
     left:0;
     bottom:-4px;
   }
@@ -52,11 +58,11 @@ const LinkTo = styled(Link)`
   color:inherit;
   font-size:1.1em;
   &:hover {
-    color:#ee324e;
+    color:#FEBE10;
   }
 `
 
-const Copyright = styled.p`
+const Copyright = styled.div`
   background:#d8d8d8;
   padding:18px;
   text-align:center;
@@ -72,114 +78,113 @@ const CopyrightText = styled.span`
 const Footer = () => {
   return (
     <Wrapper>
-      <FooterNav>
-        <NavItem>
-          <Category>news</Category>
-          <List>
-            <ListItem>
-              <LinkTo to='/club'>club</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/training'>training</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/injuries'>injuries</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/transfers'>transfers</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/rumors'>rumors</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/archives'>archives</LinkTo>
-            </ListItem>
-          </List>
-        </NavItem>
-        <NavItem>
-          <Category>Schedule</Category>
-          <List>
-            <ListItem>
-              <LinkTo to='/la liga'>la liga</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/champion-league'>champion league</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/copa-del-ray'>copa del ray</LinkTo>
-            </ListItem>
-          </List>
-        </NavItem>
-        <NavItem>
-          <Category>fixtures</Category>
-          <List>
-            <ListItem>
-              <LinkTo to='/la liga'>la liga</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/champion-league'>champion league</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/supercopa'>supercopa</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/fifa-club-world-cup'>fifa club world cup</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/uefa-super-cup'>uefa super cup</LinkTo>
-            </ListItem>
-          </List>
-        </NavItem>
-        <NavItem>
-          <Category>club</Category>
-          <List>
-            <ListItem>
-              <LinkTo to='/squad'>squad</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/results'>results</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/opponents'>opponents</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/statistics'>statistics</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/anthem'>anthem</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/stadium'>stadium</LinkTo>
-            </ListItem>
-          </List>
-        </NavItem>
-        <NavItem>
-          <Category>history</Category>
-          <List>
-            <ListItem>
-              <LinkTo to='/club'>club</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/legends'>legends</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/preisdents'>preisdents</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/stadium'>stadium</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/trophies'>trophies</LinkTo>
-            </ListItem>
-            <ListItem>
-              <LinkTo to='/santiago-bernabeu'>santiago bernabeu</LinkTo>
-            </ListItem>
-          </List>
-        </NavItem>
-      </FooterNav>
-      <Copyright>
-        <CopyrightText>©2018 REAL MADRID.  ALL RIGHTS RESERVED.</CopyrightText>
-      </Copyright>
+      <FooterBackground>
+        <FooterNav>
+          <NavItem>
+            <Category>Wiadomości</Category>
+            <List>
+              <ListItem>
+                <LinkTo to='/app/club'>Klub</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/training'>Trening</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/injuries'>Kontuzje</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/transfers'>Transfery</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/rumors'>Plotki</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/archives'>Archiwum</LinkTo>
+              </ListItem>
+            </List>
+          </NavItem>
+          <NavItem>
+            <Category>Terminarz</Category>
+            <List>
+              <ListItem>
+                <LinkTo to='/app/la liga'>Liga Hiszpańska</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/champion-league'>Liga Mistrzów</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/copa-del-ray'>Pochar Króla</LinkTo>
+              </ListItem>
+            </List>
+          </NavItem>
+          <NavItem>
+            <Category>Rozgrywki</Category>
+            <List>
+              <ListItem>
+                <LinkTo to='/app/la liga'>Liga Hiszpańska</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/champion-league'>Liga Mistrzów</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/supercopa'>Superpuchar Hiszpani</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/fifa-club-world-cup'>Klubowe Mistrzostwa Świata</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/uefa-super-cup'>Superpuchar Europy</LinkTo>
+              </ListItem>
+            </List>
+          </NavItem>
+          <NavItem>
+            <Category>Klub</Category>
+            <List>
+              <ListItem>
+                <LinkTo to='/app/squad'>Skład</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/results'>Wyniki</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/statistics'>Statystyki</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/league-table'>Tabela ligowa</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/anthem'>Hymn</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/stadium'>Stadion</LinkTo>
+              </ListItem>
+            </List>
+          </NavItem>
+          <NavItem>
+            <Category>Historia</Category>
+            <List>
+              <ListItem>
+                <LinkTo to='/app/club'>Klub</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/legends'>Legendy</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/preisdents'>Prezesi</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/trophies'>Trofea</LinkTo>
+              </ListItem>
+              <ListItem>
+                <LinkTo to='/app/santiago-bernabeu'>Santiago Bernabeu</LinkTo>
+              </ListItem>
+            </List>
+          </NavItem>
+        </FooterNav>
+      </FooterBackground>
+        <Copyright>
+          <CopyrightText>©2018 - 2019 PORTAL-WERTYKALNY.  ALL RIGHTS RESERVED.</CopyrightText>
+        </Copyright>
     </Wrapper>
   )
 }

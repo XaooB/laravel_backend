@@ -126,9 +126,10 @@ class Searchbar extends Component {
   searchFor(e) {
     this.setState({
       term: e.target.value,
-    }, async (prevState) => {
-      const request = await API.get(`articles_filtrate?phrase=${this.state.term}`);
+    }, async prevState => {
+      const request = await API.get(`articles_filtrate/5/${this.state.term}`);
       await this.setState({ articles: request });
+      console.log(request);
     });
   }
 

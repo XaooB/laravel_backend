@@ -19,14 +19,25 @@ const Container = styled.section`
 `
 
 const Content = props => {
+  const { uniqueVisits, users, articles, comments } = props;
+
   return (
     <Container>
-      <LastWeekStats />
+      <LastWeekStats
+        uniqueVisits={ uniqueVisits }
+        users={ users }
+        articles={ articles }
+        comments={ comments }
+      />
       <section>
         <Title>podstawowe informacje</Title>
         <Wrapper>
           <Categories />
-          <FullStats />
+          <FullStats
+            totalUsers={users.totalUsers}
+            totalArticles={articles.totalArticles}
+            totalComments={comments.totalComments}
+          />
         </Wrapper>
       </section>
     </Container>

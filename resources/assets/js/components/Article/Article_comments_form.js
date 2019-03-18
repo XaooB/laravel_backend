@@ -14,6 +14,7 @@ window.axios = axios;
 const Form = styled.form`
   flex:8;
   width:100%;
+  margin-top:10px;
   margin-left:5px;
 `
 
@@ -105,17 +106,13 @@ class AddCommentForm extends Component {
         <Form>
           <TextField value={this.state.content} onChange={this.handleTextarea} maxLength='500'></TextField>
           <Wrapper>
-          {
-            charactersUsed == 500
-            ? <Counter><Warning>Użyto znaków: {charactersUsed}/500 - osiągnięto maksymalną ilość znaków!</Warning></Counter>
-            : <Counter>Użyto znaków: {charactersUsed}/500</Counter>
-          }
+            {
+              charactersUsed == 500
+              ? <Counter><Warning>Użyto znaków: {charactersUsed}/500 - osiągnięto maksymalną ilość znaków!</Warning></Counter>
+              : <Counter>Użyto znaków: {charactersUsed}/500</Counter>
+            }
             <Wrapper style={{alignSelf: 'flex-end', alignItems:'center'}}>
-              { fetchingStatus
-                ? <MiniLoader />
-                : ''
-              }
-              <Button name='Wyślij wiadomość' colorBlue onClick={this.handlePost} />
+              <Button name='Wyślij wiadomość' colorBlue onClick={this.handlePost} isFetching={fetchingStatus} />
             </Wrapper>
           </Wrapper>
         </Form>

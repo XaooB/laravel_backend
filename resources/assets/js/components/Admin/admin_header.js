@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   padding:0 15px;
   justify-content: flex-end;
   border-bottom:1px solid #F3F4F8;
+  border-left:1px solid #F3F4F8;
 `
 
 const User = styled.section`
@@ -19,8 +20,8 @@ const User = styled.section`
 
 const UserImage = styled.img`
   display:inline-block;
-  height:35px;
-  border-radius:100%;
+  height:31px;
+  border-radius:50%;
 `;
 
 const UserInfo = styled.div`
@@ -41,7 +42,7 @@ const Text = styled.span`
   }
 `;
 
-const Header = (props) => {
+const AdminHeader = (props) => {
   const { user } = props.user;
   return (
     <Wrapper>
@@ -61,4 +62,4 @@ const Header = (props) => {
 
 const mapStateToProps = ({ user }) => ({ user });
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(AdminHeader);

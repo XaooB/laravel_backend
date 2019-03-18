@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Container = styled.section`
   display:flex;
   width:100%;
-  min-width:320px;
+  min-width:265px;
   align-items:center;
   background: #00529f;
   height:170px;
@@ -29,10 +29,13 @@ const TeamName = styled.span`
   text-transform: uppercase;
   display:block;
   margin-top:12px;
-  font-size:.95em;
+  font-size:.85em;
   letter-spacing:1px;
   text-align:center;
   word-break:none;
+  @media (min-width: 640px) {
+    font-size:.95em;
+  }
 `
 
 const Team = styled.div`
@@ -43,10 +46,13 @@ const Team = styled.div`
 
 const Fixtures = styled.div`
   font-family:'SSP';
-  font-size:.8em;
+  font-size:.7em;
   margin:0 auto;
   text-transform: 'capitalize';
   line-height:1.5em;
+  @media (min-width: 640px) {
+    font-size:.8em;
+  }
 `
 
 const FixturesInfo = styled.span`

@@ -5,37 +5,37 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   display:flex;
   justify-content:center;
-  border-radius:6px;
-  align-items:center;
-  width:42px;
-  height:36px;
-  background: rgb(238,50,78);
-  background: linear-gradient(125deg, rgba(238,50,78,1) 0%, rgba(232,75,105,1) 100%);
-  color:white;
-  margin-right:5px;
-  font-size:.9em;
-  font-family: 'Verdana';
-`
-
-const LogoText = styled.span`
-  color:inherit;
-  letter-spacing:1px;
+  padding:6px 0;
+  background:#fff;
 `
 
 const LinkTo = styled(Link)`
-  display:flex;
-  align-items:center;
-  font-family: "SSP";
-  color:#1e1e1e;
+  color:#00529f;
+`
+
+const Title = styled.span`
+  margin-bottom:-10px;
+  display:block;
+  text-transform: lowercase;
+`
+
+const SubTitle = styled.span`
+  text-transform: uppercase;
+  font-family: "SSPBK";
+  align-self: flex-end;
+  letter-spacing:1px;
+  display:block;
+  text-align:right;
 `
 
 const Logo = () => {
   return (
-    <LinkTo to="/">
-      <Wrapper>
-        <LogoText>RM</LogoText>
-      </Wrapper>
-    </LinkTo>
+    <Wrapper>
+      <LinkTo to="/app">
+        <Title>Real Madrid</Title>
+        <SubTitle>POLSKA</SubTitle>
+      </LinkTo>
+    </Wrapper>
   )
 }
 

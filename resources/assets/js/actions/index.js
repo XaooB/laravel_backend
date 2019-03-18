@@ -1,6 +1,7 @@
-import { FETCH_USER, FETCH_ARTICLE, DEC_COMMENT_COUNT, DISABLE_LIKE_BUTTON, FETCH_COMMENTS, ADD_COMMENT, ADD_COMMENT_STATUS, SELECTED_COMMENT_ID, CHANGE_LIKE_STATUS, INC_COMMENT_COUNT, INC_LIKES_COUNT, DEC_LIKES_COUNT } from './types';
+import { FETCH_SEARCH, FETCH_ADMIN_ARTICLES, FETCH_NEWS, FETCH_SCHEDULE, FIXTURE_TYPE, ADMIN_EDIT_ARTICLE_DATA, FETCH_USER, FETCH_ARTICLE, FETCH_ARTICLE_NEIGHBOURS, DEC_COMMENT_COUNT, DISABLE_LIKE_BUTTON, FETCH_COMMENTS, ADD_COMMENT, ADD_COMMENT_STATUS, SELECTED_COMMENT_ID, CHANGE_LIKE_STATUS, INC_COMMENT_COUNT, INC_LIKES_COUNT, DEC_LIKES_COUNT } from './types';
 import { API } from '../helpers/api';
 import axios from 'axios';
+import qs from 'qs';
 
 export const fetchUser = () => async dispatch => {
   const request = await API.get('users_check_user');
@@ -18,6 +19,67 @@ export const fetchArticle = articleID => async dispatch => {
   })
 }
 
+export const fetchAdminArticles = () => async dispatch => {
+  const request = await axios.get('/api/articles');
+  dispatch({
+    type: FETCH_ADMIN_ARTICLES,
+    payload: request.data
+  })
+}
+
+export const fetchNews = categories => async dispatch => {
+  try {
+    const request = await axios.get(`/api/articles_by_category/20`, {
+      params: {
+        categories
+      },
+      paramsSerializer: params => qs.stringify(params)
+    })
+    dispatch({
+      type: FETCH_NEWS,
+      payload: request.data
+    })
+  } catch (e) {
+    throw new Error(e);
+  }
+}
+
+
+export const fetchSchedule = () => async dispatch => {
+  try {
+    const matches = await axios.get('/api/matches_get_scheduled_matches/50');
+    dispatch({
+      type: FETCH_SCHEDULE,
+      payload: matches.data
+    })
+  } catch (e) {
+    throw new Error(e);
+  }
+}
+
+export const fixtureType = name => dispatch => {
+  dispatch({
+    type: FIXTURE_TYPE,
+    payload: name
+  })
+}
+
+export const fetchArticleNeighbours = articleID => async dispatch => {
+  const request = await axios.get(`/api/articles_show_neighbours/${articleID}`);
+  dispatch({
+    type: FETCH_ARTICLE_NEIGHBOURS,
+    payload: request.data
+  })
+}
+
+export const fetchSearch = keyword => async dispatch => {
+  const request = await API.get(`articles_filtrate/5/${keyword}`);
+  dispatch({
+    type: FETCH_SEARCH,
+    payload: request
+  })
+}
+
 export const fetchComments = articleID => async dispatch => {
   const request = await axios.get(`/api/comments_get_article_comments/${articleID}`);
   dispatch({
@@ -30,6 +92,7 @@ export const addComment = data => async dispatch => {
   const { idreference } = data;
   try {
     await axios.post('/api/comments', data);
+    //przepisac, aby dodawało lokalne element do talibcy, a nie fetchwoało ponownie. Stwarza problemy ze względu na implementacje cache.
     await dispatch(fetchComments(idreference));
   } catch(e) { throw new Error(e) };
   dispatch(setCommentStatus(true));
@@ -121,5 +184,12 @@ export const setCommentStatus = boolean => dispatch => {
   dispatch({
     type: ADD_COMMENT_STATUS,
     payload: boolean
+  })
+}
+
+export const StoreAdminArticleToEdit = data => dispatch => {
+  dispatch({
+    type: ADMIN_EDIT_ARTICLE_DATA,
+    payload: [data]
   })
 }

@@ -6,10 +6,10 @@ const Wrapper = styled.div`
   display:flex;
   width:100%;
   height:170px;
-  min-width:320px;
+  min-width:265px;
   flex-flow: row wrap;
   text-transform: uppercase;
-  font-family:'SSPBK';
+  font-family:'Bebas';
 `
 
 const Teams = styled.div`
@@ -26,14 +26,14 @@ const Item = styled.div`
   align-items:center;
   flex-flox: column nowrap;
   background: #3f3f3f;
-  line-height:1.5em;
+  line-height:1.8em;
   &:nth-child(even) {
     background: #1e1e1e;
   }
 `
 
 const TeamName = styled.div`
-  font-size:1.75em;
+  font-size:2.2em;
   flex:3;
 `
 

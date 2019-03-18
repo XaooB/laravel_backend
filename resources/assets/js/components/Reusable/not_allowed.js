@@ -13,7 +13,6 @@ const Information = styled.span`
 `
 
 const NotAllowed = props => {
-  console.log(props);
   return (
     <Fragment>
       <Information>Nie masz uprawnień do przeglądania tej strony!</Information>

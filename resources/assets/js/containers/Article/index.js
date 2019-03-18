@@ -6,6 +6,7 @@ import Aside from '../../components/Article/article_aside';
 import Footer from '../../components/Reusable/footer'
 import MiniLoader from '../../components/Reusable/mini_loader';
 import {connect} from 'react-redux';
+import { Helmet } from 'react-helmet';
 import {fetchComments, fetchArticle} from '../../actions/'
 
 //api calls
@@ -16,11 +17,16 @@ const Main = styled.main`
   flex-flow:column;
   position:relative;
   color:#1e1e1e;
-  width:100%;
-  margin-bottom:100px;
+  padding-right:23px;
+  @media (min-width: 640px) {
+    padding-right:0;
+  }
 `
 
 const Container = styled.section`
+  margin-left: auto;
+  margin-right:auto;
+  max-width:1300px;
   display:flex;
   flex-flow: row wrap;
   justify-content: space-between;
@@ -45,11 +51,10 @@ class SingleArticle extends Component {
           prevID = Number(prevProps.match.params.id);
 
     if (currentID !== prevID) {
-      await this.props.fetchArticle(currentID)
+      await this.props.fetchArticle(currentID);
       const neighbours = await API.get(`articles_show_neighbours/${currentID}`);
+      this.setState({article: this.props.article, neighbours});
 
-      this.setState({article: this.props.article, neighbours})
-      document.title = `${this.state.article.data.title}` //tmp solution
       window.scrollTo(0,0);
     }
 
@@ -62,6 +67,7 @@ class SingleArticle extends Component {
     window.scrollTo(0,0);
 
     const currentID = Number(this.props.match.params.id);
+    console.log(this.props);
     await this.props.fetchArticle(currentID);
     const latest = await API.get('articles_latest/10'),
           neighbours = await API.get(`articles_show_neighbours/${currentID}`);
@@ -70,12 +76,16 @@ class SingleArticle extends Component {
   }
 
   render() {
-    if(this.state.loadingStatus) return <MiniLoader margin />
-    const {latest, neighbours} = this.state;
+    if(this.state.loadingStatus) return <MiniLoader margin={50} />
+    const { latest, neighbours } = this.state;
     const article = this.state.article.data;
 
     return (
       <Fragment>
+      <Helmet>
+        <title>{ article.title }</title>
+        <meta name='description' content='main article' />
+      </Helmet>
         <Main>
           <ArticleImage article={article} />
           <Container>

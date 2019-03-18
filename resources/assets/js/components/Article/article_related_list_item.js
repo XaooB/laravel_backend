@@ -65,7 +65,7 @@ const LinkTo = styled(Link)`
 `
 
 const Author = styled.div`
-  flex:1;
+  flex:2;
   display:flex;
   flex-flow: row nowrap;
   jutsify-content:space-between;
@@ -106,7 +106,7 @@ const Count = styled.span`
 
 const RelatedListItem = props => {
   const { image, category, title, idarticle, comments_count, user } = props.article,
-          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-').toLowerCase()}`;
+          link = `/app/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-').toLowerCase()}`;
 
   return (
     <Article>

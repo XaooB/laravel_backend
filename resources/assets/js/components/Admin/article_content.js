@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Title from './admin_content_title';
 import ArticleFilters from './article_filters';
@@ -28,7 +29,9 @@ const ArticleContent = props => {
     <Container>
       <Title>Twoje artykuły</Title>
       <Wrapper>
-        <Button name='Dodaj artykuł'/>
+        <Link to='/admin/articles/add'>
+          <Button name='Dodaj artykuł' colorBlue bgBlue />
+        </Link>
       </Wrapper>
       <Wrapper>
         <ArticleFilters />

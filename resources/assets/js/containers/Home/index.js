@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import MainArticle from '../../components/Home/main_article';
 import LatestResult from '../../components/Home/latest_result';
 import LeagueTable from '../../components/Home/league_table';
+import ScorersTable from '../../components/Home/scorers_table';
 import SmallNews from '../../components/Home/small_news';
 import Schedule from '../../components/Home/fixtures_upcoming';
 import LatestNews from '../../components/Home/latest_news';
 import StrawPoll from '../../components/Home/Poll';
-import NextMatch from '../../components/Home/next_match';
+import NextMatch from '../../components/Home/next_match_newVersion';
 import Injuries from '../../components/Home/injuries';
 import Footer from '../../components/Reusable/footer'
-import SocialMedia from '../../components/Home/social_media';
 import Loader from '../../components/Reusable/loader';
 import styled from 'styled-components';
 
@@ -18,10 +18,15 @@ import { API } from '../../helpers/api';
 
 const Main = styled.main`
   display:flex;
+  max-width:1300px;
+  margin-left: auto;
+  margin-right:auto;
   flex-flow: row wrap;
   justify-content: space-between;
-  margin-bottom:100px;
-  margin-top:50px;
+  padding-right:41px;
+  @media (min-width: 640px) {
+    padding-right:0;
+  }
 `
 
 const Container = styled.div`
@@ -29,22 +34,11 @@ const Container = styled.div`
 `
 
 const RestNewsAndPolls = styled.section`
-  flex:2 1 600px;
+  flex:4 1 600px;
   order:1;
-  margin-right:10px;
-`
-
-const RestNews = styled.section`
-  align-content:flex-start;
-  display:flex;
-  margin-left:5px;
-  flex-flow:row wrap;
-  justify-content:space-between;
 `
 
 const Polls = styled.section`
-  margin-top:20px;
-  padding:0 10px;
   display:flex;
   align-items: flex-start;
   flex-flow:row wrap;
@@ -53,14 +47,14 @@ const Polls = styled.section`
 
 const TableAndSocial = styled.section`
   margin-top:-12px;
-  flex:.9 1 300px;
+  flex:1 1 300px;
   order:2;
   padding:0 10px;
 `
 
 const FixturesInfo = styled.section`
   width:100%;
-  padding:0 10px;
+  margin:35px 10px 0 10px;
   display:flex;
   justify-content:space-between;
   flex-flow: row wrap;
@@ -84,8 +78,8 @@ class Home extends Component {
 
   async componentDidMount() {
     const mainArticle = await API.get('articles_latest_main/1'),
-          articles = await API.get('articles_latest/22'),
-          schedule = await API.get('matches_get_scheduled_matches/4'),
+          articles = await API.get('articles_latest/24'),
+          schedule = await API.get('matches_get_scheduled_matches/5'),
           leagueTable = await API.get('leaguescoreboard_get_league_scoreboard/2018-2019/PD'),
           latestResult = await API.get('matches_get_finished_match'),
           pollData = await API.get('surveysets_get_latest'),
@@ -98,33 +92,27 @@ class Home extends Component {
     const { mainArticle, articles, schedule, leagueTable, latestResult, pollData, injuriesData, loadingStatus } = this.state;
 
     if(loadingStatus) return <Loader />
-    const lastestNewsBig = articles.slice(0, 6),
-          smallNews = articles.slice(7, 16),
+    const lastestNewsBig = articles.slice(0, 9),
+          smallNews = articles.slice(9, 19),
           nextMatch = schedule[0],
-          upcomingMatches = schedule.slice(1, 4);
+          upcomingMatches = schedule.slice(1, 5);
 
     return (
       <Container>
         <MainArticle mainArticle={ mainArticle } />
         <Main>
-          <FixturesInfo>
-            <LatestResult latestResult={latestResult} />
-            <NextMatch  nextMatch={nextMatch} />
-            <Schedule schedule={upcomingMatches} />
-          </FixturesInfo>
           <LatestNews latestArticles={lastestNewsBig} />
+          <NextMatch data={nextMatch} />
           <RestNewsAndPolls>
-            <RestNews>
-              { smallNews.map((item, key) => <SmallNews key={ key } data={ item } />) }
-            </RestNews>
+            <SmallNews smallNews={smallNews} />
             <Polls>
-              <StrawPoll pollData={pollData} />
-              <Injuries injuriesData={injuriesData} />
+              <LeagueTable leagueTable={leagueTable} />
+              <ScorersTable />
             </Polls>
           </RestNewsAndPolls>
           <TableAndSocial>
-            <LeagueTable leagueTable={leagueTable} />
-            <SocialMedia />
+            <StrawPoll pollData={pollData} />
+            <Injuries injuriesData={injuriesData} />
           </TableAndSocial>
         </Main>
         <Footer />

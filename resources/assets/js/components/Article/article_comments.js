@@ -10,11 +10,11 @@ import {fetchComments, setCommentStatus} from '../../actions/'
 const Title = styled.h3`
   font-size:1.5em;
   font-family:'SSPB';
-  margin-bottom:12px;
+  margin-top:15px;
 `
 
 const Information = styled.p`
-  margin-top:15px;
+  margin-top:5px;
 `
 
 class CommentSection extends Component {

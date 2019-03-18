@@ -3,11 +3,28 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Nav = styled.nav`
-  color:#1e1e1e;
-  font-size: .9em;
-  font-weight:bold;
-  align-self:center;
+  display:none;
+  color:#00529f;
+  font-size:.8em;
+  font-fmily:'AvenirLTD';
   text-transform: uppercase;
+  @media (min-width: 640px) {
+    display:block;
+  }
+`
+
+const MobileNav = styled.div`
+  display:flex;
+  padding:4px 6px;
+  align-items:center;
+  color:#fff;
+  font-size: 1.3em;
+  font-family:'SSPBK'
+  justify-content:center;
+  background: #00529f;
+  @media (min-width: 640px) {
+    display:none;
+  }
 `
 
 const List = styled.ul`
@@ -16,26 +33,32 @@ const List = styled.ul`
 
 const ListLink = styled(Link)`
   color:inherit;
-  padding:0 15px;
   transition: all .3s;
-  &:hover {
-    transition: all .3s;
-    color:#ee324e;
-  }
-`
-
-const ApiRoute = styled.a`
-  background:#ee324e;
-  color:#ffffff;
-  padding:8px;
+  padding:30px 10px;
   position:relative;
-  font-family: 'SSP';
+  &:before {
+    position:absolute;
+    content: '';
+    width:.1px;
+    height:3px;
+    bottom:-3px;
+    left:50%;
+    background:#00529f;
+    transform: translateX(-50%);
+    transition:.2s all;
+  }
+  &:hover {
+    font-weight:bold;
+    &:before {
+      width:100%;
+    }
+  }
 `
 
 const UserNav = styled.div`
   position:absolute;
   width:100%;
-  padding:10px;
+  padding:10px 5px;
   left:0;
   bottom:0;
   background:#ee324e;
@@ -51,15 +74,6 @@ const UserImage = styled.img`
   border-radius:100%;
 `
 
-const GoogleIcon = styled.span`
-  display:inline-block;
-  line-height:1.1;
-  text-transform: lowercase;
-  padding-right:6px;
-  margin-right:6px;
-  border-right:1px solid rgba(255,255,255,.65);
-`
-
 const ListItem = styled.li`
   display:inline-block;
   letter-spacing:1.2px;
@@ -67,25 +81,25 @@ const ListItem = styled.li`
 
 const Navigation = props => {
   return (
-    <Nav>
-      <List>
-        <ListLink to='/news'>
-          <ListItem>wiadomości</ListItem>
-        </ListLink>
-        <ListLink to='/club'>
-          <ListItem>real madryt</ListItem>
-        </ListLink>
-        <ListLink to='/schedule'>
-          <ListItem>terminarz</ListItem>
-        </ListLink>
-        <ListLink to='/live'>
-          <ListItem>na żywo</ListItem>
-        </ListLink>
-        <ListLink to='/contact'>
-          <ListItem>kontakt</ListItem>
-        </ListLink>
-      </List>
-    </Nav>
+        <Nav>
+          <List>
+            <ListLink to='/app/news'>
+              <ListItem>wiadomości</ListItem>
+            </ListLink>
+            <ListLink to='/app/club'>
+              <ListItem>real madryt</ListItem>
+            </ListLink>
+            <ListLink to='/app/schedule'>
+              <ListItem>terminarz</ListItem>
+            </ListLink>
+            <ListLink to='/app/live'>
+              <ListItem>na żywo</ListItem>
+            </ListLink>
+            <ListLink to='/app/contact'>
+              <ListItem>kontakt</ListItem>
+            </ListLink>
+          </List>
+        </Nav>
   )
 }
 

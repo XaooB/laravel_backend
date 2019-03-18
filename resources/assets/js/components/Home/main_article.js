@@ -16,74 +16,95 @@ const ImageWrapper = styled.figure`
   max-height: 500px;
   overflow:hidden;
   position:relative;
-  &:before {
-    position:absolute;
-    content: '';
-    background: #00529f;
-    width:100%;
-    mix-blend-mode: hard-light;
-    opacity:.5;
-    height:100%;
-    left:0;
-    top:0;
-  }
-`
-
-const HeaderWrapper = styled.div`
-  left:5%;
-  bottom:25%;
-  display:flex;
-  background: rgba(0,0,0,.6);
-  padding:20px;
-  flex-flow:column nowrap;
-  flex-direction:column;
-  max-width:550px;
-  min-width:300px;
-  position:absolute;
-  font-family:'SSPBK';
 `
 
 const Category = styled.span`
   text-transform: uppercase;
-  color:#febe10;
-  font-size: 1.05em;
+  color:#FEBE10;
+  display:none;
+  font-weight:bold;
+  font-family:'Arial';
+  position:relative;
+  &:before {
+    transition: width .6s;
+    transition-timing-function: cubic-bezier(.24,.11,.43,1.46);
+    content:'';
+    position:absolute;
+    width:0;
+    height:3px;
+    background:#FEBE10;
+    left:101px;
+    top:9px;
+  }
+  @media (min-width: 640px) {
+    display:block;
+    font-size:.85em;
+  }
 `
 
 const Title = styled.h2`
-  font-size: 2.1em;
+  font-family: 'Bebas';
   letter-spacing:1.5px;
-  line-height: 1.2em;
+  font-size:1.4em;
+  line-height: 1em;
   color:#ffffff;
-  padding:8px 0;
-`
-
-const Hover = styled.span`
-  border-bottom:0px solid #febe10;
-  transition: border .15s;
+  @media (min-width: 640px) {
+    line-height: 1.2em;
+    font-size: 2.6em;
+  }
 `
 
 const LinkTo = styled(Link)`
+  position:absolute;
+  left:43%
+  transform: translateX(-50%);
+  bottom:10px;
+  font-size:1.1em;
+  width:calc(100% - 100px);
+  max-width:550px;
   color:inherit;
-  &:hover ${HeaderWrapper} {
-    border-left: 4px solid #febe10;
+  &:hover ${Category} {
+    &:before {
+      width:calc(100% - 101px);
+    }
+  }
+  @media (min-width: 640px) {
+    left:35%;
+    width:auto;
+    font-size:1em;
+    bottom:40px;
+  }
+`
+
+const BlackOverlay = styled.div`
+  position:absolute;
+  background: linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 65%);
+  padding-top:70px;
+  padding-bottom:40px;
+  width:100%;
+  bottom:0;
+  left:0;
+  @media (min-width: 640px) {
+    padding-top:250px;
+    padding-bottom:50px;
   }
 `
 
 const MainArticle = props => {
   const { image, category, idarticle,  title } = props.mainArticle[0],
-          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-').toLowerCase()}`;
+          link = `/app/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-').toLowerCase()}`;
 
   return (
     <Article>
       <ImageWrapper>
         <Image src={image}  title={title} alt={title} />
       </ImageWrapper>
-      <LinkTo to={link}>
-        <HeaderWrapper>
+      <BlackOverlay>
+        <LinkTo to={link}>
           <Category>{category}</Category>
           <Title>{title}</Title>
-        </HeaderWrapper>
-      </LinkTo>
+        </LinkTo>
+      </BlackOverlay>
     </Article>
   )
 }

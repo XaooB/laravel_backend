@@ -5,17 +5,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Polska - fanowski portal hiszpańskiego klubu Real Madrid</title>
-		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-134339010-1"></script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
-			gtag('config', 'UA-134339010-1');
-		</script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script rel="javascript" type="text/javascript" href="js/jquery-1.11.3.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+        <title>Strona głowna - portal-wertykalny</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script rel="javascript" type="text/javascript" href="js/jquery-1.11.3.min.js"></script>
     </head>
     <body>
         <div id="app"></div>
-        <script src="{{secure_asset('js/app.js')}}" ></script>
+        <script src="{{asset('js/app.js')}}" ></script>
     </body>
 </html>

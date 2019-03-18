@@ -159,8 +159,7 @@ class SingleComment extends Component {
               ? <Added>{dateConverter.toStageDate(comment.create_date)}</Added>
               : (
                 <Added>
-                  edytowano
-                  {dateConverter.toStageDate(comment.modify_date)}
+                  {dateConverter.toStageDate(comment.create_date)} – edytowano
                 </Added>
               )
             }

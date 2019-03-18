@@ -1,15 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import InjuriesListItem from './injuries_list_item';
 import dateConverter from '../../helpers/dateConverter';
 
 const Wrapper = styled.div`
-  flex:.6 1 400px;
-`
-
-const Header = styled.header`
-  padding:15px;
-  color:#fff;
-  background: #00529f;
+  flex:1 1 300px;
 `
 
 const Category = styled.p`
@@ -17,16 +12,25 @@ const Category = styled.p`
   font-size:.9em;
 `
 
+const Header = styled.header`
+  padding:8px 4px;
+  font-size:.9em;
+  border-radius: 6px;
+  color:#777;
+  background: #ededed;
+`
+
 const Title = styled.h4`
-  font-family: 'SSPB';
-  font-size: 1.4em;
+  font-family: 'AvenirLTD';
+  padding:0 5px;
+  text-transform: uppercase;
 `
 
 const Content = styled.div`
   display:flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  margin-top:30px;
+  margin-top:18px;
   color:#1e1e1e;
 `
 
@@ -36,18 +40,14 @@ const Injuries = props => {
   return (
     <Wrapper>
       <Header>
-        <Title>Injuries and suspensions</Title>
+        <Title>Kontuzje i zawieszenia</Title>
       </Header>
       <Content>
-      {injuriesData.map((item, key) => {
-        const {player, type, return_date} = item;
-
-        return <div key={key} style={{marginBottom:10}}>
-            <p>Name: {player.name}</p>
-            <p>Type: {type}</p>
-            <p>Possible return date: {dateConverter.toDateOnly(new Date(return_date))}</p>
-          </div>
-      })}
+        {
+          injuriesData.map((item, key) => {
+            return <InjuriesListItem key={item.player.id_player} data={item} />
+          })
+        }
       </Content>
     </Wrapper>
   )

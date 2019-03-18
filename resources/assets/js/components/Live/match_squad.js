@@ -15,7 +15,7 @@ const TeamName = styled.h2`
   border-bottom:1px solid #e0e0e0;
   display:block;
   font-size:1.1em;
-  font-family:'AvenirD';
+  font-family:'SSPB';
   text-transform: uppercase;
 `
 

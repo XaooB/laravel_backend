@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
+import Wrapper from '../Reusable/wrapper';
 import dateConverter from '../../helpers/dateConverter';
 
 const Title = styled.span`
@@ -29,30 +30,43 @@ const Title = styled.span`
   }
 `
 
-const TableField = styled.div`
-  font-size:1.05em;
-  color:#1e1e1e;
+const MatchItem = styled.div`
+  font-family: 'Bebas';
+  font-size:1.2em;
+  margin-top:-3px;
   flex:1;
-  text-transform: uppercase;
-  &:first-child {
-    flex:2;
-  }
-  &:last-child {
-    flex:1.4;
-  }
+  display:flex;
+  flex-flow:row nowrap;
+  align-items:center;
+  justify-content:space-between;
+  padding-bottom:28px;
 `
 
-const TableRow = styled.div`
-  width:100%;
+const Date = styled.span`
+  flex:1.5;
+  margin-right:6px;
+`
+
+const TeamName = styled.span`
+  margin-left:5px;
+`
+
+const Fixture = styled.span`
+  flex:3;
+  text-align:right;
+`
+
+const TeamInfo = styled.div`
+  flex:2;
   display:flex;
-  flex-flow:row wrap;
-  justify-content:space-between;
-  &:first-child {
-    margin-bottom:10px;
-  }
-  &:not(:first-child) {
-    padding:4px 0;
-  }
+  align-items:center;
+  flex-flow:row nowrap;
+  justify-content:flex-start;
+`
+
+const Image = styled.img`
+  height:20px;
+  display:inline-block;
 `
 
 const Fixtures = props => {
@@ -60,25 +74,31 @@ const Fixtures = props => {
 
   return (
       <Fragment>
-        <TableRow>
-          <Title>fixture</Title>
-          <Title>date</Title>
-          <Title>opponent</Title>
-        </TableRow>
-          {schedule ? schedule.map((item, i) => {
-            const { home_team, away_team, league, date} = item,
-            teamName = location === 'HOME' ? away_team.short_name : home_team.short_name;
+          {
+          schedule ?
+          (
+            schedule.map((item, i) => {
+              const { home_team, away_team, league, date, location } = item;
+              let teamName = location === 'HOME' ? away_team.short_name : home_team.short_name,
+              teamImage = location === 'HOME' ? away_team.image : home_team.image;
 
             return (
-            <TableRow key={i}>
-              <TableField>{ league }</TableField>
-              <TableField>{ dateConverter.toDateOnly(date) }</TableField>
-              <TableField>{ teamName }</TableField>
-            </TableRow>)}
-            ) : (
-        <TableRow>
-          <TableField>There's no data</TableField>
-        </TableRow>)}
+              <MatchItem key={i}>
+                <Date>{ dateConverter.toDateOnly(date) }</Date>
+                <TeamInfo>
+                  <Image src={ teamImage } title={teamName} alt={teamName} />
+                  <TeamName>{ teamName }</TeamName>
+                </TeamInfo>
+                <Fixture>{ league }</Fixture>
+              </MatchItem>
+              )
+            })
+          ) : (
+            <MatchItem>
+              <p>There's no data</p>
+            </MatchItem>
+          )
+      }
       </Fragment>
   )
 }

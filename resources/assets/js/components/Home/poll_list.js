@@ -4,7 +4,7 @@ import ListItem from './poll_list_item';
 
 const List = styled.ul`
   list-style-type: none;
-  margin-bottom:25px;
+  margin-bottom:18px;
 `
 
 const PollList = props => <List> { props.pollData.answers.map(( item, key ) => {

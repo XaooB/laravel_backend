@@ -8,7 +8,8 @@ import {
   MdKeyboardArrowRight,
   MdPoll,
   MdPerson,
-} from "react-icons/md";
+  MdHome
+} from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
 
@@ -18,7 +19,7 @@ const Nav = styled.nav`
   letter-spacing:.35px;
   max-width:200px;
   min-width:200px;
-  height: calc(100% - 20px);
+  height: calc(100% - 50px);
   box-shadow: 1px 1px 4px #e5e5e5;
 `
 
@@ -32,7 +33,7 @@ const LinkTo = styled(Link)`
   display:block;
   &:hover {
     color:#fff;
-    background:#ee324e;
+    background:#00529f;
   }
 `
 
@@ -61,7 +62,7 @@ const AlignMid = styled.div`
 `
 
 
-const Navigation = () => {
+const AdminNavigation = () => {
   return (
     <Nav>
       <NavList>
@@ -80,7 +81,6 @@ const Navigation = () => {
               <MdReceipt />
               <Text>Artykuły</Text>
             </AlignMid>
-            <MdKeyboardArrowRight />
           </Item>
         </LinkTo>
         <LinkTo to="/admin/users">
@@ -120,9 +120,18 @@ const Navigation = () => {
           <MdKeyboardArrowRight />
         </Item>
       </LinkTo>
+      <LinkTo to="/app">
+        <Item>
+          <AlignMid>
+            <MdHome />
+            <Text>Strona główna</Text>
+          </AlignMid>
+          <MdKeyboardArrowRight />
+        </Item>
+      </LinkTo>
       </NavList>
     </Nav>
   )
 }
 
-export default Navigation;
+export default AdminNavigation;

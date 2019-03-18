@@ -11,24 +11,24 @@ import {
   IoMdSettings,
 } from 'react-icons/io';
 import { Link } from 'react-router-dom';
-import Logo from './logo';
 import Searchbar from './searchbar';
+import HeaderLogin from './header_login'
 import Navigation from './navigation';
+import Logo from './logo';
+import MobileNavigation from './mobile_nav';
 import Wrapper from './wrapper';
 
 const Topbar = styled.header`
-  padding: 12px 5px;
-  height:69px;
-  background:#fff;
-  border-bottom:1px solid #ededed;
-  display: flex;
   width:100%;
-  align-items: center;
-  flex-flow: row nowrap;
-  justify-content: space-between;
+  color:#00529f;
+  border-bottom:3px solid #ededed;
   position:sticky;
   top:0;
   z-index:999;
+  background:#fff;
+  @media (min-width: 640px) {
+    position:initial;
+  }
 `;
 
 const User = styled.section`
@@ -153,6 +153,18 @@ const Counter = styled.span`
   color:#ffffff;
 `;
 
+const Container = styled.div`
+  max-width:1300px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-left:10px;
+  @media (min-width: 640px) {
+    padding:0 10px;
+  }
+`
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -191,7 +203,7 @@ class Header extends Component {
             <NavText>Wiadomości</NavText>
           </NavItem>
           {
-            !user[0].privileges !== 'użytkownik'
+            user[0].tier > 1
             ? <NavItem to="/admin/dashboard">
                 <IoMdSettings />
                 <NavText>Panel administracyjny</NavText>
@@ -213,36 +225,12 @@ class Header extends Component {
 
     return (
       <Topbar>
-        <Logo />
-        <Wrapper>
-          <Searchbar />
-          <Wrapper>
+        <HeaderLogin />
+          <Container>
+            <Logo />
             <Navigation />
-            {
-              !user.length ? (
-                <User>
-                  <a href="/api/auth/google">
-                    <div id="customBtn" className="customGPlusSignIn">
-                      <span className="icon" />
-                      <span className="buttonText">Zaloguj się</span>
-                    </div>
-                  </a>
-                </User>
-              ) : (
-                <User onClick={this.toggleNav}>
-                  <Wrapper>
-                    <UserImage src={user[0].image} />
-                    <UserInfo>
-                      <Text>{user[0].name}</Text>
-                      <Text>{user[0].email}</Text>
-                    </UserInfo>
-                  </Wrapper>
-                  <ShowNav />
-                  { this.showNavigation() }
-                </User>
-              )}
-          </Wrapper>
-        </Wrapper>
+            <MobileNavigation user={user} />
+          </Container>
       </Topbar>
     );
   }

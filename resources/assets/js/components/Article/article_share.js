@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 import {FacebookShareButton, FacebookIcon,
         GooglePlusShareButton, GooglePlusIcon,
         TwitterShareButton, TwitterIcon} from 'react-share';
@@ -44,23 +45,23 @@ const ShareCount = styled.span`
 `
 
 const Share = props => {
-  const {url} = props;
+  const { pathname } = props.location;
 
   return (
     <ArticleFooter>
       <List>
         <ListItem title='Udostępnij na Twitterze'>
-        <TwitterShareButton url={`https://portal-wertykalny.herokuapp.com${url}`}>
+        <TwitterShareButton url={`https://portal-wertykalny.herokuapp.com${pathname}`}>
           <TwitterIcon size={32} round={true} />
         </TwitterShareButton>
         </ListItem>
         <ListItem title='Udostępnij na Facebooku'>
-          <FacebookShareButton url={`https://portal-wertykalny.herokuapp.com${url}`}>
+          <FacebookShareButton url={`https://portal-wertykalny.herokuapp.com${pathname}`}>
             <FacebookIcon size={32} round={true} />
           </FacebookShareButton>
         </ListItem>
         <ListItem title='Udostępnij na Google+'>
-          <GooglePlusShareButton url={`https://portal-wertykalny.herokuapp.com${url}`}>
+          <GooglePlusShareButton url={`https://portal-wertykalny.herokuapp.com${pathname}`}>
             <GooglePlusIcon size={32} round={true} />
           </GooglePlusShareButton>
         </ListItem>
@@ -69,4 +70,4 @@ const Share = props => {
   )
 }
 
-export default Share;
+export default withRouter(Share);

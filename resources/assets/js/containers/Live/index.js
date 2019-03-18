@@ -5,10 +5,11 @@ import Squad from '../../components/Live/match_squad';
 import Commentary from '../../components/Live/match_commentary';
 import Footer from '../../components/Reusable/footer'
 import CommentSection from '../../components/Article/article_comments';
+import { Helmet } from 'react-helmet';
 import Wrapper from '../../components/Reusable/wrapper';
 
 const Main = styled.main`
-  width:calc(100% - 20px);
+  width:100%;
 `
 
 const Image = styled.img`
@@ -20,6 +21,7 @@ const ImageWrapper = styled.div`
   align-items:flex-end;
   max-height:600px;
   position:relative;
+  z-index:-1;
   &:before {
     position:absolute;
     content: '';
@@ -33,8 +35,10 @@ const ImageWrapper = styled.div`
 `
 
 const Section = styled.section`
+  margin:0 auto;
   margin-top:50px;
   color:#1e1e1e;
+  max-width:1300px;
 `
 
 const LiveCentre = styled.section`
@@ -165,9 +169,12 @@ class Live extends Component {
   render() {
     return (
         <Fragment>
+          <Helmet>
+            <title>Na żywo - portal-wertykalny</title>
+          </Helmet>
           <Main>
             <ImageWrapper>
-              <Image src='./img/ballPit.jpg' alt='pit' />
+              <Image src='/img/ballPit.jpg' alt='pit' />
               <MatchSummary />
             </ImageWrapper>
             <Section>

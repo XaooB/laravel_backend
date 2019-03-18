@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import createLink from '../../helpers/createLink';
 import { Link } from 'react-router-dom';
 
 const ListItem = styled.li`
@@ -48,7 +49,7 @@ const LinkTo = styled(Link)`
 
 const AsideItem = props => {
   const { image, title, category, idarticle } = props.item,
-          link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-').toLowerCase()}`;
+          link = createLink(props.item);
 
   return (
     <ListItem>

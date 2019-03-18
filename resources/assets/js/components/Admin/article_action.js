@@ -1,51 +1,36 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import {
-  MdEdit,
-  MdDeleteForever,
-} from 'react-icons/md';
 
 const Button = styled.button`
   display:inline-flex;
   justify-content:space-between;
   align-items:center;
   cursor:pointer;
-  background:#ee324e;
+  background:#00529f;
   outline:none;
   border:1px solid #999;
   border-radius:3px;
-  padding:8px 10px;
+  padding:8px 8px;
+  margin:2px 0;
+  margin-right: 6px;
   svg {
     color:#fff !important;
-  }
-  &:not(:last-child) {
-    margin-right: 6px;
+    margin-right: 3px;
   }
 `
 
 const Text = styled.span`
-  margin-left:4px;
   display:block;
     color:#fff;
 `
 
 const ActionButton = props => {
   return (
-    <Button>
-      {
-        props.name === 'edit'
-        ? (
-          <Fragment>
-            <MdEdit />
-            <Text>Edytuj</Text>
-          </Fragment>
-        ) : (
-          <Fragment>
-            <MdDeleteForever />
-            <Text>Usuń</Text>
-          </Fragment>
-        )
-      }
+    <Button onClick={props.onClick} >
+      <Fragment>
+        { props.icon }
+        <Text>{ props.name }</Text>
+      </Fragment>
     </Button>
   )
 }

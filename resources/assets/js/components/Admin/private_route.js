@@ -10,34 +10,29 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     ? (
       <Route
         {...rest}
-        render={props =>
-          user.length
-          ? true
-          ? ( <Component {...props} />
+        render={ props => 
+          user[0].tier > 1
+          ? (
+            <Component {...props} />
           ) : (
           <Redirect
             to={{
-              pathname: '/not_allowed',
+              pathname: '/app/unauthorized',
               state: { from: props.location }
             }}
           />
           )
-          : (
-            <Redirect
-              to={{
-                pathname: '/api/auth/google',
-                state: { from: props.location }
-              }}
-            />
-          )
         }
       />
-    ) : (
-      ''
+      ) : (
+      <Redirect
+        to={{
+        pathname: '/app/unauthorized',
+        }}
+      />
     )
   )
 }
 
 const mapStateToProps = ({ user }) => ({ user });
-
 export default connect(mapStateToProps)(PrivateRoute);

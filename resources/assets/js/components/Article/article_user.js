@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ImageContainer = styled.figure`
-  display:flex;
+  display:none;
   justify-content:center;
   min-width:55px;
   min-height:55px;
@@ -12,6 +12,9 @@ const ImageContainer = styled.figure`
   overflow:hidden;
   align-self:flex-start;
   border-radius:100%;
+  @media (min-width: 640px) {
+    display:flex;
+  }
 `
 
 const Image = styled.img`

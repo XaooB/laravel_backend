@@ -24,7 +24,7 @@ const PlayerSurname = styled.span`
   text-transform:uppercase;
   display:block;
   padding-right:6px;
-  font-family:'AvenirD';
+  font-family:'SSPB';
 `
 
 const SquadItem = props => {

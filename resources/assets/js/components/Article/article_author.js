@@ -6,17 +6,17 @@ import Share from './article_share';
 const Wrapper = styled.section`
   flex:1;
   padding-top:5px;
-  margin-bottom:32px;
+  margin-bottom:10px;
   @media only screen and (max-width: 480px) {
     display:none;
   }
 `
 
 const Sticky = styled.div`
- position: sticky;
- top:42%;
- text-align: right;
- line-height:1.5;
+   position: sticky;
+   top:42%;
+   text-align: right;
+   line-height:1.5;
 `
 
 const PublishedBy = styled.span`

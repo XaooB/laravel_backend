@@ -2,94 +2,127 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Article = styled.article`
-  flex: 1 1 365px;
-  min-width: 300px;
-  color:#1e1e1e;
-  padding:10px;
+const ImageWrapper = styled.figure`
+  display:flex;
+  height:inherit;
+  justify-content:center;
+  flex:1 1 380px;
+  max-height:150px;
+  max-width:100%;
+  overflow:hidden;
+  @media (min-width: 640px) {
+    max-height:100%;
+    max-width:50%;
+    height:inherit;
+  }
 `
 
-const ImageWrapper = styled.figure`
+const Article = styled.article`
+  flex: 1 1 470px;
+  height:315px;
+  color:#1e1e1e;
+  margin:10px;
   overflow:hidden;
-  flex:1;
+  @media (min-width: 480px) {
+    height:400px;
+  }
+`
+
+const Image = styled.img`
+  height:auto;
+  align-self:flex-start;
+  @media (min-width: 640px) {
+    height:inherit;
+  }
+`
+
+const LinkTo = styled(Link)`
+  height:inherit;
   display:flex;
-  justify-content:center;
-  align-items:center;
-  max-height:150px;
+  justify-content:space-between;
+  flex-flow:column wrap;
+  @media (min-width: 640px) {
+    flex-flow:row wrap;
+  }
 `
 
 const Container = styled.div`
   display:flex;
-  justify-content:flex-start;
-  flex:1;
-`
-
-const Category = styled.span`
-  display:inline-block;
-  text-transform: uppercase;
-  font-size:.9em;
-  font-family:'SSPB';
-  margin-bottom:10px;
-`
-
-const Title = styled.h3`
-  font-size:1.55em;
-  line-height:1.1em;
-  margin-bottom:3px;
-`
-
-const Added = styled.span`
-  display:inline-block;
-  font-family:'SSP';
-  font-size:.85em;
-  margin-bottom:12px;
-`
-
-const Summary = styled.p`
-  padding-bottom:15px;
-  line-height:1.2em;
-  text-align:justify;
-`
-
-const Image = styled.img`
-  width:100%;
-  align-self: center;
-`
-
-const Hover = styled.span`
-  border-bottom:0px solid #00529f;
-  transition: border .15s;
-`
-
-const LinkTo = styled(Link)`
-  color:inherit;
-  padding:15px 0;
-  &:hover ${Hover} {
-    border-bottom:3px solid #00529f;
-    transition: border .15s;
+  max-width:fit-content;
+  flex:1 1 38%;
+  flex-flow: row wrap;
+  align-content:space-between;
+  padding:15px;
+  @media (min-width: 640px) {
+    max-width:50%;
   }
 `
 
+const ArticleInfo = styled.header`
+  letter-spacing:.5px;
+  color:#1e1e1e;
+  width:100%;
+`
+
+const Title = styled.h3`
+  line-height:1;
+  font-size:2em;
+  font-family:'Bebas';
+`
+
+const Category = styled.span`
+  display:block;
+  margin-top:3px;
+  font-size:.85em;
+  font-family:'AvenirLTR'
+`
+
+const Description = styled.span`
+  display:none;
+  margin-top:12px;
+  @media (min-width: 480px) {
+    display:block;
+  }
+`
+
+const ReadMore = styled.div`
+  display:flex;
+  color:#1e1e1e;
+  align-self:flex-end;
+  align-items:center;
+  width:100%;
+  flex-flow:row nowrap;
+  justify-content:space-between;
+`
+
+const Arrow = styled.span`
+  font-size:1.5em;
+  display:block;
+  font-family: 'Bebas';
+`
 
 const LatestNewsItem = props => {
   const {title, image, category, content, create_date, idarticle} = props.article,
-        link = `/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-').toLowerCase()}`;
+        link = `/app/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-').toLowerCase()}`;
 
   return (
     <Article>
-      <ImageWrapper>
-        <Image src={image} alt='isco' title='isco' />
-      </ImageWrapper>
-      <Container>
-        <LinkTo to={link}>
-          <Category>{category}</Category>
-          <Title>
-            <Hover>{title}</Hover>
-          </Title>
-          <Added>{create_date}</Added>
-          <Summary>{content}</Summary>
-        </LinkTo>
-      </Container>
+      <LinkTo to={link}>
+        <ImageWrapper>
+          <Image src={image} alt={title} title={title} />
+        </ImageWrapper>
+        <Container>
+          <ArticleInfo>
+            <Title>{title}</Title>
+            <Category>{category}</Category>
+            <Description>{content}</Description>
+          </ArticleInfo>
+          <ReadMore>
+            <p>czytaj więcej</p>
+            <Arrow>&rarr;</Arrow>
+          </ReadMore>
+        </Container>
+      </LinkTo>
     </Article>
   )
 }

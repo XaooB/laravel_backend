@@ -17,19 +17,19 @@ const ArticleWrapper = styled.article`
 
 const Section = styled.section`
   display:flex;
-  margin-bottom:40px;
   justify-content: space-between;
   flex-flow: row wrap;
 `
 
 const Wrapper = styled.section`
   flex:6;
+  margin-top:20px;
   background:white;
   padding:0 25px;
 `
 
 const Article = props => {
-  const {article, neighbours, comments, user, url} = props;
+  const {article, neighbours, user, url} = props;
 
   return (
     <ArticleWrapper>

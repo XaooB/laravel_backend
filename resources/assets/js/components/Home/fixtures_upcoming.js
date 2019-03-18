@@ -6,28 +6,28 @@ import { Link } from 'react-router-dom';
 
 const Section = styled.section`
   flex:1;
+  color:#1e1e1e;
+  font-weight:lighter;
+  padding:4px 0;
+  font-size:1.05em;
 `
 
 const Wrapper = styled.div`
-  display:flex;
   height:170px;
   min-width:320px;
-  flex-flow:row wrap;
 `
 
 const LinkTo = styled(Link)`
-  background: #00529f;
+  color: #00529f;
   width:100%;
   display:block;
   text-align:center;
-  align-self:flex-end;
-  padding:2px;
+
 `
 
 const IconSpan = styled.span`
-  transform: rotate(90deg);
   display:inline-block;
-  font-family:'DoHyeon';
+  font-family:'Bebas';
   font-size:1.2em;
 `
 
@@ -35,13 +35,10 @@ const FixturesUpcoming = props => {
   const { schedule } = props;
   return (
     <Section>
-      <PageHeader title='Teminarz' />
-      <Wrapper>
+
+
         <ScheduleTable schedule = { schedule }/>
-        <LinkTo to='/schedule'>
-          <IconSpan> >> </IconSpan>
-        </LinkTo>
-      </Wrapper>
+
     </Section>
   )
 }

@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import LeagueTableItem from './league_table_item';
+import Button from '../Reusable/button';
 
 const FixturesTable = styled.div`
-  width:100%;
+  flex:1 1 350px;
+  margin:10px;
 `
 
 const Container = styled.div`
@@ -17,10 +19,10 @@ const Container = styled.div`
 const Table = styled.div`
   display:flex;
   text-align:center;
-  font-family: monospace;
-  font-size:16px;
+  flex:1 1 75%;
+  font-family:'AvenirLTR';
   color:#1e1e1e;
-  flex-flow:column nowrap;
+  flex-flow:row wrap;
 `
 
 const Image = styled.img`
@@ -36,9 +38,13 @@ const Selection = styled.select`
   border:1px solid #00529f;
 `
 
-const LeagueItem = styled.div`
-  background: #00529f;
+const Title = styled.div`
+  background: #ededed;
   display:flex;
+  font-family:"AvenirLTD";
+  font-size:.9em;
+  color:#777;
+  border-radius:6px;
   flex-flow:row nowrap;
   padding:8px 4px;
   align-items:center;
@@ -51,12 +57,16 @@ const LeagueItem = styled.div`
 
 const ItemField = styled.div`
   cursor:default;
-  color:#fff;
   flex:.5;
   &:nth-child(2) {
-    flex:3;
     text-align:left;
+    flex:3;
   }
+`
+
+const ButtonWrapper = styled.div`
+  display:flex;
+  margin-top:12px;
 `
 
 const LeagueTable = props => {
@@ -65,19 +75,24 @@ const LeagueTable = props => {
   return (
     <FixturesTable>
       <Table>
-      <LeagueItem>
-        <ItemField title='Pozycja'>R</ItemField>
-        <ItemField title='Klub'>Klub</ItemField>
-        <ItemField title='Rozegrane mecze'>P</ItemField>
-        <ItemField title='Wygrane'>W</ItemField>
-        <ItemField title='Remisy'>D</ItemField>
-        <ItemField title='Porażki'>L</ItemField>
-        <ItemField title='Punkty'>Pts</ItemField>
-      </LeagueItem>
-        { leagueTable ? leagueTable.map((item, key) => {
-          return <LeagueTableItem leagueTable = { item } key={ key } />
-        }) : <p>No data</p> }
+        <Title>
+          <ItemField title='Pozycja'>Lp.</ItemField>
+          <ItemField title='Klub'>Klub</ItemField>
+          <ItemField title='Rozegrane mecze'>P</ItemField>
+          <ItemField title='Wygrane'>W</ItemField>
+          <ItemField title='Remisy'>D</ItemField>
+          <ItemField title='Porażki'>L</ItemField>
+          <ItemField title='Punkty'>Pts</ItemField>
+        </Title>
+        {
+          leagueTable ? leagueTable.map((item, key) => {
+            return key < 6 ? <LeagueTableItem leagueTable = { item } key={ key } /> : false;
+          }) : <p>No data</p>
+        }
       </Table>
+      <ButtonWrapper>
+        <Button colorBlue fullWidth name='Pokaż całą tabelę'></Button>
+      </ButtonWrapper>
     </FixturesTable>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  margin-left:1px;
+  border-left:1px solid #F3F4F8;
   height:40px;
   background:white;
   padding:0 15px;
@@ -18,6 +18,6 @@ const Text = styled.h4`
 `
 
 
-const PageTitle = props => <Wrapper><Text><span style={{color: '#c8c8c8'}}>Home &bull; </span>{props.title}</Text></Wrapper>
+const PageTitle = props => <Wrapper><Text><span style={{color: '#c8c8c8'}}>Admin &bull; </span>{props.title}</Text></Wrapper>
 
 export default PageTitle;

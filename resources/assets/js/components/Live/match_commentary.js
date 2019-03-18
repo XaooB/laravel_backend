@@ -10,7 +10,7 @@ const Wrapper = styled.section`
 
 const Title = styled.h2`
   font-size:1.1em;
-  font-family:'AvenirD';
+  font-family:'SSPB';
   text-transform: uppercase;
 `
 
@@ -18,7 +18,7 @@ const Status = styled.span`
   display:block;
   color:#ee324e;
   font-size:1.1em;
-  font-family:'AvenirB';
+  font-family:'SSPBK';
 `
 
 const CommentaryInfo = styled.div`
