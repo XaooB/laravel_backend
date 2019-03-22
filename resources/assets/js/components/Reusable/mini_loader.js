@@ -20,6 +20,7 @@ const Spinner = styled.div`
 const Wrapper = styled.div`
   margin-top: ${props => props.margin ? `${props.margin}px` : '0'};
   display:flex;
+  flex:1 1 100%;
   align-items:center;
   justify-content:center;
 `

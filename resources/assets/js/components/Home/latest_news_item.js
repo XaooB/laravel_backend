@@ -7,7 +7,7 @@ const ImageWrapper = styled.figure`
   height:inherit;
   justify-content:center;
   flex:1 1 380px;
-  max-height:150px;
+  max-height:${props => props.small ? '100px' : '150px'};
   max-width:100%;
   overflow:hidden;
   @media (min-width: 640px) {
@@ -19,7 +19,7 @@ const ImageWrapper = styled.figure`
 
 const Article = styled.article`
   flex: 1 1 470px;
-  height:315px;
+  height:${props => props.small ? '200px' : '315px'};
   color:#1e1e1e;
   margin:10px;
   overflow:hidden;

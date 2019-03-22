@@ -1,4 +1,4 @@
-import { FETCH_SEARCH, FETCH_ADMIN_ARTICLES, FETCH_NEWS, FETCH_SCHEDULE, FIXTURE_TYPE, ADMIN_EDIT_ARTICLE_DATA, FETCH_USER, FETCH_ARTICLE, FETCH_ARTICLE_NEIGHBOURS, DEC_COMMENT_COUNT, DISABLE_LIKE_BUTTON, FETCH_COMMENTS, ADD_COMMENT, ADD_COMMENT_STATUS, SELECTED_COMMENT_ID, CHANGE_LIKE_STATUS, INC_COMMENT_COUNT, INC_LIKES_COUNT, DEC_LIKES_COUNT } from './types';
+import { FETCH_SEARCH, ADD_SELECTED_CATEGORIES, DELETE_SELECTED_CATEGORIES, FETCH_CATEGORIES, FETCH_ADMIN_ARTICLES, FETCH_NEWS, FETCH_SCHEDULE, FIXTURE_TYPE, ADMIN_EDIT_ARTICLE_DATA, FETCH_USER, FETCH_ARTICLE, FETCH_ARTICLE_NEIGHBOURS, DEC_COMMENT_COUNT, DISABLE_LIKE_BUTTON, FETCH_COMMENTS, ADD_COMMENT, ADD_COMMENT_STATUS, SELECTED_COMMENT_ID, CHANGE_LIKE_STATUS, INC_COMMENT_COUNT, INC_LIKES_COUNT, DEC_LIKES_COUNT } from './types';
 import { API } from '../helpers/api';
 import axios from 'axios';
 import qs from 'qs';
@@ -38,6 +38,18 @@ export const fetchNews = categories => async dispatch => {
     dispatch({
       type: FETCH_NEWS,
       payload: request.data
+    })
+  } catch (e) {
+    throw new Error(e);
+  }
+}
+
+export const fetchCategories = () => async dispatch => {
+  try {
+    const categories = await axios.get('/api/categories');
+    dispatch({
+      type: FETCH_CATEGORIES,
+      payload: categories.data
     })
   } catch (e) {
     throw new Error(e);
@@ -191,5 +203,19 @@ export const StoreAdminArticleToEdit = data => dispatch => {
   dispatch({
     type: ADMIN_EDIT_ARTICLE_DATA,
     payload: [data]
+  })
+}
+
+export const setSelectedCategoriesByUser = data => dispatch => {
+  dispatch({
+    type: ADD_SELECTED_CATEGORIES,
+    payload: data
+  })
+}
+
+export const deleteSelectedCategoriesByUser = id => dispatch => {
+  dispatch({
+    type: DELETE_SELECTED_CATEGORIES,
+    payload: id
   })
 }
