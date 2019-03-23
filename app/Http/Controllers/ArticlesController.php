@@ -258,7 +258,7 @@ class ArticlesController extends Controller
                         'idCategory' => $request->category,
                         'Title' => $request->title,
                         'Content' => $request->content]))
-                        return response()->json(['status' => true, 'error' => ''], 202);
+                        return response()->json(['status' => true, 'error' => '' . $check_file_msg]);
                 }
             }
             else
