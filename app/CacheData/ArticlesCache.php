@@ -11,6 +11,16 @@ class ArticlesCache
 {
 	CONST CACHE_KEY = 'ARTICLES';
 
+    public function index($user)
+    {
+        $key = 'index.' . $user;
+        $cacheKey = $this->getCacheKey($key);
+        return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($user) {
+            ArticlesController::buildArticleData($articles, [0, 1], 'articles.idUser', [$user], 'articles.idArticle', 'desc', null, null, 'articles.Title', '', 'long');
+            return $articles;
+        });
+    }
+
 	public function article($id, $user)
 	{
 		$key = 'article.' . $id . '.' . $user;
@@ -18,7 +28,7 @@ class ArticlesCache
 		return cache()->remember($cacheKey, Carbon::now()->addHours(1), function() use($id, $user) {
             if(Articles::where('idArticle', $id)->where('Visible', 1)->count())
             {
-                ArticlesController::buildArticleData($article, [1], 'Main', [0, 1], 'articles.idArticle', 'asc', 1, $id, 'articles.Title', '');
+                ArticlesController::buildArticleData($article, [1], 'Main', [0, 1], 'articles.idArticle', 'asc', 1, $id, 'articles.Title', '', 'long');
                 Articles::where('idArticle', $id)->increment('Views', 1);
                 if($user != 'none')
                 {
