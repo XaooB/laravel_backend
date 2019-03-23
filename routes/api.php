@@ -164,5 +164,10 @@ Route::group(['middleware' => 'apiauth'], function() {
         Route::resource('privileges', 'PrivilegesController')->except(['index']);
         // Statuses routes
         Route::resource('statuses', 'StatusesController')->except(['index']);
+
+        Route::get('clear_cache', function(Request $request) {
+            $exitCode = Artisan::call('cache:clear');
+            return;
+        });
     });
 });

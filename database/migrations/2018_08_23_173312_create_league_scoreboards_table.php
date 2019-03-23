@@ -22,7 +22,7 @@ class CreateLeagueScoreboardsTable extends Migration
             $table->tinyInteger('Draw');
             $table->tinyInteger('Lost');
             $table->tinyInteger('Points');
-            $table->string('Season');
+            $table->string('Season', 9);
             $table->string('League', 4);
             $table->string('Group', 8)->nullable();
             $table->foreign('idClub')->references('idClub')->on('clubs')->onDelete('cascade');

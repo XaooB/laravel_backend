@@ -19,23 +19,20 @@ class SurveysController extends Controller
      */
     public function index()
     {
-        $surveys = Surveys::all();
+        $surveys = SurveysCache::index();
         return response()->json(SurveysResource::collection($surveys));
     }
 
     public function get_survey($id)
     {
-        $survey = Surveys::where('idSurvey', $id)->take(1)->get();
-        return response()->json(SurveysResource::collection($survey));
+        $survey = SurveysCache::get_survey($id);
+        return response()->json($survey);
     }
 
-    public function latest($count)
+    public function latest()
     {
-        $surveys = DB::table('surveys')->select('idSurvey as idsurvey', 'Topic as topic', 'idSurvey as answers','created_at as create_date')->orderBy('idSurvey', 'desc')->take($count)->get();
-        foreach ($surveys as $key => $survey) {
-            SurveySetsController::buildSurveySetData($survey->answers);
-        }
-        return response()->json($surveys);
+        $latestSurvey = SurveysCache::latest();
+        return response()->json($latestSurvey);
     }
 
     // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------

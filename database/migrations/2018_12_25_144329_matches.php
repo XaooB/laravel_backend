@@ -23,6 +23,7 @@ class Matches extends Migration
             $table->unsignedInteger('idClubAway');
             $table->tinyInteger('AwayClubScore')->nullable();
             $table->string('Type', 45);
+            $table->string('Season', 9);
             $table->timestamps();
             $table->foreign('idClubHome')->references('idClub')->on('clubs')->onDelete('cascade');
             $table->foreign('idClubAway')->references('idClub')->on('clubs')->onDelete('cascade');

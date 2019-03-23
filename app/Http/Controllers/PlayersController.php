@@ -107,17 +107,32 @@ class PlayersController extends Controller
             Aby wysłać dane (modyfikacja) z FRONT należy przesłać dane metodą POST z dodatkową ukrytą wartością:
             <input type="hidden" name="_method" value="PUT">
         */
+        $status = false;
+        $msg = '';
         if($request->file('image') != null)
         {
             $image_name = 'players' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
             $destinationFolder = public_path('images') . '/players/';
             $request->file('image')->move($destinationFolder, $image_name);
             $path = $destinationFolder . $image_name;
-            CloudinaryController::uploadImage($path, $image_name, 'players', 'idPlayer', $id); 
-            return response()->json(['message' => 'success']);
+            $playerImage = CloudinaryController::uploadImage($path, $image_name, 'players');
+            if(Players::where('idPlayer', $id)->update(['Image' => $playerImage]))
+            {
+                $status = true;
+                $msg .= 'image updated.';
+            }
         }
-        else 
-            {return response()->json(['message' => 'failure']);}
+        return response()->json(['status' => $status, 'error' => $msg], 200);
+    }
+
+    public function add_statistic($id)
+    {
+
+    }
+
+    public function change_statistic($id)
+    {
+        
     }
 
     /**

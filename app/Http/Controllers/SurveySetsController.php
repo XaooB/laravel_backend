@@ -78,11 +78,8 @@ class SurveySetsController extends Controller
         $data = json_decode($request->getContent(), true);
         if(isset($data['answer']))
         {
-            foreach ($data['answer'] as $key => $answer)
-            {
-                if(SurveySets::where('idSurvey', $request->idsurvey)->where('Answer', $answer)->exists()) 
-                    return response()->json(['status' => false, 'error' => 'wrong data']);
-            }
+            if(SurveySets::where('idSurvey', $request->idsurvey)->whereIn('Answer', $data['answer'])->exists()) 
+                return response()->json(['status' => false, 'error' => 'wrong data']);
             foreach ($data['answer'] as $key => $answer)
             {
                 $survey_set = new SurveySets;
