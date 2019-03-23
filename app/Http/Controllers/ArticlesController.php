@@ -244,16 +244,22 @@ class ArticlesController extends Controller
                     $request->file('image')->move($destinationFolder, $image_name);
                     $path = $destinationFolder . $image_name;
 
-                    $articleImage = CloudinaryController::uploadImage($path, $image_name, 'articles'); 
+                    $articleImage = CloudinaryController::uploadImage($path, $image_name, 'articles');
+                    if(Articles::where('idArticle', $id)->update([
+                        'idCategory' => $request->category,
+                        'Title' => $request->title,
+                        'Content' => $request->content,
+                        'Image' => $articleImage]))
+                        return response()->json(['status' => true, 'error' => ''], 202);
                 }
                 else
-                    return response()->json(['status' => false, 'error' => 'wrong data'], 204);
-                if(Articles::where('idArticle', $id)->update([
-                    'idCategory' => $request->category,
-                    'Title' => $request->title,
-                    'Content' => $request->content,
-                    'Image' => $articleImage]))
-                	return response()->json(['status' => true, 'error' => ''], 202);
+                {
+                    if(Articles::where('idArticle', $id)->update([
+                        'idCategory' => $request->category,
+                        'Title' => $request->title,
+                        'Content' => $request->content]))
+                        return response()->json(['status' => true, 'error' => ''], 202);
+                }
             }
             else
                 return response()->json(['status' => false, 'error' => 'wrong data ' . $check_file_msg]);
