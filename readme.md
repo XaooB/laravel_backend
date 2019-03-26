@@ -12,5 +12,5 @@ Google+ API - user authorization/authentication </br>
 Cloudinary API - image storage </br>
 Football-data.org API - football data </br>
 
-RDB (MySQL) + local Cache - data storage </br>
+RDBMS (MySQL) + local Cache - data storage </br>
 JSON - to transmit data (client-server) </br>
