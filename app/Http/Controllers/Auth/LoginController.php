@@ -92,7 +92,7 @@ class LoginController extends Controller
         $_SESSION['articles_count'] = $userData->articles_count;
         $_SESSION['comments_count'] = $userData->comments_count;
         $_SESSION['crate_date'] = $userData->created_at;
-        return redirect(env('APP_URL'))->withCookie(cookie('auth-token', JWTAuth::fromUser($userData, $customClaims)));
+        return redirect(env('APP_URL'))->withCookie(cookie('token', JWTAuth::fromUser($userData, $customClaims)));
     }
 
     public function findOrCreateUser($user)

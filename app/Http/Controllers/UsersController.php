@@ -89,7 +89,7 @@ class UsersController extends Controller
 
     public function check_token(Request $request)
     {
-        if(isset($request->token))
+        if($request->cookie('token'))
         {
             try 
             {
