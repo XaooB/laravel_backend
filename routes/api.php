@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Facades\App\CacheData\AnalyticsCache;
 use App\Http\Controllers\ValidatorController;
+use App\User;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -31,10 +32,9 @@ Route::group(['middleware' => ['web']], function () {
     });
 });
 
-Route::post('test', function(Request $request) {
-    print_r($request->file('image')->getSize());
-    //ValidatorController::checkUploadFile($request->file('image'), $msg);
-    return;
+Route::get('test', function(Request $request) {
+    $user = User::all();
+    return response()->json($user);
 });
 
 // Use middleware to allow Client-side use API
@@ -167,7 +167,7 @@ Route::group(['middleware' => 'apiauth'], function() {
 
         Route::get('clear_cache', function(Request $request) {
             $exitCode = Artisan::call('cache:clear');
-            return;
+            return 'cache cleared!';
         });
     });
 });
