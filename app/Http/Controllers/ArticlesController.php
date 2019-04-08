@@ -97,6 +97,7 @@ class ArticlesController extends Controller
                 $user = 'none';
             $articles = ArticlesCache::article($id, $user);
             $articles->user = UsersCache::by_id($articles->user);
+            Articles::where('idArticle', $id)->increment('Views', 1);
             return response()->json($articles);
         }
 

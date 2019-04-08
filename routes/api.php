@@ -99,7 +99,7 @@ Route::group(['middleware' => 'apiresponse'], function() {
     Route::get('matches_update_finished_matches', 'MatchesController@update_finished_matches')->name('matches.update_finished_matches');
 });
 
-// Secure API using SESSION
+// Secure API using SESSION (or JWT)
 Route::group(['middleware' => 'apiauth'], function() {
     // Users routes
     Route::resource('users', 'UsersController')->except(['index']);

@@ -29,7 +29,6 @@ class ArticlesCache
             if(Articles::where('idArticle', $id)->where('Visible', 1)->count())
             {
                 ArticlesController::buildArticleData($article, [1], 'Main', [0, 1], 'articles.idArticle', 'asc', 1, $id, 'articles.Title', '', 'long');
-                Articles::where('idArticle', $id)->increment('Views', 1);
                 if($user != 'none')
                 {
                     // sprawdzenie czy użytkownik którego dane sesji zostały przesłane polubił dany artykuł
