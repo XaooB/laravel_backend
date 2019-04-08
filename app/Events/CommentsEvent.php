@@ -24,7 +24,7 @@ class CommentsEvent implements ShouldBroadcastNow
      */
     public function __construct($idArticle)
     {
-        $this->idArticle->$idArticle;
+        $this->idArticle = $idArticle;
     }
 
     /**
