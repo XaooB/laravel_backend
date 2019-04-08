@@ -12,6 +12,7 @@ use App\Http\Controllers\UsersController;
 use App\Notifications;
 use Facades\App\CacheData\CommentsCache;
 use Facades\App\CacheData\UsersCache;
+use App\Events\CommentsEvent;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -87,6 +88,7 @@ class CommentsController extends Controller
             $userID = DB::table('comments')->where('idComment', $data['idsubreference'])->value('idUser');
             if($comments->save())
             {
+                event(new CommentsEvent($data['idreference']));
                 if($data['idsubreference'] > 0 && $_SESSION['iduser'] != $userID)
                 {
                     $notification = new Notifications;
