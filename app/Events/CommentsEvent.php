@@ -34,6 +34,6 @@ class CommentsEvent implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new Channel('article.' . $this->$idArticle);
+        return new Channel('article.' . $this->idArticle);
     }
 }
