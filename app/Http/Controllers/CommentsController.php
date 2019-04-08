@@ -88,6 +88,7 @@ class CommentsController extends Controller
             $userID = DB::table('comments')->where('idComment', $data['idsubreference'])->value('idUser');
             if($comments->save())
             {
+                echo $data['idreference'];
                 event(new CommentsEvent($data['idreference']));
                 if($data['idsubreference'] > 0 && $_SESSION['iduser'] != $userID)
                 {
