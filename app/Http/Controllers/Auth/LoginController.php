@@ -70,7 +70,7 @@ class LoginController extends Controller
         $authUser = $this->findOrCreateUser($user, $provider);
         $userData = UsersCache::by_email($authUser->email);
         $customClaims = [
-            'iduser' => $userData->iduser,
+            'id' => $userData->iduser,
             'name' => $userData->name,
             'email' => $userData->email,
             'image' => $userData->image,
