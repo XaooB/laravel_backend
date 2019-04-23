@@ -81,7 +81,6 @@ class LoginController extends Controller
             'comments_count' => $userData->comments_count,
             'create_date' => $userData->create_date
         ];
-        dd($userData);
         $_SESSION['iduser'] = $userData->id;
         $_SESSION['name'] = $userData->name;
         $_SESSION['email'] = $userData->email;
