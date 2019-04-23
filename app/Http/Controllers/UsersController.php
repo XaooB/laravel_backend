@@ -191,7 +191,6 @@ class UsersController extends Controller
         $msg = '';
         if($request->file('image') != null)
         {
-
             $image_name = 'users' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
             $destinationFolder = public_path('images') . '/articles/';
             $request->file('image')->move($destinationFolder, $image_name);

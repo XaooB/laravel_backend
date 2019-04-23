@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Auth;
 use JWTAuth;
+use Facades\App\CacheData\UsersCache;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -51,16 +52,14 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function redirectToProvider()
+    public function redirectToProvider($provider)
     {
-        $provider = 'google';
         return Socialite::driver($provider)->redirect();
     }
 
-    public function handleProviderCallback(Request $request)
+    public function handleProviderCallback($provider, Request $request)
     {
         $data = array();
-        $provider = 'google';
         $user = Socialite::driver($provider)->stateless()->user();
         if(DB::table('users')->join('statuses', 'users.idStatus', 'statuses.idStatus')->where('users.provider_id', $user->id)->where('statuses.Name', 'zablokowany')->count())
             { 
@@ -69,9 +68,9 @@ class LoginController extends Controller
                     'reason' => DB::table('user_blockades')->select('Reason')->where('idUser', DB::table('users')->select('id')->where('provider_id', $user->id)->value('id'))->value('Reason')], 401);
             }
         $authUser = $this->findOrCreateUser($user, $provider);
-        $userData = DB::table('users')->select('users.id', 'users.Name', 'users.Email', 'users.Image', 'privileges.Name as Privileges', 'privileges.Tier as Tier', 'statuses.Name as Status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at')->join('privileges', 'users.idPrivilege', '=', 'privileges.idPrivilege')->join('statuses', 'users.idStatus', '=', 'statuses.idStatus')->where('Email', $this->email)->first();
+        $userData = UsersCache::by_email($authUser->email);
         $customClaims = [
-            'iduser' => $userData->id, 
+            'iduser' => $userData->id,
             'name' => $userData->Name,
             'email' => $userData->Email,
             'image' => $userData->Image,
@@ -95,18 +94,18 @@ class LoginController extends Controller
         return redirect(env('APP_URL'))->withCookie(cookie('token', JWTAuth::fromUser($userData, $customClaims)));
     }
 
-    public function findOrCreateUser($user)
+    public function findOrCreateUser($user, $provider)
     {
         if(User::where('Email', $user->email)->count() > 0)
         {
-            User::where('Email', $user->email)->update(['provider' => 'GOOGLE']);
+            User::where('Email', $user->email)->update(['provider' => strtoupper($provider)]);
         }
         else
         {
             User::create([
                 'name' => explode('@', $user->email)[0],
                 'email' => $user->email,
-                'provider' => 'GOOGLE', //'provider' => strtoupper($provider),
+                'provider' => strtoupper($provider),
                 'provider_id' => $user->id,
                 'image' => $user->avatar,
                 'idprivilege' => 1,

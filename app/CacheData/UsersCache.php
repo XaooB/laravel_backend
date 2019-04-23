@@ -26,9 +26,20 @@ class UsersCache
 	{
 		$key = 'by_name.' . $name;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($name) {
+		return cache()->remember($cacheKey, Carbon::now()->addHours(1), function() use($name) {
 			$user = $name;
 			UsersController::buildUserData($user, 'Name');
+			return $user;
+		});
+	}
+
+	public function by_email($email)
+	{
+		$key = 'by_email.' . $email;
+		$cacheKey = $this->getCacheKey($key);
+		return cache()->remember($cacheKey, Carbon::now()->addHours(1), function() use($email) {
+			$user = $email;
+			UsersController::buildUserData($user, 'Email');
 			return $user;
 		});
 	}

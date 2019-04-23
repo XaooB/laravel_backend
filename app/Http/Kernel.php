@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'apiauth' => \App\Http\Middleware\APIAuth::class,
         'checkprivilege' => \App\Http\Middleware\CheckPrivilege::class,
         'apiresponse' => \App\Http\Middleware\APIResponse::class,
+        'testadministrator' => \App\Http\Middleware\TestAdministrator::class,
     ];
 }

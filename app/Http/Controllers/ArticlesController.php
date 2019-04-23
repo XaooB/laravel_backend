@@ -194,6 +194,7 @@ class ArticlesController extends Controller
                 {
                     if($articles->save())
                     {
+                        $_SESSION['articles_count'] += 1;
                         return response()->json(['status' => true, 'error' => ''], 201);
                     }
                     else
@@ -322,6 +323,14 @@ class ArticlesController extends Controller
             if(DB::table('articles')->update(['Main' => DB::raw('(case when `idArticle` = ' . $id . ' then 1 when `idArticle` <> ' . $id . ' then 0 end)')]))
                 return response()->json(['status' => true, 'error' => ''], 202);
             else
+                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
+        }
+
+        public function test_admin_delete()
+        {
+            if(Articles::where('idUser', $_SESSION['iduser'])->delete())
+                return response()->json(['status' => true, 'error' => ''], 202);
+            else 
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 }

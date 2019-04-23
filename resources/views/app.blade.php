@@ -9,6 +9,13 @@
         <script rel="javascript" type="text/javascript" href="js/jquery-1.11.3.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
         <title>Strona głowna - portal-wertykalny</title>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134339010-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-134339010-1');
+        </script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script rel="javascript" type="text/javascript" href="js/jquery-1.11.3.min.js"></script>
     </head>

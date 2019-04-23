@@ -32,9 +32,31 @@ Route::group(['middleware' => ['web']], function () {
     });
 });
 
-Route::get('test', function(Request $request) {
-    $user = User::all();
-    return response()->json($user);
+Route::get('auth/test/admin', function(Request $request) {
+    $userData = UsersCache::by_email('testadministrator@portal-wertykalny');
+    $customClaims = [
+        'iduser' => $userData->id,
+        'name' => $userData->Name,
+        'email' => $userData->Email,
+        'image' => $userData->Image,
+        'privileges' => $userData->Privileges,
+        'tier' => $userData->Tier,
+        'status' => $userData->Status,
+        'articles_count' => $userData->articles_count,
+        'comments_count' => $userData->comments_count,
+        'crate_date' => $userData->created_at
+        ];
+    $_SESSION['iduser'] = $userData->id;
+    $_SESSION['name'] = $userData->Name;
+    $_SESSION['email'] = $userData->Email;
+    $_SESSION['image'] = $userData->Image;
+    $_SESSION['privileges'] = $userData->Privileges;
+    $_SESSION['tier'] = $userData->Tier;
+    $_SESSION['status'] = $userData->Status;
+    $_SESSION['articles_count'] = $userData->articles_count;
+    $_SESSION['comments_count'] = $userData->comments_count;
+    $_SESSION['crate_date'] = $userData->created_at;
+    return redirect(env('APP_URL'))->withCookie(cookie('token', JWTAuth::fromUser($userData, $customClaims)));
 });
 
 // Use middleware to allow Client-side use API
@@ -115,22 +137,24 @@ Route::group(['middleware' => 'apiauth'], function() {
 
     // Restrict routes to Root/Admin or Moderator/Redactor privileges
     Route::group(['middleware' => 'checkprivilege', 'privileges' => ['root', 'administrator', 'moderator', 'redaktor']], function() {
+        Route::group(['middleware' => 'testadministrator'], function() {
         // Articles routes
-        Route::resource('articles', 'ArticlesController');
-        Route::get('articles_staff_show_article/{id}', 'ArticlesController@staff_show_article')->name('articles.staff_show_article');
-        Route::put('articles_staff/{id}', 'ArticlesController@staff_update')->name('articles.staff_update');
-        Route::put('articles_staff_change_visibility/{id}', 'ArticlesController@staff_change_visibility')->name('articles.staff_change_visibility');
-        Route::put('articles_staff_change_main/{id}', 'ArticlesController@staff_change_main')->name('articles.staff_change_main');
+            Route::resource('articles', 'ArticlesController');
+            Route::get('articles_staff_show_article/{id}', 'ArticlesController@staff_show_article')->name('articles.staff_show_article');
+            Route::put('articles_staff/{id}', 'ArticlesController@staff_update')->name('articles.staff_update');
+            Route::put('articles_staff_change_visibility/{id}', 'ArticlesController@staff_change_visibility')->name('articles.staff_change_visibility');
+            Route::put('articles_staff_change_main/{id}', 'ArticlesController@staff_change_main')->name('articles.staff_change_main');
         // Players routes
-        Route::resource('players', 'PlayersController')->except(['index']);
+            Route::resource('players', 'PlayersController')->except(['index']);
 
-        Route::get('users_panel/{days}', 'UsersController@panel')->name('users.panel');
-        Route::get('articles_panel/{days}', 'ArticlesController@panel')->name('articles.panel');
-        Route::get('comments_panel/{days}', 'CommentsController@panel')->name('comments.panel');
+            Route::get('users_panel/{days}', 'UsersController@panel')->name('users.panel');
+            Route::get('articles_panel/{days}', 'ArticlesController@panel')->name('articles.panel');
+            Route::get('comments_panel/{days}', 'CommentsController@panel')->name('comments.panel');
 
-        Route::get('analytics_panel/{days}', function($days) {
-            $analytics = AnalyticsCache::panel($days);
-            return response()->json($analytics);
+            Route::get('analytics_panel/{days}', function($days) {
+                $analytics = AnalyticsCache::panel($days);
+                return response()->json($analytics);
+            });
         });
     });
 
