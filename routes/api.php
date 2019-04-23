@@ -35,29 +35,17 @@ Route::group(['middleware' => ['web']], function () {
 
 Route::get('auth/test/admin', function(Request $request) {
     $userData = UsersCache::by_email('testadministrator@portal-wertykalny');
-    $customClaims = [
-        'iduser' => $userData->id,
-        'name' => $userData->Name,
-        'email' => $userData->Email,
-        'image' => $userData->Image,
-        'privileges' => $userData->Privileges,
-        'tier' => $userData->Tier,
-        'status' => $userData->Status,
-        'articles_count' => $userData->articles_count,
-        'comments_count' => $userData->comments_count,
-        'crate_date' => $userData->created_at
-        ];
-    $_SESSION['iduser'] = $userData->id;
-    $_SESSION['name'] = $userData->Name;
-    $_SESSION['email'] = $userData->Email;
-    $_SESSION['image'] = $userData->Image;
-    $_SESSION['privileges'] = $userData->Privileges;
-    $_SESSION['tier'] = $userData->Tier;
-    $_SESSION['status'] = $userData->Status;
+    $_SESSION['iduser'] = $userData->iduser;
+    $_SESSION['name'] = $userData->name;
+    $_SESSION['email'] = $userData->email;
+    $_SESSION['image'] = $userData->image;
+    $_SESSION['privileges'] = $userData->privilege;
+    $_SESSION['tier'] = $userData->tier;
+    $_SESSION['status'] = $userData->status;
     $_SESSION['articles_count'] = $userData->articles_count;
     $_SESSION['comments_count'] = $userData->comments_count;
-    $_SESSION['crate_date'] = $userData->created_at;
-    return redirect(env('APP_URL'))->withCookie(cookie('token', JWTAuth::fromUser($userData, $customClaims)));
+    $_SESSION['create_date'] = $userData->create_date;
+    return redirect(env('APP_URL'));
 });
 
 // Use middleware to allow Client-side use API
