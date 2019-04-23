@@ -70,7 +70,7 @@ class LoginController extends Controller
         $userData->id = $userData->iduser;
         unset($userData->iduser);
         $customClaims = [
-            'id' => $userData->id,
+            'iduser' => $userData->id,
             'name' => $userData->name,
             'email' => $userData->email,
             'image' => $userData->image,
