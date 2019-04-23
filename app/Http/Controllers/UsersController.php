@@ -91,6 +91,8 @@ class UsersController extends Controller
     {
         if($request->cookie('token'))
         {
+            if(!isset($request->token))
+                $request->request->add(['token' => $request->cookie('token')]);
             try 
             {
                 $token = JWTAuth::getToken();
