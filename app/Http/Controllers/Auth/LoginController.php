@@ -40,8 +40,6 @@ class LoginController extends Controller
      */
     //protected $redirectTo = '/home';
 
-    protected $email = "";
-
     /**
      * Create a new controller instance.
      *
@@ -69,8 +67,10 @@ class LoginController extends Controller
             }
         $authUser = $this->findOrCreateUser($user, $provider);
         $userData = UsersCache::by_email($authUser->email);
+        $userData->id = $userData->iduser;
+        unset($userData->iduser);
         $customClaims = [
-            'id' => $userData->iduser,
+            'id' => $userData->id,
             'name' => $userData->name,
             'email' => $userData->email,
             'image' => $userData->image,
@@ -81,7 +81,8 @@ class LoginController extends Controller
             'comments_count' => $userData->comments_count,
             'create_date' => $userData->create_date
         ];
-        $_SESSION['iduser'] = $userData->iduser;
+        dd($userData);
+        $_SESSION['iduser'] = $userData->id;
         $_SESSION['name'] = $userData->name;
         $_SESSION['email'] = $userData->email;
         $_SESSION['image'] = $userData->image;
@@ -113,25 +114,5 @@ class LoginController extends Controller
         }
         $this->email = $user->email;
         return $user; 
-    }
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public function generateUserToken($provider_id)
-    {
-        $date_now = new DateTime(); 
-        $token_date = new DateTime(DB::table('users')->select('updated_at')->where('provider_id', $provider_id)->value('updated_at')); 
-        $date_diff = $date_now->diff($token_date);
-        $total_date_diff = $date_diff->days * 24 * 60;
-        $total_date_diff += $date_diff->h * 60;
-        $total_date_diff += $date_diff->i;
-        if(($total_date_diff >= 180 && User::select('remember_token')->where('provider_id', $provider_id)->value('remember_token') != null) || User::select('remember_token')->where('provider_id', $provider_id)->value('remember_token') == null)
-        {
-            $userID = User::select('id')->where('provider_id', $provider_id)->value('id');
-            $idPriv = User::select('idPrivilege')->where('provider_id', $provider_id)->value('idPrivilege');
-            $userPriv = DB::table('privileges')->select('Name')->where('idPrivilege', '=', $idPriv)->value('Name');
-            $this->access_token = hash('sha256', (time() . "_" . $userID . "_" . $userPriv . "secretToken"));
-            User::where('provider_id', $provider_id)->update(['remember_token' => $this->access_token]);
-        }
-        else { $this->access_token = User::select('remember_token')->where('provider_id', $provider_id)->value('remember_token'); }
     }
 }
