@@ -127,6 +127,7 @@ Route::group(['middleware' => 'apiauth'], function() {
     // Restrict routes to Root/Admin or Moderator/Redactor privileges
     Route::group(['middleware' => 'checkprivilege', 'privileges' => ['root', 'administrator', 'moderator', 'redaktor']], function() {
         Route::group(['middleware' => 'testadministrator'], function() {
+            Route::get('articles_test_admin_delete', 'ArticlesController@test_admin_delete')->name('articles.test_admin_delete');
         // Articles routes
             Route::resource('articles', 'ArticlesController');
             Route::get('articles_staff_show_article/{id}', 'ArticlesController@staff_show_article')->name('articles.staff_show_article');
@@ -180,7 +181,7 @@ Route::group(['middleware' => 'apiauth'], function() {
 
         Route::get('clear_cache', function(Request $request) {
             $exitCode = Artisan::call('cache:clear');
-            return 'cache cleared!';
+            return response()->json(['status' => false, 'error' => 'cache cleared!'], 200);
         });
     });
 });
