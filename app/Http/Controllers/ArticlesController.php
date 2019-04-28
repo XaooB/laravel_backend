@@ -71,7 +71,7 @@ class ArticlesController extends Controller
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
 
-        public function latest($count)
+        public function latest($count, Request $request)
         {
             if($count > 0)
             {
