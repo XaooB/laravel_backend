@@ -58,6 +58,7 @@ Route::group(['middleware' => 'apiresponse'], function() {
     Route::get('users_by_name/{name}', 'UsersController@by_name')->name('users.by_name');
     Route::get('users_check_user', 'UsersController@check_user')->name('users.check_user');
     Route::get('users_check_token', 'UsersController@check_token')->name('users.check_token');
+    Route::get('users_get_profile/{id}', 'UsersController@get_profile')->name('users.get_profile');
     // Articles routes
     Route::get('articles_latest/{count}', 'ArticlesController@latest')->name('articles.latest');
     Route::get('articles_latest_main/{count}', 'ArticlesController@latest_main')->name('articles.latest_main');
@@ -116,7 +117,6 @@ Route::group(['middleware' => 'apiauth'], function() {
     Route::resource('users', 'UsersController')->except(['index']);
     //Route::get('users/get_images', 'UsersController@get_images')->name('users.get_images');
     Route::get('users_get_notifications', 'UsersController@get_notifications')->name('users.get_notifications');
-    Route::get('users_get_profile', 'UsersController@get_profile')->name('users.get_profile');
     // Comments routes
     Route::resource('comments', 'CommentsController')->except(['index']);
     // User survey answers routes

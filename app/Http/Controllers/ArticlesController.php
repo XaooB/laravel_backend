@@ -75,7 +75,8 @@ class ArticlesController extends Controller
         {
             if($count > 0)
             {
-                echo $request->id;
+                if($request->id)
+                    echo $request->id;
                 $articles = ArticlesCache::latest($count);
                 $this->addUsersData($articles);
                 return response()->json($articles);
