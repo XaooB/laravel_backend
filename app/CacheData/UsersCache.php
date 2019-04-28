@@ -51,16 +51,12 @@ class UsersCache
 		$key = 'profile.' . $id;
 		$cacheKey = $this->getCacheKey($key);
 		return cache()->remember($cacheKey, Carbon::now()->addSeconds(10), function() use($id) {
-			$likedArticles = DB::table('user_likes')->select('idReference as article')->where('idUser', $id)->get();
-			$latestComments = DB::table('comments')->select('idComment as idcomment', 'idReference as idarticle', 'idUser as user', 'Content as content', 'created_at as create_date', 'updated_at as modify_date')->where('idUser', $id)->orderBy('comments.created_at', 'desc')->limit(7)->get();
-        	foreach ($latestComments as $key => $comment) {
-        	    UsersController::buildUserData($comment->user, 'id');
-        	}
-
+			$likedArticles = DB::table('articles')->rightJoin('user_likes', 'user_likes.idReference', '=', 'articles.idarticle')->leftJoin('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.Main as main', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->where('idUser', $id)->get();
+			$latestComments = DB::table('comments')->select('idComment as idcomment', 'idReference as idarticle', 'Content as content', 'created_at as create_date', 'updated_at as modify_date')->where('idUser', $id)->orderBy('comments.created_at', 'desc')->limit(7)->get();
 			$userProfile = [
 				'likedArticles' => $likedArticles,
 				'latestComments' => $latestComments
-			]
+			];
 			return $userProfile;
 		});
 	}
