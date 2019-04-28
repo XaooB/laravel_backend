@@ -6,6 +6,8 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\ArticlesController;
 
 class UsersCache
 {
@@ -41,6 +43,25 @@ class UsersCache
 			$user = $email;
 			UsersController::buildUserData($user, 'Email');
 			return $user;
+		});
+	}
+
+	public function profile($id)
+	{
+		$key = 'profile.' . $id;
+		$cacheKey = $this->getCacheKey($key);
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(10), function() use($id) {
+			$likedArticles = DB::table('user_likes')->select('idReference as article')->where('idUser', $id)->get();
+			$latestComments = DB::table('comments')->select('idComment as idcomment', 'idReference as idarticle', 'idUser as user', 'Content as content', 'created_at as create_date', 'updated_at as modify_date')->where('idUser', $id)->orderBy('comments.created_at', 'desc')->limit(7)->get();
+        	foreach ($latestComments as $key => $comment) {
+        	    UsersController::buildUserData($comment->user, 'id');
+        	}
+
+			$userProfile = [
+				'likedArticles' => $likedArticles,
+				'latestComments' => $latestComments
+			]
+			return $userProfile;
 		});
 	}
 

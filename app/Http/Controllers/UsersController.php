@@ -87,6 +87,12 @@ class UsersController extends Controller
             return response()->json($_SESSION);
 	}
 
+    public function get_profile()
+    {
+        $userProfile = UsersCache::profile($_SESSION['iduser']);
+        return response()->json($userProfile);
+    }
+
     public function check_token(Request $request)
     {
         if($request->cookie('token'))
