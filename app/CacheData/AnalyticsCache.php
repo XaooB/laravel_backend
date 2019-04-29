@@ -5,6 +5,7 @@ namespace App\CacheData;
 use Analytics;
 use Spatie\Analytics\Period;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redis;
 
 class AnalyticsCache
 {

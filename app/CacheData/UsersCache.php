@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\ArticlesController;
+use Illuminate\Support\Facades\Redis;
 
 class UsersCache
 {

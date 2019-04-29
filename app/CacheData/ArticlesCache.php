@@ -56,7 +56,7 @@ class ArticlesCache
 
 	public function latest($count)
 	{
-		$key = 'latest_plain.' . $count;
+        $key = 'latest_plain.' . $count;
 		$cacheKey = $this->getCacheKey($key);
 		return cache()->remember($cacheKey, Carbon::now()->addSeconds(2), function() use($count) {
 			ArticlesController::buildArticleData($articles_latest, [1], 'articles.Main', [0], 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');

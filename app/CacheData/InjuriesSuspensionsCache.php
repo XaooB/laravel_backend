@@ -6,6 +6,7 @@ use App\InjuriesSuspensions;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Http\Controllers\InjuriesSuspensionsController;
+use Illuminate\Support\Facades\Redis;
 
 class InjuriesSuspensionsCache
 {

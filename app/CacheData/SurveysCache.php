@@ -7,6 +7,7 @@ use App\SurveySets;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Http\Controllers\SurveySetsController;
+use Illuminate\Support\Facades\Redis;
 
 class SurveysCache
 {

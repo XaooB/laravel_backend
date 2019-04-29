@@ -6,6 +6,7 @@ use App\LeagueScoreboard;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Http\Controllers\LeagueScoreboardController;
+use Illuminate\Support\Facades\Redis;
 
 class LeagueScoreboardsCache
 {

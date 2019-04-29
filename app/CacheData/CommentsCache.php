@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CommentsController;
+use Illuminate\Support\Facades\Redis;
 
 class CommentsCache
 {

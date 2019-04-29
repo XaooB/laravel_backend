@@ -6,6 +6,7 @@ use App\Matches;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Http\Controllers\MatchesController;
+use Illuminate\Support\Facades\Redis;
 
 class MatchesCache
 {

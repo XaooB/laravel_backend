@@ -5,6 +5,7 @@ namespace App\CacheData;
 use App\Categories;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redis;
 
 class CategoriesCache
 {
