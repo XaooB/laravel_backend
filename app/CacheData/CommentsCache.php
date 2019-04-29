@@ -29,7 +29,7 @@ class CommentsCache
 		$key = 'panel.' . $days;
 		$cacheKey = $this->getCacheKey($key);
 		return cache()->remember($cacheKey, Carbon::now()->addMinutes(1), function() use($days) {
-			$latestComments = DB::table('comments')->leftJoin('articles', 'articles.idComment', '=', 'comments.idComment')->select('comments.idComment as idcomment', 'comments.idReference as idarticle', 'articles.Title as title', 'comments.idUser as user', 'comments.Content as content', 'comments.created_at as create_date', 'comments.updated_at as modify_date')->orderBy('comments.created_at', 'desc')->limit(3)->get();
+			$latestComments = DB::table('comments')->leftJoin('articles', 'articles.idArticle', '=', 'comments.idReference')->select('comments.idComment as idcomment', 'comments.idReference as idarticle', 'articles.Title as title', 'comments.idUser as user', 'comments.Content as content', 'comments.created_at as create_date', 'comments.updated_at as modify_date')->orderBy('comments.created_at', 'desc')->limit(3)->get();
         	foreach ($latestComments as $key => $comment) {
         	    UsersController::buildUserData($comment->user, 'id');
         	}
