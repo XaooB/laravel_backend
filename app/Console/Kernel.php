@@ -14,7 +14,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\UpdateLive::class
+        Commands\UpdateLive::class,
+        Commands\UpdateFinished::class,
+        Commands\UpdateScheduled::class
     ];
 
     /**
@@ -26,6 +28,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('schedule:update_live')->everyMinute()->runInBackground();
+        $schedule->command('schedule:update_finished')->hourlyAt(30)->runInBackground();
+        $schedule->command('schedule:update_scheduled')->hourlyAt(30)->runInBackground();
     }
 
     /**

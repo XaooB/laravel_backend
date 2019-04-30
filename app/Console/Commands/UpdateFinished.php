@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 use Facades\App\CacheData\MatchesCache;
 use App\Http\Controllers\MatchesController;
 
-class UpdateLive extends Command
+class UpdateFinished extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'schedule:update_live';
+    protected $signature = 'schedule:update_finished';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Aktualizacja meczu na żywo';
+    protected $description = 'Aktualizacja ukończonych meczów';
 
     /**
      * Create a new command instance.
@@ -39,13 +39,7 @@ class UpdateLive extends Command
      */
     public function handle()
     {
-        $date = MatchesCache::next_match_date();
-        if($date != null)
-        {
-            MatchesController::update_live_match();
-            $this->info('pomyslnie zaktualizowano mecz na żywo!');
-        }
-        else
-            $this->info('brak meczu do aktualizacji!');
+        MatchesController::update_finished_matches();
+        $this->info('pomyslnie zaktualizowano ukończone mecze!');
     }
 }
