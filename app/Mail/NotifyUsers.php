@@ -30,8 +30,9 @@ class NotifyUsers extends Mailable
      */
     public function build()
     {
+        var_dump($this->emailData)
         return $this->view('emails')
-            ->subject($this->emailData->subject)
+            ->subject($this->emailData['subject'])
             ->with([
                 'header' => $this->emailData->header,
                 'content' => $this->emailData->content,
