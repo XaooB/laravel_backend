@@ -11,6 +11,7 @@ use App\Mail\NotifyUsers;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Mail;
 use Log;
+use App\User;
 
 class SendEmail implements ShouldQueue
 {
