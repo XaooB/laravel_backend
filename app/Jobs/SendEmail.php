@@ -48,7 +48,7 @@ class SendEmail implements ShouldQueue
                         'header' => 'Witaj ' . $user->Name . '!',
                         'content' => $this->message
                     ];
-                    Mail::to($user->Email)->queue(new NotifyUsers($emailData));
+                    Mail::to($user->Email)->send(new NotifyUsers($emailData));
                     Log::info('Emailed to: ' . $user->Email);
             }, function () {
                 return $this->release(2);
