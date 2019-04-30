@@ -16,8 +16,8 @@ class MailController extends Controller
 		{
 			SendEmail::dispatch($request->subject, $request->message, $request->users);
         	Log::info('Dispatched mails');
-        	return response()->json(['status' => true, 'error' => ''], 200);
+        	return response()->json(['message' => 'success'], 200);
 		}
-		return response()->json(['status' => false, 'error' => 'invalid data'], 400);
+		return response()->json(['message' => 'invalid data'], 400);
 	}
 }

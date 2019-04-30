@@ -40,19 +40,19 @@ class SendEmail implements ShouldQueue
      */
     public function handle()
     {
-        Redis::throttle('user-notification-emails')->allow(2)->every(1)->then(function () {
-            $usersData = User::select('Email', 'Name')->whereIn('id', $this->users)->get();
-            foreach ($usersData as $key => $user) {
-                $emailData = [
-                    'subject' => $this->subject,
-                    'header' => 'Witaj ' . $user->Name . '!',
-                    'content' => $this->message
-                ];
-                Mail::to($user->Email)->queue(new NotifyUsers($emailData));
-                Log::info('Emailed to: ' . $user->Email);
-            }
-        }, function () {
-            return $this->release(2);
-        });
+        $usersData = User::select('Email', 'Name')->whereIn('id', $this->users)->get();
+        foreach ($usersData as $key => $user) {
+            Redis::throttle('user-notification-emails')->allow(2)->every(1)->then(function () {
+                    $emailData = [
+                        'subject' => $this->subject,
+                        'header' => 'Witaj ' . $user->Name . '!',
+                        'content' => $this->message
+                    ];
+                    Mail::to($user->Email)->send(new NotifyUsers($emailData));
+                    Log::info('Emailed to: ' . $user->Email);
+            }, function () {
+                return $this->release(2);
+            });
+        }
     }
 }
