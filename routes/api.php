@@ -47,7 +47,7 @@ Route::get('auth/test/admin', function(Request $request) {
     $_SESSION['create_date'] = $userData->create_date;
     return redirect(env('APP_URL'));
 });
-
+//
 Route::post('mails/send-notifications', 'MailController@sendMailNotification')->name('mails.send-notifications');
 
 // Use middleware to allow Client-side use API
