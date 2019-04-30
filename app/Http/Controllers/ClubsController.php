@@ -33,6 +33,18 @@ class ClubsController extends Controller
         FootballAPIController::getClubs_ExternalAPI('https://api.football-data.org/v2/competitions/CL/teams', 'a526814bc45a452ea371bec3ec82baaf');
     }
 
+    public function update_clubs_CL()
+    {
+        // UEFA Champions League Clubs
+        FootballAPIController::getClubs_ExternalAPI('https://api.football-data.org/v2/competitions/CL/teams', 'a526814bc45a452ea371bec3ec82baaf');
+    }
+
+    public function update_clubs_PD()
+    {
+        // Spain League Clubs
+        FootballAPIController::getClubs_ExternalAPI('https://api.football-data.org/v2/competitions/PD/teams', 'a526814bc45a452ea371bec3ec82baaf');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
