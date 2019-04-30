@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Facades\App\CacheData\MatchesCache;
 use App\Http\Controllers\MatchesController;
 
 class UpdateFinished extends Command

@@ -12,7 +12,7 @@ class MatchesCache
 {
 	CONST CACHE_KEY = 'MATCHES';
 
-	public function next_match_date()
+	public static function next_match_date()
 	{
 		$key = 'next_match_date';
 		$cacheKey = $this->getCacheKey($key);
