@@ -59,19 +59,19 @@ class MatchesController extends Controller
         //
     }
 
-    public function update_scheduled_matches()
+    public static function update_scheduled_matches()
     {
         // Upcoming Matches
         FootballAPIController::getScheduledMatches_ExternalAPI('https://api.football-data.org/v2/teams/86/matches?status=SCHEDULED', env('APP_FootballAPIToken'), 'SCHEDULED');
     }
 
-    public function update_live_match()
+    public static function update_live_match()
     {
         // Live Match Result
         FootballAPIController::getLiveMatch_ExternalAPI('https://api.football-data.org/v2/teams/86/matches?status=LIVE', env('APP_FootballAPIToken'), 'LIVE');
     }
 
-    public function update_finished_matches()
+    public static function update_finished_matches()
     {
         // Latest Match Result
         FootballAPIController::getFinishedMatches_ExternalAPI('https://api.football-data.org/v2/teams/86/matches?status=FINISHED', env('APP_FootballAPIToken'), 'FINISHED');

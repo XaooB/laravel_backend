@@ -35,7 +35,7 @@ class PlayersController extends Controller
         FootballAPIController::getPlayers_ExternalAPI('https://api.football-data.org/v2/teams/' . env("APP_FootallAPIMyTeamID"), env('APP_FootballAPIToken'));
     }
 
-    public function update_players()
+    public static function update_players()
     {
         // My Team Squad
         FootballAPIController::getPlayers_ExternalAPI('https://api.football-data.org/v2/teams/' . env("APP_FootallAPIMyTeamID"), env('APP_FootballAPIToken'));
