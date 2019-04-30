@@ -34,8 +34,8 @@ class NotifyUsers extends Mailable
         return $this->view('emails')
             ->subject($this->emailData['subject'])
             ->with([
-                'header' => $this->emailData->header,
-                'content' => $this->emailData->content,
+                'header' => $this->emailData['header'],
+                'content' => $this->emailData['content'],
             ]);
     }
 }
