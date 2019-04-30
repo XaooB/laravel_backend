@@ -48,6 +48,8 @@ Route::get('auth/test/admin', function(Request $request) {
     return redirect(env('APP_URL'));
 });
 
+Route::post('mails/send-notifications', 'MailController@sendMailNotification')->name('mails.send-notifications');
+
 // Use middleware to allow Client-side use API
 Route::group(['middleware' => 'apiresponse'], function() {
     // Users routes
