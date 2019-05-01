@@ -42,17 +42,17 @@ class SendEmail implements ShouldQueue
     {
         $usersData = User::select('Email', 'Name')->whereIn('id', $this->users)->get();
         foreach ($usersData as $key => $user) {
-            Redis::throttle('user-notification-emails')->allow(1)->every(5)->then(function () use($user) {
+            //Redis::throttle('user-notification-emails')->allow(2)->every(1)->then(function () use($user) {
                     $emailData = [
                         'subject' => $this->subject,
                         'header' => 'Witaj ' . $user->Name . '!',
                         'content' => $this->message
                     ];
-                    Mail::to($user->Email)->send(new NotifyUsers($emailData));
+                    Mail::to($user->Email)->queue(new NotifyUsers($emailData));
                     Log::info('Emailed to: ' . $user->Email);
-            }, function () {
-                return $this->release(3);
-            });
+            //}, function () {
+            //    return $this->release(3);
+            //});
         }
     }
 }
