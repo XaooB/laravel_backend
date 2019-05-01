@@ -26,11 +26,11 @@ class SendEmail implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($subject, $message, $users)
+    public function __construct($request)
     {
-        $this->subject = $subject;
-        $this->message = $message;
-        $this->users = $users;
+        $this->subject = $request->subject;
+        $this->message = $request->$message;
+        $this->users = $request->$users;
     }
 
     /**

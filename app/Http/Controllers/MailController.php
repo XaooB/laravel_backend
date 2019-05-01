@@ -15,8 +15,7 @@ class MailController extends Controller
 	{
 		if($request->validated())
 		{
-			$usersData = User::select('Email', 'Name')->whereIn('id', $request->users)->get();
-			SendEmail::dispatch($request->subject, $request->message, $usersData);
+			SendEmail::dispatch($request);
         	Log::info('Dispatched mails');
         	return response()->json(['message' => 'success'], 200);
 		}
