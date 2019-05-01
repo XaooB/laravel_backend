@@ -14,8 +14,7 @@ class MailController extends Controller
 	{
 		if($request->validated())
 		{
-			var_dump($request->users);
-			SendEmail::dispatch($request->subject, $request->message, $request->users);
+			SendEmail::dispatch($request->subject, $request->message, $request->users)->onQueue('default');
         	Log::info('Dispatched mails');
         	return response()->json(['message' => 'success'], 200);
 		}
