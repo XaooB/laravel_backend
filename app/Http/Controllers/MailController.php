@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\MailRequest;
 use App\Jobs\SendEmail;
 use Log;
+use App\User;
 
 class MailController extends Controller
 {
