@@ -14,7 +14,7 @@ class MailController extends Controller
 	{
 		if($request->validated())
 		{
-			SendEmail::dispatch($request->subject, $request->message, $request->users)->onQueue('default');
+			SendEmail::dispatch($request->subject, $request->message, $request->users)->onConnection('redis')->onQueue('default');
         	Log::info('Dispatched mails');
         	return response()->json(['message' => 'success'], 200);
 		}
