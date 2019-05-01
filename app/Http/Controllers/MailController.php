@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\MailRequest;
 use App\Jobs\SendEmail;
 use Log;
-use App\User;
 
 class MailController extends Controller
 {
@@ -15,6 +14,7 @@ class MailController extends Controller
 	{
 		if($request->validated())
 		{
+			var_dump($request->users);
 			SendEmail::dispatch($request->subject, $request->message, $request->users);
         	Log::info('Dispatched mails');
         	return response()->json(['message' => 'success'], 200);
