@@ -15,7 +15,7 @@ class CommentsEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $idArticle;
+    private $idArticle;
 
     /**
      * Create a new event instance.
@@ -34,6 +34,6 @@ class CommentsEvent implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new Channel('article.' . $this->idArticle);
+        return new Channel('articles.' . $this->idArticle);
     }
 }
