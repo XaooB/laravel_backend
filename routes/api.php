@@ -47,8 +47,6 @@ Route::get('auth/test/admin', function(Request $request) {
     $_SESSION['create_date'] = $userData->create_date;
     return redirect(env('APP_URL'));
 });
-//
-Route::post('mails/send-notifications', 'MailController@sendMailNotification')->name('mails.send-notifications');
 
 // Use middleware to allow Client-side use API
 Route::group(['middleware' => 'apiresponse'], function() {
@@ -177,6 +175,8 @@ Route::group(['middleware' => 'apiauth'], function() {
     // Restrict routes only to Root/Admin privileges
     Route::group(['middleware' => 'checkprivilege', 'privileges' => ['root', 'administrator']], function() {
         Route::put('users_change_user_privilege/{id}', 'UsersController@change_user_privilege')->name('users.change_user_privilege');
+        //
+        Route::post('mails/send-notifications', 'MailController@sendMailNotification')->name('mails.send-notifications');
         // Privileges routes
         Route::resource('privileges', 'PrivilegesController')->except(['index']);
         // Statuses routes
