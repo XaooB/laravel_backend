@@ -5,6 +5,7 @@ import MiniLoader from './mini_loader';
 const Btn = styled.button`
   padding:10px 12px;
   display:flex;
+  margin-bottom:6px;
   justify-content:center;
   align-items:center;
   min-width:150px;
@@ -26,6 +27,8 @@ const Btn = styled.button`
 const BtnDisabled = styled.button`
   padding:8px 12px;
   display:flex;
+  margin-bottom:6px;
+  border-radius:6px;
   justify-content:center;
   align-items:center;
   min-width:150px;
@@ -38,17 +41,36 @@ const BtnDisabled = styled.button`
 `
 
 const Spinner = styled.div`
-  border: 4px solid #fff;
-  border-radius: 50%;
-  border-top: 4px solid #00529f;
-  width: 18px;
-  height: 18px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
+    margin: 4px auto 0;
+    width: 36px;
+    text-align: center;
+  > div {
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: spin 1.4s infinite ease-in-out both;
+    animation: spin 1.4s infinite ease-in-out both;
+    &:nth-child(1) {
+      -webkit-animation-delay: -0.32s;
+      animation-delay: -0.32s;
+    }
+
+    &:nth-child(2) {
+      -webkit-animation-delay: -0.16s;
+      animation-delay: -0.16s;
+    }
+  }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0%, 80%, 100% {
+      -webkit-transform: scale(0);
+      transform: scale(0);
+    } 40% {
+      -webkit-transform: scale(1.0);
+      transform: scale(1.0);
+    }
   }
 `
 
@@ -58,13 +80,12 @@ const Button = props => {
   return (
       isFetching ?
       (
-        <BtnDisabled
-          fullWidth={props.fullWidth}
-          type='button'
-          onClick={props.onClick}
-          disabled
-          >
-          <Spinner />
+        <BtnDisabled disabled>
+          <Spinner>
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+          </Spinner>
         </BtnDisabled>
       ) : (
         <Btn

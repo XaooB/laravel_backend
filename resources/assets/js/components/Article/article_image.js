@@ -2,12 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ImageWrapper = styled.figure`
-  max-height: 500px;
   overflow:hidden;
+  height:250px;
+  display:flex;
+  justify-content:center;
+  flex-flow:row wrap;
+  @media (min-width: 480px) {
+    max-height: 500px;
+    height:auto;
+    font-size:2.6em;
+  }
 `
 
 const Image = styled.img`
-  width:100%;
+  height:250px;
+  @media (min-width: 480px) {
+    width:100%;
+    height:100%;
+  }
 `
 
 const ArticleImage = props => {

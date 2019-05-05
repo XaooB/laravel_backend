@@ -13,20 +13,6 @@ const Nav = styled.nav`
   }
 `
 
-const MobileNav = styled.div`
-  display:flex;
-  padding:4px 6px;
-  align-items:center;
-  color:#fff;
-  font-size: 1.3em;
-  font-family:'SSPBK'
-  justify-content:center;
-  background: #00529f;
-  @media (min-width: 640px) {
-    display:none;
-  }
-`
-
 const List = styled.ul`
   list-style:none;
 `
@@ -86,7 +72,7 @@ const Navigation = props => {
             <ListLink to='/app/news'>
               <ListItem>wiadomości</ListItem>
             </ListLink>
-            <ListLink to='/app/club'>
+            <ListLink to='/app/realmadrid'>
               <ListItem>real madryt</ListItem>
             </ListLink>
             <ListLink to='/app/schedule'>

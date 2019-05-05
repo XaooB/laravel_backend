@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
     case FETCH_CATEGORIES:
       return {...state, categories: action.payload}
     case ADD_SELECTED_CATEGORIES:
-      return {...state, selectedCategoriesByUser: [...state.selectedCategoriesByUser, action.payload]}
+      return {...state, selectedCategoriesByUser: [...state.selectedCategoriesByUser.filter(item => item.id !== action.payload.id), action.payload]}
     case DELETE_SELECTED_CATEGORIES:
       return {...state, selectedCategoriesByUser: state.selectedCategoriesByUser.filter(item => item.id !== action.payload)}
     case INC_COMMENT_COUNT:

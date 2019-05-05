@@ -33,10 +33,8 @@ const Field = styled.td`
 `
 
 const Row = styled.tr`
-  &:nth-child(odd) {
-    ${Field} {
-      background:#F3F4F8;
-    }
+  &:not(:last-child) {
+    border-bottom:1px solid #ededed;
   }
 `
 
@@ -118,7 +116,11 @@ class ArticleTable extends Component {
                     <Field>DODANY</Field>
                     <Field>{item.title}</Field>
                     <Field>
-                      <input type='checkbox' />
+                      {
+                        item.main ?
+                        <input type='checkbox' name='main' defaultChecked />
+                        : <input type='checkbox' name='main' />
+                      }
                     </Field>
                     <Field>{item.category}</Field>
                     <Field>

@@ -1,0 +1,44 @@
+import React, { Component, Fragment } from 'react';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+import PageHeader from '../../components/Reusable/PageHeader'
+import Footer from '../../components/Reusable/footer';
+import { Helmet } from 'react-helmet';
+
+const Main = styled.main`
+  max-width: 1300px;
+  color:#1e1e1e;
+  padding:0 5px;
+  margin:40px auto;
+  padding-right:45px;
+  @media (min-width: 640px) {
+    padding-right:0;
+  }
+`
+
+const Info = styled.p`
+  margin-top:16px;
+`
+
+class Notifications extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <Fragment>
+        <Helmet>
+          <title>Twoje powiadomienia - portal-wertykalny.herokuapp.com</title>
+        </Helmet>
+        <Main>
+          <PageHeader>Powiadomienia</PageHeader>
+          <Info>tutaj pojawią się powiadomienia</Info>
+        </Main>
+        <Footer />
+      </Fragment>
+    )
+  }
+}
+
+export default Notifications;

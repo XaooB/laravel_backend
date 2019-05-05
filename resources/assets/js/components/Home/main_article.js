@@ -9,13 +9,24 @@ const Article = styled.article`
 `
 
 const Image = styled.img`
-  width:100%;
+  height:250px;
+  @media (min-width: 480px) {
+    width:100%;
+    height:100%;
+  }
 `
 
 const ImageWrapper = styled.figure`
-  max-height: 500px;
+  height: 250px
+  display:flex;
+  justify-content:center;
+  flex-flow:row wrap;
   overflow:hidden;
-  position:relative;
+  @media (min-width: 480px) {
+    max-height: 500px;
+    height:auto;
+    font-size:2.6em;
+  }
 `
 
 const Category = styled.span`

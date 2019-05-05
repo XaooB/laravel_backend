@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { GoCommentDiscussion } from 'react-icons/go';
+import createLink from '../../helpers/createLink';
 
 const Article = styled.article`
   flex:1 1 160px;
   max-width:260px;
   margin-bottom:10px;
   &:not(:last-child) {
-    padding-right:2px;
+    padding-right:5px;
   }
   @media only screen and (max-width: 900px) {
     max-width:100%;
@@ -19,14 +20,13 @@ const Article = styled.article`
 `
 
 const ImageWrapper = styled.figure`
-  max-height:90px;
+  height:70px;
   display:flex;
   overflow:hidden;
 `
 
 const Image = styled.img`
    width:100%;
-   height:100%;
    align-self:center;
 `
 
@@ -36,12 +36,9 @@ const Header = styled.header`
 
 const Category = styled.span`
   display:block;
-  font-size:.85em;
+  font-size:.7em;
+  font-family:'AvenirLTB';
   text-transform:uppercase;
-`
-
-const Title = styled.h3`
-  font-family: 'SSPB';
 `
 
 const Footer = styled.footer`
@@ -51,17 +48,8 @@ const Footer = styled.footer`
   align-items:center;
 `
 
-const Hover = styled.span`
-  border-bottom:0px solid #00529f;
-  transition: border .15s;
-`
-
 const LinkTo = styled(Link)`
   color:inherit;
-  &:hover ${Hover} {
-    border-bottom:3px solid #00529f;
-    transition: border .15s;
-  }
 `
 
 const Author = styled.div`
@@ -84,10 +72,10 @@ const ImageContainer = styled.figure`
   margin-top:-2px;
   display:flex;
   justify-content:center;
-  min-width:35px;
-  min-height:35px;
-  max-width:35px;
-  max-height:35px;
+  min-width:25px;
+  min-height:25px;
+  max-width:25px;
+  max-height:25px;
   margin-right:10px;
   overflow:hidden;
   align-self:flex-start;
@@ -95,7 +83,11 @@ const ImageContainer = styled.figure`
 `
 
 const ImageAuthor = styled.img`
-  height:35px;
+  height:25px;
+`
+
+const UserName = styled.span`
+  font-size:.9em;
 `
 
 const Count = styled.span`
@@ -104,9 +96,13 @@ const Count = styled.span`
   font-size:.9em;
 `
 
+const Title = styled.h3`
+  font-weight:lighter;
+`
+
 const RelatedListItem = props => {
   const { image, category, title, idarticle, comments_count, user } = props.article,
-          link = `/app/news/${category.replace(/ /g,'-')}/${idarticle}/${title.replace(/ /g,'-').toLowerCase()}`;
+          link = createLink(props.article);
 
   return (
     <Article>
@@ -116,9 +112,7 @@ const RelatedListItem = props => {
       <Header>
         <LinkTo to={link}>
           <Category>{category}</Category>
-          <Title>
-            <Hover>{title}</Hover>
-          </Title>
+          <Title>{title}</Title>
         </LinkTo>
       </Header>
       <Footer>
@@ -126,7 +120,7 @@ const RelatedListItem = props => {
           <ImageContainer>
             <ImageAuthor src={user.image} title={user.name} alt={user.name} />
           </ImageContainer>
-          <span>{user.name}</span>
+          <UserName>{user.name}</UserName>
         </Author>
         <Statistics title='komentarze'>
           <GoCommentDiscussion />

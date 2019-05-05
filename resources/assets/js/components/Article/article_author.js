@@ -43,7 +43,7 @@ const Author = props => {
   return (
     <Wrapper>
       <Sticky>
-        <LinkTo to='/club'>{category}</LinkTo>
+        <LinkTo to='/news'>{category}</LinkTo>
         <PublishedBy>posted by {user.name}, <br/> 3 hours ago</PublishedBy>
         <Share url={props.url} />
       </Sticky>

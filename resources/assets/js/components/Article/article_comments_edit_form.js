@@ -6,15 +6,13 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import MiniLoader from '../../components/Reusable/mini_loader';
 import {API} from '../../helpers/api';
-
 import { editComment, setCommentStatus } from '../../actions/';
-
-window.axios = axios;
 
 const Form = styled.form`
   flex:8;
   width:100%;
   margin-top:10px;
+  margin-bottom:5px;
   margin-left:5px;
 `
 
@@ -50,6 +48,14 @@ const Wrapper = styled.section`
   display:flex;
   flex-flow: row wrap;
   justify-content: space-between;
+`
+
+const ButtonWrapper = styled.div`
+  display:flex;
+  flex-flow:row wrap;
+  > button:not(:last-child) {
+    margin-right:10px;
+  }
 `
 
 class EditCommentForm extends Component {
@@ -101,7 +107,7 @@ class EditCommentForm extends Component {
   }
 
   render() {
-    const { charactersUsed } = this.state,
+    const { charactersUsed, fetchingStatus } = this.state,
           { articleID, commentID, user, comments, isEditing } = this.props;
 
     return (
@@ -109,15 +115,10 @@ class EditCommentForm extends Component {
         <TextField value={this.state.content} onChange={this.handleTextarea} maxLength='500'></TextField>
         <Wrapper>
           <Counter id='counter'>Użyto znaków: {charactersUsed}/500</Counter>
-          <Wrapper style={{alignSelf: 'flex-end', alignItems:'center'}}>
-            {this.state.fetchingStatus
-              ? <MiniLoader />
-              : ''}
-            <div style={{marginRight:10}}>
-              <Button name='Anuluj' onClick={this.cancelPost} />
-            </div>
-            <Button name='Edytuj wiadomość' colorBlue onClick={this.handlePost} />
-          </Wrapper>
+          <ButtonWrapper>
+            <Button name='Anuluj' onClick={this.cancelPost} />
+            <Button name='Edytuj wiadomość' colorBlue onClick={this.handlePost} isFetching={fetchingStatus} />
+          </ButtonWrapper>
         </Wrapper>
       </Form>
     )

@@ -7,7 +7,12 @@ import Home from '../containers/Home';
 import Live from '../containers/Live';
 import Search from '../containers/Search';
 import News from '../containers/News';
+import RealMadrid from '../containers/RealMadrid';
 import Schedule from '../containers/Schedule';
+import Contact from '../containers/Contact';
+import User from '../containers/User';
+import Messages from '../containers/Messages';
+import Notifications from '../containers/Notifications';
 import SingleArticle from '../containers/Article';
 import NotAllowed from './Reusable/not_allowed';
 import AdminDashboard from '../containers/Admin/Dashboard';
@@ -87,6 +92,11 @@ class App extends Component {
                 <Route path={`${url}/news/:category`} component={ News } />
                 <Route path={`${url}/news`} component={ News } />
                 <Route path={`${url}/live`} component={ Live } />
+                <Route path={`${url}/user/messages`} component={ Messages } />
+                <Route path={`${url}/user/notifications`} component={ Notifications } />
+                <Route path={`${url}/user/:id`} component={ User } />
+                <Route path={`${url}/contact`} component={ Contact } />
+                <Route path={`${url}/realmadrid`} component={ RealMadrid } />
                 <Route path={`${url}/search/:keyword`} component={ Search } />
                 <Route path={`${url}/schedule`} component={ Schedule } />
                 <Route path={`${url}/unauthorized`} component={ NotAllowed } />

@@ -202,9 +202,9 @@ class SingleComment extends Component {
                 </FooterItem>
                 {user[0].tier > 2
                   ? (
-                    <FooterItem title="Ukryj komentarz" style={{ color: '#ee324e' }} onClick={this.handleHide}>
+                    <FooterItem title="Zbanuj komentarz" style={{ color: '#ee324e' }} onClick={this.handleHide}>
                       <IoIosFlag />
-                      <ActionName>Ukryj</ActionName>
+                      <ActionName>Zbanuj</ActionName>
                     </FooterItem>
                   )
                   : ''

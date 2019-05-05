@@ -40,7 +40,7 @@ const LinkTo = styled(Link)`
   height:inherit;
   display:flex;
   justify-content:space-between;
-  flex-flow:column wrap;
+  flex-flow:column nowrap;
   @media (min-width: 640px) {
     flex-flow:row wrap;
   }
