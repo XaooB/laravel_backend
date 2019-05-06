@@ -48,6 +48,16 @@ Route::get('auth/test/admin', function(Request $request) {
     return redirect(env('APP_URL'));
 });
 
+Route::get('test', function(Request $request) {
+    User::chunk(2, function ($users) {
+        foreach ($users as $user) {
+            echo $user->id;
+        }
+        echo 'chunked.';
+    });
+    return;
+});
+
 // Use middleware to allow Client-side use API
 Route::group(['middleware' => 'apiresponse'], function() {
     // Users routes
