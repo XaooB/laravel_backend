@@ -38,6 +38,27 @@ const TextField = styled.textarea`
   }
 `
 
+const UserImageContainer = styled.figure`
+  display:none;
+  justify-content:center;
+  min-width:55px;
+  min-height:55px;
+  max-width:55px;
+  max-height:55px;
+  margin-top:10px;
+  margin-right:10px;
+  overflow:hidden;
+  align-self:flex-start;
+  border-radius:100%;
+  @media (min-width: 640px) {
+    display:flex;
+  }
+`
+
+const UserImage = styled.img`
+  height:55px;
+`
+
 const Counter = styled.span`
   font-weight:lighter;
   display:block;
@@ -102,7 +123,9 @@ class AddCommentForm extends Component {
 
     return (
       <Wrapper>
-        <User user={user[0]} />
+        <UserImageContainer>
+          <UserImage  src={user[0].image} title='' alt='' />
+        </UserImageContainer>
         <Form>
           <TextField value={this.state.content} onChange={this.handleTextarea} maxLength='500'></TextField>
           <Wrapper>

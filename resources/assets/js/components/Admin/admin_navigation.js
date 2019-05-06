@@ -8,7 +8,8 @@ import {
   MdKeyboardArrowRight,
   MdPoll,
   MdPerson,
-  MdHome
+  MdHome,
+  MdLiveTv
 } from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
@@ -108,7 +109,6 @@ const AdminNavigation = () => {
             <MdPoll />
             <Text>Ankiety</Text>
           </AlignMid>
-          <MdKeyboardArrowRight />
         </Item>
       </LinkTo>
       <LinkTo to="/admin/players">
@@ -117,18 +117,27 @@ const AdminNavigation = () => {
             <MdPerson />
             <Text>Piłkarze</Text>
           </AlignMid>
-          <MdKeyboardArrowRight />
         </Item>
       </LinkTo>
-      <LinkTo to="/app">
+      <LinkTo to="/admin/live">
         <Item>
           <AlignMid>
-            <MdHome />
-            <Text>Strona główna</Text>
+            <MdLiveTv />
+            <Text>Centrum Meczowe</Text>
           </AlignMid>
-          <MdKeyboardArrowRight />
         </Item>
       </LinkTo>
+      </NavList>
+      <NavList>
+        <Item>Wróć do aplikacji</Item>
+        <LinkTo to="/app">
+          <Item>
+            <AlignMid>
+              <MdHome />
+              <Text>Strona główna</Text>
+            </AlignMid>
+          </Item>
+        </LinkTo>
       </NavList>
     </Nav>
   )

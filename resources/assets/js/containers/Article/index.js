@@ -30,8 +30,10 @@ const Container = styled.section`
   display:flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  margin-top:40px;
   padding:0 5px;
+  @media (min-width: 480px) {
+    margin-top:40px;
+  }
 `
 
 class SingleArticle extends Component {
