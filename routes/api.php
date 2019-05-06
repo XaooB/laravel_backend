@@ -49,13 +49,17 @@ Route::get('auth/test/admin', function(Request $request) {
 });
 
 Route::get('test', function(Request $request) {
-    User::chunk(2, function ($users) {
-        foreach ($users as $user) {
-            echo $user->id;
+    $handle = fopen("https://www.realmadrid.com/en", "r");
+    if ($handle) 
+    {
+        while (!feof($handle)) 
+        {
+            $buffer = fgets($handle, 4096);
+            echo $buffer;
+            break;
         }
-        echo 'chunked ';
-    });
-    return;
+        fclose($handle);
+    }
 });
 
 // Use middleware to allow Client-side use API
