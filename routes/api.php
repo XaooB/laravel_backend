@@ -53,7 +53,7 @@ Route::get('test', function(Request $request) {
         foreach ($users as $user) {
             echo $user->id;
         }
-        echo 'chunked.';
+        echo 'chunked ';
     });
     return;
 });
