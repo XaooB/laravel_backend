@@ -1,16 +1,13 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+## About Project
+Website that provides global (mainly spanish) information about spanish club Real Madrid C.F. for polish fans. 
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Technologies Used
+### Frontend side
+HTML, CSS, JS, ReactJS, Redux
 
-Used external APIs: </br>
-Google+ API - user authorization/authentication </br>
-Cloudinary API - image storage </br>
-Football-data.org API - football data </br>
+### Backend side
+MySQL, PHP, Laravel
 
-RDBMS (MySQL) - 1st layer storage </br>
-Redis - 2nd layer storage, queue jobs</br>
+## Contributions
+Marcin M. (https://github.com/Marcin250)
+
