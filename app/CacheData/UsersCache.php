@@ -49,7 +49,7 @@ class UsersCache
 
 	public function profile($id, $quantity)
 	{
-		$key = 'profile.' . $id;
+		$key = 'profile.' . $id . '.' . $quantity;
 		$cacheKey = $this->getCacheKey($key);
 		return cache()->remember($cacheKey, Carbon::now()->addSeconds(10), function() use($id, $quantity) {
 			$likedArticles = DB::table('articles')->rightJoin('user_likes', 'user_likes.idReference', '=', 'articles.idarticle')->leftJoin('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->distinct()->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.Main as main', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->where('user_likes.idUser', $id)->limit($quantity)->get();
