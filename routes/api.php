@@ -64,7 +64,7 @@ Route::group(['middleware' => 'apiresponse'], function() {
     Route::get('users_by_name/{name}', 'UsersController@by_name')->name('users.by_name');
     Route::get('users_check_user', 'UsersController@check_user')->name('users.check_user');
     Route::get('users_check_token', 'UsersController@check_token')->name('users.check_token');
-    Route::get('users_get_profile/{id}/{count}', 'UsersController@get_profile')->name('users.get_profile');
+    Route::get('users_get_profile/{id}/{quantity}', 'UsersController@get_profile')->name('users.get_profile');
     // Articles routes
     Route::get('articles_latest/{count}', 'ArticlesController@latest')->name('articles.latest');
     Route::get('articles_latest_main/{count}', 'ArticlesController@latest_main')->name('articles.latest_main');

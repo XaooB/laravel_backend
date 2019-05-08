@@ -87,9 +87,9 @@ class UsersController extends Controller
             return response()->json($_SESSION);
 	}
 
-    public function get_profile($id, $count)
+    public function get_profile($id, $quantity)
     {
-        $userProfile = UsersCache::profile($id, $count);
+        $userProfile = UsersCache::profile($id, $quantity);
         return response()->json($userProfile);
     }
 
