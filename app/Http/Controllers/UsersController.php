@@ -32,7 +32,7 @@ class UsersController extends Controller
     {
         if(DB::table('users')->where($whereColumn, $user)->count() > 0)
         {
-            $user = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at as create_date')->where('users.' . $whereColumn, $user)->first();
+            $user = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idUser = users.id) as likes_count'), 'users.created_at as create_date')->where('users.' . $whereColumn, $user)->first();
             if($user->status == 'usunięty')
             {
                 $user->email = null;

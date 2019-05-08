@@ -56,9 +56,9 @@ class UsersCache
 			$latestComments = DB::table('comments')->leftJoin('articles', 'articles.idArticle', '=', 'comments.idReference')->select('comments.idComment as idcomment', 'comments.idReference as idarticle', 'articles.Title as title', 'comments.Content as content', 'comments.created_at as create_date', 'comments.updated_at as modify_date')->where('comments.idUser', $id)->orderBy('comments.created_at', 'desc')->limit(7)->get();
 			$articleLikes = DB::table('user_likes')->select(DB::raw('count(idUser) as likes'))->where('idUser', $id)->first();
 			$userProfile = [
+				'user' => $this->by_id($id),
 				'likedArticles' => $likedArticles,
-				'latestComments' => $latestComments,
-				'articleLikes' => $articleLikes->likes
+				'latestComments' => $latestComments
 			];
 			return $userProfile;
 		});
