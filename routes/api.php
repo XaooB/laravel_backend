@@ -49,17 +49,9 @@ Route::get('auth/test/admin', function(Request $request) {
 });
 
 Route::get('test', function(Request $request) {
-    $handle = fopen("https://www.realmadrid.com/en", "r");
-    if ($handle) 
-    {
-        while (!feof($handle)) 
-        {
-            $buffer = fgets($handle, 4096);
-            echo $buffer;
-            break;
-        }
-        fclose($handle);
-    }
+    $status = cache()->forget('MATCHES.FINISHED.1');
+    var_dump($status);
+    return;
 });
 
 // Use middleware to allow Client-side use API
@@ -72,7 +64,7 @@ Route::group(['middleware' => 'apiresponse'], function() {
     Route::get('users_by_name/{name}', 'UsersController@by_name')->name('users.by_name');
     Route::get('users_check_user', 'UsersController@check_user')->name('users.check_user');
     Route::get('users_check_token', 'UsersController@check_token')->name('users.check_token');
-    Route::get('users_get_profile/{id}', 'UsersController@get_profile')->name('users.get_profile');
+    Route::get('users_get_profile/{id}/{count}', 'UsersController@get_profile')->name('users.get_profile');
     // Articles routes
     Route::get('articles_latest/{count}', 'ArticlesController@latest')->name('articles.latest');
     Route::get('articles_latest_main/{count}', 'ArticlesController@latest_main')->name('articles.latest_main');

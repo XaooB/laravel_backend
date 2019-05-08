@@ -47,13 +47,13 @@ class UsersCache
 		});
 	}
 
-	public function profile($id)
+	public function profile($id, $count)
 	{
 		$key = 'profile.' . $id;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(10), function() use($id) {
-			$likedArticles = DB::table('articles')->rightJoin('user_likes', 'user_likes.idReference', '=', 'articles.idarticle')->leftJoin('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->distinct()->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.Main as main', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->where('user_likes.idUser', $id)->get();
-			$latestComments = DB::table('comments')->leftJoin('articles', 'articles.idArticle', '=', 'comments.idReference')->select('comments.idComment as idcomment', 'comments.idReference as idarticle', 'articles.Title as title', 'comments.Content as content', 'comments.created_at as create_date', 'comments.updated_at as modify_date')->where('comments.idUser', $id)->orderBy('comments.created_at', 'desc')->limit(7)->get();
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(10), function() use($id, $count) {
+			$likedArticles = DB::table('articles')->rightJoin('user_likes', 'user_likes.idReference', '=', 'articles.idarticle')->leftJoin('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->distinct()->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.Main as main', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->where('user_likes.idUser', $id)->limit($count)->get();
+			$latestComments = DB::table('comments')->leftJoin('articles', 'articles.idArticle', '=', 'comments.idReference')->select('comments.idComment as idcomment', 'comments.idReference as idarticle', 'articles.Title as title', 'comments.Content as content', 'comments.created_at as create_date', 'comments.updated_at as modify_date')->where('comments.idUser', $id)->orderBy('comments.created_at', 'desc')->limit(7)->limit($count)->get();
 			$articleLikes = DB::table('user_likes')->select(DB::raw('count(idUser) as likes'))->where('idUser', $id)->first();
 			$userProfile = [
 				'user' => $this->by_id($id),
