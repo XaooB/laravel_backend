@@ -291,7 +291,7 @@ class ArticlesController extends Controller
         public function destroy(Request $request, $id)
         {
             if(Articles::where('idArticle', $id)->where('idUser', $_SESSION['iduser'])->delete())
-                if(Comments::where('idArticle', $id)->delete())
+                if(Comments::where('idReference', $id)->delete())
                     return response()->json(['status' => true, 'error' => ''], 202);
                 return response()->json(['status' => false, 'error' => 'wrong data'], 400);
         }
