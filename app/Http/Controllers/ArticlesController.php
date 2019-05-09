@@ -106,9 +106,13 @@ class ArticlesController extends Controller
             else
                 $user = 'none';
             $articles = ArticlesCache::article($id, $user);
-            $articles->user = UsersCache::by_id($articles->user);
-            Articles::where('idArticle', $id)->increment('Views', 1);
-            return response()->json($articles);
+            if($articles)
+            {
+                $articles->user = UsersCache::by_id($articles->user);
+                Articles::where('idArticle', $id)->increment('Views', 1);
+                return response()->json($articles);
+            }
+            return response()->json(['status' => false, 'error' => 'wrong data'], 400);
         }
 
         public static function BuildNeighboursData($ids)
@@ -137,7 +141,7 @@ class ArticlesController extends Controller
                 return response()->json($articles);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 400);
         }
 
         public function by_category($count, Request $request)

@@ -39,8 +39,9 @@ class ArticlesCache
                 }
                 else
                     $article->liked = false;
+                return $article;
             }
-          	return $article;
+          	return false;
 		});
 	}
 

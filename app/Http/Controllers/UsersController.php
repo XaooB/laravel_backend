@@ -200,7 +200,7 @@ class UsersController extends Controller
         if($request->file('image') != null && ValidatorController::checkUploadFile($request->file('image'), $check_file_msg))
         {
             $image_name = 'users' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
-            $destinationFolder = public_path('images') . '/articles/';
+            $destinationFolder = public_path('images') . '/users/';
             $request->file('image')->move($destinationFolder, $image_name);
             $path = $destinationFolder . $image_name;
 
