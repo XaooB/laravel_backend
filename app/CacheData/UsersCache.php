@@ -9,6 +9,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\ArticlesController;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cache;
 
 class UsersCache
 {
@@ -120,6 +121,6 @@ class UsersCache
 	{
 		$key = 'by_id.' . $id;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->forget($cacheKey);
+		return Cache::forget($cacheKey);
 	}
 }

@@ -210,6 +210,12 @@ class UsersController extends Controller
                 $_SESSION['image'] = $userImage;
                 $status = true;
                 $msg .= 'image updated.';
+                UsersCache::removeFromCache($id);
+            }
+            else
+            {
+                $status = false;
+                $msg .= 'invalid file.';
             }
         }
         if(ValidatorController::checkString($request->name, 30))
@@ -219,6 +225,7 @@ class UsersController extends Controller
                 $_SESSION['name'] = $request->name;
                 $status = true;
                 $msg .= 'name updated.';
+                UsersCache::removeFromCache($id);
             }
             else 
             { 
@@ -226,8 +233,6 @@ class UsersController extends Controller
                 $msg .= 'wrong name data.';
             }
         }
-        if($status)
-            UsersCache::removeFromCache($id);
         return response()->json(['status' => $status, 'error' => $msg], 200);
     }
 
