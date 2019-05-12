@@ -49,8 +49,6 @@ Route::get('auth/test/admin', function(Request $request) {
 });
 
 Route::get('test', function(Request $request) {
-    $status = cache()->forget('MATCHES.FINISHED.1');
-    var_dump($status);
     return;
 });
 
