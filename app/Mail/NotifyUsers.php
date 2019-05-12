@@ -34,7 +34,7 @@ class NotifyUsers extends Mailable
             ->subject($this->emailData['subject'])
             ->with([
                 'header' => $this->emailData['header'],
-                'content' => $this->emailData['content'],
+                'content' => $this->emailData['content']
             ]);
     }
 }
