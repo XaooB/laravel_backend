@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FaReply, FaBan } from 'react-icons/fa';
 import { IoIosFlag } from 'react-icons/io';
@@ -98,7 +99,14 @@ const FooterItem = styled.button`
       display:none;
     }
   }
-`;
+`
+
+const LinkTo = styled(Link)`
+  color:inherit;
+  &:hover {
+    color:#00529f;
+  }
+`
 
 /**
  * Renders single Comment.
@@ -154,12 +162,14 @@ class SingleComment extends Component {
         <User user={comment.user} />
         <Article>
           <Header>
-            <UserName>{comment.user.name}</UserName>
+            <UserName title={`Profil użytkownika ${comment.user.name}`}>
+              <LinkTo to={`/app/user/${comment.user.iduser}`}>{comment.user.name}</LinkTo>
+            </UserName>
             {!comment.modify_date
-              ? <Added>{dateConverter.toStageDate(comment.create_date)}</Added>
+              ? <Added>Added {dateConverter.toStageDate(comment.create_date)}</Added>
               : (
                 <Added>
-                  {dateConverter.toStageDate(comment.create_date)} – edytowano
+                  Added {dateConverter.toStageDate(comment.create_date)}, edited
                 </Added>
               )
             }

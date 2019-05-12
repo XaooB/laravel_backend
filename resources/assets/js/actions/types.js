@@ -1,4 +1,6 @@
 export const FETCH_USER = 'FU';
+export const FETCH_USER_PROFILE = 'FUP';
+export const FETCH_USER_CHECK = 'FUC';
 export const FETCH_ARTICLE = 'FA';
 export const FETCH_ADMIN_ARTICLES = 'FAA';
 export const FETCH_ARTICLE_NEIGHBOURS = 'FAN';

@@ -19,10 +19,19 @@ const Article = styled.article`
   flex: 1 1 100%;
   height: auto;
   color:#1e1e1e;
-  margin:1px 0;
+  padding:20px 0;
   overflow:hidden;
+  &:not(:last-child) {
+    border-bottom:1px solid #ededed;
+  }
   @media (min-width: 480px) {
+    margin:5px 0;
+    padding:0;
     height: 80px;
+    border:none;
+    &:not(:last-child) {
+      border: none;
+    }
   }
 `
 
@@ -49,13 +58,15 @@ const Container = styled.div`
 
 const ArticleInfo = styled.header`
   letter-spacing:.5px;
-  border-left:3px solid #FEBE10;
-  padding:5px 0 5px 8px;
   flex:2;
   line-height:1;
-  margin-left:5px;
   color:#1e1e1e;
   width:100%;
+  @media (min-width: 480px) {
+    border-left:3px solid #FEBE10;
+    margin-left:5px;
+    padding:5px 0 5px 8px;
+  }
 `
 
 const Title = styled.h3`

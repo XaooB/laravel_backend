@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
 import MiniLoader from '../Reusable/mini_loader';
 import { FaEdit } from "react-icons/fa";
+import axios from 'axios';
 
 const Container = styled.section`
   width:100%;
@@ -128,62 +128,175 @@ const EditImageButton = styled.button`
   }
 `
 
-const UserSettings = props => {
-  const { user } = props;
+const Info = styled.p`
+  align-self:center;
+  color:#fff;
+`
 
-  return (
-    <Container>
-      {
-        !user.length ?
-        (
-          <MiniLoader />
-        ) : (
-          <Fragment>
-            <UserWrapper>
-              <EditImageButton title='Zmień swój avatar'>
-                <FaEdit /> Zmień zdjęcie
-              </EditImageButton>
-              <ImageWrapper>
-                <Image src={user[0].image} alt={user[0].name} title={user[0].name} />
-              </ImageWrapper>
-              <UserInfo>
-                <UserName>{user[0].name}</UserName>
-                <UserRank>{user[0].privileges}</UserRank>
-              </UserInfo>
-            </UserWrapper>
-            <UserStatsWrapper>
-              <UserRegisterInfo>
-                <StatsTitle>zarejestrowany</StatsTitle>
-                <UserMail>{user[0].create_date}</UserMail>
-              </UserRegisterInfo>
-              <UserRegisterInfo>
-                <StatsTitle>email</StatsTitle>
-                <UserMail>{user[0].email}</UserMail>
-              </UserRegisterInfo>
-            </UserStatsWrapper>
-            <UserStats>
-              <h4>Statystyki</h4>
+const UploadButtonWrapper = styled.div`
+  display:flex;
+  height:75px;
+  width:75px;
+  position:relative;
+  bottom:-15px;
+  border-radius:6px;
+  overflow:hidden;
+  background:#ededed;
+`
+
+const UploadButton = styled.button`
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  text-transform: uppercase;
+  color:#333;
+  font-family:'AvenirLTB';
+  font-size:.8em;
+  line-height:1.35;
+  border:none;
+  background:none;
+`
+
+const UploadInput = styled.input`
+  position:absolute;
+  max-width:75px;
+  left:0;
+  top:0;
+  opacity:0;
+  font-size:60px;
+`
+
+class UserSettings extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      imageModalUpload: false,
+      imageUploadStatus: false
+    }
+
+    this.changeUserImage = this.changeUserImage.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
+  }
+
+  changeUserImage(e) {
+    this.setState({imageModalUpload: !this.state.imageModalUpload})
+  }
+
+  async uploadImage(e) {
+    this.setState({imageUploadStatus: !this.state.imageUploadStatus})
+
+    const { user } = this.props;
+    const image = e.target.files[0];
+    const data = new FormData();
+    data.append('image', image);
+    data.append('_method', 'PUT');
+
+    try {
+      await axios.post(`/api/users/${user.data.iduser}`, data);
+    } catch (e) {
+      throw new Error(e);
+    } finally {
+      this.setState({imageUploadStatus: !this.state.imageUploadStatus})
+      await this.props.fetchUserProfile(user.data.iduser);
+      this.changeUserImage();
+
+    }
+  }
+
+  render() {
+    const { user, status, userSession, activity } = this.props;
+    const { imageModalUpload, imageUploadStatus } = this.state;
+
+    return (
+      <Container>
+        {
+          status
+          ? <MiniLoader margin={20} />
+          : user.status !== 200
+          ? ''
+          : (
+            <Fragment>
+              <UserWrapper>
+              {
+                !userSession.user.length
+                ? ''
+                : userSession.user[0].iduser === user.data.iduser
+                ? (
+                  <EditImageButton
+                    title='Zmień swój avatar'
+                    onClick={this.changeUserImage}
+                  >
+                    <FaEdit /> Zmień zdjęcie
+                  </EditImageButton>
+                ) : ''
+              }
+                {
+                  !imageModalUpload
+                  ? (
+                    <ImageWrapper>
+                      <Image src={user.data.image} alt={user.data.name} title={user.data.name} />
+                    </ImageWrapper>
+                    ) : (
+                      <UploadButtonWrapper>
+                      {
+                        !imageUploadStatus
+                        ? (
+                          <Fragment>
+                            <UploadButton>upload image</UploadButton>
+                            <UploadInput
+                              type='file'
+                              name='image'
+                              accept="image/*"
+                              onChange={this.uploadImage}
+                            />
+                          </Fragment>
+                        ) : (
+                          <MiniLoader />
+                        )
+                      }
+                      </UploadButtonWrapper>
+                    )
+                  }
+                <UserInfo>
+                  <UserName>{user.data.name}</UserName>
+                  <UserRank>{user.data.privileges}</UserRank>
+                </UserInfo>
+              </UserWrapper>
               <UserStatsWrapper>
                 <UserRegisterInfo>
-                  <StatsTitle>artykuły</StatsTitle>
-                  <UserMail>{user[0].articles_count}</UserMail>
+                  <StatsTitle>zarejestrowany</StatsTitle>
+                  <UserMail>{user.data.create_date}</UserMail>
                 </UserRegisterInfo>
                 <UserRegisterInfo>
-                  <StatsTitle>komentarze</StatsTitle>
-                  <UserMail>{user[0].comments_count}</UserMail>
-                </UserRegisterInfo>
-                <UserRegisterInfo>
-                  <StatsTitle>Polubienia</StatsTitle>
-                  <UserMail>4</UserMail>
+                  <StatsTitle>email</StatsTitle>
+                  <UserMail>{user.data.email}</UserMail>
                 </UserRegisterInfo>
               </UserStatsWrapper>
-            </UserStats>
-          </Fragment>
-        )
-      }
-    </Container>
-  )
+              <UserStats>
+                <h4>Statystyki</h4>
+                <UserStatsWrapper>
+                  <UserRegisterInfo>
+                    <StatsTitle>artykuły</StatsTitle>
+                    <UserMail>{user.data.articles_count}</UserMail>
+                  </UserRegisterInfo>
+                  <UserRegisterInfo>
+                    <StatsTitle>komentarze</StatsTitle>
+                    <UserMail>{user.data.comments_count}</UserMail>
+                  </UserRegisterInfo>
+                  <UserRegisterInfo>
+                    <StatsTitle>Polubienia</StatsTitle>
+                    <UserMail>{activity.likedArticles.length}</UserMail>
+                  </UserRegisterInfo>
+                </UserStatsWrapper>
+              </UserStats>
+            </Fragment>
+          )
+        }
+      </Container>
+    )
+  }
 }
 
-const mapStateToProps = ({user}) => user;
-export default connect(mapStateToProps)(UserSettings);
+export default UserSettings;

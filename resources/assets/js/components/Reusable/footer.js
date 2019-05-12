@@ -64,12 +64,10 @@ const LinkTo = styled(Link)`
 
 const Copyright = styled.div`
   background:#d8d8d8;
-  padding:18px;
-  padding-right:56px;
+  padding:0 20px;
   text-align:center;
-  @media (min-width: 640px) {
-    padding-right:0;
-  }
+  padding-top:25px;
+  padding-bottom:50px;
 `
 
 const CopyrightText = styled.span`

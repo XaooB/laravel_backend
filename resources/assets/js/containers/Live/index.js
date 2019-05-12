@@ -36,6 +36,7 @@ const ImageWrapper = styled.div`
 
 const Section = styled.section`
   margin:0 auto;
+  padding:0 10px;
   margin-top:50px;
   color:#1e1e1e;
   max-width:1300px;
@@ -166,6 +167,11 @@ const AWAY = [
 ]
 
 class Live extends Component {
+
+  componentDidMount() {
+    window.scrollTo(0,0);
+  }
+
   render() {
     return (
         <Fragment>

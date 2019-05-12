@@ -23,10 +23,6 @@ const Main = styled.main`
   margin-right:auto;
   flex-flow: row wrap;
   justify-content: space-between;
-  padding-right:41px;
-  @media (min-width: 640px) {
-    padding-right:0;
-  }
 `
 
 const Container = styled.div`

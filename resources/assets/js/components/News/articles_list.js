@@ -7,10 +7,12 @@ import MiniLoader from '../Reusable/mini_loader';
 
 const Section = styled.section`
   width:100%;
-  margin: 10px 0;
   display:flex;
   flex-flow:row wrap;
   justify-content: space-between;
+  @media (min-width: 480px) {
+    margin-top:20px;
+  }
   article {
     cursor:pointer;
     transition: all .2s ease-in-out;

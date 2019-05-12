@@ -11,12 +11,8 @@ import { API } from '../../helpers/api';
 const Main = styled.main`
   max-width: 1300px;
   color:#1e1e1e;
-  padding:0 5px;
+  padding:0 10px;
   margin:40px auto;
-  padding-right:40px;
-  @media (min-width: 640px) {
-    padding-right:0;
-  }
 `
 
 class News extends Component {
@@ -28,8 +24,8 @@ class News extends Component {
     }
   }
 
-  componentDiDMount() {
-
+  componentDidMount() {
+    window.scrollTo(0,0);
   }
 
   render() {

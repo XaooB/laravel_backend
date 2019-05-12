@@ -141,7 +141,6 @@ class AddNewArticleForm extends Component {
 
   handleSelect(e) {
     const id = e.target.value;
-    console.log(id);
     this.setState({category: id});
   }
 
