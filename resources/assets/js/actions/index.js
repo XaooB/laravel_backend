@@ -1,12 +1,30 @@
-import { FETCH_SEARCH, ADD_SELECTED_CATEGORIES, DELETE_SELECTED_CATEGORIES, FETCH_CATEGORIES, FETCH_ADMIN_ARTICLES, FETCH_NEWS, FETCH_SCHEDULE, FIXTURE_TYPE, ADMIN_EDIT_ARTICLE_DATA, FETCH_USER, FETCH_ARTICLE, FETCH_ARTICLE_NEIGHBOURS, DEC_COMMENT_COUNT, DISABLE_LIKE_BUTTON, FETCH_COMMENTS, ADD_COMMENT, ADD_COMMENT_STATUS, SELECTED_COMMENT_ID, CHANGE_LIKE_STATUS, INC_COMMENT_COUNT, INC_LIKES_COUNT, DEC_LIKES_COUNT } from './types';
+import { FETCH_SEARCH, FETCH_USER_CHECK, FETCH_USER_PROFILE, ADD_SELECTED_CATEGORIES, DELETE_SELECTED_CATEGORIES, FETCH_CATEGORIES, FETCH_ADMIN_ARTICLES, FETCH_NEWS, FETCH_SCHEDULE, FIXTURE_TYPE, ADMIN_EDIT_ARTICLE_DATA, FETCH_USER, FETCH_ARTICLE, FETCH_ARTICLE_NEIGHBOURS, DEC_COMMENT_COUNT, DISABLE_LIKE_BUTTON, FETCH_COMMENTS, ADD_COMMENT, ADD_COMMENT_STATUS, SELECTED_COMMENT_ID, CHANGE_LIKE_STATUS, INC_COMMENT_COUNT, INC_LIKES_COUNT, DEC_LIKES_COUNT } from './types';
 import { API } from '../helpers/api';
 import axios from 'axios';
 import qs from 'qs';
+
+export const checkUserAfterRequest = () => dispatch => {
+  dispatch({
+    type: FETCH_USER_CHECK,
+    payload: true
+  })
+}
 
 export const fetchUser = () => async dispatch => {
   const request = await API.get('users_check_user');
   dispatch({
     type: FETCH_USER,
+    payload: request
+  })
+  // After fetchUser action is finished set a flag userCheck to true.
+  // It's a solution for refreshing page while browsing prive routes for user and admin
+  dispatch(checkUserAfterRequest());
+}
+
+export const fetchUserProfile = id => async dispatch => {
+  const request = await axios.get(`/api/users_by_id/${id}`);
+  dispatch({
+    type: FETCH_USER_PROFILE,
     payload: request
   })
 }

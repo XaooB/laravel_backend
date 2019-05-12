@@ -10,7 +10,7 @@ import { fetchSchedule } from '../../actions/';
 
 const Main = styled.main`
   display:flex;
-  padding:0 5px;
+  padding:0 10px;
   flex-flow:column;
   position:relative;
   color:#1e1e1e;
@@ -19,10 +19,6 @@ const Main = styled.main`
   margin-right:auto;
   margin-top:20px;
   margin-bottom:100px;
-  padding-right:46px;
-  @media (min-width: 640px) {
-    padding-right:0;
-  }
 `
 
 class Schedule extends Component {
@@ -35,6 +31,7 @@ class Schedule extends Component {
   }
 
   async componentDidMount() {
+    window.scrollTo(0,0);
     await this.props.fetchSchedule();
   }
 

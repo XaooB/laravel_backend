@@ -17,10 +17,6 @@ const Main = styled.main`
   flex-flow:column;
   position:relative;
   color:#1e1e1e;
-  padding-right:23px;
-  @media (min-width: 640px) {
-    padding-right:0;
-  }
 `
 
 const Container = styled.section`
@@ -30,7 +26,7 @@ const Container = styled.section`
   display:flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  padding:0 5px;
+  padding:0 10px;
   @media (min-width: 480px) {
     margin-top:40px;
   }
@@ -69,7 +65,6 @@ class SingleArticle extends Component {
     window.scrollTo(0,0);
 
     const currentID = Number(this.props.match.params.id);
-    console.log(this.props);
     await this.props.fetchArticle(currentID);
     const latest = await API.get('articles_latest/10'),
           neighbours = await API.get(`articles_show_neighbours/${currentID}`);

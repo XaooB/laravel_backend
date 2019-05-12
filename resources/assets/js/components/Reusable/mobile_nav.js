@@ -43,21 +43,6 @@ const MobileNav = styled.nav`
   background:#fff;
   height:calc(100% - 53px);
   position:fixed;
-  right:0;
-  transition: all .5s;
-  transition-timing-function: cubic-bezier(1,.11,.5,.85);
-  @media (min-width: 640px) {
-    display:none;
-  }
-`
-
-const SubMobileNav = styled.nav`
-  display:block;
-  width:42px;
-  top:96px;
-  background:#fff;
-  height:calc(100% - 48px);
-  position:fixed;
   right:-42px;
   transition: all .5s;
   transition-timing-function: cubic-bezier(1,.11,.5,.85);
@@ -76,11 +61,13 @@ const NavList = styled.ul`
   right:-178px;
   list-style-type: none;
   background:#fff;
+  padding-bottom:33px;
 `
 
 const Checkbox = styled.input`
   display:none;
   &:checked ~ ${MobileNav} {
+    right:0;
     width:100%;
     ${NavList} {
       right:unset;
@@ -90,17 +77,6 @@ const Checkbox = styled.input`
   &:checked ~ ${Hamburger} {
     &:after {
       content: '❌';
-    }
-  }
-`
-
-const CheckboxSub = styled.input`
-  display:none;
-  &:checked ~ ${SubMobileNav} {
-    width:100%;
-    ${NavList} {
-      right:unset;
-      left:0;
     }
   }
 `
@@ -230,79 +206,6 @@ class MobileNavigation extends Component {
               ) : (
                 <Fragment>
                 <ToggleSubNav htmlFor='toggleSubNav'>
-                  <CheckboxSub type='checkbox' id='toggleSubNav' />
-
-
-
-
-                  <SubMobileNav>
-                    <NavList>
-                      <NavItem>
-                        <NavLinka>
-                        <FaLongArrowAltLeft />
-                          <NavText>
-                            <NavTitle>Powrót</NavTitle>
-                            <NavDesc>Kliknij, aby wrócić poziom wyżej</NavDesc>
-                          </NavText>
-                        </NavLinka>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink to={`/app/user/${user[0].iduser}`}>
-                        <FaUserCircle />
-                          <NavText>
-                            <NavTitle>Mój profil</NavTitle>
-                            <NavDesc>Informacje o twoim koncie</NavDesc>
-                          </NavText>
-                        </NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink to='/app/user/messages'>
-                        <FiMessageSquare />
-                          <NavText>
-                            <NavTitle>Wiadomości</NavTitle>
-                            <NavDesc>Twoje wiadomości prywatne</NavDesc>
-                          </NavText>
-                        </NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink to='/app/user/notifications'>
-                        <FaInfoCircle />
-                          <NavText>
-                            <NavTitle>Powiadomienia</NavTitle>
-                            <NavDesc>Bądź ciągle na bieżąco</NavDesc>
-                          </NavText>
-                        </NavLink>
-                      </NavItem>
-                      {
-                        user[0].tier > 1 ?
-                        (
-                          <NavItem>
-                            <NavLink to='/admin/dashboard'>
-                            <IoMdSettings />
-                              <NavText>
-                                <NavTitle>Panel Administracyjny</NavTitle>
-                                <NavDesc>Zarządaj treścią na portalu</NavDesc>
-                              </NavText>
-                            </NavLink>
-                          </NavItem>
-                        ) : (
-                          ''
-                        )
-                      }
-                      <NavItem>
-                        <ApiRouteLink href='/api/google/auth/logout'>
-                        <FaSignOutAlt />
-                          <NavText>
-                            <NavTitle>Wyloguj się</NavTitle>
-                            <NavDesc>Kliknij, aby się wylogować z aplikacji</NavDesc>
-                          </NavText>
-                        </ApiRouteLink>
-                      </NavItem>
-                    </NavList>
-                  </SubMobileNav>
-
-
-
                   <NavItem>
                     <NavLinka>
                     <FaUserCircle />

@@ -30,6 +30,7 @@ const Wrapper = styled.div`
 const Item = styled.div`
   display:flex;
   cursor:default;
+  cursor: pointer;
   align-items:center;
   color:#c8c8c8;
   &:not(:last-child) {
@@ -38,7 +39,6 @@ const Item = styled.div`
   &:nth-child(2) {
     svg:hover {
       color:#ee324e;
-      cursor:pointer;
     }
   }
   svg {
@@ -101,23 +101,26 @@ class ArticleTitle extends Component {
             <GoCommentDiscussion />
             <Count>{comments_count}</Count>
           </Item>
-          <Item title='polubienia'>
           {
            liked && user.length
-           ? <Fragment>
-               <IoIosHeart style={{color:'#ee324e'}} onClick = {this.handleDislikeButton} />
+           ? (
+             <Item title='Nie podoba mi się' onClick = {this.handleDislikeButton}>
+               <IoIosHeart style={{color:'#ee324e'}} />
                <Count>{articleLikes}</Count>
-             </Fragment>
-           : <Fragment>
-            { user.length
-              ? <IoIosHeart onClick = {this.handleLikeButton} />
-              : <IoIosHeart />
-            }
+             </Item>
+           ) : user.length ? (
+             <Item title='Podoba mi się' onClick = {this.handleLikeButton}>
+               <IoIosHeart />
                <Count>{articleLikes}</Count>
-            </Fragment>
+             </Item>
+           ) : (
+             <Item title='Zaloguj się, aby móc polubić artykuł'>
+               <IoIosHeart />
+               <Count>{articleLikes}</Count>
+             </Item>
+           )
           }
-          </Item>
-          <Item title='wyświetlenia'>
+          <Item title='Wyświetlenia artykułu'>
             <IoIosEye />
             <Count>{views}</Count>
           </Item>

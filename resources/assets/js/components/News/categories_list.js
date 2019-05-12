@@ -6,7 +6,7 @@ import { fetchNews, fetchCategories, setSelectedCategoriesByUser } from '../../a
 import CategoryList from './categories_list_item';
 
 const Container = styled.div`
-  padding:10px 0;
+  margin-top:20px;
 `
 
 class CategoriesList extends Component {
