@@ -55,14 +55,15 @@ class UserSurveyAnswersController extends Controller
      */
     public function store(Request $request)
     {
-        $user_survey_answer = new UserSurveyAnswers;
-        $user_survey_answer->idUser = $_SESSION['iduser'];
-        $user_survey_answer->idSurveySet = $request->idsurveyset;
-        $surveyId = DB::table('survey_sets')->select('idSurvey')->where('idSurveySet', '=', $request->idsurveyset)->value('idSurvey');
-        $answers = DB::table('survey_sets')->select('idSurveySet')->where('idSurvey', '=', $surveyId)->pluck('idSurveySet');
-        if(UserSurveyAnswers::where('idUser', '=' , $user_survey_answer->idUser)->whereIn('idSurveySet', $answers)->exists()) 
-            {return response()->json(['message' => 'failure']);}
-        else {if($user_survey_answer->save()) {return response()->json(['message' => 'success']);}}
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['idsurveyset']))
+        {
+            $user_survey_answer = new UserSurveyAnswers;
+            $user_survey_answer->idUser = $_SESSION['iduser'];
+            $user_survey_answer->idSurveySet = $data['idsurveyset'];
+            if($user_survey_answer->save())
+                return response()->json(['message' => 'success']);
+        }
         return response()->json(['message' => 'connection failure']);
     }
 
