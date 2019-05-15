@@ -15,6 +15,11 @@ Route::get('/', function(){
   return redirect('/app');
 });
 
+
+Route::get('/admin', function(){
+  return redirect('/admin/dashboard');
+});
+
 Route::get('/{path?}', function($path = null){
         return View::make('app');
-    })->where('path', '.*'); 
+    })->where('path', '.*');
