@@ -61,7 +61,7 @@ const NavList = styled.ul`
   right:-178px;
   list-style-type: none;
   background:#fff;
-  padding-bottom:33px;
+  padding-bottom:42px;
 `
 
 const Checkbox = styled.input`
@@ -199,26 +199,6 @@ class MobileNavigation extends Component {
         </Hamburger>
         <MobileNav>
             <NavList>
-            {
-              !user.length ?
-              (
-                ''
-              ) : (
-                <Fragment>
-                <ToggleSubNav htmlFor='toggleSubNav'>
-                  <NavItem>
-                    <NavLinka>
-                    <FaUserCircle />
-                      <NavText>
-                        <NavTitle>Moje Konto</NavTitle>
-                        <NavDesc>Przejdź, aby uzyskać dostęp do nowych funkcji</NavDesc>
-                      </NavText>
-                    </NavLinka>
-                  </NavItem>
-                  </ToggleSubNav>
-              </Fragment>
-              )
-            }
               <NavItem>
                 <NavLink to='/app'>
                 <FaHome />
