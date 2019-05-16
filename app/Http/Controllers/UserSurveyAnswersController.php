@@ -31,7 +31,8 @@ class UserSurveyAnswersController extends Controller
         $user_answer = DB::table('survey_sets')->select('Answer')->where('idSurveySet', '=', $user_answerId)->value('Answer');
         $date = DB::table('user_survey_answers')->select('created_at')->whereIn('idSurveySet', $survey_set)->where('idUser', $_SESSION['iduser'])->value('created_at');
         $data = array(
-            'user_answer' => $user_answer,
+            'idsurveyset' => $user_answerId,
+            'answer' => $user_answer,
             'date' => $date);
         array_push($dataArray, $data);
         return response()->json($dataArray);
