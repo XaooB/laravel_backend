@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Http\Controllers\SurveySetsController;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cache;
 
 class SurveysCache
 {
@@ -58,6 +59,12 @@ class SurveysCache
 			$surveys = Surveys::all();
 			return $surveys;
 		});
+	}
+
+	public function forgetKey($key)
+	{
+		$cacheKey = $this->getCacheKey($key);
+		return Cache::forget($cacheKey);
 	}
 
 	public function getCacheKey($key)

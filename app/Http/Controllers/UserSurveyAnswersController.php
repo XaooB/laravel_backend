@@ -63,7 +63,10 @@ class UserSurveyAnswersController extends Controller
             $user_survey_answer->idUser = $_SESSION['iduser'];
             $user_survey_answer->idSurveySet = $data['idsurveyset'];
             if($user_survey_answer->save())
+            {
+                SurveysCache::forgetKey('latest.user.' . $_SESSION['iduser'];
                 return response()->json(['message' => 'success']);
+            }
         }
         return response()->json(['message' => 'connection failure']);
     }
