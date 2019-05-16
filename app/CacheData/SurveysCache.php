@@ -13,14 +13,27 @@ class SurveysCache
 {
 	CONST CACHE_KEY = 'SURVEYS';
 
-	public function latest()
+	public function latest($user)
 	{
-		$key = 'latest';
+		$key = 'latest.user.' . $user;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addMinutes(30), function() {
+		return cache()->remember($cacheKey, Carbon::now()->addHours(12), function() use($user) {
 			$latestSurvey = DB::table('surveys')->select('idSurvey as idsurvey', 'Topic as topic')->orderBy('idSurvey', 'desc')->first();
         	$latestSurvey->answers = array();
+        	$answersId = array();
         	SurveySetsController::getAnswers($latestSurvey->answers, $latestSurvey->idsurvey);
+        	foreach ($latestSurvey->answers as $key => $answer) {
+        		array_push($answersId, $answer['idsurveyset']);
+        	}
+        	if($user != 'none')
+            {
+                if(DB::table('user_survey_answers')->whereIn('idSurveySet', $answersId)->where('idUser', $user)->count())
+                    $latestSurvey->voted = true;
+                else
+                    $latestSurvey->voted = false;
+            }
+            else
+            	$latestSurvey->voted = false;
 			return $latestSurvey;
 		});
 	}
