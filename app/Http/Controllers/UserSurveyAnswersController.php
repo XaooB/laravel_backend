@@ -8,6 +8,7 @@ use App\UserSurveyAnswers;
 use App\Http\Resources\UserSurveyAnswers as UserSurveyAnswersResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
+use Facades\App\CacheData\SurveysCache;
 
 if(!isset($_SESSION)) { session_start(); } 
 
