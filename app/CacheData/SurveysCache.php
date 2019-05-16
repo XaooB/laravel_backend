@@ -14,28 +14,38 @@ class SurveysCache
 {
 	CONST CACHE_KEY = 'SURVEYS';
 
-	public function latest($user)
+	public function latest()
+	{
+		$key = 'latest';
+		$cacheKey = $this->getCacheKey($key);
+		return cache()->remember($cacheKey, Carbon::now()->addHours(12), function() {
+			$latestSurvey = DB::table('surveys')->select('idSurvey as idsurvey', 'Topic as topic')->orderBy('idSurvey', 'desc')->first();
+        	$latestSurvey->answers = array();
+        	SurveySetsController::getAnswers($latestSurvey->answers, $latestSurvey->idsurvey);
+			return $latestSurvey;
+		});
+	}
+
+	public function latestUser($user)
 	{
 		$key = 'latest.user.' . $user;
 		$cacheKey = $this->getCacheKey($key);
 		return cache()->remember($cacheKey, Carbon::now()->addHours(12), function() use($user) {
-			$latestSurvey = DB::table('surveys')->select('idSurvey as idsurvey', 'Topic as topic')->orderBy('idSurvey', 'desc')->first();
-        	$latestSurvey->answers = array();
+			$latestSurvey = $this->latest();
         	$answersId = array();
-        	SurveySetsController::getAnswers($latestSurvey->answers, $latestSurvey->idsurvey);
         	foreach ($latestSurvey->answers as $key => $answer) {
         		array_push($answersId, $answer['idsurveyset']);
         	}
         	if($user != 'none')
             {
                 if(DB::table('user_survey_answers')->whereIn('idSurveySet', $answersId)->where('idUser', $user)->count())
-                    $latestSurvey->voted = true;
+                    $voted = true;
                 else
-                    $latestSurvey->voted = false;
+                    $voted = false;
             }
             else
-            	$latestSurvey->voted = false;
-			return $latestSurvey;
+            	$voted = false;
+			return $voted;
 		});
 	}
 

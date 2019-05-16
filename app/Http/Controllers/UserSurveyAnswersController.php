@@ -58,13 +58,12 @@ class UserSurveyAnswersController extends Controller
     public function store(Request $request)
     {
         $data = json_decode($request->getContent(), true);
-        if(isset($data['idsurveyset']))
+        if(isset($data['idsurveyset']) && isset($data['idsurvey']))
         {
-            $user_survey_answer = new UserSurveyAnswers;
-            $user_survey_answer->idUser = $_SESSION['iduser'];
-            $user_survey_answer->idSurveySet = $data['idsurveyset'];
-            if($user_survey_answer->save())
+            if(UserSurveyAnswers::updateOrCreate(['idUser' => $_SESSION['iduser'], 'idSurvey' => $data['idsurvey']], 
+                ['idSurveySet' => $data['idsurveyset']]))
             {
+                SurveysCache::forgetKey('latest');
                 SurveysCache::forgetKey('latest.user.' . $_SESSION['iduser']);
                 return response()->json(['message' => 'success']);
             }

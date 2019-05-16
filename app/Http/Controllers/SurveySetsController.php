@@ -55,7 +55,9 @@ class SurveySetsController extends Controller
                 $user = $_SESSION['iduser'];
             else
                 $user = 'none';
-        $latestSurvey = SurveysCache::latest($user);
+        $latestSurvey = SurveysCache::latest();
+        $voted = SurveysCache::latestUser($user);
+        $latestSurvey->voted = $voted;
         return response()->json($latestSurvey);
     }
 
