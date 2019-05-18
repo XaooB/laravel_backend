@@ -71,6 +71,12 @@ class SurveysCache
 		});
 	}
 
+	public function storeForever($key, $data)
+	{
+		$cacheKey = $this->getCacheKey($key);
+		return Cache::forever($cacheKey, $data);
+	}
+
 	public function forgetKey($key)
 	{
 		$cacheKey = $this->getCacheKey($key);

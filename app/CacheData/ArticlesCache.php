@@ -21,14 +21,28 @@ class ArticlesCache
         });
     }
 
-	public function article($id, $user)
+	public function article($id)
 	{
-		$key = 'article.' . $id . '.' . $user;
+		$key = 'article.' . $id;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(4), function() use($id, $user) {
+		return cache()->remember($cacheKey, Carbon::now()->addHours(12), function() use($id) {
             if(Articles::where('idArticle', $id)->where('Visible', 1)->count())
             {
                 ArticlesController::buildArticleData($article, [1], 'Main', [0, 1], 'articles.idArticle', 'asc', 1, $id, 'articles.Title', '', 'long');
+                return $article;
+            }
+          	return false;
+		});
+	}
+
+    public function articleUser($id, $user)
+    {
+        $key = 'article.' . $id . '.user.' . $user;
+        $cacheKey = $this->getCacheKey($key);
+        return cache()->remember($cacheKey, Carbon::now()->addSeconds(4), function() use($id, $user) {
+            $article = $this->article($id);
+            if($article)
+            {
                 if($user != 'none')
                 {
                     // sprawdzenie czy użytkownik którego dane sesji zostały przesłane polubił dany artykuł
@@ -39,11 +53,10 @@ class ArticlesCache
                 }
                 else
                     $article->liked = false;
-                return $article;
             }
-          	return false;
-		});
-	}
+            return $article;
+        });
+    }
 
 	public function latest_main($count)
 	{
@@ -128,6 +141,12 @@ class ArticlesCache
             ArticlesController::buildArticleData($articles, [1], 'articles.' . $column, $categories, 'articles.idArticle', 'desc', $count, null, 'articles.Title', '');
             return $articles;
         });
+    }
+
+    public function storeForever($key, $data)
+    {
+        $cacheKey = $this->getCacheKey($key);
+        return Cache::forever($cacheKey, $data);
     }
 
 	public function getCacheKey($key)

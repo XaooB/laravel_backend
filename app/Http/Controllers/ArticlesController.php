@@ -106,7 +106,7 @@ class ArticlesController extends Controller
                 $user = $_SESSION['iduser'];
             else
                 $user = 'none';
-            $articles = ArticlesCache::article($id, $user);
+            $articles = ArticlesCache::articleUser($id, $user);
             if($articles)
             {
                 $articles->user = UsersCache::by_id($articles->user);
@@ -267,7 +267,10 @@ class ArticlesController extends Controller
                         'Title' => $request->title,
                         'Content' => $request->content,
                         'Image' => $articleImage]))
+                    {
+                        ArticlesCache::removeFromCache($id);
                         return response()->json(['status' => true, 'error' => ''], 202);
+                    }
                 }
                 else
                 {
@@ -275,7 +278,10 @@ class ArticlesController extends Controller
                         'idCategory' => $request->category,
                         'Title' => $request->title,
                         'Content' => $request->content]))
+                    {
+                        ArticlesCache::removeFromCache($id);
                         return response()->json(['status' => true, 'error' => '' . $check_file_msg]);
+                    }
                 }
             }
             else
@@ -292,7 +298,10 @@ class ArticlesController extends Controller
         {
             if(Articles::where('idArticle', $id)->where('idUser', $_SESSION['iduser'])->delete())
                 if(Comments::where('idReference', $id)->delete())
+                {
+                    ArticlesCache::removeFromCache($id);
                     return response()->json(['status' => true, 'error' => ''], 202);
+                }
                 return response()->json(['status' => false, 'error' => 'wrong data'], 400);
         }
 
@@ -316,8 +325,11 @@ class ArticlesController extends Controller
         {
             if(isset($request->content))
             {
-                if(Articles::where('idArticle', '=' , $id)->update(['Content' => $data['content']])) 
+                if(Articles::where('idArticle', '=' , $id)->update(['Content' => $data['content']]))
+                {
+                    ArticlesCache::removeFromCache($id);
                     return response()->json(['status' => true, 'error' => ''], 202);
+                }
                 else 
                     return response()->json(['status' => false, 'error' => 'wrong data'], 204);
             }
@@ -328,7 +340,10 @@ class ArticlesController extends Controller
         public function staff_change_visibility($id)
         {
             if(DB::table('articles')->where('idArticle', $id)->update(['Visible' => DB::raw('ABS(Visible-1)')]))
+            {
+                ArticlesCache::removeFromCache($id);
                 return response()->json(['status' => true, 'error' => ''], 202);
+            }
             else
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
@@ -336,7 +351,10 @@ class ArticlesController extends Controller
         public function staff_change_main($id)
         {
             if(DB::table('articles')->update(['Main' => DB::raw('(case when `idArticle` = ' . $id . ' then 1 when `idArticle` <> ' . $id . ' then 0 end)')]))
+            {
+                ArticlesCache::removeFromCache($id);
                 return response()->json(['status' => true, 'error' => ''], 202);
+            }
             else
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
@@ -344,7 +362,10 @@ class ArticlesController extends Controller
         public function test_admin_delete()
         {
             if(Articles::where('idUser', $_SESSION['iduser'])->delete())
+            {
+                ArticlesCache::removeFromCache($id);
                 return response()->json(['status' => true, 'error' => ''], 202);
+            }
             else 
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }

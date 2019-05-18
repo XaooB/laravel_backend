@@ -210,7 +210,7 @@ class UsersController extends Controller
                 $_SESSION['image'] = $userImage;
                 $status = true;
                 $msg .= 'image updated.';
-                UsersCache::removeFromCache($id);
+                UsersCache::removeFromCache($_SESSION['iduser'], $_SESSION['name'], $_SESSION['email']);
             }
             else
             {
@@ -225,10 +225,10 @@ class UsersController extends Controller
                 $_SESSION['name'] = $request->name;
                 $status = true;
                 $msg .= 'name updated.';
-                UsersCache::removeFromCache($id);
+                UsersCache::removeFromCache($_SESSION['iduser'], $_SESSION['name'], $_SESSION['email']);
             }
             else 
-            { 
+            {
                 $status = false;
                 $msg .= 'wrong name data.';
             }

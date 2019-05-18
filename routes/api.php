@@ -2,8 +2,6 @@
 
 use Illuminate\Http\Request;
 use Facades\App\CacheData\AnalyticsCache;
-use App\Http\Controllers\ValidatorController;
-use App\User;
 use Facades\App\CacheData\UsersCache;
 
 if(!isset($_SESSION)) { session_start(); } 

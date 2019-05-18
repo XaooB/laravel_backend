@@ -19,7 +19,7 @@ class UsersCache
 	{
 		$key = 'by_id.' . $id;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addHours(1), function() use($id) {
+		return cache()->remember($cacheKey, Carbon::now()->addHours(12), function() use($id) {
 			$user = $id;
 			UsersController::buildUserData($user, 'id');
 			return $user;
@@ -30,7 +30,7 @@ class UsersCache
 	{
 		$key = 'by_name.' . $name;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addHours(1), function() use($name) {
+		return cache()->remember($cacheKey, Carbon::now()->addHours(12), function() use($name) {
 			$user = $name;
 			UsersController::buildUserData($user, 'Name');
 			return $user;
@@ -41,7 +41,7 @@ class UsersCache
 	{
 		$key = 'by_email.' . $email;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addHours(1), function() use($email) {
+		return cache()->remember($cacheKey, Carbon::now()->addHours(12), function() use($email) {
 			$user = $email;
 			UsersController::buildUserData($user, 'Email');
 			return $user;
@@ -111,16 +111,29 @@ class UsersCache
 		});
 	}
 
+	public function storeForever($key, $data)
+	{
+		$cacheKey = $this->getCacheKey($key);
+		return Cache::forever($cacheKey, $data);
+	}
+
 	public function getCacheKey($key)
 	{
 		$key = strtoupper($key);
 		return self::CACHE_KEY . '.' . $key;
 	}
 
-	public function removeFromCache($id)
+	public function removeFromCache($id, $name, $email)
 	{
-		$key = 'by_id.' . $id;
-		$cacheKey = $this->getCacheKey($key);
-		return Cache::forget($cacheKey);
+		$key_id = 'by_id.' . $id;
+		$key_name = 'by_name.' . $name;
+		$key_email = 'by_email.' . $email;
+		$cacheKey = $this->getCacheKey($key_id);
+		Cache::forget($cacheKey);
+		$cacheKey = $this->getCacheKey($key_name);
+		Cache::forget($cacheKey);
+		$cacheKey = $this->getCacheKey($key_email);
+		Cache::forget($cacheKey);
+		return;
 	}
 }
