@@ -63,7 +63,6 @@ class UserSurveyAnswersController extends Controller
             if(UserSurveyAnswers::updateOrCreate(['idUser' => $_SESSION['iduser'], 'idSurvey' => $data['idsurvey']], 
                 ['idSurveySet' => $data['idsurveyset']]))
             {
-                SurveysCache::forgetKey('latest');
                 SurveysCache::forgetKey('latest.user.' . $_SESSION['iduser']);
                 return response()->json(['message' => 'success']);
             }
@@ -120,8 +119,11 @@ class UserSurveyAnswersController extends Controller
     {
         $data = json_decode($request->getContent(), true);
         if(isset($data['idsurvey']))
-            if(UserSurveyAnswers::where('idUser', $id)->where('idUser', $_SESSION['iduser'])->where('idSurvey', $data['idsurvey'])->delete()) 
+            if(UserSurveyAnswers::where('idUser', $id)->where('idUser', $_SESSION['iduser'])->where('idSurvey', $data['idsurvey'])->delete())
+            {
+                SurveysCache::forgetKey('latest.user.' . $_SESSION['iduser']);
                 return response()->json(['message' => 'success']);
+            }
         return response()->json(['message' => 'connection failure'], 400);
     }
 }
