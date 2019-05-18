@@ -68,7 +68,7 @@ class UserSurveyAnswersController extends Controller
                 return response()->json(['message' => 'success']);
             }
         }
-        return response()->json(['message' => 'connection failure']);
+        return response()->json(['message' => 'connection failure'], 400);
     }
 
     /**
@@ -118,8 +118,10 @@ class UserSurveyAnswersController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        if(UserSurveyAnswers::where('idUser', '=' , $id)->where('idSurveySet', '=' , $request->idsurveyset)->delete()) 
-            {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'connection failure']);}
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['idsurvey']))
+            if(UserSurveyAnswers::where('idUser', $id)->where('idUser', $_SESSION['iduser'])->where('idSurvey', $data['idsurvey'])->delete()) 
+                return response()->json(['message' => 'success']);
+        return response()->json(['message' => 'connection failure'], 400);
     }
 }
