@@ -11,6 +11,7 @@ import Comments from './article_comments_list';
 import AddCommentForm from './article_comments_form';
 import EditCommentForm from './article_comments_edit_form';
 import dateConverter from '../../helpers/dateConverter';
+import Modal from '../Reusable/Modal';
 import { selectedCommentID, deleteComment, hideComment } from '../../actions';
 
 const ListItem = styled.li`
@@ -118,6 +119,8 @@ class SingleComment extends Component {
     this.state = {
       showingForm: false,
       isEditing: false,
+      showModal: false,
+      fetchingStatus: false
     };
 
     this.handlePostForm = this.handlePostForm.bind(this);
@@ -143,8 +146,9 @@ class SingleComment extends Component {
     this.handleEditForm();
   }
 
-  handleDelete() {
+  async handleDelete() {
     const { articleID, comment, deleteComment } = this.props;
+    this.setState({fetchingStatus: true})
     deleteComment({ articleID, idcomment: comment.idcomment });
   }
 
@@ -155,10 +159,16 @@ class SingleComment extends Component {
 
   render() {
     const { comment, articleID, user } = this.props;
-    const { showingForm, isEditing } = this.state;
+    const { showingForm, isEditing, showModal, fetchingStatus } = this.state;
 
     return (
       <ListItem>
+        <Modal
+          showModal={showModal}
+          accept={this.handleDelete}
+          denied={() => this.setState({showModal: false})}
+          status={fetchingStatus}
+        />
         <User user={comment.user} />
         <Article>
           <Header>
@@ -166,11 +176,9 @@ class SingleComment extends Component {
               <LinkTo to={`/app/user/${comment.user.iduser}`}>{comment.user.name}</LinkTo>
             </UserName>
             {!comment.modify_date
-              ? <Added>Added {dateConverter.toStageDate(comment.create_date)}</Added>
+              ? <Added title={comment.create_date}>Added {dateConverter.toStageDate(comment.create_date)}</Added>
               : (
-                <Added>
-                  Added {dateConverter.toStageDate(comment.create_date)}, edited
-                </Added>
+                <Added title={`${comment.create_date}, edited at ${comment.modify_date}`}>Added {dateConverter.toStageDate(comment.create_date)}, edited {dateConverter.toStageDate(comment.modify_date)}</Added>
               )
             }
           </Header>
@@ -199,7 +207,7 @@ class SingleComment extends Component {
                         <MdEdit />
                         <ActionName>Edytuj</ActionName>
                       </FooterItem>
-                      <FooterItem title="Usuń komentarz" onClick={this.handleDelete}>
+                      <FooterItem title="Usuń komentarz" onClick={() => this.setState({showModal: true})}>
                         <MdDeleteForever />
                         <ActionName>Usuń</ActionName>
                       </FooterItem>

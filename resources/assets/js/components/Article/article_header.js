@@ -4,6 +4,7 @@ import { GoCommentDiscussion } from 'react-icons/go';
 import { IoIosEye, IoIosHeart } from 'react-icons/io';
 import {incLikesCount, decLikesCount} from '../../actions/';
 import { connect } from 'react-redux';
+import Modal from '../Reusable/Modal';
 
 const Header = styled.header`
   background:white;

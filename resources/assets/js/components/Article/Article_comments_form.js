@@ -99,7 +99,8 @@ class AddCommentForm extends Component {
       return this.setState({charactersUsed: event.target.value.length});
   }
 
-  async handlePost() {
+  async handlePost(e) {
+    e.preventDefault();
     const { charactersUsed, content } = this.state;
     const { articleID, commentID, handleForm } = this.props;
     const idsubreference = !commentID ? 0 : commentID;
@@ -135,7 +136,13 @@ class AddCommentForm extends Component {
               : <Counter>Użyto znaków: {charactersUsed}/500</Counter>
             }
             <Wrapper style={{alignSelf: 'flex-end', alignItems:'center'}}>
-              <Button name='Wyślij wiadomość' colorBlue onClick={this.handlePost} isFetching={fetchingStatus} />
+              <Button
+                name='Dodaj post'
+                colorBlue onClick={this.handlePost}
+                isFetching={fetchingStatus}
+                warning
+                minWidth
+              />
             </Wrapper>
           </Wrapper>
         </Form>

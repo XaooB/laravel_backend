@@ -15,6 +15,7 @@ const Hamburger = styled.label`
   right:0;
   outline:none;
   padding:17px 20px;
+  padding-bottom:18px;
   border:1px solid #ededed;
   border-bottom:2px solid #ededed;
   &:after {
@@ -39,7 +40,7 @@ const NavWrapper = styled.div`
 const MobileNav = styled.nav`
   z-index:998;
   width:42px;
-  top:96px;
+  top:109px;
   background:#fff;
   height:calc(100% - 53px);
   position:fixed;
@@ -61,7 +62,7 @@ const NavList = styled.ul`
   right:-178px;
   list-style-type: none;
   background:#fff;
-  padding-bottom:42px;
+  padding-bottom: ${props => props.user.length ? '55px' : '0'};
 `
 
 const Checkbox = styled.input`
@@ -198,7 +199,7 @@ class MobileNavigation extends Component {
           onClick={() => { this.closeSubNav() }}>
         </Hamburger>
         <MobileNav>
-            <NavList>
+            <NavList user={user}>
               <NavItem>
                 <NavLink to='/app'>
                 <FaHome />
@@ -212,7 +213,7 @@ class MobileNavigation extends Component {
                 <NavLink to='/app/news'>
                 <FaRegNewspaper />
                   <NavText>
-                    <NavTitle>Wiadomości</NavTitle>
+                    <NavTitle>Aktualności</NavTitle>
                     <NavDesc>Najnowsze wiadomości</NavDesc>
                   </NavText>
                 </NavLink>

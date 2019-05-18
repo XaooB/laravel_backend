@@ -3,50 +3,24 @@ import styled from 'styled-components';
 import MiniLoader from './mini_loader';
 
 const Btn = styled.button`
-  padding:10px 12px;
-  display:flex;
-  margin-bottom:6px;
-  justify-content:center;
-  align-items:center;
-  min-width:150px;
+  border-radius:6px;
+  border:none;
   cursor:pointer;
-  border-radius:6px;
-  align-self:center;
-  transition: all .25s;
-  background: none;
-  flex: ${props => props.fullWidth ? '1' : 'initial'};
-  color: ${props => props.colorBlue ? '#00529f' : '#ee324e'};
-  border: ${props => props.colorBlue ? '1px solid  #00529f' : '1px solid  #ee324e'};
-  &:hover {
-    transition: all .25s;
-    background: ${props => props.colorBlue ? '#00529f' : '#ee324e'};
-    color:white;
-  }
-`
-
-const BtnDisabled = styled.button`
-  padding:8px 12px;
-  display:flex;
-  margin-bottom:6px;
-  border-radius:6px;
-  justify-content:center;
-  align-items:center;
-  min-width:150px;
-  cursor:default;
-  align-self:center;
-  background:#00529f;
-  transition: all .25s;
-  border:  1px solid  #00529f;
-  flex: ${props => props.fullWidth ? '1' : 'initial'};
+  padding:10px 20px;
+  outline:none;
+  margin: 0 6px;
+  min-width:${props => props.minWidth ? '105px' : 'initial'};
+  width: ${props => props.fullWidth ? '100%' : 'initial'};
+  color:${props => props.warning ? '#ffffff' : 'inherit'};
+  background:${props => props.warning ? '#ee324e' : 'default'};
 `
 
 const Spinner = styled.div`
-    margin: 4px auto 0;
-    width: 36px;
     text-align: center;
   > div {
-    width: 12px;
-    height: 12px;
+    margin:0 1px;
+    width: 10px;
+    height: 10px;
     background-color: #fff;
     border-radius: 100%;
     display: inline-block;
@@ -75,26 +49,30 @@ const Spinner = styled.div`
 `
 
 const Button = props => {
-  const { isFetching } = props;
+  const { isFetching, warning } = props;
 
   return (
       isFetching ?
       (
-        <BtnDisabled disabled>
+        <Btn
+          warning={props.warning}
+          minWidth={props.minWidth}
+          fullWidth={props.fullWidth}>
           <Spinner>
             <div className="bounce1"></div>
             <div className="bounce2"></div>
             <div className="bounce3"></div>
           </Spinner>
-        </BtnDisabled>
+        </Btn>
       ) : (
         <Btn
           fullWidth={props.fullWidth}
           type='button'
           colorBlue={props.colorBlue}
           onClick={props.onClick}
-          >{props.name}
-        </Btn>
+          warning={props.warning}
+          minWidth={props.minWidth}
+        >{props.name}</Btn>
       )
   )
 }

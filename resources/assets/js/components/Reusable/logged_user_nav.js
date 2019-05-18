@@ -9,7 +9,7 @@ const Container = styled.div`
   top:50px;
   color:#1e1e1e;
   right:0;
-  border-radius:10px;
+  border-radius:6px;
   background:#fff;
   border:1px solid #ededed;
   a {
@@ -53,8 +53,8 @@ const Label = styled.span`
     color:#1e1e1e;
   }
   &:first-child {
-    border-top-left-radius:8px;
-    border-top-right-radius:8px;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
   }
 `
 

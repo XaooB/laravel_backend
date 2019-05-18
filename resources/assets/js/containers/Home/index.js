@@ -12,6 +12,8 @@ import Injuries from '../../components/Home/injuries';
 import Footer from '../../components/Reusable/footer'
 import Loader from '../../components/Reusable/loader';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { fetchCurrentPoll } from '../../actions/'
 
 //api calls
 import { API } from '../../helpers/api';
@@ -78,10 +80,10 @@ class Home extends Component {
           schedule = await API.get('matches_get_scheduled_matches/5'),
           leagueTable = await API.get('leaguescoreboard_get_league_scoreboard/2018-2019/PD'),
           latestResult = await API.get('matches_get_finished_match'),
-          pollData = await API.get('surveysets_get_latest'),
           injuriesData = await API.get('injuriessuspensions_actual');
+          await this.props.fetchCurrentPoll(),
 
-    this.setState({ mainArticle, articles, schedule, leagueTable, latestResult, pollData, injuriesData, loadingStatus: false });
+    this.setState({ mainArticle, articles, schedule, leagueTable, latestResult, pollData:this.props.user.pollData, injuriesData, loadingStatus: false });
   }
 
   render() {
@@ -117,4 +119,5 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = ({user}) => ({user});
+export default connect(mapStateToProps, {fetchCurrentPoll})(Home);

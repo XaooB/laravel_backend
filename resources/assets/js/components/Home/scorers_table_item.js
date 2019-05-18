@@ -29,11 +29,24 @@ const ItemField = styled.div`
   flex:.4
   &:nth-child(2) {
     display:flex;
-    flex:2;
+    flex:initial;
+    margin-right:28px;
+    @media (min-width: 480px) {
+      margin-right:0;
+      flex:2;
+    }
+
   }
   &:nth-child(3) {
     text-align:left;
     flex:2;
+  }
+`
+
+const ClubName = styled.span`
+  display:none;
+  @media (min-width: 480px) {
+    display:block;
   }
 `
 
@@ -47,7 +60,7 @@ const ScorersTableItem = props => {
         <ImageWraper>
           <Image src={ image } title={ player } alt={ player } />
         </ImageWraper>
-          { club }
+        <ClubName>{ club }</ClubName>
       </ItemField>
       <ItemField>{ player }</ItemField>
       <ItemField>{ goals }</ItemField>
@@ -62,7 +75,7 @@ const ScorersTableItem = props => {
         <ImageWraper>
           <Image src={ image } title={ player } alt={ player } />
         </ImageWraper>
-          { club }
+        <ClubName>{ club }</ClubName>
       </ItemField>
       <ItemField>{ player }</ItemField>
       <ItemField>{ goals }</ItemField>
