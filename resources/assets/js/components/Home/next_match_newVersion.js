@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Wrapper from '../Reusable/wrapper';
 
 const Section = styled.section`
   display:flex;
@@ -31,26 +32,42 @@ const MatchWrapper = styled.div`
 `
 
 const TeamName = styled.span`
+  display:none;
   margin-top:20px;
   font-family:'Bebas';
-  font-size:3em;
+  font-size:1.8em;
   line-height:.9;
+  @media (min-width: 480px) {
+    display:block;
+    font-size:2em;
+  }
+  @media (min-width: 640px) {
+    font-size:3em;
+  }
 `
 
 const MatchInfo = styled.div`
   min-width:170px;
-  margin-left:30px;
-  margin-right:30px;
+  margin: 0 5px;
   margin-top:-20px;
   > span {
     display:block;
     text-align:center;
   }
+  @media (min-width: 480px) {
+    margin: 0 15px;
+  }
+  @media (min-width: 640px) {
+    margin: 0 30px;
+  }
 `
 
 const FixtureName = styled.span`
-  font-size: 1.2em;
+  font-size: .9em;
   font-family:'AvenirLTB';
+  @media (min-width: 480px) {
+    font-size: 1.2em;
+  }
 `
 
 const Date = styled.span`
@@ -61,10 +78,13 @@ const Date = styled.span`
 
 const Result = styled.span`
   margin-top:12px;
-  font-size:4em;
+  font-size:2.5em;
   color:#FEBE10;
   font-family:'Bebas';
-  line-height:.9;;
+  line-height:.9;
+  @media (min-width: 480px) {
+    font-size:4em;
+  }
 `
 
 const Location = styled.span`
@@ -84,11 +104,20 @@ const Text = styled.span`
 `
 
 const ImageWrapper = styled.figure`
-  margin:0 30px;
+  margin:0 5px;
+  @media (min-width: 480px) {
+    margin:0 30px;
+  }
 `
 
 const Image = styled.img`
-  height:100px;
+  height:65px;
+  @media (min-width: 480px) {
+    height:75px;
+  }
+  @media (min-width: 640px) {
+    height:100px;
+  }
 `
 
 const Team = styled.div`
@@ -102,6 +131,7 @@ const NextMatch = props => {
   const { away_team, home_team, date, league, location } = props.data;
   return (
     <Section>
+
         <Team>
           <ImageWrapper>
             <Image src={home_team.image}/>

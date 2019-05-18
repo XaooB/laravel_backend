@@ -30,7 +30,6 @@ const Title = styled.h3`
   font-size:.95em;
   align-self:flex-start;
   font-weight:lighter;
-  padding:0 15px;
 `
 
 const Span = styled.span`
@@ -42,8 +41,7 @@ const LinkTo = styled(Link)`
   color:inherit;
   position:relative;
   &:hover ${Span} {
-    border-bottom:3px solid #00529f;
-    transition: border .15s;
+    color:#ee324e;
   }
 `
 
@@ -53,9 +51,6 @@ const AsideItem = props => {
 
   return (
     <ListItem>
-      <ImageWrapper>
-        <Image src={image} title={title} alt={title} />
-      </ImageWrapper>
       <Title>
         <LinkTo to={link}>
           <Span>{title}</Span>

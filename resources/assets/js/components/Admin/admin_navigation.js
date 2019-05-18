@@ -92,14 +92,6 @@ const AdminNavigation = () => {
             </AlignMid>
           </Item>
         </LinkTo>
-        <LinkTo to="/admin/comments">
-          <Item>
-            <AlignMid>
-              <MdComment />
-              <Text>Komentarze</Text>
-            </AlignMid>
-          </Item>
-        </LinkTo>
       </NavList>
       <NavList>
       <Item>Dodatkowe</Item>

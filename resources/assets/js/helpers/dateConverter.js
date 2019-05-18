@@ -25,7 +25,7 @@ const dateConverter = {
       hoursDiff = Math.floor(minutesDiff / 60),
       dayDiff = Math.floor(hoursDiff / 24);
 
-    if(secondsDiff > 0 && secondsDiff < 2) return ` ${secondsDiff} second ago`;
+    if(secondsDiff < 2) return ` now`;
     if(secondsDiff > 1 && secondsDiff < 60) return ` ${secondsDiff} seconds ago`;
     if(minutesDiff >= 1 && minutesDiff < 2) return ` ${minutesDiff} minute ago`;
     if(minutesDiff > 1 && minutesDiff < 60) return ` ${minutesDiff} minutes ago`;

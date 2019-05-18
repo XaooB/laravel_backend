@@ -11,7 +11,6 @@ import {
   IoMdSettings,
 } from 'react-icons/io';
 import { Link } from 'react-router-dom';
-import Searchbar from './searchbar';
 import HeaderLogin from './header_login'
 import Navigation from './navigation';
 import Logo from './logo';

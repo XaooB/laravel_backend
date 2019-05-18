@@ -56,9 +56,12 @@ const Category = styled.span`
 const Title = styled.h2`
   font-family: 'Bebas';
   letter-spacing:1.5px;
-  font-size:1.4em;
+  font-size:1.7em;
   line-height: 1em;
   color:#ffffff;
+  @media (min-width: 480px) {
+    font-size: 2.2em;
+  }
   @media (min-width: 640px) {
     line-height: 1.2em;
     font-size: 2.6em;
@@ -69,7 +72,7 @@ const LinkTo = styled(Link)`
   position:absolute;
   left:43%
   transform: translateX(-50%);
-  bottom:10px;
+  bottom:20px;
   font-size:1.1em;
   width:calc(100% - 100px);
   max-width:550px;

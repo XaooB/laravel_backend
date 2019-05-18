@@ -57,8 +57,13 @@ const ItemField = styled.div`
   text-align:center;
   flex:.4
   &:nth-child(2) {
-    flex:2;
+    flex:initial;
+    margin-right:20px;
     text-align:left;
+    @media (min-width: 480px) {
+      flex:2;
+      margin-right:0;
+    }
   }
   &:nth-child(3) {
     flex:2;

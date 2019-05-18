@@ -73,7 +73,6 @@ class App extends Component {
                     <AdminPrivateRoute path={`${url}/articles/add`} component={ ArticleAddNew } />
                     <AdminPrivateRoute path={`${url}/articles`}  component={ AdminArticles } />
                     <AdminPrivateRoute path={`${url}/users`}  component={ AdminUsers } />
-                    <AdminPrivateRoute path={`${url}/comments`}  component={ AdminComments } />
                     <AdminPrivateRoute path={`${url}/polls`}  component={ AdminPolls } />
                     <AdminPrivateRoute path={`${url}/players`}  component={ AdminPlayers } />
                   </Switch>
