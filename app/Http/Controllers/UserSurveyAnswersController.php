@@ -63,7 +63,7 @@ class UserSurveyAnswersController extends Controller
             if(UserSurveyAnswers::updateOrCreate(['idUser' => $_SESSION['iduser'], 'idSurvey' => $data['idsurvey']], 
                 ['idSurveySet' => $data['idsurveyset']]))
             {
-                SurveysCache::storeForever('LATEST.USER' . $_SESSION['iduser'], true);
+                SurveysCache::storeForever('LATEST.USER.' . $_SESSION['iduser'], true);
                 return response()->json(['message' => 'success']);
             }
         }

@@ -18,7 +18,7 @@ class SurveysCache
 	{
 		$key = 'latest';
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addHours(12), function() {
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(4), function() {
 			$latestSurvey = DB::table('surveys')->select('idSurvey as idsurvey', 'Topic as topic')->orderBy('idSurvey', 'desc')->first();
         	$latestSurvey->answers = array();
         	SurveySetsController::getAnswers($latestSurvey->answers, $latestSurvey->idsurvey);
