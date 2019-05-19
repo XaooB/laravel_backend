@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PollList from './poll_list';
 import PageHeader from '../../components/Reusable/PageHeader'
 import { connect } from 'react-redux';
-import { setVoteFlagCurrentPoll } from '../../actions/'
+import { setVoteFlagCurrentPoll, fetchCurrentPoll } from '../../actions/'
 import Button from '../Reusable/button';
 
 const Wrapper = styled.div`
@@ -29,6 +29,7 @@ const Topic = styled.p`
   color:#1e1e1e;
   font-weight:bold;
   margin:15px 5px;
+  text-align:justify;
   font-size:.95em;
 `
 
@@ -66,12 +67,13 @@ class StrawPoll extends Component {
   async handleSurveyPost(e) {
     e.preventDefault();
     const { pollAnswer } = this.props.user;
-    const { pollData } = this.props;
+    const { pollData, fetchCurrentPoll } = this.props;
 
     //zapytanie musi byc akcją ze względu na zmiane widoku, wiec trzeba przechowywac to w reduksie
     //po sukcesywnym oddaniu glosu zmieniamy flage voted na true, co wymusi zmiane
     this.setState({isFetching: true})
-    const request = await axios.post('/api/usersurveyanswers', {idsurvey: pollData.idsurvey, idsurveyset: pollAnswer})
+    const request = await axios.post('/api/usersurveyanswers', {idsurvey: pollData.idsurvey, idsurveyset: pollAnswer});
+    await fetchCurrentPoll();
 
     if(request.status === 200)
       return (
@@ -126,11 +128,11 @@ class StrawPoll extends Component {
   }
 }
 
-//after sending a post request on poll answer and calling an action to update vote value in reducer, the component is not rerendering again.
+//I splitted it into 2 variables becase when I tried with ({user}) => ({user}), props wasn't updating the state after user voted
 const mapStateToProps = state => {
   return {
     user: state.user,
-    pollData: state.user.pollData
+    pollData: state.user.pollData //pulling pollData directly from user reducer
   }
 }
-export default connect(mapStateToProps, {setVoteFlagCurrentPoll})(StrawPoll);
+export default connect(mapStateToProps, {setVoteFlagCurrentPoll, fetchCurrentPoll})(StrawPoll);

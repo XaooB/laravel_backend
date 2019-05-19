@@ -5,8 +5,13 @@ import MiniLoader from '../Reusable/mini_loader';
 import Title from '../Schedule/schedule_title';
 
 const Container = styled.section`
-  width:27%;
-  padding-left:20px;
+  width:100%;
+  order:1;
+  @media (min-width: 820px) {
+    order:2;
+    width:27%;
+    padding-left:20px;
+  }
 `
 
 const Information = styled.p`

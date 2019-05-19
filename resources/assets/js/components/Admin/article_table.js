@@ -118,8 +118,8 @@ class ArticleTable extends Component {
                     <Field>
                       {
                         item.main ?
-                        <input type='checkbox' name='main' defaultChecked />
-                        : <input type='checkbox' name='main' />
+                        <input type='radio' name='main' defaultChecked />
+                        : <input type='radio' name='main' />
                       }
                     </Field>
                     <Field>{item.category}</Field>

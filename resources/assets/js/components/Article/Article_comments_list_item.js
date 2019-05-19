@@ -11,7 +11,7 @@ import Comments from './article_comments_list';
 import AddCommentForm from './article_comments_form';
 import EditCommentForm from './article_comments_edit_form';
 import dateConverter from '../../helpers/dateConverter';
-import Modal from '../Reusable/Modal';
+import Modal from '../Reusable/modal_confirmation';
 import { selectedCommentID, deleteComment, hideComment } from '../../actions';
 
 const ListItem = styled.li`
@@ -214,11 +214,16 @@ class SingleComment extends Component {
                     </Fragment>
                   )
                   : ''}
-                <FooterItem title="Zgłoś użytkownika">
-                  <FaBan />
-                  <ActionName>Zgłoś</ActionName>
-                </FooterItem>
-                {user[0].tier > 2
+                  {
+                  user[0].iduser !== comment.user.iduser
+                  ? (
+                    <FooterItem title="Zgłoś użytkownika">
+                      <FaBan />
+                      <ActionName>Zgłoś</ActionName>
+                    </FooterItem>
+                  ) : ''
+                }
+                {user[0].tier > 2 && user[0].iduser !== comment.user.iduser
                   ? (
                     <FooterItem title="Zbanuj komentarz" style={{ color: '#ee324e' }} onClick={this.handleHide}>
                       <IoIosFlag />
