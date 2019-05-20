@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Articles;
+use App\Comments;
+use App\UserLikes;
 use App\Http\Resources\Articles as ArticlesResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +15,6 @@ use App\Http\Controllers\CloudinaryController;
 use Facades\App\CacheData\ArticlesCache;
 use Facades\App\CacheData\UsersCache;
 use App\Http\Controllers\ValidatorController;
-use App\Comments;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -296,13 +297,16 @@ class ArticlesController extends Controller
          */
         public function destroy(Request $request, $id)
         {
-            if(Articles::where('idArticle', $id)->where('idUser', $_SESSION['iduser'])->delete())
-                if(Comments::where('idReference', $id)->delete())
-                {
-                    ArticlesCache::removeFromCache($id);
-                    return response()->json(['status' => true, 'error' => ''], 202);
-                }
-                return response()->json(['status' => false, 'error' => 'wrong data'], 400);
+            if(
+                Articles::where('idArticle', $id)->where('idUser', $_SESSION['iduser'])->delete() &&
+                Comments::where('idReference', $id)->delete() &&
+                UserLikes::where('idReference', $id)->delete()
+            )
+            {
+                ArticlesCache::removeFromCache($id);
+                return response()->json(['status' => true, 'error' => ''], 202);
+            }
+            return response()->json(['status' => false, 'error' => 'wrong data'], 400);
         }
 
         // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------
