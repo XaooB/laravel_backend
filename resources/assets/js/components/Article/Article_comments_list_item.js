@@ -11,7 +11,7 @@ import Comments from './article_comments_list';
 import AddCommentForm from './article_comments_form';
 import EditCommentForm from './article_comments_edit_form';
 import dateConverter from '../../helpers/dateConverter';
-import Modal from '../Reusable/Modal';
+import Modal from '../Reusable/modal_confirmation';
 import { selectedCommentID, deleteComment, hideComment } from '../../actions';
 
 const ListItem = styled.li`
@@ -20,6 +20,7 @@ const ListItem = styled.li`
   flex-flow:row nowrap;
   justify-content:flex-start;
   padding-top:25px;
+  }
   &:not(:last-child) {
     margin-bottom:15px;
   }
@@ -36,8 +37,13 @@ const ListItem = styled.li`
 `;
 
 const Article = styled.article`
-  margin-left:4px;
   flex:1;
+  ul {
+    margin-left:20px;
+    @media only screen and (min-width: 640px) {
+      margin-left:-20px;
+    }
+  }
 `;
 
 const Header = styled.header`
@@ -45,10 +51,6 @@ const Header = styled.header`
   justify-content:space-between;
   align-items:baseline;
   flex-flow: row wrap;
-`;
-
-const UserName = styled.span`
-  font-family:'SSPB';
 `;
 
 const Added = styled.span`
@@ -172,9 +174,9 @@ class SingleComment extends Component {
         <User user={comment.user} />
         <Article>
           <Header>
-            <UserName title={`Profil użytkownika ${comment.user.name}`}>
+            <span title={`Profil użytkownika ${comment.user.name}`}>
               <LinkTo to={`/app/user/${comment.user.iduser}`}>{comment.user.name}</LinkTo>
-            </UserName>
+            </span>
             {!comment.modify_date
               ? <Added title={comment.create_date}>Added {dateConverter.toStageDate(comment.create_date)}</Added>
               : (
@@ -214,11 +216,16 @@ class SingleComment extends Component {
                     </Fragment>
                   )
                   : ''}
-                <FooterItem title="Zgłoś użytkownika">
-                  <FaBan />
-                  <ActionName>Zgłoś</ActionName>
-                </FooterItem>
-                {user[0].tier > 2
+                  {
+                  user[0].iduser !== comment.user.iduser
+                  ? (
+                    <FooterItem title="Zgłoś użytkownika">
+                      <FaBan />
+                      <ActionName>Zgłoś</ActionName>
+                    </FooterItem>
+                  ) : ''
+                }
+                {user[0].tier > 2 && user[0].iduser !== comment.user.iduser
                   ? (
                     <FooterItem title="Zbanuj komentarz" style={{ color: '#ee324e' }} onClick={this.handleHide}>
                       <IoIosFlag />
@@ -230,8 +237,17 @@ class SingleComment extends Component {
               </Footer>
             )
             : ''}
-          {showingForm ? <AddCommentForm user={user} articleID={articleID} commentID={comment.idcomment} handleForm={() => this.handlePostForm()} /> : ''}
-          {comment.comments ? <Comments comments={comment.comments} user={user} articleID={articleID} /> : ''}
+          {
+            showingForm
+            ? <AddCommentForm
+                showAnswerForm={showingForm}
+                user={user} articleID={articleID}
+                commentID={comment.idcomment}
+                author={comment.user.name}
+                handleForm={() => this.handlePostForm()} />
+            : ''}
+          {
+            comment.comments ? <Comments comments={comment.comments} user={user} articleID={articleID} /> : ''}
         </Article>
       </ListItem>
     );

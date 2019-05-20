@@ -4,7 +4,7 @@ import { GoCommentDiscussion } from 'react-icons/go';
 import { IoIosEye, IoIosHeart } from 'react-icons/io';
 import {incLikesCount, decLikesCount} from '../../actions/';
 import { connect } from 'react-redux';
-import Modal from '../Reusable/Modal';
+import Notification from '../Reusable/modal_notification';
 
 const Header = styled.header`
   background:white;
@@ -58,7 +58,10 @@ class ArticleTitle extends Component {
     super(props);
 
     this.state = {
-      articleLikes: null
+      articleLikes: null,
+      showModal: false,
+      typeModal: '',
+      textModal: ''
     }
 
     this.handleLikeButton = this.handleLikeButton.bind(this);
@@ -81,12 +84,18 @@ class ArticleTitle extends Component {
 
   async handleLikeButton() {
     const {idarticle} = this.props.article.data;
-    if(!this.props.article.blockLikeButton) return this.props.incLikesCount({idreference: idarticle});
+    if(!this.props.article.blockLikeButton) {
+      await this.props.incLikesCount({idreference: idarticle});
+      this.setState({typeModal:'success', showModal: true, textModal: 'Artykuł został dodany do ulubionych.'})
+    }
   }
 
   async handleDislikeButton() {
     const {idarticle} = this.props.article.data;
-    if(!this.props.article.blockLikeButton) return await this.props.decLikesCount(idarticle);
+    if(!this.props.article.blockLikeButton) {
+      await this.props.decLikesCount(idarticle);
+      this.setState({typeModal:'success', showModal: true, textModal: 'Arykuł został usunięty z ulubionych.'})
+    }
   }
 
   render() {
@@ -126,6 +135,15 @@ class ArticleTitle extends Component {
             <Count>{views}</Count>
           </Item>
         </Wrapper>
+        <Notification
+          options={{
+            showModal: this.state.showModal,
+            hideModalFunction: () => this.setState({showModal: false}),
+            type: this.state.typeModal,
+            timeout: 3000,
+            text: this.state.textModal
+          }}
+        />
       </Header>
     )
   }

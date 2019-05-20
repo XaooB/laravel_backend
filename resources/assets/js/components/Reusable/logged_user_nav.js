@@ -10,7 +10,7 @@ const Container = styled.div`
   color:#1e1e1e;
   right:0;
   border-radius:6px;
-  background:#fff;
+  background:#f9f9f9;
   border:1px solid #ededed;
   a {
     display:block;

@@ -132,7 +132,7 @@ const User = styled.span`
 
 const SearchInput = styled.input`
   position:absolute;
-  width:32px;
+  width:100%;
   right:0px;
   color:#1e1e1e;
   padding-left:0px;
@@ -146,6 +146,9 @@ const SearchInput = styled.input`
   transition: .3s all ease-in;
   &::placeholder {
     color:#1e1e1e;
+  }
+  @media (min-width: 480px) {
+    width:32px;
   }
 `
 
@@ -173,7 +176,7 @@ const Checkbox = styled.input`
 
 const UserImageWrapper = styled.figure`
   height:24px;
-  border-radius:6px;
+  border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:scenter;
@@ -194,6 +197,9 @@ class HeaderLogin extends Component {
       keyword: '',
       showUserNav: false,
     }
+
+    this.submitForm = this.submitForm.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   openUserNav() {
@@ -223,13 +229,13 @@ class HeaderLogin extends Component {
           <Text>Fanowska strona poświęcona hiszpańskiemu klubowi – <b>Real Madryt C.F.</b></Text>
           <Wrapper>
             <SearchBar
-              onSubmit={ e => this.submitForm(e) }>
+              onSubmit={ this.submitForm }>
               <Checkbox type='checkbox' id='search' />
               <SearchInput
                 type='text'
                 placeholder='Szukaj..'
                 value={ keyword }
-                onChange={ e => this.handleSearch(e) }/>
+                onChange={ this.handleSearch }/>
               <SearchIcon htmlFor='search' >
                 <FaSearch />
               </SearchIcon>

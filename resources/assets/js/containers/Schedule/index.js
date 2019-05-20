@@ -26,16 +26,20 @@ class Schedule extends Component {
     super(props);
 
     this.state = {
-      matches: []
+      matches: [],
+      isFetching: false
     }
   }
 
   async componentDidMount() {
     window.scrollTo(0,0);
+    this.setState({isFetching: true})
     await this.props.fetchSchedule();
   }
 
   render() {
+    const { isFetching } = this.state;
+    
     return (
       <Fragment>
         <Helmet>
@@ -43,7 +47,7 @@ class Schedule extends Component {
         </Helmet>
         <Main>
           <ChooseFixture />
-          <ScheduleList />
+          <ScheduleList status={isFetching} />
         </Main>
         <Footer />
       </Fragment>

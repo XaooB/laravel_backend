@@ -26,7 +26,7 @@ class Search extends Component {
     }
   }
   async componentDidMount() {
-    window.scrollTop(0,0);
+    window.scrollTo(0,0);
     const { keyword } = this.props.match.params;
 
     await this.setState({ keyword, fetchingStatus: true }) //ustawienie wyrażenia oraz flagi na wartośc true

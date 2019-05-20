@@ -11,7 +11,7 @@ const Btn = styled.button`
   margin: 0 6px;
   min-width:${props => props.minWidth ? '105px' : 'initial'};
   width: ${props => props.fullWidth ? '100%' : 'initial'};
-  color:${props => props.warning ? '#ffffff' : 'inherit'};
+  color:${props => props.warning ? '#ffffff' : 'rgb(119, 119, 119)'};
   background:${props => props.warning ? '#ee324e' : 'default'};
 `
 

@@ -86,7 +86,8 @@ class EditCommentForm extends Component {
       return this.setState({charactersUsed: event.target.value.length});
   }
 
-  async handlePost() {
+  async handlePost(e) {
+    e.preventDefault();
     this.setState({fetchingStatus: true});
 
     const { content } = this.state,

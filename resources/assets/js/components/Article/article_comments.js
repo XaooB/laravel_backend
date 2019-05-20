@@ -10,7 +10,7 @@ import {fetchComments, setCommentStatus} from '../../actions/'
 const Title = styled.h3`
   font-size:1.5em;
   font-family:'SSPB';
-  margin-top:15px;
+  margin-top:50px;
 `
 
 const Information = styled.p`

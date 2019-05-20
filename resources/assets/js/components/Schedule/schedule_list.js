@@ -9,18 +9,25 @@ const List = styled.section`
   margin-top:30px;
 `
 
+const Information = styled.p`
+  margin-top:20px;
+  font-size:1.1.em;
+`
+
 class ScheduleList extends Component {
   render() {
-    const { matches, filterType } = this.props.user.schedule;
+    const { matches, filterType, status } = this.props.user.schedule;
 
     return (
       <List>
         <PageHeader>Nadchodzące mecze</PageHeader>
         {
-          !matches.length ?
-          (
-            <MiniLoader margin={30} />
-          ) : (
+
+          status
+          ? <MiniLoader margin={30} />
+          : !matches.length
+          ? <Information>Brak nadchodzących meczów.</Information>
+          : (
             matches
               .filter(item => {
                 if(filterType !== 'All') {
@@ -33,6 +40,8 @@ class ScheduleList extends Component {
                 return <ScheduleListItem match={ item } key={`${item.date} + ${item.away_team.short_name}`}/>
               })
           )
+
+
         }
       </List>
     )
