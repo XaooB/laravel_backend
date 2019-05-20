@@ -244,7 +244,7 @@ class UserSettings extends Component {
                         !imageUploadStatus
                         ? (
                           <Fragment>
-                            <UploadButton>upload image</UploadButton>
+                            <UploadButton>pick an image</UploadButton>
                             <UploadInput
                               type='file'
                               name='image'

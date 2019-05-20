@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Wrapper from '../Reusable/wrapper';
@@ -47,6 +47,8 @@ const TeamName = styled.span`
 `
 
 const MatchInfo = styled.div`
+  position:relative;
+  z-index:1;
   min-width:170px;
   margin: 0 5px;
   margin-top:-20px;
@@ -121,36 +123,51 @@ const Image = styled.img`
 `
 
 const Team = styled.div`
+  position:relative;
+  z-index:1;
   display:flex;
   flex-flow:column wrap;
   justify-content:space-between;
   align-items:center;
 `
 
+const Infomation = styled.span`
+  position:relative;
+  z-index:1;
+  font-size:1.3em;
+  text-align:center;
+`
+
 const NextMatch = props => {
   const { away_team, home_team, date, league, location } = props.data;
   return (
     <Section>
-
-        <Team>
-          <ImageWrapper>
-            <Image src={home_team.image}/>
-          </ImageWrapper>
-          <TeamName>{home_team.short_name}</TeamName>
-        </Team>
-        <MatchInfo>
-          <Text>Najbliższy mecz</Text>
-          <FixtureName>{league}</FixtureName>
-          <Date>{date}</Date>
-          <Result>vs.</Result>
-          <Location>{location === 'HOME' ? 'mecz u siebie' : 'mecz na wyjeździe' }</Location>
-        </MatchInfo>
-        <Team>
-          <ImageWrapper>
-            <Image src={away_team.image}/>
-          </ImageWrapper>
-          <TeamName>{away_team.short_name}</TeamName>
-        </Team>
+    {
+      props.data.length
+      ? (
+        <Fragment>
+          <Team>
+            <ImageWrapper>
+              <Image src={home_team.image}/>
+            </ImageWrapper>
+            <TeamName>{home_team.short_name}</TeamName>
+          </Team>
+          <MatchInfo>
+            <Text>Najbliższy mecz</Text>
+            <FixtureName>{league}</FixtureName>
+            <Date>{date}</Date>
+            <Result>vs.</Result>
+            <Location>{location === 'HOME' ? 'mecz u siebie' : 'mecz na wyjeździe' }</Location>
+          </MatchInfo>
+          <Team>
+            <ImageWrapper>
+              <Image src={away_team.image}/>
+            </ImageWrapper>
+            <TeamName>{away_team.short_name}</TeamName>
+          </Team>
+        </Fragment>
+      ) : <Infomation>Koniec sezonu. Brak nadchodzących meczów.</Infomation>
+    }
     </Section>
   )
 }

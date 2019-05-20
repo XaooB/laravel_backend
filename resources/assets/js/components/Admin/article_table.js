@@ -53,9 +53,6 @@ class ArticleTable extends Component {
     try {
       const request = await axios.delete(`/api/articles/${id}`)
       this.showToast();
-
-      //akcja ktora ponownie pobiera artykuły
-
     } catch (e) {
       throw new Error(e);
     }

@@ -6,7 +6,7 @@ const Button = styled.button`
   justify-content:space-between;
   align-items:center;
   cursor:pointer;
-  background:#00529f;
+  background:#ee324e;
   outline:none;
   border:1px solid #999;
   border-radius:3px;
@@ -21,7 +21,7 @@ const Button = styled.button`
 
 const Text = styled.span`
   display:block;
-    color:#fff;
+  color:#fff;
 `
 
 const ActionButton = props => {

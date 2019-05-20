@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import Button from '../Reusable/button';
 import User from './article_user';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import MiniLoader from '../../components/Reusable/mini_loader';
+import AddCommentButtonMobile from './article_comment_add_mobile';
+import AddCommentModalMobile from './article_comment_add_modal';
 import {API} from '../../helpers/api';
 
 import { addComment, setCommentStatus } from '../../actions/';
@@ -68,9 +70,12 @@ const Counter = styled.span`
 `
 
 const Wrapper = styled.section`
-  display:flex;
+  display:none;
   flex-flow: row wrap;
   justify-content: space-between;
+  @media only screen and (min-width: 640px) {
+    display:flex;
+  }
 `
 
 const Warning = styled.span`
@@ -85,6 +90,7 @@ class AddCommentForm extends Component {
       fetchingStatus: false,
       content: '',
       charactersUsed: 0,
+      openCommentModal: false
     };
 
     this.handleTextarea = this.handleTextarea.bind(this);
@@ -119,37 +125,45 @@ class AddCommentForm extends Component {
   }
 
   render() {
-    const { charactersUsed, fetchingStatus } = this.state,
-          { articleID, commentID, user, comments, isEditing } = this.props;
+    const { charactersUsed, fetchingStatus, openCommentModal } = this.state,
+          { articleID, commentID, user, comments, isEditing, article } = this.props;
 
     return (
-      <Wrapper>
-        <UserImageContainer>
-          <UserImage  src={user[0].image} title='' alt='' />
-        </UserImageContainer>
-        <Form>
-          <TextField value={this.state.content} onChange={this.handleTextarea} maxLength='500'></TextField>
-          <Wrapper>
-            {
-              charactersUsed == 500
-              ? <Counter><Warning>Użyto znaków: {charactersUsed}/500 - osiągnięto maksymalną ilość znaków!</Warning></Counter>
-              : <Counter>Użyto znaków: {charactersUsed}/500</Counter>
-            }
-            <Wrapper style={{alignSelf: 'flex-end', alignItems:'center'}}>
-              <Button
-                name='Dodaj post'
-                colorBlue onClick={this.handlePost}
-                isFetching={fetchingStatus}
-                warning
-                minWidth
-              />
+      <Fragment>
+        <Wrapper>
+          <UserImageContainer>
+            <UserImage  src={user[0].image} title='' alt='' />
+          </UserImageContainer>
+          <Form>
+            <TextField value={this.state.content} onChange={this.handleTextarea} maxLength='500'></TextField>
+            <Wrapper>
+              {
+                charactersUsed == 500
+                ? <Counter><Warning>Użyto znaków: {charactersUsed}/500 - osiągnięto maksymalną ilość znaków!</Warning></Counter>
+                : <Counter>Użyto znaków: {charactersUsed}/500</Counter>
+              }
+              <Wrapper style={{alignSelf: 'flex-end', alignItems:'center'}}>
+                <Button
+                  name='Dodaj post'
+                  colorBlue onClick={this.handlePost}
+                  isFetching={fetchingStatus}
+                  warning
+                  minWidth
+                />
+              </Wrapper>
             </Wrapper>
-          </Wrapper>
-        </Form>
-      </Wrapper>
+          </Form>
+        </Wrapper>
+        <AddCommentButtonMobile
+          openCommentModal={() => this.setState({openCommentModal: !openCommentModal})} />
+        <AddCommentModalMobile
+          openCommentModal={() => this.setState({openCommentModal: !openCommentModal})}
+          statusModal={openCommentModal}
+          article={article} />
+      </Fragment>
     )
   }
 }
 
-const mapStateToProps = ({comments}) => ({comments});
+const mapStateToProps = ({comments, article}) => ({comments, article});
 export default connect(mapStateToProps, {addComment, setCommentStatus})(AddCommentForm);

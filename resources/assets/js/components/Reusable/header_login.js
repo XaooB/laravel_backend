@@ -132,7 +132,7 @@ const User = styled.span`
 
 const SearchInput = styled.input`
   position:absolute;
-  width:32px;
+  width:100%;
   right:0px;
   color:#1e1e1e;
   padding-left:0px;
@@ -146,6 +146,9 @@ const SearchInput = styled.input`
   transition: .3s all ease-in;
   &::placeholder {
     color:#1e1e1e;
+  }
+  @media (min-width: 480px) {
+    width:32px;
   }
 `
 

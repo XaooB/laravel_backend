@@ -20,6 +20,7 @@ const ListItem = styled.li`
   flex-flow:row nowrap;
   justify-content:flex-start;
   padding-top:25px;
+  }
   &:not(:last-child) {
     margin-bottom:15px;
   }
@@ -36,8 +37,13 @@ const ListItem = styled.li`
 `;
 
 const Article = styled.article`
-  margin-left:4px;
   flex:1;
+  ul {
+    margin-left:20px;
+    @media only screen and (min-width: 640px) {
+      margin-left:-20px;
+    }
+  }
 `;
 
 const Header = styled.header`
@@ -45,10 +51,6 @@ const Header = styled.header`
   justify-content:space-between;
   align-items:baseline;
   flex-flow: row wrap;
-`;
-
-const UserName = styled.span`
-  font-family:'SSPB';
 `;
 
 const Added = styled.span`
@@ -172,9 +174,9 @@ class SingleComment extends Component {
         <User user={comment.user} />
         <Article>
           <Header>
-            <UserName title={`Profil użytkownika ${comment.user.name}`}>
+            <span title={`Profil użytkownika ${comment.user.name}`}>
               <LinkTo to={`/app/user/${comment.user.iduser}`}>{comment.user.name}</LinkTo>
-            </UserName>
+            </span>
             {!comment.modify_date
               ? <Added title={comment.create_date}>Added {dateConverter.toStageDate(comment.create_date)}</Added>
               : (

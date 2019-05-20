@@ -92,7 +92,7 @@ class Home extends Component {
     if(loadingStatus) return <Loader />
     const lastestNewsBig = articles.slice(0, 9),
           smallNews = articles.slice(9, 19),
-          nextMatch = schedule[0],
+          nextMatch = schedule,
           upcomingMatches = schedule.slice(1, 5);
 
     return (
