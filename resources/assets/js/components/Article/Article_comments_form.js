@@ -97,6 +97,14 @@ class AddCommentForm extends Component {
     this.handlePost = this.handlePost.bind(this);
   }
 
+
+  componentDidMount() {
+    const { showAnswerForm } = this.props;
+
+    if(showAnswerForm === true)
+      this.setState({openCommentModal: true});
+  }
+
   handleTextarea(event) {
     const charactersUsed = event.target.value.length;
 
@@ -116,21 +124,18 @@ class AddCommentForm extends Component {
     this.setState({ fetchingStatus: true });
 
     await this.props.addComment({content, idsubreference, idreference});
-    await this.setState({
-      charactersUsed: 0,
-      content: '',
-      fetchingStatus: false
-    });
+    await this.setState({charactersUsed: 0, content: '', fetchingStatus: false});
     handleForm && handleForm();
   }
 
   render() {
     const { charactersUsed, fetchingStatus, openCommentModal } = this.state,
-          { articleID, commentID, user, comments, isEditing, article } = this.props;
+          { articleID, commentID, user, comments, isEditing, article, showAnswerForm, handleForm, author } = this.props;
+
 
     return (
       <Fragment>
-        <Wrapper>
+        <Wrapper showingForm>
           <UserImageContainer>
             <UserImage  src={user[0].image} title='' alt='' />
           </UserImageContainer>
@@ -155,11 +160,16 @@ class AddCommentForm extends Component {
           </Form>
         </Wrapper>
         <AddCommentButtonMobile
-          openCommentModal={() => this.setState({openCommentModal: !openCommentModal})} />
+          openCommentModal={() => this.setState({openCommentModal: !openCommentModal})}
+          handleForm={handleForm} />
         <AddCommentModalMobile
           openCommentModal={() => this.setState({openCommentModal: !openCommentModal})}
           statusModal={openCommentModal}
-          article={article} />
+          showAnswerForm={showAnswerForm}
+          article={article}
+          handleForm={handleForm}
+          commentID={commentID}
+          author={author} />
       </Fragment>
     )
   }

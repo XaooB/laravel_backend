@@ -237,8 +237,17 @@ class SingleComment extends Component {
               </Footer>
             )
             : ''}
-          {showingForm ? <AddCommentForm user={user} articleID={articleID} commentID={comment.idcomment} handleForm={() => this.handlePostForm()} /> : ''}
-          {comment.comments ? <Comments comments={comment.comments} user={user} articleID={articleID} /> : ''}
+          {
+            showingForm
+            ? <AddCommentForm
+                showAnswerForm={showingForm}
+                user={user} articleID={articleID}
+                commentID={comment.idcomment}
+                author={comment.user.name}
+                handleForm={() => this.handlePostForm()} />
+            : ''}
+          {
+            comment.comments ? <Comments comments={comment.comments} user={user} articleID={articleID} /> : ''}
         </Article>
       </ListItem>
     );
