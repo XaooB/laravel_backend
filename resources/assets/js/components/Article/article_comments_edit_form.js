@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import Button from '../Reusable/button';
 import User from './article_user';
@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import MiniLoader from '../../components/Reusable/mini_loader';
 import {API} from '../../helpers/api';
 import { editComment, setCommentStatus } from '../../actions/';
+import AddCommentModalMobile from './article_comment_add_modal';
 
 const Form = styled.form`
   flex:8;
@@ -14,6 +15,10 @@ const Form = styled.form`
   margin-top:10px;
   margin-bottom:5px;
   margin-left:5px;
+  display:none;
+  @media only screen and (min-width: 640px) {
+    display:block;
+  }
 `
 
 const TextField = styled.textarea`
@@ -66,7 +71,8 @@ class EditCommentForm extends Component {
       fetchingStatus: false,
       content: '',
       charactersUsed: 0,
-      editingContent: ''
+      editingContent: '',
+      openEditModal: false
     }
 
     this.handleTextarea = this.handleTextarea.bind(this);
@@ -108,23 +114,37 @@ class EditCommentForm extends Component {
   }
 
   render() {
-    const { charactersUsed, fetchingStatus } = this.state,
-          { articleID, commentID, user, comments, isEditing } = this.props;
+    const { charactersUsed, fetchingStatus, content } = this.state,
+          { articleID, user, comments, isEditing, article } = this.props;
 
     return (
-      <Form>
-        <TextField value={this.state.content} onChange={this.handleTextarea} maxLength='500'></TextField>
-        <Wrapper>
-          <Counter id='counter'>Użyto znaków: {charactersUsed}/500</Counter>
-          <ButtonWrapper>
-            <Button name='Anuluj' onClick={this.cancelPost} />
-            <Button name='Edytuj wiadomość' colorBlue onClick={this.handlePost} isFetching={fetchingStatus} />
-          </ButtonWrapper>
-        </Wrapper>
-      </Form>
+      <Fragment>
+        <Form>
+          <TextField value={content} onChange={this.handleTextarea} maxLength='500'></TextField>
+          <Wrapper>
+            <Counter id='counter'>Użyto znaków: {charactersUsed}/500</Counter>
+            <ButtonWrapper>
+              <Button name='Anuluj' onClick={this.cancelPost} />
+              <Button name='Edytuj wiadomość' colorBlue onClick={this.handlePost} isFetching={fetchingStatus} />
+            </ButtonWrapper>
+          </Wrapper>
+        </Form>
+        {
+          !isEditing
+          ? ''
+          : <AddCommentModalMobile
+              statusModal={isEditing}
+              article={article}
+              commentID={comments.selectedCommentID}
+              content={this.props.content}
+              openCommentModal={this.cancelPost}
+              isEditing={isEditing}
+            />
+        }
+      </Fragment>
     )
   }
 }
 
-const mapStateToProps = ({comments}) => ({comments});
+const mapStateToProps = ({comments, article}) => ({comments, article});
 export default connect(mapStateToProps, {editComment, setCommentStatus})(EditCommentForm);

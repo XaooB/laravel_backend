@@ -17,7 +17,6 @@ const Form = styled.form`
   flex:8;
   width:100%;
   margin-top:10px;
-  margin-left:5px;
 `
 
 const TextField = styled.textarea`

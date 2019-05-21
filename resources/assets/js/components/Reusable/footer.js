@@ -22,7 +22,7 @@ const FooterBackground = styled.footer`
 const NavItem = styled.div`
   flex:1;
   color:#474747;
-  padding:15px 10px;
+  padding:15px;
 `
 
 const Category = styled.h5`

@@ -61,6 +61,7 @@ const Added = styled.span`
 
 const Content = styled.p`
   white-space:pre-line;
+  text-align:justify;
   padding:8px 0;
   font-size:1.05em;
 `;
@@ -95,12 +96,6 @@ const FooterItem = styled.button`
   }
   &:hover {
     color:#00529f;
-  }
-  svg {
-    /* ikony przy przyciskach */
-    @media only screen and (max-width: 480px) {
-      display:none;
-    }
   }
 `
 
@@ -178,9 +173,9 @@ class SingleComment extends Component {
               <LinkTo to={`/app/user/${comment.user.iduser}`}>{comment.user.name}</LinkTo>
             </span>
             {!comment.modify_date
-              ? <Added title={comment.create_date}>Added {dateConverter.toStageDate(comment.create_date)}</Added>
+              ? <Added title={comment.create_date}>{dateConverter.toStageDate(comment.create_date)}</Added>
               : (
-                <Added title={`${comment.create_date}, edited at ${comment.modify_date}`}>Added {dateConverter.toStageDate(comment.create_date)}, edited {dateConverter.toStageDate(comment.modify_date)}</Added>
+                <Added title={`${comment.create_date}, edited at ${comment.modify_date}`}>{dateConverter.toStageDate(comment.create_date)}, edited {dateConverter.toStageDate(comment.modify_date)}</Added>
               )
             }
           </Header>
@@ -191,6 +186,7 @@ class SingleComment extends Component {
                 handleEdit={() => this.handleEdit()}
                 handleEditForm={() => this.handleEditForm()}
                 content={comment.content}
+                isEditing={isEditing}
               />
             )
             : <Content>{comment.content}</Content>

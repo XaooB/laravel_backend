@@ -26,7 +26,7 @@ const Container = styled.section`
   display:flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  padding:0 10px;
+  padding:0 15px;
   @media (min-width: 480px) {
     margin-top:40px;
   }

@@ -15,7 +15,7 @@ const Hamburger = styled.label`
   right:0;
   outline:none;
   padding:17px 20px;
-  padding-bottom:18px;
+  padding-bottom:20px;
   border:1px solid #ededed;
   border-bottom:2px solid #ededed;
   &:after {
