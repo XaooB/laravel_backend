@@ -18,15 +18,12 @@ const List = styled.ul`
 `
 
 const ListItem = styled.li`
-  margin-top:10px;
+  margin:6px 2px 0 2px;
   cursor:pointer;
   display:flex;
   flex-flow:column nowrap;
   align-items:center;
   justify-content: center;
-  &:not(:last-child) {
-    margin-right:6px;
-  }
 `
 
 const ListLink = styled.a`

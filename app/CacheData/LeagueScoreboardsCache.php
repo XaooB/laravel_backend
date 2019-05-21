@@ -16,7 +16,7 @@ class LeagueScoreboardsCache
 	{
 		$key = 'season.' . $season . '.league.' . $league;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addMinutes(30), function() use($season, $league) {
+		return cache()->remember($cacheKey, Carbon::now()->addHours(12), function() use($season, $league) {
 			LeagueScoreboardController::buildScoreboardData($scoreboard, $season, $league);
 			return $scoreboard;
 		});

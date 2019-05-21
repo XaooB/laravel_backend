@@ -1,7 +1,11 @@
 export const FETCH_USER = 'FU';
+export const FETCH_USER_PROFILE = 'FUP';
+export const FETCH_USER_CHECK = 'FUC';
 export const FETCH_ARTICLE = 'FA';
 export const FETCH_ADMIN_ARTICLES = 'FAA';
 export const FETCH_ARTICLE_NEIGHBOURS = 'FAN';
+export const FETCH_CURRENT_POLL = 'FCP';
+export const SET_VOTE_FLAG_CURRENT_POLL = 'SVFCP';
 export const ADD_COMMENT = 'AC';
 export const FETCH_NEWS = 'FN';
 export const EDIT_COMMENT = 'EC';
@@ -23,3 +27,4 @@ export const DISABLE_LIKE_BUTTON = 'DLB';
 export const CHANGE_LIKE_STATUS = 'CLS';
 export const EDIT_COMMENT_STATUS = 'ESS';
 export const ADMIN_EDIT_ARTICLE_DATA = 'AEAD';
+export const SELECTED_POLL_ANSWER = 'SPA';

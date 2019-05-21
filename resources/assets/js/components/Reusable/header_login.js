@@ -9,7 +9,7 @@ import LoginOptions from './login_options';
 
 const Background = styled.section`
   width:100%;
-  padding:5px 10px;
+  padding:12px 10px;
   border-bottom:1px solid #ededed;
 `
 
@@ -35,24 +35,6 @@ const Container = styled.div`
   }
 `
 
-
-const LogIn = styled.a`
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  min-width:125px;
-  cursor:pointer;
-  padding:4px 15px;
-  background: #00529f;
-  border-radius:20px;
-  margin-left:5px;
-  text-transform:uppercase;
-  svg {
-    font-size:17px;
-    margin-right:5px;
-  }
-`
-
 const LogInText = styled.span`
   display:block;
   line-height:1;
@@ -74,9 +56,9 @@ const Text = styled.span`
 
 const SearchIcon = styled.label`
   font-size:12px;
-  border-radius:20px;
-  background: #00529f;
-  color:#fff;
+  border-radius:6px;
+  background: #ededed;
+  color:#1e1e1e;
   height:32px;
   width:32px;
   cursor:pointer;
@@ -101,6 +83,26 @@ const UserSection = styled.div`
   align-items:initial;
 `
 
+const LogIn = styled.a`
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-width:125px;
+  cursor:pointer;
+  color:#1e1e1e;
+  padding:4px 12px;
+  background: #ededed;
+  border-radius:6px;
+  margin-left:5px;
+  text-transform:uppercase;
+  svg {
+    font-size:19px;
+    position:relative;
+    top:-1px;
+    margin-right:5px;
+  }
+`
+
 const LoggedIn = styled.div`
   display:none;
   margin-left:6px;
@@ -108,11 +110,12 @@ const LoggedIn = styled.div`
   padding-left:15px;
   cursor:pointer;
   align-items:center;
-  color:#fff;
-  background: #00529f;
-  border-radius:20px;
+  color:#1e1e1e;
+  background: #ededed;
+  border-radius:6px;
   svg {
-    font-size:12px;
+    font-size:13px;
+    margin-left:2px;
   }
   @media (min-width: 640px) {
     display:flex;
@@ -122,26 +125,30 @@ const LoggedIn = styled.div`
 const User = styled.span`
   text-transform:uppercase;
   font-size:11px;
+  font-family:'AvenirLTD';
   letter-spacing:.5px;
   white-space: nowrap;
 `
 
 const SearchInput = styled.input`
   position:absolute;
-  width:32px;
+  width:100%;
   right:0px;
-  color:#fff;
+  color:#1e1e1e;
   padding-left:0px;
   padding-right:0px;
   height:32px;
   border:none;
   outline:none;
-  background: #00529f;
-  border-radius:20px;
+  background: #ededed;
+  border-radius:6px;
   font-size:12px;
   transition: .3s all ease-in;
   &::placeholder {
-    color:#fff;
+    color:#1e1e1e;
+  }
+  @media (min-width: 480px) {
+    width:32px;
   }
 `
 
@@ -167,6 +174,20 @@ const Checkbox = styled.input`
   }
 `
 
+const UserImageWrapper = styled.figure`
+  height:24px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:scenter;
+  overflow:hidden;
+  margin-right:8px;
+`
+
+const UserImage = styled.img`
+  height:24px;
+`
+
 class HeaderLogin extends Component {
   constructor(props) {
     super(props);
@@ -176,6 +197,9 @@ class HeaderLogin extends Component {
       keyword: '',
       showUserNav: false,
     }
+
+    this.submitForm = this.submitForm.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   openUserNav() {
@@ -205,13 +229,13 @@ class HeaderLogin extends Component {
           <Text>Fanowska strona poświęcona hiszpańskiemu klubowi – <b>Real Madryt C.F.</b></Text>
           <Wrapper>
             <SearchBar
-              onSubmit={ e => this.submitForm(e) }>
+              onSubmit={ this.submitForm }>
               <Checkbox type='checkbox' id='search' />
               <SearchInput
                 type='text'
                 placeholder='Szukaj..'
                 value={ keyword }
-                onChange={ e => this.handleSearch(e) }/>
+                onChange={ this.handleSearch }/>
               <SearchIcon htmlFor='search' >
                 <FaSearch />
               </SearchIcon>
@@ -236,6 +260,9 @@ class HeaderLogin extends Component {
               ) : (
                 <UserSection>
                   <LoggedIn onClick={ () => this.openUserNav() }>
+                    <UserImageWrapper>
+                      <UserImage src={user[0].image} title={user[0].name} alt={user[0].name} />
+                    </UserImageWrapper>
                     <User>{ user[0].name }</User>
                     <IoMdArrowDropdown />
                   </LoggedIn>

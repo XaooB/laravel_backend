@@ -11,11 +11,11 @@ import {
   IoMdSettings,
 } from 'react-icons/io';
 import { Link } from 'react-router-dom';
-import Searchbar from './searchbar';
 import HeaderLogin from './header_login'
 import Navigation from './navigation';
 import Logo from './logo';
 import MobileNavigation from './mobile_nav';
+import UserMobileNav from './mobile_nav_user';
 import Wrapper from './wrapper';
 
 const Topbar = styled.header`
@@ -182,50 +182,13 @@ class Header extends Component {
     this.setState({ toggleNav: !toggleNav });
   }
 
-  showNavigation() {
-    const { toggleNav } = this.state;
-    const { user } = this.props.user;
-
-    if (toggleNav) {
-      return (
-        <UserNav>
-          <NavItem to="/profile">
-            <FaUser />
-            <NavText>Mój profil</NavText>
-          </NavItem>
-          <NavItem to="/notifications">
-            <IoIosNotifications />
-            <NavText>Powiadomienia</NavText>
-            <Counter>2</Counter>
-          </NavItem>
-          <NavItem to="/notifications">
-            <FiMessageSquare />
-            <NavText>Wiadomości</NavText>
-          </NavItem>
-          {
-            user[0].tier > 1
-            ? <NavItem to="/admin/dashboard">
-                <IoMdSettings />
-                <NavText>Panel administracyjny</NavText>
-              </NavItem>
-              : ''
-          }
-          <ApiLink href="/api/auth/google/logout">
-            <FiLogOut />
-            <NavText>Wyloguj</NavText>
-          </ApiLink>
-        </UserNav>
-      );
-    }
-    return '';
-  }
-
   render() {
     const { user } = this.props.user;
 
     return (
       <Topbar>
         <HeaderLogin />
+        <UserMobileNav user={ user } />
           <Container>
             <Logo />
             <Navigation />

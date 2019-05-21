@@ -4,6 +4,7 @@ import { GoCommentDiscussion } from 'react-icons/go';
 import { IoIosEye, IoIosHeart } from 'react-icons/io';
 import {incLikesCount, decLikesCount} from '../../actions/';
 import { connect } from 'react-redux';
+import Notification from '../Reusable/modal_notification';
 
 const Header = styled.header`
   background:white;
@@ -30,6 +31,7 @@ const Wrapper = styled.div`
 const Item = styled.div`
   display:flex;
   cursor:default;
+  cursor: pointer;
   align-items:center;
   color:#c8c8c8;
   &:not(:last-child) {
@@ -38,7 +40,6 @@ const Item = styled.div`
   &:nth-child(2) {
     svg:hover {
       color:#ee324e;
-      cursor:pointer;
     }
   }
   svg {
@@ -57,7 +58,10 @@ class ArticleTitle extends Component {
     super(props);
 
     this.state = {
-      articleLikes: null
+      articleLikes: null,
+      showModal: false,
+      typeModal: '',
+      textModal: ''
     }
 
     this.handleLikeButton = this.handleLikeButton.bind(this);
@@ -80,12 +84,18 @@ class ArticleTitle extends Component {
 
   async handleLikeButton() {
     const {idarticle} = this.props.article.data;
-    if(!this.props.article.blockLikeButton) return this.props.incLikesCount({idreference: idarticle});
+    if(!this.props.article.blockLikeButton) {
+      await this.props.incLikesCount({idreference: idarticle});
+      this.setState({typeModal:'success', showModal: true, textModal: 'Artykuł został dodany do ulubionych.'})
+    }
   }
 
   async handleDislikeButton() {
     const {idarticle} = this.props.article.data;
-    if(!this.props.article.blockLikeButton) return await this.props.decLikesCount(idarticle);
+    if(!this.props.article.blockLikeButton) {
+      await this.props.decLikesCount(idarticle);
+      this.setState({typeModal:'success', showModal: true, textModal: 'Arykuł został usunięty z ulubionych.'})
+    }
   }
 
   render() {
@@ -101,27 +111,39 @@ class ArticleTitle extends Component {
             <GoCommentDiscussion />
             <Count>{comments_count}</Count>
           </Item>
-          <Item title='polubienia'>
           {
            liked && user.length
-           ? <Fragment>
-               <IoIosHeart style={{color:'#ee324e'}} onClick = {this.handleDislikeButton} />
+           ? (
+             <Item title='Nie podoba mi się' onClick = {this.handleDislikeButton}>
+               <IoIosHeart style={{color:'#ee324e'}} />
                <Count>{articleLikes}</Count>
-             </Fragment>
-           : <Fragment>
-            { user.length
-              ? <IoIosHeart onClick = {this.handleLikeButton} />
-              : <IoIosHeart />
-            }
+             </Item>
+           ) : user.length ? (
+             <Item title='Podoba mi się' onClick = {this.handleLikeButton}>
+               <IoIosHeart />
                <Count>{articleLikes}</Count>
-            </Fragment>
+             </Item>
+           ) : (
+             <Item title='Zaloguj się, aby móc polubić artykuł'>
+               <IoIosHeart />
+               <Count>{articleLikes}</Count>
+             </Item>
+           )
           }
-          </Item>
-          <Item title='wyświetlenia'>
+          <Item title='Wyświetlenia artykułu'>
             <IoIosEye />
             <Count>{views}</Count>
           </Item>
         </Wrapper>
+        <Notification
+          options={{
+            showModal: this.state.showModal,
+            hideModalFunction: () => this.setState({showModal: false}),
+            type: this.state.typeModal,
+            timeout: 3000,
+            text: this.state.textModal
+          }}
+        />
       </Header>
     )
   }

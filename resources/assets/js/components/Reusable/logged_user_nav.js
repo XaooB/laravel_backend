@@ -9,8 +9,8 @@ const Container = styled.div`
   top:50px;
   color:#1e1e1e;
   right:0;
-  border-radius:10px;
-  background:#fff;
+  border-radius:6px;
+  background:#f9f9f9;
   border:1px solid #ededed;
   a {
     display:block;
@@ -53,8 +53,8 @@ const Label = styled.span`
     color:#1e1e1e;
   }
   &:first-child {
-    border-top-left-radius:8px;
-    border-top-right-radius:8px;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
   }
 `
 

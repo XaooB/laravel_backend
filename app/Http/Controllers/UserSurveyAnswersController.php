@@ -8,6 +8,7 @@ use App\UserSurveyAnswers;
 use App\Http\Resources\UserSurveyAnswers as UserSurveyAnswersResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
+use Facades\App\CacheData\SurveysCache;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -31,7 +32,8 @@ class UserSurveyAnswersController extends Controller
         $user_answer = DB::table('survey_sets')->select('Answer')->where('idSurveySet', '=', $user_answerId)->value('Answer');
         $date = DB::table('user_survey_answers')->select('created_at')->whereIn('idSurveySet', $survey_set)->where('idUser', $_SESSION['iduser'])->value('created_at');
         $data = array(
-            'user_answer' => $user_answer,
+            'idsurveyset' => $user_answerId,
+            'answer' => $user_answer,
             'date' => $date);
         array_push($dataArray, $data);
         return response()->json($dataArray);
@@ -55,15 +57,17 @@ class UserSurveyAnswersController extends Controller
      */
     public function store(Request $request)
     {
-        $user_survey_answer = new UserSurveyAnswers;
-        $user_survey_answer->idUser = $_SESSION['iduser'];
-        $user_survey_answer->idSurveySet = $request->idsurveyset;
-        $surveyId = DB::table('survey_sets')->select('idSurvey')->where('idSurveySet', '=', $request->idsurveyset)->value('idSurvey');
-        $answers = DB::table('survey_sets')->select('idSurveySet')->where('idSurvey', '=', $surveyId)->pluck('idSurveySet');
-        if(UserSurveyAnswers::where('idUser', '=' , $user_survey_answer->idUser)->whereIn('idSurveySet', $answers)->exists()) 
-            {return response()->json(['message' => 'failure']);}
-        else {if($user_survey_answer->save()) {return response()->json(['message' => 'success']);}}
-        return response()->json(['message' => 'connection failure']);
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['idsurveyset']) && isset($data['idsurvey']))
+        {
+            if(UserSurveyAnswers::updateOrCreate(['idUser' => $_SESSION['iduser'], 'idSurvey' => $data['idsurvey']], 
+                ['idSurveySet' => $data['idsurveyset']]))
+            {
+                SurveysCache::storeForever('LATEST.USER.' . $_SESSION['iduser'], true);
+                return response()->json(['message' => 'success']);
+            }
+        }
+        return response()->json(['message' => 'connection failure'], 400);
     }
 
     /**
@@ -113,8 +117,13 @@ class UserSurveyAnswersController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        if(UserSurveyAnswers::where('idUser', '=' , $id)->where('idSurveySet', '=' , $request->idsurveyset)->delete()) 
-            {return response()->json(['message' => 'success']);}
-        else {return response()->json(['message' => 'connection failure']);}
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['idsurvey']))
+            if(UserSurveyAnswers::where('idUser', $id)->where('idUser', $_SESSION['iduser'])->where('idSurvey', $data['idsurvey'])->delete())
+            {
+                SurveysCache::storeForever('LATEST.USER' . $_SESSION['iduser'], false);
+                return response()->json(['message' => 'success']);
+            }
+        return response()->json(['message' => 'connection failure'], 400);
     }
 }

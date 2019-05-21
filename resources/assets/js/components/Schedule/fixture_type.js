@@ -7,10 +7,9 @@ import Wrapper from '../Reusable/wrapper';
 
 const Container = styled.div`
   display:flex;
-  margin:0 20px;
+  margin:20px;
   flex-flow:column nowrap;
   justify-content:center;
-  margin-top:10px;
 `
 
 const Logo = styled.img`

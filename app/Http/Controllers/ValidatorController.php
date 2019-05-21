@@ -8,7 +8,7 @@ class ValidatorController extends Controller
 {
 	public static function checkString($stringToValidate, $maxLenght)
 	{
-		if(isset($stringToValidate) && strlen($stringToValidate) <= $maxLenght && preg_match('/^[A-Za-z0-9_-]*$/', $stringToValidate) == 1)
+		if(isset($stringToValidate) && strlen($stringToValidate) <= $maxLenght && preg_match('/^[A-Za-z0-9_ -]*$/', $stringToValidate) == 1)
 			return true;
 		else
 			return false;

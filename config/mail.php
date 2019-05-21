@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'oauth2testbackend@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Admin'),
+        'address' => env('MAIL_FROM_ADDRESS', 'mailnotificationguy@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Administrator'),
     ],
 
     /*

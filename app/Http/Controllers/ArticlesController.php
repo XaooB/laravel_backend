@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Articles;
+use App\Comments;
+use App\UserLikes;
 use App\Http\Resources\Articles as ArticlesResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
@@ -105,10 +107,14 @@ class ArticlesController extends Controller
                 $user = $_SESSION['iduser'];
             else
                 $user = 'none';
-            $articles = ArticlesCache::article($id, $user);
-            $articles->user = UsersCache::by_id($articles->user);
-            Articles::where('idArticle', $id)->increment('Views', 1);
-            return response()->json($articles);
+            $articles = ArticlesCache::articleUser($id, $user);
+            if($articles)
+            {
+                $articles->user = UsersCache::by_id($articles->user);
+                Articles::where('idArticle', $id)->increment('Views', 1);
+                return response()->json($articles);
+            }
+            return response()->json(['status' => false, 'error' => 'wrong data'], 400);
         }
 
         public static function BuildNeighboursData($ids)
@@ -137,7 +143,7 @@ class ArticlesController extends Controller
                 return response()->json($articles);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
+                return response()->json(['status' => false, 'error' => 'wrong data'], 400);
         }
 
         public function by_category($count, Request $request)
@@ -262,7 +268,10 @@ class ArticlesController extends Controller
                         'Title' => $request->title,
                         'Content' => $request->content,
                         'Image' => $articleImage]))
+                    {
+                        ArticlesCache::removeFromCache($id);
                         return response()->json(['status' => true, 'error' => ''], 202);
+                    }
                 }
                 else
                 {
@@ -270,7 +279,10 @@ class ArticlesController extends Controller
                         'idCategory' => $request->category,
                         'Title' => $request->title,
                         'Content' => $request->content]))
+                    {
+                        ArticlesCache::removeFromCache($id);
                         return response()->json(['status' => true, 'error' => '' . $check_file_msg]);
+                    }
                 }
             }
             else
@@ -285,10 +297,16 @@ class ArticlesController extends Controller
          */
         public function destroy(Request $request, $id)
         {
-            if(Articles::where('idArticle', $id)->where('idUser', $_SESSION['iduser'])->delete()) 
+            if(
+                Articles::where('idArticle', $id)->where('idUser', $_SESSION['iduser'])->delete() &&
+                Comments::where('idReference', $id)->delete() &&
+                UserLikes::where('idReference', $id)->delete()
+            )
+            {
+                ArticlesCache::removeFromCache($id);
                 return response()->json(['status' => true, 'error' => ''], 202);
-            else 
-                return response()->json(['status' => false, 'error' => 'wrong data'], 204);
+            }
+            return response()->json(['status' => false, 'error' => 'wrong data'], 400);
         }
 
         // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -311,8 +329,11 @@ class ArticlesController extends Controller
         {
             if(isset($request->content))
             {
-                if(Articles::where('idArticle', '=' , $id)->update(['Content' => $data['content']])) 
+                if(Articles::where('idArticle', '=' , $id)->update(['Content' => $data['content']]))
+                {
+                    ArticlesCache::removeFromCache($id);
                     return response()->json(['status' => true, 'error' => ''], 202);
+                }
                 else 
                     return response()->json(['status' => false, 'error' => 'wrong data'], 204);
             }
@@ -323,7 +344,10 @@ class ArticlesController extends Controller
         public function staff_change_visibility($id)
         {
             if(DB::table('articles')->where('idArticle', $id)->update(['Visible' => DB::raw('ABS(Visible-1)')]))
+            {
+                ArticlesCache::removeFromCache($id);
                 return response()->json(['status' => true, 'error' => ''], 202);
+            }
             else
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
@@ -331,7 +355,10 @@ class ArticlesController extends Controller
         public function staff_change_main($id)
         {
             if(DB::table('articles')->update(['Main' => DB::raw('(case when `idArticle` = ' . $id . ' then 1 when `idArticle` <> ' . $id . ' then 0 end)')]))
+            {
+                ArticlesCache::removeFromCache($id);
                 return response()->json(['status' => true, 'error' => ''], 202);
+            }
             else
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }
@@ -339,7 +366,10 @@ class ArticlesController extends Controller
         public function test_admin_delete()
         {
             if(Articles::where('idUser', $_SESSION['iduser'])->delete())
+            {
+                ArticlesCache::removeFromCache($id);
                 return response()->json(['status' => true, 'error' => ''], 202);
+            }
             else 
                 return response()->json(['status' => false, 'error' => 'wrong data'], 204);
         }

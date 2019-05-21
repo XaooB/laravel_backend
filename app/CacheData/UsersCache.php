@@ -9,6 +9,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\ArticlesController;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cache;
 
 class UsersCache
 {
@@ -18,7 +19,7 @@ class UsersCache
 	{
 		$key = 'by_id.' . $id;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addHours(1), function() use($id) {
+		return cache()->remember($cacheKey, Carbon::now()->addHours(12), function() use($id) {
 			$user = $id;
 			UsersController::buildUserData($user, 'id');
 			return $user;
@@ -29,7 +30,7 @@ class UsersCache
 	{
 		$key = 'by_name.' . $name;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addHours(1), function() use($name) {
+		return cache()->remember($cacheKey, Carbon::now()->addHours(12), function() use($name) {
 			$user = $name;
 			UsersController::buildUserData($user, 'Name');
 			return $user;
@@ -40,21 +41,24 @@ class UsersCache
 	{
 		$key = 'by_email.' . $email;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addHours(1), function() use($email) {
+		return cache()->remember($cacheKey, Carbon::now()->addHours(12), function() use($email) {
 			$user = $email;
 			UsersController::buildUserData($user, 'Email');
 			return $user;
 		});
 	}
 
-	public function profile($id)
+	public function profile($id, $quantity)
 	{
-		$key = 'profile.' . $id;
+		$key = 'profile.' . $id . '.' . $quantity;
 		$cacheKey = $this->getCacheKey($key);
-		return cache()->remember($cacheKey, Carbon::now()->addSeconds(10), function() use($id) {
-			$likedArticles = DB::table('articles')->rightJoin('user_likes', 'user_likes.idReference', '=', 'articles.idarticle')->leftJoin('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->distinct()->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.Main as main', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->where('user_likes.idUser', $id)->get();
-			$latestComments = DB::table('comments')->leftJoin('articles', 'articles.idArticle', '=', 'comments.idReference')->select('comments.idComment as idcomment', 'comments.idReference as idarticle', 'articles.Title as title', 'comments.Content as content', 'comments.created_at as create_date', 'comments.updated_at as modify_date')->where('comments.idUser', $id)->orderBy('comments.created_at', 'desc')->limit(7)->get();
+		return cache()->remember($cacheKey, Carbon::now()->addSeconds(10), function() use($id, $quantity) {
+			$likedArticles = DB::table('articles')->rightJoin('user_likes', 'user_likes.idReference', '=', 'articles.idarticle')->leftJoin('categories', 'articles.idCategory', '=', 'categories.idCategory')->leftJoin('comments', 'comments.idReference', '=', 'articles.idArticle')->distinct()->select('articles.idArticle as idarticle', 'categories.Name as category', 'articles.idUser as user', 'articles.Title as title', 'articles.Image as image', DB::raw('SUBSTRING(articles.Content, 1, 120) as content'), 'articles.Views as views', 'articles.Visible as visible', 'articles.Main as main', 'articles.created_at as create_date', 'articles.updated_at as modify_date', DB::raw('(select count(*) from comments where comments.idReference = articles.idArticle and comments.Type = "article" and comments.Visible = 1) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idReference = articles.idArticle and user_likes.Type = "article" and user_likes.Reaction = "like") as likes_count'))->where('user_likes.idUser', $id)->limit($quantity)->get();
+			ArticlesController::addUsersData($likedArticles);
+			$latestComments = DB::table('comments')->leftJoin('articles', 'articles.idArticle', '=', 'comments.idReference')->leftJoin('categories', 'articles.idCategory', '=', 'categories.idCategory')->select('comments.idComment as idcomment', 'comments.idReference as idarticle', 'articles.Title as title', 'categories.Name as category', 'comments.Content as content', 'comments.created_at as create_date', 'comments.updated_at as modify_date')->where('comments.idUser', $id)->orderBy('comments.created_at', 'desc')->limit(7)->limit($quantity)->get();
+			$articleLikes = DB::table('user_likes')->select(DB::raw('count(idUser) as likes'))->where('idUser', $id)->first();
 			$userProfile = [
+				'user' => $this->by_id($id),
 				'likedArticles' => $likedArticles,
 				'latestComments' => $latestComments
 			];
@@ -107,16 +111,29 @@ class UsersCache
 		});
 	}
 
+	public function storeForever($key, $data)
+	{
+		$cacheKey = $this->getCacheKey($key);
+		return Cache::forever($cacheKey, $data);
+	}
+
 	public function getCacheKey($key)
 	{
 		$key = strtoupper($key);
 		return self::CACHE_KEY . '.' . $key;
 	}
 
-	public function removeFromCache($id)
+	public function removeFromCache($id, $name, $email)
 	{
-		$key = 'by_id.' . $id;
-		$cacheKey = $this->getCacheKey($key);
-		return cache()->forget($cacheKey);
+		$key_id = 'by_id.' . $id;
+		$key_name = 'by_name.' . $name;
+		$key_email = 'by_email.' . $email;
+		$cacheKey = $this->getCacheKey($key_id);
+		Cache::forget($cacheKey);
+		$cacheKey = $this->getCacheKey($key_name);
+		Cache::forget($cacheKey);
+		$cacheKey = $this->getCacheKey($key_email);
+		Cache::forget($cacheKey);
+		return;
 	}
 }

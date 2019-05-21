@@ -13,7 +13,6 @@ const Main = styled.main`
   color:#1e1e1e;
   padding:0 5px;
   margin:40px auto;
-  padding-right:48px;
 `
 
 class Search extends Component {
@@ -27,6 +26,7 @@ class Search extends Component {
     }
   }
   async componentDidMount() {
+    window.scrollTo(0,0);
     const { keyword } = this.props.match.params;
 
     await this.setState({ keyword, fetchingStatus: true }) //ustawienie wyrażenia oraz flagi na wartośc true

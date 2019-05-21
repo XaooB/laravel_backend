@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FaReply, FaBan } from 'react-icons/fa';
 import { IoIosFlag } from 'react-icons/io';
@@ -10,6 +11,7 @@ import Comments from './article_comments_list';
 import AddCommentForm from './article_comments_form';
 import EditCommentForm from './article_comments_edit_form';
 import dateConverter from '../../helpers/dateConverter';
+import Modal from '../Reusable/modal_confirmation';
 import { selectedCommentID, deleteComment, hideComment } from '../../actions';
 
 const ListItem = styled.li`
@@ -18,6 +20,7 @@ const ListItem = styled.li`
   flex-flow:row nowrap;
   justify-content:flex-start;
   padding-top:25px;
+  }
   &:not(:last-child) {
     margin-bottom:15px;
   }
@@ -34,8 +37,13 @@ const ListItem = styled.li`
 `;
 
 const Article = styled.article`
-  margin-left:4px;
   flex:1;
+  ul {
+    margin-left:20px;
+    @media only screen and (min-width: 640px) {
+      margin-left:-20px;
+    }
+  }
 `;
 
 const Header = styled.header`
@@ -43,10 +51,6 @@ const Header = styled.header`
   justify-content:space-between;
   align-items:baseline;
   flex-flow: row wrap;
-`;
-
-const UserName = styled.span`
-  font-family:'SSPB';
 `;
 
 const Added = styled.span`
@@ -57,6 +61,7 @@ const Added = styled.span`
 
 const Content = styled.p`
   white-space:pre-line;
+  text-align:justify;
   padding:8px 0;
   font-size:1.05em;
 `;
@@ -92,13 +97,14 @@ const FooterItem = styled.button`
   &:hover {
     color:#00529f;
   }
-  svg {
-    /* ikony przy przyciskach */
-    @media only screen and (max-width: 480px) {
-      display:none;
-    }
+`
+
+const LinkTo = styled(Link)`
+  color:inherit;
+  &:hover {
+    color:#00529f;
   }
-`;
+`
 
 /**
  * Renders single Comment.
@@ -110,6 +116,8 @@ class SingleComment extends Component {
     this.state = {
       showingForm: false,
       isEditing: false,
+      showModal: false,
+      fetchingStatus: false
     };
 
     this.handlePostForm = this.handlePostForm.bind(this);
@@ -135,8 +143,9 @@ class SingleComment extends Component {
     this.handleEditForm();
   }
 
-  handleDelete() {
+  async handleDelete() {
     const { articleID, comment, deleteComment } = this.props;
+    this.setState({fetchingStatus: true})
     deleteComment({ articleID, idcomment: comment.idcomment });
   }
 
@@ -147,20 +156,26 @@ class SingleComment extends Component {
 
   render() {
     const { comment, articleID, user } = this.props;
-    const { showingForm, isEditing } = this.state;
+    const { showingForm, isEditing, showModal, fetchingStatus } = this.state;
 
     return (
       <ListItem>
+        <Modal
+          showModal={showModal}
+          accept={this.handleDelete}
+          denied={() => this.setState({showModal: false})}
+          status={fetchingStatus}
+        />
         <User user={comment.user} />
         <Article>
           <Header>
-            <UserName>{comment.user.name}</UserName>
+            <span title={`Profil użytkownika ${comment.user.name}`}>
+              <LinkTo to={`/app/user/${comment.user.iduser}`}>{comment.user.name}</LinkTo>
+            </span>
             {!comment.modify_date
-              ? <Added>{dateConverter.toStageDate(comment.create_date)}</Added>
+              ? <Added title={comment.create_date}>{dateConverter.toStageDate(comment.create_date)}</Added>
               : (
-                <Added>
-                  {dateConverter.toStageDate(comment.create_date)} – edytowano
-                </Added>
+                <Added title={`${comment.create_date}, edited at ${comment.modify_date}`}>{dateConverter.toStageDate(comment.create_date)}, edited {dateConverter.toStageDate(comment.modify_date)}</Added>
               )
             }
           </Header>
@@ -171,6 +186,7 @@ class SingleComment extends Component {
                 handleEdit={() => this.handleEdit()}
                 handleEditForm={() => this.handleEditForm()}
                 content={comment.content}
+                isEditing={isEditing}
               />
             )
             : <Content>{comment.content}</Content>
@@ -189,18 +205,23 @@ class SingleComment extends Component {
                         <MdEdit />
                         <ActionName>Edytuj</ActionName>
                       </FooterItem>
-                      <FooterItem title="Usuń komentarz" onClick={this.handleDelete}>
+                      <FooterItem title="Usuń komentarz" onClick={() => this.setState({showModal: true})}>
                         <MdDeleteForever />
                         <ActionName>Usuń</ActionName>
                       </FooterItem>
                     </Fragment>
                   )
                   : ''}
-                <FooterItem title="Zgłoś użytkownika">
-                  <FaBan />
-                  <ActionName>Zgłoś</ActionName>
-                </FooterItem>
-                {user[0].tier > 2
+                  {
+                  user[0].iduser !== comment.user.iduser
+                  ? (
+                    <FooterItem title="Zgłoś użytkownika">
+                      <FaBan />
+                      <ActionName>Zgłoś</ActionName>
+                    </FooterItem>
+                  ) : ''
+                }
+                {user[0].tier > 2 && user[0].iduser !== comment.user.iduser
                   ? (
                     <FooterItem title="Zbanuj komentarz" style={{ color: '#ee324e' }} onClick={this.handleHide}>
                       <IoIosFlag />
@@ -212,8 +233,17 @@ class SingleComment extends Component {
               </Footer>
             )
             : ''}
-          {showingForm ? <AddCommentForm user={user} articleID={articleID} commentID={comment.idcomment} handleForm={() => this.handlePostForm()} /> : ''}
-          {comment.comments ? <Comments comments={comment.comments} user={user} articleID={articleID} /> : ''}
+          {
+            showingForm
+            ? <AddCommentForm
+                showAnswerForm={showingForm}
+                user={user} articleID={articleID}
+                commentID={comment.idcomment}
+                author={comment.user.name}
+                handleForm={() => this.handlePostForm()} />
+            : ''}
+          {
+            comment.comments ? <Comments comments={comment.comments} user={user} articleID={articleID} /> : ''}
         </Article>
       </ListItem>
     );

@@ -104,7 +104,7 @@ class ScheduleListItem extends Component {
       let now = new window.Date().getTime();
       let diff = scheduledDate - now;
       let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + 1;
       let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       let seconds = Math.floor((diff % (1000 * 60)) / 1000);
 

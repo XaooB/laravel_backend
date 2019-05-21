@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PollList from './poll_list';
 import PageHeader from '../../components/Reusable/PageHeader'
+import { connect } from 'react-redux';
+import { setVoteFlagCurrentPoll, fetchCurrentPoll } from '../../actions/'
 import Button from '../Reusable/button';
 
 const Wrapper = styled.div`
@@ -23,8 +25,12 @@ const Category = styled.p`
 `
 
 const Topic = styled.p`
+  line-height:1.5;
   color:#1e1e1e;
+  font-weight:bold;
   margin:15px 5px;
+  text-align:justify;
+  font-size:.95em;
 `
 
 const Title = styled.h4`
@@ -37,27 +43,96 @@ const Form = styled.form`
   display:flex;
   flex-flow:column nowrap;
   color:#1e1e1e;
+  margin: 0 5px;
+`
+
+const Amount = styled.span`
+  display:block;
+  font-size:.85em;
+  padding:8px 0;
+  text-align:center;
 `
 
 class StrawPoll extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isFetching: false,
+    }
+
+    this.handleSurveyPost = this.handleSurveyPost.bind(this);
+  }
+
+  async handleSurveyPost(e) {
+    e.preventDefault();
+    const { pollAnswer } = this.props.user;
+    const { pollData, fetchCurrentPoll } = this.props;
+
+    //zapytanie musi byc akcją ze względu na zmiane widoku, wiec trzeba przechowywac to w reduksie
+    //po sukcesywnym oddaniu glosu zmieniamy flage voted na true, co wymusi zmiane
+    this.setState({isFetching: true})
+    const request = await axios.post('/api/usersurveyanswers', {idsurvey: pollData.idsurvey, idsurveyset: pollAnswer});
+    await fetchCurrentPoll();
+
+    if(request.status === 200)
+      return (
+        this.props.setVoteFlagCurrentPoll(),
+        this.setState({isFetching: false})
+      )
+  }
+
   render() {
-    const { topic } = this.props.pollData;
+    const { user, pollData } = this.props;
+    const { isFetching } = this.state;
+    const sumAnswerCount =
+      pollData.answers
+      .map(({answers_count}) => answers_count)
+      .reduce((prevValue, currentValue) => prevValue + currentValue);
 
     return (
       <Wrapper>
         <Header>
           <Title>Ankieta</Title>
         </Header>
-        <Topic>{ topic }</Topic>
+        <Topic>{ pollData.topic }</Topic>
         <Form>
-          <PollList pollData={this.props.pollData} />
-          <div style={{display:'flex'}}>
-            <Button name='Oddaj głos' fullWidth colorBlue />
-          </div>
+          <PollList
+            pollData={pollData}
+            user={user}
+            sumAnswerCount={sumAnswerCount}
+          />
+          {
+            !user.user.length
+            ? <div>
+                <Amount>Oddanych głosów: {sumAnswerCount}</Amount>
+                <Amount>Zaloguj się, aby zagłosować</Amount>
+              </div>
+            : !pollData.voted
+            ? (
+              <div style={{display:'flex'}}>
+                <Button
+                  name='Oddaj głos'
+                  onClick={ this.handleSurveyPost }
+                  isFetching={ isFetching }
+                  fullWidth
+                  colorBlue />
+              </div>
+            ) : (
+              <Amount>Oddanych głosów: {sumAnswerCount}</Amount>
+            )
+          }
         </Form>
       </Wrapper>
     )
   }
 }
 
-export default StrawPoll;
+//I splitted it into 2 variables becase when I tried with ({user}) => ({user}), props wasn't updating the state after user voted
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    pollData: state.user.pollData //pulling pollData directly from user reducer
+  }
+}
+export default connect(mapStateToProps, {setVoteFlagCurrentPoll, fetchCurrentPoll})(StrawPoll);

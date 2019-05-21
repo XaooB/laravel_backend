@@ -32,7 +32,7 @@ class UsersController extends Controller
     {
         if(DB::table('users')->where($whereColumn, $user)->count() > 0)
         {
-            $user = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), 'users.created_at as create_date')->where('users.' . $whereColumn, $user)->first();
+            $user = DB::table('users')->join('privileges', 'privileges.idPrivilege', '=', 'users.idPrivilege')->join('statuses', 'statuses.idStatus', '=', 'users.idStatus')->select('id as iduser', 'users.Name as name', 'Email as email', 'Image as image', 'privileges.Name as privilege', 'privileges.Tier as tier', 'statuses.Name as status', DB::raw('(select count(*) from articles where articles.idUser = users.id) as articles_count'), DB::raw('(select count(*) from comments where comments.idUser = users.id) as comments_count'), DB::raw('(select count(*) from user_likes where user_likes.idUser = users.id) as likes_count'), 'users.created_at as create_date')->where('users.' . $whereColumn, $user)->first();
             if($user->status == 'usunięty')
             {
                 $user->email = null;
@@ -87,9 +87,9 @@ class UsersController extends Controller
             return response()->json($_SESSION);
 	}
 
-    public function get_profile($id)
+    public function get_profile($id, $quantity)
     {
-        $userProfile = UsersCache::profile($id);
+        $userProfile = UsersCache::profile($id, $quantity);
         return response()->json($userProfile);
     }
 
@@ -200,7 +200,7 @@ class UsersController extends Controller
         if($request->file('image') != null && ValidatorController::checkUploadFile($request->file('image'), $check_file_msg))
         {
             $image_name = 'users' . $id . time() . '.' . $request->file('image')->getClientOriginalExtension();
-            $destinationFolder = public_path('images') . '/articles/';
+            $destinationFolder = public_path('images') . '/users/';
             $request->file('image')->move($destinationFolder, $image_name);
             $path = $destinationFolder . $image_name;
 
@@ -210,6 +210,12 @@ class UsersController extends Controller
                 $_SESSION['image'] = $userImage;
                 $status = true;
                 $msg .= 'image updated.';
+                UsersCache::removeFromCache($_SESSION['iduser'], $_SESSION['name'], $_SESSION['email']);
+            }
+            else
+            {
+                $status = false;
+                $msg .= 'invalid file.';
             }
         }
         if(ValidatorController::checkString($request->name, 30))
@@ -219,15 +225,14 @@ class UsersController extends Controller
                 $_SESSION['name'] = $request->name;
                 $status = true;
                 $msg .= 'name updated.';
+                UsersCache::removeFromCache($_SESSION['iduser'], $_SESSION['name'], $_SESSION['email']);
             }
             else 
-            { 
+            {
                 $status = false;
                 $msg .= 'wrong name data.';
             }
         }
-        if($status)
-            UsersCache::removeFromCache($id);
         return response()->json(['status' => $status, 'error' => $msg], 200);
     }
 

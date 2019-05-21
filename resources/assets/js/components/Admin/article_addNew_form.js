@@ -141,7 +141,6 @@ class AddNewArticleForm extends Component {
 
   handleSelect(e) {
     const id = e.target.value;
-    console.log(id);
     this.setState({category: id});
   }
 
@@ -182,7 +181,7 @@ class AddNewArticleForm extends Component {
               </form>
               <BtnWrapper>
                 <Button name='Dodaj' onClick={() => { this.handleSubmit() } } title='Dodaj artykuł' />
-                <Button name='Powrót &larr;' colorBlue onClick={() => { this.props.history.goBack() } } title='Powrót' />
+                <Button name='&larr;' colorBlue onClick={() => { this.props.history.goBack() } } title='Powrót' />
               </BtnWrapper>
             </Fragment>
         }

@@ -5,7 +5,13 @@ import ArticlesList from './articles_list';
 import MiniLoader from '../Reusable/mini_loader';
 
 const Container = styled.section`
-  width:73%;
+  width:100%;
+  flex:1 1 580px;
+  order:2;
+  @media (min-width: 820px) {
+    order:1;
+    width:73%;
+  }
 `
 
 const Information = styled.p`

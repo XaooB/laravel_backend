@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 const FooterNav = styled.nav`
   max-width:1300px;
   margin: 0 auto;
-  padding: 40px 0 75px 0;
+  padding: 40px 0 80px 0;
   display:flex;
   flex-flow: row wrap;
 `
@@ -17,13 +17,12 @@ const FooterNav = styled.nav`
 const FooterBackground = styled.footer`
   background:#ededed;
   margin-bottom:1px;
-  padding-right:55px;
 `
 
 const NavItem = styled.div`
   flex:1;
   color:#474747;
-  padding:15px 10px;
+  padding:15px;
 `
 
 const Category = styled.h5`
@@ -64,12 +63,10 @@ const LinkTo = styled(Link)`
 
 const Copyright = styled.div`
   background:#d8d8d8;
-  padding:18px;
-  padding-right:56px;
+  padding:0 20px;
   text-align:center;
-  @media (min-width: 640px) {
-    padding-right:0;
-  }
+  padding-top:30px;
+  padding-bottom: 65px;
 `
 
 const CopyrightText = styled.span`
@@ -79,7 +76,8 @@ const CopyrightText = styled.span`
   color:#1e1e1e;
 `
 
-const Footer = () => {
+const Footer = (props) => {
+
   return (
     <Wrapper>
       <FooterBackground>
@@ -187,7 +185,7 @@ const Footer = () => {
         </FooterNav>
       </FooterBackground>
         <Copyright>
-          <CopyrightText>©2018 - 2019 PORTAL-WERTYKALNY.  ALL RIGHTS RESERVED.</CopyrightText>
+          <CopyrightText>©2018 - {new Date().getFullYear()} PORTAL-WERTYKALNY.  ALL RIGHTS RESERVED.</CopyrightText>
         </Copyright>
     </Wrapper>
   )

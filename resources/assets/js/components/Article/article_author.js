@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import dateConverter from '../../helpers/dateConverter';
 import Share from './article_share';
 
 const Wrapper = styled.section`
@@ -37,14 +38,20 @@ const LinkTo = styled(Link)`
   }
 `
 
+const LinkToUser = styled(Link)`
+  color:#00529f;
+  display:inline;
+  text-transform: lowercase;
+`
+
 const Author = props => {
-  const { category, user } = props.article;
+  const { category, user, create_date } = props.article;
 
   return (
     <Wrapper>
       <Sticky>
         <LinkTo to='/news'>{category}</LinkTo>
-        <PublishedBy>posted by {user.name}, <br/> 3 hours ago</PublishedBy>
+        <PublishedBy>posted by <LinkToUser to={`/app/user/${user.iduser}`} title={`Profil użytkownika ${user.name}`}>{user.name}</LinkToUser>,<br/>{dateConverter.toStageDate(create_date)}</PublishedBy>
         <Share url={props.url} />
       </Sticky>
     </Wrapper>

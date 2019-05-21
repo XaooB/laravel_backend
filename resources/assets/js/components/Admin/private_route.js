@@ -1,16 +1,18 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Loader from '../Reusable/loader';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { user } = rest.user
+  const { user, userCheck } = rest.user
 
   return (
-    user.length
+    userCheck
+    ? user.length
     ? (
       <Route
         {...rest}
-        render={ props => 
+        render={ props =>
           user[0].tier > 1
           ? (
             <Component {...props} />
@@ -30,7 +32,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         pathname: '/app/unauthorized',
         }}
       />
-    )
+    ) : <Loader />
   )
 }
 

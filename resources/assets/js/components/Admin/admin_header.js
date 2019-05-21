@@ -21,7 +21,6 @@ const User = styled.section`
 const UserImage = styled.img`
   display:inline-block;
   height:31px;
-  border-radius:50%;
 `;
 
 const UserInfo = styled.div`

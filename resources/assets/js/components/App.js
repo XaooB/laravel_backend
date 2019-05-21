@@ -27,7 +27,8 @@ import AdminLogo from './Reusable/logo_admin';
 import AdminNavigation from './Admin/admin_navigation';
 import AdminHeader from './Admin/admin_header';
 import Header from './Reusable/header';
-import PrivateRoute from './Admin/private_route';
+import AdminPrivateRoute from './Admin/private_route';
+import UserPrivateRoute from './User/private_route';
 import NotFound from './404';
 import { fetchUser } from '../actions';
 
@@ -67,14 +68,13 @@ class App extends Component {
                 <div style={{ width:'100%' }}>
                   <AdminHeader />
                   <Switch>
-                    <PrivateRoute path={`${url}/dashboard`} component={ AdminDashboard } />
-                    <PrivateRoute path={`${url}/articles/edit/:id`} component={ ArticleEdit } />
-                    <PrivateRoute path={`${url}/articles/add`} component={ ArticleAddNew } />
-                    <PrivateRoute path={`${url}/articles`}  component={ AdminArticles } />
-                    <PrivateRoute path={`${url}/users`}  component={ AdminUsers } />
-                    <PrivateRoute path={`${url}/comments`}  component={ AdminComments } />
-                    <PrivateRoute path={`${url}/polls`}  component={ AdminPolls } />
-                    <PrivateRoute path={`${url}/players`}  component={ AdminPlayers } />
+                    <AdminPrivateRoute path={`${url}/dashboard`} component={ AdminDashboard } />
+                    <AdminPrivateRoute path={`${url}/articles/edit/:id`} component={ ArticleEdit } />
+                    <AdminPrivateRoute path={`${url}/articles/add`} component={ ArticleAddNew } />
+                    <AdminPrivateRoute path={`${url}/articles`}  component={ AdminArticles } />
+                    <AdminPrivateRoute path={`${url}/users`}  component={ AdminUsers } />
+                    <AdminPrivateRoute path={`${url}/polls`}  component={ AdminPolls } />
+                    <AdminPrivateRoute path={`${url}/players`}  component={ AdminPlayers } />
                   </Switch>
                 </div>
               </Wrapper>
@@ -92,8 +92,8 @@ class App extends Component {
                 <Route path={`${url}/news/:category`} component={ News } />
                 <Route path={`${url}/news`} component={ News } />
                 <Route path={`${url}/live`} component={ Live } />
-                <Route path={`${url}/user/messages`} component={ Messages } />
-                <Route path={`${url}/user/notifications`} component={ Notifications } />
+                <UserPrivateRoute path={`${url}/user/messages`} component={ Messages } />
+                <UserPrivateRoute path={`${url}/user/notifications`} component={ Notifications } />
                 <Route path={`${url}/user/:id`} component={ User } />
                 <Route path={`${url}/contact`} component={ Contact } />
                 <Route path={`${url}/realmadrid`} component={ RealMadrid } />

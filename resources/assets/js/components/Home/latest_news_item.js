@@ -29,11 +29,8 @@ const Article = styled.article`
 `
 
 const Image = styled.img`
-  height:auto;
+  height:inherit;
   align-self:flex-start;
-  @media (min-width: 640px) {
-    height:inherit;
-  }
 `
 
 const LinkTo = styled(Link)`
