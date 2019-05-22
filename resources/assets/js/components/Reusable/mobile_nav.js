@@ -15,9 +15,8 @@ const Hamburger = styled.label`
   right:0;
   outline:none;
   padding:17px 20px;
-  padding-bottom:20px;
   border:1px solid #ededed;
-  border-bottom:2px solid #ededed;
+  border-bottom:3px solid #ededed;
   &:after {
     content:'☰';
     color:#00529f;
@@ -181,26 +180,37 @@ const NavDesc = styled.span`
 `
 
 class MobileNavigation extends Component {
-  closeSubNav() {
-    let subNavCheckboxValue = document.querySelector('#toggleSubNav');
+  constructor(props) {
+    super(props);
 
-    if(subNavCheckboxValue)
-      if(subNavCheckboxValue.checked)
-        subNavCheckboxValue.click();
+    this.state = {
+      navCheckboxValue: null
+    }
+
+    this.setCheckboxRef = this.setCheckboxRef.bind(this);
+    this.closeMobileNav = this.closeMobileNav.bind(this);
   }
+
+  setCheckboxRef(node) {
+    this.setState({navCheckboxValue: node})
+  }
+
+  closeMobileNav() {
+    const { navCheckboxValue } = this.state;
+    navCheckboxValue.checked = false;
+  }
+
   render() {
-    const { user } = this.props;
+    const { user, status } = this.props;
 
     return (
       <NavWrapper>
-        <Checkbox type='checkbox' id='toggleNav' />
-        <Hamburger
-          htmlFor='toggleNav'
-          onClick={() => { this.closeSubNav() }}>
+        <Checkbox type='checkbox' id='toggleNav' ref={this.setCheckboxRef} />
+        <Hamburger htmlFor='toggleNav'>
         </Hamburger>
         <MobileNav>
             <NavList user={user}>
-              <NavItem>
+              <NavItem onClick={this.closeMobileNav}>
                 <NavLink to='/app'>
                 <FaHome />
                   <NavText>
@@ -209,7 +219,7 @@ class MobileNavigation extends Component {
                   </NavText>
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem onClick={this.closeMobileNav}>
                 <NavLink to='/app/news'>
                 <FaRegNewspaper />
                   <NavText>
@@ -218,7 +228,7 @@ class MobileNavigation extends Component {
                   </NavText>
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem onClick={this.closeMobileNav}>
                 <NavLink to='/app/realmadrid'>
                 <FaShieldAlt />
                   <NavText>
@@ -227,7 +237,7 @@ class MobileNavigation extends Component {
                   </NavText>
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem onClick={this.closeMobileNav}>
                 <NavLink to='/app/schedule'>
                 <FaRegCalendarAlt />
                   <NavText>
@@ -236,7 +246,7 @@ class MobileNavigation extends Component {
                   </NavText>
                 </NavLink>
               </NavItem>
-              <NavItem>
+             <NavItem onClick={this.closeMobileNav}>
                 <NavLink to='/app/live'>
                 <FaRegPlayCircle />
                   <NavText>
@@ -245,7 +255,7 @@ class MobileNavigation extends Component {
                   </NavText>
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem onClick={this.closeMobileNav}>
                 <NavLink to='/app/contact'>
                 <MdContactMail />
                   <NavText>

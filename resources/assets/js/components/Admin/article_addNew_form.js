@@ -125,7 +125,6 @@ class AddNewArticleForm extends Component {
     const { title, category, file, content } = this.state;
     const data = new FormData();
 
-    console.log(category);
     data.append('title', title);
     data.append('category', category);
     data.append('content', content);

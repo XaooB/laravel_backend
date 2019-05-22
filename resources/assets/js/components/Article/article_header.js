@@ -14,10 +14,10 @@ const Header = styled.header`
 
 const Title = styled.h2`
   display:block;
-  font-family:'SSPBK';
+  font-family:'AvenirLTB';
   font-size:1.7em;
   @media (min-width: 640px) {
-    font-size:2.6em;
+    font-size:2.3em;
   }
 `
 

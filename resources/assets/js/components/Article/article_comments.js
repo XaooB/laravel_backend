@@ -47,7 +47,7 @@ class CommentSection extends Component {
       await this.setState({comments: this.props.comments});
     }
 
-    if(prevProps.status !== status) {
+    if(prevProps.status.commentAdded !== status.commentAdded) {
       await this.setState({comments: this.props.comments})
    } else {
       await this.props.setCommentStatus(false);
