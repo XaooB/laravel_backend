@@ -28,6 +28,7 @@ const Wrapper = styled.section`
   flex:6;
   margin-top:20px;
   background:white;
+  padding:0 5px;
   @media (min-width: 480px) {
     padding:0 25px;
     margin-top:0;
