@@ -27,6 +27,8 @@ class CreateArticlesTable extends Migration
             $table->foreign('idCategory')->references('idCategory')->on('categories')->onDelete('cascade');
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
         });
+
+        DB::statement('ALTER TABLE articles ADD FULLTEXT fulltext_index (Title, Content)');
     }
 
     /**

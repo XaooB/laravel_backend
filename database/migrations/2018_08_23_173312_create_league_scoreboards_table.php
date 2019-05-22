@@ -25,6 +25,7 @@ class CreateLeagueScoreboardsTable extends Migration
             $table->string('Season', 9);
             $table->string('League', 4);
             $table->string('Group', 8)->nullable();
+            $table->timestamps();
             $table->foreign('idClub')->references('idClub')->on('clubs')->onDelete('cascade');
         });
     }

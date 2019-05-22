@@ -298,10 +298,7 @@ class ArticlesController extends Controller
         public function destroy(Request $request, $id)
         {
             if(
-                Articles::where('idArticle', $id)->where('idUser', $_SESSION['iduser'])->delete() &&
-                Comments::where('idReference', $id)->delete() &&
-                UserLikes::where('idReference', $id)->delete()
-            )
+                Articles::where('idArticle', $id)->where('idUser', $_SESSION['iduser'])->delete())
             {
                 ArticlesCache::removeFromCache($id);
                 return response()->json(['status' => true, 'error' => ''], 202);
