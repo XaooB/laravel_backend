@@ -148,9 +148,9 @@ export const editComment = data => async dispatch => {
   const { selectedCommentID, content, articleID } = data;
   try {
     await axios.post(`/api/comments/${selectedCommentID}`, {_method: 'PUT', content});
-    await dispatch(fetchComments(articleID));
-    dispatch(setCommentStatus(true));
+    dispatch(fetchComments(articleID));
   } catch(e) { throw new Error(e) }
+  dispatch(setCommentStatus(true));
 }
 
 export const deleteComment = data => async dispatch => {

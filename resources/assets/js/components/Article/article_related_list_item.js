@@ -8,13 +8,6 @@ const Article = styled.article`
   flex:1 1 160px;
   max-width:260px;
   margin-bottom:10px;
-  transition: all .2s ease-in-out;
-  &:hover {
-    transform:scale(1.03);
-    h3 {
-      color:#ee324e;
-    }
-  }
   &:not(:last-child) {
     padding-right:5px;
   }

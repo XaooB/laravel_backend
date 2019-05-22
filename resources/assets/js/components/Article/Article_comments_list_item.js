@@ -11,7 +11,7 @@ import Comments from './article_comments_list';
 import AddCommentForm from './article_comments_form';
 import EditCommentForm from './article_comments_edit_form';
 import dateConverter from '../../helpers/dateConverter';
-import ConfimationModal from '../Reusable/modal_confirmation';
+import Modal from '../Reusable/modal_confirmation';
 import { selectedCommentID, deleteComment, hideComment } from '../../actions';
 
 const ListItem = styled.li`
@@ -160,12 +160,8 @@ class SingleComment extends Component {
 
     return (
       <ListItem>
-        <ConfimationModal
+        <Modal
           showModal={showModal}
-          title='Usunięcie komentarza'
-          text='Czy jesteś pewien, że chcesz usunąć ten komentarz? Nie będziesz mógł cofnąć tej operacji.'
-          btnTextYes='Usuń'
-          btnTextNo='Cofnij'
           accept={this.handleDelete}
           denied={() => this.setState({showModal: false})}
           status={fetchingStatus}
@@ -245,17 +241,9 @@ class SingleComment extends Component {
                 commentID={comment.idcomment}
                 author={comment.user.name}
                 handleForm={() => this.handlePostForm()} />
-            : ''
-          }
+            : ''}
           {
-            comment.comments
-            ? <Comments
-                comments={comment.comments}
-                user={user}
-                articleID={articleID}
-              />
-            : ''
-          }
+            comment.comments ? <Comments comments={comment.comments} user={user} articleID={articleID} /> : ''}
         </Article>
       </ListItem>
     );

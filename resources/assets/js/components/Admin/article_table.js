@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import MiniLoader from '../Reusable/mini_loader';
 import { Link } from 'react-router-dom';
@@ -6,8 +6,12 @@ import ActionButton from './article_action';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { StoreAdminArticleToEdit, fetchAdminArticles } from '../../actions'
-import { MdEdit, MdDeleteForever } from 'react-icons/md';
-import ConfimationModal from '../Reusable/modal_confirmation';
+import {
+  MdEdit,
+  MdDeleteForever,
+} from 'react-icons/md';
+
+import Toast from '../Reusable/Toast';
 import { API } from '../../helpers/api';
 
 const Table = styled.table`
@@ -34,34 +38,6 @@ const Row = styled.tr`
   }
 `
 
-const CustomRadio = styled.label`
-  position:relative;
-  cursor:pointer;
-  top:-10px;
-  vertical-align: middle;
-  &:before {
-    content:'';
-    position:absolute;
-    left:0;
-    top:0;
-    width:16px;
-    height:16px;
-    border-radius:6px;
-    border:2px solid #ee324e;
-  }
-`
-
-const Input = styled.input`
-  display:none;
-  &:checked ~ ${CustomRadio}:after {
-    content:'✔';
-    position:absolute;
-    left:3px;
-    top:-1px;
-    color:#ee324e;
- }
-`
-
 
 class ArticleTable extends Component {
   constructor(props) {
@@ -69,70 +45,49 @@ class ArticleTable extends Component {
 
     this.state = {
       articles: [],
-      showConfirmationModal: false,
-      fetchingStatus: false,
-      selectedArticleID: null,
-      currentMainRef: null,
-      clickedInput: null
+      showToast: false
     }
+  }
 
-    this.setInputRef = this.setInputRef.bind(this);
-    this.handleMainArticleUpdate = this.handleMainArticleUpdate.bind(this);
-    this.onDenied = this.onDenied.bind(this);
-    this.setCurrentMain = this.setCurrentMain.bind(this);
+  async handleDelete(id) {
+    try {
+      const request = await axios.delete(`/api/articles/${id}`)
+      this.showToast();
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 
   async componentDidMount() {
     await this.props.fetchAdminArticles();
-    this.setState({ articles: this.props.admin.ownArticles })
+    this.setState({
+      articles: this.props.admin.ownArticles
+    })
   }
 
   async componentDidUpdate(prevProps) {
     const currentProps = this.props;
 
     if(prevProps.admin.ownArticles.length !== currentProps.admin.ownArticles.length)
-      this.setState({articles: currentProps.admin.ownArticles})
+      this.setState({
+        articles: currentProps.admin.ownArticles
+      })
   }
 
-  async handleDelete(id) {
-    try {
-      const request = await axios.delete(`/api/articles/${id}`)
-    } catch (e) {
-      throw new Error(e);
-    }
+  showToast () {
+    this.setState({
+      showToast: true
+    }, () => {
+      setTimeout(() => {
+        this.setState({ showToast: false });
+        this.props.fetchAdminArticles();
+      }
+    ,2000)
+    })
   }
-
-  async handleMainArticleUpdate() {
-    const { selectedArticleID } = this.state;
-    const data = new FormData();
-
-    this.setState({fetchingStatus: true});
-
-    try {
-      const request = await axios.put(`/api/articles_staff_change_main/${selectedArticleID}`)
-    } catch (e) {
-      throw new Error(e);
-    } finally {
-      this.setState({fetchingStatus: false, showConfirmationModal: false})
-    }
-  }
-
-  setInputRef(node) {
-    this.setState({clickedInput: node.target})
-   }
-
-   setCurrentMain(node) {
-     this.setState({currentMainRef: node})
-   }
-
-   async onDenied() {
-     this.setState({showConfirmationModal: false});
-     this.state.clickedInput.checked = false;
-     this.state.currentMainRef.checked = true;
-   }
 
   render() {
-    const { articles, fetchingStatus, showConfirmationModal, mainArticle } = this.state;
+    const { showToast, articles } = this.state;
 
     return (
       articles.length
@@ -159,21 +114,9 @@ class ArticleTable extends Component {
                     <Field>{item.title}</Field>
                     <Field>
                       {
-                        item.main
-                        ? (
-                          <Fragment>
-                            <Input type='radio' id={item.idarticle} name='mainArticle' defaultChecked ref={this.setCurrentMain} />
-                            <CustomRadio htmlFor={item.idarticle} />
-                          </Fragment>
-                        )
-                        : (
-                          <Fragment>
-                            <Input type='radio' id={item.idarticle} name='mainArticle' onChange={this.setInputRef} />
-                            <CustomRadio
-                              htmlFor={item.idarticle}
-                              onClick={() => this.setState({showConfirmationModal: true, selectedArticleID: item.idarticle})} />
-                          </Fragment>
-                        )
+                        item.main ?
+                        <input type='radio' name='main' defaultChecked />
+                        : <input type='radio' name='main' />
                       }
                     </Field>
                     <Field>{item.category}</Field>
@@ -188,19 +131,10 @@ class ArticleTable extends Component {
                 })
               }
           </tbody>
-          </Table>
-            <ConfimationModal
-              title='Zmiana artykułu głównego'
-              text='Czy jesteś pewien, że chcesz ustawić ten artykuł jako główny? Tylko jeden artykuł w danym momencie może pełnić taką rolę.'
-              btnTextYes='Ustaw'
-              btnTextNo='Cofnij'
-              denied={this.onDenied}
-              accept={this.handleMainArticleUpdate}
-              status={fetchingStatus}
-              showModal={showConfirmationModal}
-            />
-          </div>
-      ) : 'Brak artykułów'
+        </Table>
+        <Toast message='Artykuł został usunięty' visible={showToast} />
+        </div>
+    ) : ''
     );
   };
 };
