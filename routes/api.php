@@ -47,7 +47,8 @@ Route::get('auth/test/admin', function(Request $request) {
 });
 
 Route::get('test', function(Request $request) {
-    return;
+    $data = file_get_contents("http://spys.one/en/socks-proxy-list/");
+    dd($data);
 });
 
 // Use middleware to allow Client-side use API
