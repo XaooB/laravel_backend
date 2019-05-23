@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Title from './admin_content_title';
-import ArticleFilters from './article_filters';
+import ArticleFilters from './admin_filters';
 import ArticleTable from './article_table';
 import Button from '../Reusable/button';
 

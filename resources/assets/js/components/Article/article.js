@@ -13,6 +13,9 @@ const ArticleWrapper = styled.article`
   flex-flow:column wrap;
   background:white;
   flex: 3;
+  @media (min-width: 900px) {
+    padding-right:25px;
+  }
   section:last-child section {
     padding:0;
   }
@@ -28,9 +31,8 @@ const Wrapper = styled.section`
   flex:6;
   margin-top:20px;
   background:white;
-  padding:0 5px;
   @media (min-width: 480px) {
-    padding:0 25px;
+    padding-left:25px;
     margin-top:0;
   }
 `
@@ -49,9 +51,7 @@ const Article = props => {
         </Wrapper>
       </Section>
       <Section>
-        <Wrapper>
-          <CommentSection articleID={article.idarticle} user={user} />
-        </Wrapper>
+        <CommentSection articleID={article.idarticle} user={user} />
       </Section>
     </ArticleWrapper>
   )

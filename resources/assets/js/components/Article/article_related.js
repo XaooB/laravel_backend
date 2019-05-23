@@ -7,9 +7,9 @@ const Section = styled.section`
 `
 
 const Title = styled.h3`
-  font-family:'SSPB';
-  font-size:1.5em;
-  margin-bottom:12px;
+  font-weight:lighter;
+  font-size:1.4em;
+  margin-bottom:16px;
 `
 
 const Related = props => {

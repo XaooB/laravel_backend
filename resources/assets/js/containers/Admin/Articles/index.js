@@ -14,7 +14,7 @@ class AdminArticles extends Component {
           <title>Artykuły - Panel Administracyjny</title>
         </Helmet>
         <Title title='Artykuły' />
-        <ArticleContent />
+        <ArticleContent />    
       </Fragment>
     )
   }

@@ -1,4 +1,4 @@
-import { FETCH_SEARCH, FETCH_CURRENT_POLL, SET_VOTE_FLAG_CURRENT_POLL, FETCH_USER_CHECK, SELECTED_POLL_ANSWER, FETCH_USER_PROFILE, ADD_SELECTED_CATEGORIES, DELETE_SELECTED_CATEGORIES, FETCH_CATEGORIES, FETCH_ADMIN_ARTICLES, FETCH_NEWS, FETCH_SCHEDULE, FIXTURE_TYPE, ADMIN_EDIT_ARTICLE_DATA, FETCH_USER, FETCH_ARTICLE, FETCH_ARTICLE_NEIGHBOURS, DEC_COMMENT_COUNT, DISABLE_LIKE_BUTTON, FETCH_COMMENTS, ADD_COMMENT, ADD_COMMENT_STATUS, SELECTED_COMMENT_ID, CHANGE_LIKE_STATUS, INC_COMMENT_COUNT, INC_LIKES_COUNT, DEC_LIKES_COUNT } from './types';
+import { FETCH_SEARCH, SET_ADMIN_LOAD_COUNTER, FETCH_CURRENT_POLL, SELECT_ARTICLES_BY_KEYWORD, SET_VOTE_FLAG_CURRENT_POLL, FETCH_USER_CHECK, SELECTED_POLL_ANSWER, FETCH_USER_PROFILE, ADD_SELECTED_CATEGORIES, DELETE_SELECTED_CATEGORIES, FETCH_CATEGORIES, FETCH_ADMIN_ARTICLES, FETCH_NEWS, FETCH_SCHEDULE, FIXTURE_TYPE, ADMIN_EDIT_ARTICLE_DATA, FETCH_USER, FETCH_ARTICLE, FETCH_ARTICLE_NEIGHBOURS, DEC_COMMENT_COUNT, DISABLE_LIKE_BUTTON, FETCH_COMMENTS, ADD_COMMENT, ADD_COMMENT_STATUS, SELECTED_COMMENT_ID, CHANGE_LIKE_STATUS, INC_COMMENT_COUNT, INC_LIKES_COUNT, DEC_LIKES_COUNT } from './types';
 import { API } from '../helpers/api';
 import axios from 'axios';
 import qs from 'qs';
@@ -136,7 +136,6 @@ export const addComment = data => async dispatch => {
   const { idreference } = data;
   try {
     await axios.post('/api/comments', data);
-    //przepisac, aby dodawało lokalne element do talibcy, a nie fetchwoało ponownie. Stwarza problemy ze względu na implementacje cache.
     await dispatch(fetchComments(idreference));
   } catch(e) { throw new Error(e) };
   dispatch(setCommentStatus(true));
@@ -148,9 +147,9 @@ export const editComment = data => async dispatch => {
   const { selectedCommentID, content, articleID } = data;
   try {
     await axios.post(`/api/comments/${selectedCommentID}`, {_method: 'PUT', content});
-    dispatch(fetchComments(articleID));
+    await dispatch(fetchComments(articleID));
+    dispatch(setCommentStatus(true));
   } catch(e) { throw new Error(e) }
-  dispatch(setCommentStatus(true));
 }
 
 export const deleteComment = data => async dispatch => {
@@ -200,6 +199,20 @@ export const selectedPollAnswer = id => dispatch => {
   dispatch({
     type: SELECTED_POLL_ANSWER,
     payload: id
+  })
+}
+
+export const searchAdminArticles = keyword => dispatch => {
+  dispatch({
+    type: SELECT_ARTICLES_BY_KEYWORD,
+    payload: keyword
+  })
+}
+
+export const setAdminLoadCounter = amount => dispatch => {
+  dispatch({
+    type: SET_ADMIN_LOAD_COUNTER,
+    payload: amount
   })
 }
 

@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import MiniLoader from '../Reusable/mini_loader';
 import ActionButton from './article_action';
-import {
-  MdEdit,
-  MdBuild,
-} from 'react-icons/md';
-
+import { connect } from 'react-redux';
+import { searchAdminArticles } from '../../actions/';
+import { Link } from 'react-router-dom';
+import { MdEdit, MdBuild } from 'react-icons/md';
 import { API } from '../../helpers/api';
 
 const Table = styled.table`
@@ -26,6 +25,7 @@ const Title = styled.th`
 
 const Field = styled.td`
   padding:14px 5px;
+  word-break: break-word;
 `
 
 const Row = styled.tr`
@@ -51,6 +51,10 @@ class UsersTable extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.searchAdminArticles('')
+  }
+
   async componentDidMount() {
     const users = await API.get('users_list/0/25');
     this.setState({
@@ -60,6 +64,8 @@ class UsersTable extends Component {
 
   render() {
     const { users } = this.state;
+    const { searchKeyword } = this.props;
+
     return (
         users.length
         ? (
@@ -76,28 +82,33 @@ class UsersTable extends Component {
             </thead>
             <tbody>
               {
-              users.sort().map((item) => {
-                return (
-                    <Row key={item.iduser}>
-                      <Field>{item.create_date}</Field>
-                      <Field>{item.status}</Field>
-                      <Field>{item.name}</Field>
-                      <Field>{item.email}</Field>
-                      <Field>{item.privilege}</Field>
-                      <Field>
-                      {
-                        item.status === 'aktywny' ?
-                        (
-                          <ActionButton name='Zablokuj' icon={<MdEdit />} />
-                        ) : (
-                          <ActionButton name='Odblokuj' icon={<MdEdit />} />
-                        )
-                      }
-                        <ActionButton name='Nadaj prawa' icon={<MdBuild />} />
-                      </Field>
-                    </Row>
-                    );
-                  })
+              users
+              .sort((a, b) => new Date(b.create_date).getTime() - new Date(a.create_date).getTime())
+              .filter(item => item.name.toLowerCase().includes(searchKeyword))
+              .map(
+                item => {
+                  return (
+                      <Row key={item.iduser}>
+                        <Field>{item.create_date}</Field>
+                        <Field>{item.status}</Field>
+                        <Field>{item.name}</Field>
+                        <Field>{item.email}</Field>
+                        <Field>{item.privilege}</Field>
+                        <Field>
+                        {
+                          item.status === 'aktywny' ?
+                          (
+                            <ActionButton name='Zablokuj' icon={<MdEdit />} />
+                          ) : (
+                            <ActionButton name='Odblokuj' icon={<MdEdit />} />
+                          )
+                        }
+                          <ActionButton name='Nadaj prawa' icon={<MdBuild />} />
+                        </Field>
+                      </Row>
+                      );
+                    }
+                  )
                 }
             </tbody>
           </Table>
@@ -108,4 +119,9 @@ class UsersTable extends Component {
   };
 };
 
-export default UsersTable;
+const mapStateToProps = state => {
+  return {
+    searchKeyword: state.admin.searchKeyword
+  }
+}
+export default connect(mapStateToProps, {searchAdminArticles})(UsersTable);
