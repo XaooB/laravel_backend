@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 const ImageWrapper = styled.figure`
   display:none;
+  overflow:hidden;
+  border-radius:6px;
   height:inherit;
   justify-content:center;
   flex:1 1 380px;
@@ -63,7 +65,7 @@ const ArticleInfo = styled.header`
   color:#1e1e1e;
   width:100%;
   @media (min-width: 480px) {
-    border-left:3px solid #FEBE10;
+    border-left:2px solid #ee324e;
     margin-left:5px;
     padding:5px 0 5px 8px;
   }
@@ -77,9 +79,9 @@ const Title = styled.h3`
 const Category = styled.span`
   display:block;
   margin-top:5px;
-  font-size:.8em;
+  font-size:.85em;
   color:#ee324e;
-  font-family:'AvenirLTB'
+  font-family:'AvenirLTD'
 `
 
 const Description = styled.span`
@@ -115,9 +117,9 @@ const Type = styled.span`
 `
 
 const Count = styled.span`
-  font-family:'AvenirLTD';
   flex:1;
-    color:#ee324e;
+  font-size:1.05em;
+  color:#ee324e;
   text-align:center;
 `
 

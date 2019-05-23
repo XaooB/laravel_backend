@@ -6,6 +6,10 @@ import MiniLoader from '../Reusable/mini_loader';
 import NoUser from './no_user_info';
 import { connect } from 'react-redux';
 
+const Information = styled.p`
+  margin-top:15px;
+`
+
 const Container = styled.section`
   width:100%;
   flex:1 1 580px;
@@ -15,11 +19,6 @@ const Container = styled.section`
     width:73%;
   }
 `
-
-const Info = styled.p`
-  margin-top:16px;
-`
-
 
 class UserActivity extends Component {
   render() {
@@ -32,6 +31,7 @@ class UserActivity extends Component {
       {
         !status
         ? activity.user !== null
+        ? activityList.length
         ? (
           <Fragment>
             <PageHeader>Ostatnia aktywność</PageHeader>
@@ -47,10 +47,13 @@ class UserActivity extends Component {
             </div>
           </Fragment>
         ) : (
-          ''
-        ) : (
-          <MiniLoader margin={20} />
+          <Fragment>
+            <PageHeader>Ostatnia aktywność</PageHeader>
+            <Information>Brak aktywności dla tego użytkownika.</Information>
+          </Fragment>
         )
+          : ''
+          : <MiniLoader margin={20} />
       }
       </Container>
     )

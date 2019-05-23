@@ -6,10 +6,14 @@ const Article = styled.article`
   position:relative;
   width:100%;
   max-height:500px;
+  &:hover img {
+    transform:scale(1.03);
+  }
 `
 
 const Image = styled.img`
   height:250px;
+  transition: all .2s ease-in-out;
   @media (min-width: 480px) {
     width:100%;
     height:100%;
@@ -35,18 +39,6 @@ const Category = styled.span`
   display:none;
   font-weight:bold;
   font-family:'Arial';
-  position:relative;
-  &:before {
-    transition: width .6s;
-    transition-timing-function: cubic-bezier(.24,.11,.43,1.46);
-    content:'';
-    position:absolute;
-    width:0;
-    height:3px;
-    background:#FEBE10;
-    left:101px;
-    top:9px;
-  }
   @media (min-width: 640px) {
     display:block;
     font-size:.85em;

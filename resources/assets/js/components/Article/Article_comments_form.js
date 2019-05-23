@@ -16,7 +16,7 @@ window.axios = axios;
 const Form = styled.form`
   flex:8;
   width:100%;
-  margin-top:10px;
+  margin-top:15px;
 `
 
 const TextField = styled.textarea`

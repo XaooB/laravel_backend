@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import ReactChartkick, { LineChart } from 'react-chartkick';
 import Chart from 'chart.js';
+import createLink from '../../helpers/createLink';
 
 ReactChartkick.addAdapter(Chart);
 
@@ -183,7 +184,7 @@ const LastWeekArticleStatsItem = (props) => {
                     <UserEmail>{item.create_date}</UserEmail>
                   </div>
                 </User>
-                <LinkTo to={`/app/news/${item.category}/${item.idarticle}/${item.title}`}>przejdź do artykułu</LinkTo>
+                <LinkTo to={createLink(item)}>przejdź do artykułu</LinkTo>
               </UserWrapper>
             )
           })

@@ -59,8 +59,8 @@ const SearchIcon = styled.label`
   border-radius:6px;
   background: #ededed;
   color:#1e1e1e;
-  height:32px;
-  width:32px;
+  height:34px;
+  width:34px;
   cursor:pointer;
   position:relative;
   z-index:9;
@@ -132,12 +132,12 @@ const User = styled.span`
 
 const SearchInput = styled.input`
   position:absolute;
-  width:100%;
   right:0px;
   color:#1e1e1e;
   padding-left:0px;
   padding-right:0px;
-  height:32px;
+  width:34px;
+  height:34px;
   border:none;
   outline:none;
   background: #ededed;
@@ -146,9 +146,6 @@ const SearchInput = styled.input`
   transition: .3s all ease-in;
   &::placeholder {
     color:#1e1e1e;
-  }
-  @media (min-width: 480px) {
-    width:32px;
   }
 `
 

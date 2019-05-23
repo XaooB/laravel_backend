@@ -98,7 +98,6 @@ class EditCommentForm extends Component {
 
     const { content } = this.state,
           { comments, articleID } = this.props;
-          console.log(articleID);
 
     await this.props.editComment({content, selectedCommentID: comments.selectedCommentID, articleID});
     this.setState({
