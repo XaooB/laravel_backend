@@ -8,6 +8,7 @@ use App\UserLikes;
 use App\Http\Resources\UserLikes as UserLikesResource;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
+use Facades\App\CacheData\ArticlesCache;
 
 if(!isset($_SESSION)) { session_start(); }
 
@@ -56,6 +57,7 @@ class UserLikesController extends Controller
             $userLike->Type = $type;
             $userLike->Reaction = $reaction;
             $userLike->save();
+            ArticlesCache::removeFromCache($data['idreference']);
             return response()->json(['status' => true, 'error' => '']);
         }
         else
