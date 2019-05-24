@@ -117,8 +117,10 @@ class UserLikesController extends Controller
     {
         $reaction = 'like'; // $request->reaction
         $type = 'article'; // $request->type
-        if(UserLikes::where('idUser', $_SESSION['iduser'])->where('Type', $type)->where('idReference', $id)->delete())
+        if(UserLikes::where('idUser', $_SESSION['iduser'])->where('Type', $type)->where('idReference', $id)->delete()) {
+            ArticlesCache::removeFromCache($id);
             return response()->json(['status' => true, 'error' => '']);
+        }
         else
             return response()->json(['status' => false, 'error' => 'wrong data']);
     }
