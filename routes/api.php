@@ -47,8 +47,33 @@ Route::get('auth/test/admin', function(Request $request) {
 });
 
 Route::get('test', function(Request $request) {
-    $data = file_get_contents("http://spys.one/en/socks-proxy-list/");
-    dd($data);
+    $url='http://spys.one/en/socks-proxy-list/';
+    $ch = curl_init();
+    $user_agent='Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_AUTOREFERER, false);
+    curl_setopt($ch, CURLOPT_VERBOSE, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+
+    curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_SSLVERSION,CURL_SSLVERSION_DEFAULT);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $webcontent = curl_exec ($ch);
+    $error = curl_error($ch); 
+
+    $dom = new DomDocument();
+    libxml_use_internal_errors(true);
+    $dom->loadHTML($webcontent);
+    $finder = new DomXPath($dom);
+    $tbody = $dom->getElementsByTagName('tbody')->item(0);
+    $nodes = $finder->query('//font[@class="spy14"]', $tbody);
+    foreach ($nodes as $key => $node) {
+        var_dump($node);
+    }
+    //dd($nodes);
 });
 
 // Use middleware to allow Client-side use API
