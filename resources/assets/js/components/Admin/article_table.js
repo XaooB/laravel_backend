@@ -7,9 +7,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { StoreAdminArticleToEdit, fetchAdminArticles, searchAdminArticles } from '../../actions'
 import { MdEdit, MdDeleteForever } from 'react-icons/md';
+import ModalNotification from '../Reusable/modal_notification';
 import ConfimationModal from '../Reusable/modal_confirmation';
-
-import Toast from '../Reusable/Toast';
 import { API } from '../../helpers/api';
 
 const Table = styled.table`
@@ -75,7 +74,11 @@ class ArticleTable extends Component {
     this.state = {
       articles: [],
       showConfirmationModal: false,
+      showNotificationModal: false,
+      modalType: '',
+      modalText: '',
       fetchingStatus: false,
+      modalFetching: false,
       selectedArticleID: null,
       currentMainRef: null,
       clickedInput: null
@@ -88,16 +91,26 @@ class ArticleTable extends Component {
   }
 
   componentWillUnmount() {
-    this.props.searchAdminArticles('')
+    this.props.searchAdminArticles('');
+    this.setState({showNotificationModal: false});
   }
 
   async componentDidMount() {
     const { loadCounter } = this.props.admin;
+    this.setState({fetchingStatus: true})
 
     await this.props.fetchAdminArticles();
-    this.setState({
-      articles: this.props.admin.ownArticles
-    })
+    this.setState({articles: this.props.admin.ownArticles, fetchingStatus: false })
+
+    //executes only after article was edited - push function with a state prop (article_edit_form.js - line 136)
+    if(this.props.history.location.state !== undefined) {
+      const { showNotificationModal, text, type } = this.props.history.location.state;
+      this.setState({
+        showNotificationModal: showNotificationModal,
+        modalText: text,
+        modalType: type
+      });
+    }
   }
 
   async componentDidUpdate(prevProps) {
@@ -105,14 +118,13 @@ class ArticleTable extends Component {
 
     if(prevProps.admin.ownArticles.length !== currentProps.admin.ownArticles.length)
       this.setState({
-        articles: currentProps.admin.ownArticles
+        articles: currentProps.admin.ownArticles,
       })
   }
 
   async handleDelete(id) {
     try {
       const request = await axios.delete(`/api/articles/${id}`)
-      this.showToast();
     } catch (e) {
       throw new Error(e);
     }
@@ -123,13 +135,19 @@ class ArticleTable extends Component {
       const { selectedArticleID } = this.state;
       const data = new FormData();
 
-      this.setState({fetchingStatus: true});
+      this.setState({modalFetching: true});
       try {
         const request = await axios.put(`/api/articles_staff_change_main/${selectedArticleID}`)
       } catch (e) {
         throw new Error(e);
       } finally {
-        this.setState({fetchingStatus: false, showConfirmationModal: false})
+        this.setState({
+          modalFetching: false,
+          showConfirmationModal: false,
+          showNotificationModal: true,
+          modalText: 'Artykuł głowny został zmieniony',
+          modalType: 'success'
+        })
       }
     }
 
@@ -152,11 +170,13 @@ class ArticleTable extends Component {
   }
 
   render() {
-    const { articles, fetchingStatus, showConfirmationModal, mainArticle } = this.state;
+    const { articles, fetchingStatus, showConfirmationModal, mainArticle, modalFetching } = this.state;
     const { searchKeyword } = this.props.admin;
 
     return (
-      articles.length
+      fetchingStatus
+      ? <MiniLoader />
+      : articles.length
       ? (
         <div>
           <Table>
@@ -217,12 +237,21 @@ class ArticleTable extends Component {
             title='Zmiana artykułu głównego'
             text='Czy jesteś pewien, że chcesz ustawić ten artykuł jako główny? Tylko jeden artykuł w danym momencie może pełnić taką rolę.'
             btnTextYes='Ustaw'
-              btnTextNo='Cofnij'
-              denied={this.onDenied}
-              accept={this.handleMainArticleUpdate}
-              status={fetchingStatus}
-              showModal={showConfirmationModal}
-            />
+            btnTextNo='Cofnij'
+            denied={this.onDenied}
+            accept={this.handleMainArticleUpdate}
+            status={modalFetching}
+            showModal={showConfirmationModal}
+          />
+          <ModalNotification
+            options = {{
+              type: this.state.modalType,
+              text: this.state.modalText,
+              hideModalFunction: () => this.setState({showNotificationModal: false}),
+              timeout: 3500,
+              showModal: this.state.showNotificationModal
+            }}
+          />
         </div>
       ) : <Information>Brak artykułów.</Information>
     );

@@ -8,16 +8,25 @@ import Navigation from './admin_navigation';
 import { connect } from 'react-redux';
 
 class ArticleEdit extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showNotificationModal: false
+    }
+  }
+
   render() {
     const { articleToEdit } = this.props.admin;
-
-    console.log(this.props.admin);
-    console.log(articleToEdit);
 
     return (
       <Fragment>
         <Title title='Artykuły • Edytuj' />
-        <ArticleEditForm label='Edytowanie artykułu' articleToEdit={ articleToEdit } />
+        <ArticleEditForm
+          label='Edytowanie artykułu'
+          articleToEdit={ articleToEdit }
+          toggleModalFunction={ () => this.setState({showNotificationModal: true}) }
+        />
       </Fragment>
     )
   }

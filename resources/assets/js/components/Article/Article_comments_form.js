@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import MiniLoader from '../../components/Reusable/mini_loader';
 import AddCommentButtonMobile from './article_comment_add_mobile';
 import AddCommentModalMobile from './article_comment_add_modal';
+import ModalNotification from '../Reusable/modal_notification';
 import {API} from '../../helpers/api';
 
 import { addComment, setCommentStatus } from '../../actions/';
@@ -89,7 +90,10 @@ class AddCommentForm extends Component {
       fetchingStatus: false,
       content: '',
       charactersUsed: 0,
-      openCommentModal: false
+      openCommentModal: false,
+      showNotificationModal: false,
+      modalText: '',
+      modalType: ''
     };
 
     this.handleTextarea = this.handleTextarea.bind(this);
@@ -123,7 +127,14 @@ class AddCommentForm extends Component {
     this.setState({ fetchingStatus: true });
 
     await this.props.addComment({content, idsubreference, idreference});
-    await this.setState({charactersUsed: 0, content: '', fetchingStatus: false});
+    await this.setState({
+      charactersUsed: 0,
+      content: '',
+      fetchingStatus: false,
+      showNotificationModal: true,
+      modalText: 'Komentarz został dodany.',
+      modalType: 'success'
+    });
     handleForm && handleForm();
   }
 
@@ -169,6 +180,15 @@ class AddCommentForm extends Component {
           handleForm={handleForm}
           commentID={commentID}
           author={author} />
+        <ModalNotification
+          options = {{
+            type: this.state.modalType,
+            text: this.state.modalText,
+            hideModalFunction: () => this.setState({showNotificationModal: false}),
+            timeout: 3500,
+            showModal: this.state.showNotificationModal
+          }}
+        />
       </Fragment>
     )
   }
