@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Facades\App\CacheData\AnalyticsCache;
 use Facades\App\CacheData\UsersCache;
+use App\Http\Controllers\FootballAPIController;
 
 if(!isset($_SESSION)) { session_start(); } 
 
@@ -47,33 +48,32 @@ Route::get('auth/test/admin', function(Request $request) {
 });
 
 Route::get('test', function(Request $request) {
-    $url='http://spys.one/en/socks-proxy-list/';
-    $ch = curl_init();
-    $user_agent='Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_AUTOREFERER, false);
-    curl_setopt($ch, CURLOPT_VERBOSE, 1);
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-
-    curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_SSLVERSION,CURL_SSLVERSION_DEFAULT);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    $webcontent = curl_exec ($ch);
-    $error = curl_error($ch); 
-
+    $url = 'http://spys.one/en/socks-proxy-list/';
+    $webcontent = FootballAPIController::curlClientSendPOST($url);
     $dom = new DomDocument();
     libxml_use_internal_errors(true);
     $dom->loadHTML($webcontent);
     $finder = new DomXPath($dom);
     $tbody = $dom->getElementsByTagName('tbody')->item(0);
     $nodes = $finder->query('//font[@class="spy14"]', $tbody);
+    $script = $dom->getElementsByTagName('script')->item(3);
+    $portVariables = $script->textContent;
+    $list = [];
+    $charToReplace = ('+');
+    $stringReplaceWith = ("%2B");
     foreach ($nodes as $key => $node) {
-        var_dump($node);
+        preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $node->textContent, $ipPort);
+        if(!empty($ipPort)) {
+            $data = explode($ipPort[0], $node->textContent);
+            $data[1] = '(":"+' . substr(substr($data[1], strpos($data[1], "+") + 1), 0, -1). ')';
+            $port = str_replace($charToReplace, $stringReplaceWith, $data[1]);
+            $url = 'https://nodejs-calc.herokuapp.com/getData?script=' . $portVariables . $port;
+            $result = FootballAPIController::curlClientSendGET($url);
+            array_push($list, $ipPort[0] . $result);
+            return response()->json($list);
+        }
     }
-    //dd($nodes);
+    return response()->json($list);
 });
 
 // Use middleware to allow Client-side use API
