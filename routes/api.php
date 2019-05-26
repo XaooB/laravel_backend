@@ -70,7 +70,6 @@ Route::get('test', function(Request $request) {
             $url = 'https://nodejs-calc.herokuapp.com/getData?script=' . $portVariables . $port;
             $result = FootballAPIController::curlClientSendGET($url);
             array_push($list, $ipPort[0] . $result);
-            return response()->json($list);
         }
     }
     return response()->json($list);
