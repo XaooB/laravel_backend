@@ -8,6 +8,12 @@ HTML, CSS, JS, ReactJS, Redux
 ### Backend side
 MySQL, PHP, Laravel
 
+## Screenshots
+
+![](glowna.png)
+![](article.png)
+![](userprofile.png)
+
 ## Contributions
 Marcin M. (https://github.com/Marcin250)
 
