@@ -8,13 +8,20 @@ import { connect } from 'react-redux';
 import {fetchComments, setCommentStatus} from '../../actions/'
 
 const Title = styled.h3`
-  font-size:1.5em;
-  font-family:'SSPB';
+  font-size:1.4em;
+  font-weight:lighter;
   margin-top:50px;
 `
 
+const Container = styled.div`
+  width:100%;
+  @media (min-width: 900px) {
+
+  }
+`
+
 const Information = styled.p`
-  margin-top:5px;
+  margin-top:25px;
 `
 
 class CommentSection extends Component {
@@ -59,8 +66,8 @@ class CommentSection extends Component {
           { fetchingStatus, comments } = this.state;
 
     return (
-      <Fragment>
-      <Title>Komentarze</Title>
+      <Container>
+        <Title>Komentarze</Title>
         <Fragment>
         {
           fetchingStatus
@@ -83,7 +90,7 @@ class CommentSection extends Component {
           : <Information>Aby napisać komentarz musisz się zalogować!</Information>
         }
         </Fragment>
-      </Fragment>
+      </Container>
     )
   }
 };

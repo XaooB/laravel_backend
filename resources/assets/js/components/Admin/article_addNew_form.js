@@ -1,13 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import Title from './admin_content_title';
-import Button from './button';
+import Button from '../Reusable/button';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../../actions/'
 import { withRouter } from 'react-router-dom';
-
-import Toast from '../Reusable/Toast';
 
 const Container = styled.section`
   margin-left:1px;
@@ -89,7 +87,7 @@ class AddNewArticleForm extends Component {
       content: '',
       summary: '',
       file: '',
-      showToast: false
+      fetchingStatus: false,
     }
 
     this.handleSelect = this.handleSelect.bind(this);
@@ -109,23 +107,12 @@ class AddNewArticleForm extends Component {
     : '';
   }
 
-  showToast () {
-    this.setState({
-      showToast: true
-    }, () => {
-      setTimeout(() => {
-        this.setState({ showToast: false });
-        this.props.history.push('/admin/articles');
-      }
-    ,2000)
-    })
-  }
-
   async handleSubmit() {
     const { title, category, file, content } = this.state;
     const data = new FormData();
 
-    console.log(category);
+    this.setState({fetchingStatus: true})
+
     data.append('title', title);
     data.append('category', category);
     data.append('content', content);
@@ -133,9 +120,11 @@ class AddNewArticleForm extends Component {
 
     try {
       await axios.post(`/api/articles`, data);
-      this.showToast();
     } catch (e) {
       throw new Error(e);
+    } finally {
+      this.setState({fetchingStatus: false});
+      this.props.history.goBack();
     }
   }
 
@@ -145,7 +134,7 @@ class AddNewArticleForm extends Component {
   }
 
   render() {
-    const { title, category, content, summary, file, showToast } = this.state;
+    const { title, category, content, summary, file } = this.state;
     const { label, articleToEdit, article } = this.props;
 
     return (
@@ -164,7 +153,7 @@ class AddNewArticleForm extends Component {
                   (
                     <Select onChange={this.handleSelect}>
                       {
-                        article.categories.map(item => <option key={item.id} value={item.idcategory}>{item.name}</option>)
+                        article.categories.map(item => <option key={item.idcategory} value={item.idcategory}>{item.name}</option>)
                       }
                     </Select>
                   ) : (
@@ -180,13 +169,19 @@ class AddNewArticleForm extends Component {
                 </Field>
               </form>
               <BtnWrapper>
-                <Button name='Dodaj' onClick={() => { this.handleSubmit() } } title='Dodaj artykuł' />
-                <Button name='&larr;' colorBlue onClick={() => { this.props.history.goBack() } } title='Powrót' />
+                <Button
+                  name='&larr; Cofnij'
+                  onClick={() => { this.props.history.goBack() } }
+                  title='Powrót' />
+                <Button name='Dodaj'
+                  warning
+                  onClick={() => { this.handleSubmit() } }
+                  title='Dodaj artykuł'
+                  isFetching={this.state.fetchingStatus} />
               </BtnWrapper>
             </Fragment>
         }
         </Wrapper>
-        <Toast message='Artykuł został dodany' visible={showToast} />
       </Container>
     )
   }

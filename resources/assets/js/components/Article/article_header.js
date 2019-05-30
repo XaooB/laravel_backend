@@ -14,10 +14,10 @@ const Header = styled.header`
 
 const Title = styled.h2`
   display:block;
-  font-family:'SSPBK';
+  font-family:'AvenirLTB';
   font-size:1.7em;
   @media (min-width: 640px) {
-    font-size:2.6em;
+    font-size:2.3em;
   }
 `
 
@@ -37,11 +37,6 @@ const Item = styled.div`
   &:not(:last-child) {
     margin-right:8px;
   }
-  &:nth-child(2) {
-    svg:hover {
-      color:#ee324e;
-    }
-  }
   svg {
     color:#c8c8c8;
   }
@@ -51,6 +46,12 @@ const Count = styled.span`
   display:inline-block;
   margin-left:4px;
   font-size:.95em;
+`
+
+const LikeInfo = styled.span`
+  &:hover {
+    color:#ee324e;
+  }
 `
 
 class ArticleTitle extends Component {
@@ -66,6 +67,7 @@ class ArticleTitle extends Component {
 
     this.handleLikeButton = this.handleLikeButton.bind(this);
     this.handleDislikeButton = this.handleDislikeButton.bind(this);
+    this.handleUnloggedButton = this.handleUnloggedButton.bind(this);
   }
 
   async componentDidMount() {
@@ -98,6 +100,10 @@ class ArticleTitle extends Component {
     }
   }
 
+  handleUnloggedButton() {
+    this.setState({typeModal:'info', showModal: true, textModal: 'Aby polubić artykuł musisz się zalogować!'})
+  }
+
   render() {
     const {title, likes_count, comments_count, views, liked} = this.props.article.data,
           {articleLikes} = this.state,
@@ -111,37 +117,43 @@ class ArticleTitle extends Component {
             <GoCommentDiscussion />
             <Count>{comments_count}</Count>
           </Item>
+          <Item title='Wyświetlenia artykułu'>
+            <IoIosEye />
+            <Count>{views}</Count>
+          </Item>
           {
            liked && user.length
            ? (
-             <Item title='Nie podoba mi się' onClick = {this.handleDislikeButton}>
+             <Item
+              title='Nie podoba mi się'
+              onClick = {this.handleDislikeButton}>
                <IoIosHeart style={{color:'#ee324e'}} />
-               <Count>{articleLikes}</Count>
+               <Count>{articleLikes}</Count>&nbsp; — &nbsp;<LikeInfo>Usuń z ulubionych</LikeInfo>
              </Item>
            ) : user.length ? (
-             <Item title='Podoba mi się' onClick = {this.handleLikeButton}>
-               <IoIosHeart />
-               <Count>{articleLikes}</Count>
+             <Item
+              title='Podoba mi się'
+              onClick = {this.handleLikeButton}>
+              <IoIosHeart />
+              <Count>{articleLikes}</Count>&nbsp; — &nbsp;<LikeInfo>Dodaj do ulubionych</LikeInfo>
              </Item>
            ) : (
-             <Item title='Zaloguj się, aby móc polubić artykuł'>
+             <Item
+              title='Zaloguj się, aby móc polubić artykuł'
+              onClick = {this.handleUnloggedButton}>
                <IoIosHeart />
                <Count>{articleLikes}</Count>
              </Item>
            )
           }
-          <Item title='Wyświetlenia artykułu'>
-            <IoIosEye />
-            <Count>{views}</Count>
-          </Item>
         </Wrapper>
         <Notification
           options={{
+            text: this.state.textModal,
+            type: this.state.typeModal,
+            timeout: 3500,
             showModal: this.state.showModal,
             hideModalFunction: () => this.setState({showModal: false}),
-            type: this.state.typeModal,
-            timeout: 3000,
-            text: this.state.textModal
           }}
         />
       </Header>

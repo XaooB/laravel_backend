@@ -332,4 +332,62 @@ class FootballAPIController
 			}
 		}
 	}
+
+	public static function curlClientSendGET($url)
+	{
+	    $ch = curl_init();
+	    $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
+	    curl_setopt($ch, CURLOPT_URL, $url);
+	    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	    curl_setopt($ch, CURLOPT_AUTOREFERER, false);
+	    curl_setopt($ch, CURLOPT_VERBOSE, 1);
+	    curl_setopt($ch, CURLOPT_HEADER, 0);
+
+	    curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt($ch, CURLOPT_SSLVERSION,CURL_SSLVERSION_DEFAULT);
+	    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+	    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+	    $webcontent = curl_exec($ch);
+	    return $webcontent;
+	    curl_close($ch);
+	}
+
+	public static function curlClientSendPOST($url)
+	{
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => $url,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_AUTOREFERER => false,
+			CURLOPT_VERBOSE => true,
+			CURLOPT_SSLVERSION => CURL_SSLVERSION_DEFAULT,
+			CURLOPT_SSL_VERIFYHOST => false,
+			CURLOPT_SSL_VERIFYPEER => false,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "POST",
+			CURLOPT_POSTFIELDS => "xpp=5",
+			CURLOPT_HTTPHEADER => array(
+		    	"Accept: */*",
+		    	"Cache-Control: no-cache",
+		    	"Connection: keep-alive",
+		    	"Content-Type: application/x-www-form-urlencoded",
+		    	"User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0",
+		    	"accept-encoding: gzip, deflate",
+		    	"cache-control: no-cache",
+		    	"content-length: 5"
+		 	),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		curl_close($curl);
+		return $response;
+	}
 }

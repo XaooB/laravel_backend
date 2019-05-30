@@ -38,7 +38,7 @@ class ArticleList extends Component {
           (
             newsByCategory.map(item => <Article key={ item.idarticle } article={item} />)
           ) : (
-            <MiniLoader margin={20} />
+            <MiniLoader />
           )
         }
       </Section>

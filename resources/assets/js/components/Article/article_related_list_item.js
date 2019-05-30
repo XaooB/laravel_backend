@@ -8,6 +8,13 @@ const Article = styled.article`
   flex:1 1 160px;
   max-width:260px;
   margin-bottom:10px;
+  transition: all .2s ease-in-out;
+  &:hover {
+    transform:scale(1.03);
+    h3 {
+      color:#ee324e;
+    }
+  }
   &:not(:last-child) {
     padding-right:5px;
   }
@@ -41,59 +48,8 @@ const Category = styled.span`
   text-transform:uppercase;
 `
 
-const Footer = styled.footer`
-  display:flex;
-  justify-content:space-between;
-  flex-flow: row nowrap;
-  align-items:center;
-`
-
 const LinkTo = styled(Link)`
   color:inherit;
-`
-
-const Author = styled.div`
-  flex:2;
-  display:flex;
-  flex-flow: row nowrap;
-  jutsify-content:space-between;
-  align-items:center;
-`
-
-const Statistics = styled.div`
-  flex:1;
-  display:flex;
-  align-items:center;
-  justify-content: flex-end;
-  cursor:default;
-`
-
-const ImageContainer = styled.figure`
-  margin-top:-2px;
-  display:flex;
-  justify-content:center;
-  min-width:25px;
-  min-height:25px;
-  max-width:25px;
-  max-height:25px;
-  margin-right:10px;
-  overflow:hidden;
-  align-self:flex-start;
-  border-radius:100%;
-`
-
-const ImageAuthor = styled.img`
-  height:25px;
-`
-
-const UserName = styled.span`
-  font-size:.9em;
-`
-
-const Count = styled.span`
-  display:inline-block;
-  margin-left:4px;
-  font-size:.9em;
 `
 
 const Title = styled.h3`
@@ -115,18 +71,6 @@ const RelatedListItem = props => {
           <Title>{title}</Title>
         </LinkTo>
       </Header>
-      <Footer>
-        <Author>
-          <ImageContainer>
-            <ImageAuthor src={user.image} title={user.name} alt={user.name} />
-          </ImageContainer>
-          <UserName>{user.name}</UserName>
-        </Author>
-        <Statistics title='komentarze'>
-          <GoCommentDiscussion />
-          <Count>{comments_count}</Count>
-        </Statistics>
-      </Footer>
     </Article>
   )
 }

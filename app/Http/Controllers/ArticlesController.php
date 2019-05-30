@@ -114,7 +114,7 @@ class ArticlesController extends Controller
                 Articles::where('idArticle', $id)->increment('Views', 1);
                 return response()->json($articles);
             }
-            return response()->json(['status' => false, 'error' => 'wrong data'], 400);
+            return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         public static function BuildNeighboursData($ids)
@@ -143,7 +143,7 @@ class ArticlesController extends Controller
                 return response()->json($articles);
             }
             else
-                return response()->json(['status' => false, 'error' => 'wrong data'], 400);
+                return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         public function by_category($count, Request $request)
@@ -297,16 +297,16 @@ class ArticlesController extends Controller
          */
         public function destroy(Request $request, $id)
         {
-            if(
-                Articles::where('idArticle', $id)->where('idUser', $_SESSION['iduser'])->delete() &&
-                Comments::where('idReference', $id)->delete() &&
-                UserLikes::where('idReference', $id)->delete()
-            )
-            {
+            $article = ArticlesCache::article($id);
+            if($article->main == 1) {
+                $latest = ArticlesCache::latest(1);
+                Articles::where('idArticle', $latest[0]->idarticle)->update(['Main' => 1]);
+            }
+            if(Articles::where('idArticle', $id)->where('idUser', $_SESSION['iduser'])->delete()) {
                 ArticlesCache::removeFromCache($id);
                 return response()->json(['status' => true, 'error' => ''], 202);
             }
-            return response()->json(['status' => false, 'error' => 'wrong data'], 400);
+            return response()->json(['status' => false, 'error' => 'wrong data']);
         }
 
         // STAFF AREA ----------------------------------------------------------------------------------------------------------------------------------------------

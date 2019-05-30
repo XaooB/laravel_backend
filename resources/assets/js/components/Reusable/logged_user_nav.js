@@ -93,13 +93,9 @@ class LoggedUserNav extends Component {
         <Link to='/app/user/messages'>Wiadomości</Link>
         <Link to='/app/user/notifications'>Powiadomienia</Link>
         {
-          user[0].tier > 1 ?
-          (
-            <Link to='/admin/dashboard'>Panel Administracyjny</Link>
-          ) :
-          (
-            ''
-          )
+          user[0].tier > 1
+          ? <Link to='/admin/dashboard'>Panel Administracyjny</Link>
+          : ''
         }
         <Label>Inne</Label>
         <a href='/api/auth/google/logout'>Wyloguj się</a>

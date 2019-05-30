@@ -155,9 +155,14 @@ class ArticlesCache
 		return self::CACHE_KEY . '.' . $key;
 	}
 
-    public function removeFromCache($id)
+    public function removeFromCache($id, $user = false)
     {
-        $key = 'by_id.' . $id;
+        if($user) {
+            $key = 'article.' . $id . '.user.' . $user;
+            $cacheKey = $this->getCacheKey($key);
+            cache()->forget($cacheKey);
+        }
+        $key = 'article.' . $id;
         $cacheKey = $this->getCacheKey($key);
         return cache()->forget($cacheKey);
     }

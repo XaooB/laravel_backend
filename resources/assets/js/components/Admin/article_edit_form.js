@@ -6,8 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { fetchCategories } from '../../actions/'
 import { connect } from 'react-redux';
 import axios from 'axios';
-
-import Toast from '../Reusable/Toast';
+import ModalNotification from '../Reusable/modal_notification';
 
 const Container = styled.section`
   margin-left:1px;
@@ -90,7 +89,7 @@ class ArticleEditForm extends Component {
       content: '',
       summary: '',
       file: '',
-      showToast:false
+      fetchingStatus: false
     }
 
     this.handleSelect = this.handleSelect.bind(this);
@@ -111,26 +110,15 @@ class ArticleEditForm extends Component {
         category: articleToEdit[0].category,
         content: articleToEdit[0].content
       })
-    })
-    : '';
-  }
-
-  showToast () {
-    this.setState({
-      showToast: true
-    }, () => {
-      setTimeout(() => {
-        this.setState({ showToast: false });
-        this.props.history.push('/admin/articles');
-      }
-    ,2000)
-    })
+    }) : '';
   }
 
   async handleEdit() {
     const { idarticle } = this.props.articleToEdit[0];
     const { title, category, file, content } = this.state;
     const data = new FormData();
+
+    this.setState({fetchingStatus: true});
 
     data.append('title', title);
     data.append('category', category);
@@ -142,9 +130,17 @@ class ArticleEditForm extends Component {
 
     try {
       await axios.post(`/api/articles/${idarticle}`, data);
-      this.showToast();
     } catch (e) {
       throw new Error(e);
+    } finally {
+      this.props.history.push({
+        pathname: '/admin/articles',
+        state: {
+          showNotificationModal: true,
+          text: 'Artykuł został zmieniony.',
+          type: 'success'
+        }
+      });
     }
   }
 
@@ -154,8 +150,8 @@ class ArticleEditForm extends Component {
   }
 
   render() {
-    const { title, category, content, summary, file, showToast } = this.state;
-    const { label, articleToEdit, article } = this.props;
+    const { title, category, content, summary, file, fetchingStatus } = this.state;
+    const { label, articleToEdit, article  } = this.props;
 
     return (
       <Container>
@@ -184,16 +180,20 @@ class ArticleEditForm extends Component {
             }
             </Field>
             <Field>
-            <Textarea type='text' placeholder='Opis' onChange={(e) => this.setState({content: e.target.value})} value={ content } />
+              <Textarea type='text' placeholder='Opis' onChange={(e) => this.setState({content: e.target.value})} value={ content } />
             </Field>
             <Field>
-            <Input type='file' onChange={(e) => this.setState({file: e.target.files[0]})} />
+              <Input type='file' onChange={(e) => this.setState({file: e.target.files[0]})} />
             </Field>
             </form>
-            <BtnWrapper>
-              <Button name='Edytuj' onClick={ () => { this.handleEdit() }} />
-              <Button name='Powrót &larr;' colorBlue onClick={() => { this.props.history.goBack() }} />
-            </BtnWrapper>
+              <BtnWrapper>
+                <Button name='&larr; Cofnij' colorBlue onClick={() => { this.props.history.goBack() }} />
+                <Button
+                  warning
+                  name='Edytuj'
+                  isFetching={fetchingStatus}
+                  onClick={ () => { this.handleEdit() }} />
+              </BtnWrapper>
             </Fragment>
           ) : (
             <Fragment>
@@ -203,7 +203,6 @@ class ArticleEditForm extends Component {
           )
         }
         </Background>
-        <Toast message='Artykuł został zaktualizowany' visible={showToast} />
       </Container>
     )
   }

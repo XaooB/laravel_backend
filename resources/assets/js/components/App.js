@@ -19,7 +19,7 @@ import AdminDashboard from '../containers/Admin/Dashboard';
 import AdminArticles from '../containers/Admin/Articles';
 import AdminPolls from '../containers/Admin/Polls';
 import AdminUsers from '../containers/Admin/Users';
-import AdminComments from '../containers/Admin/Comments';
+import AdminLive from '../containers/Admin/Live';
 import AdminPlayers from '../containers/Admin/Players';
 import ArticleAddNew from './Admin/article_addNew';
 import ArticleEdit from './Admin/article_edit';
@@ -74,6 +74,7 @@ class App extends Component {
                     <AdminPrivateRoute path={`${url}/articles`}  component={ AdminArticles } />
                     <AdminPrivateRoute path={`${url}/users`}  component={ AdminUsers } />
                     <AdminPrivateRoute path={`${url}/polls`}  component={ AdminPolls } />
+                    <AdminPrivateRoute path={`${url}/live`}  component={ AdminLive } />
                     <AdminPrivateRoute path={`${url}/players`}  component={ AdminPlayers } />
                   </Switch>
                 </div>
