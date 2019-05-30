@@ -15,5 +15,8 @@ MySQL, PHP, Laravel
 ![](userprofile.png)
 
 ## Contributions
-Marcin M. (https://github.com/Marcin250)
+Bartosz Lorek - [@me](mailto:balorek@interia.pl)
+
+Marcin Murach - [github](https://github.com/Marcin250)
+
 
