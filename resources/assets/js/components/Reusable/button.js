@@ -24,8 +24,8 @@ const Spinner = styled.div`
     background-color: #fff;
     border-radius: 100%;
     display: inline-block;
-    -webkit-animation: spin 1.4s infinite ease-in-out both;
-    animation: spin 1.4s infinite ease-in-out both;
+    -webkit-animation: bounce 1.4s infinite ease-in-out both;
+    animation: bounce 1.4s infinite ease-in-out both;
     &:nth-child(1) {
       -webkit-animation-delay: -0.32s;
       animation-delay: -0.32s;
@@ -37,7 +37,7 @@ const Spinner = styled.div`
     }
   }
 
-  @keyframes spin {
+  @keyframes bounce {
     0%, 80%, 100% {
       -webkit-transform: scale(0);
       transform: scale(0);

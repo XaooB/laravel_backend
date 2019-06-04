@@ -7,6 +7,8 @@ import CategoryList from './categories_list_item';
 
 const Container = styled.div`
   margin-top:20px;
+  position:sticky;
+  top:75px;
 `
 
 class CategoriesList extends Component {

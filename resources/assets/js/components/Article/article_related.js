@@ -7,8 +7,8 @@ const Section = styled.section`
 `
 
 const Title = styled.h3`
-  font-weight:lighter;
-  font-size:1.4em;
+  font-family:'RSBold';
+  font-size:1.8em;
   margin-bottom:16px;
 `
 

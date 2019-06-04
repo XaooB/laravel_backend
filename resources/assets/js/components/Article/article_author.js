@@ -51,7 +51,7 @@ const Author = props => {
     <Wrapper>
       <Sticky>
         <LinkTo to={`/app/news/${category}`}>{category}</LinkTo>
-        <PublishedBy>posted by <LinkToUser to={`/app/user/${user.iduser}`} title={`Profil użytkownika ${user.name}`}>{user.name}</LinkToUser>,<br/>{dateConverter.toStageDate(create_date)}</PublishedBy>
+        <PublishedBy>dodane przez <LinkToUser to={`/app/user/${user.iduser}`} title={`Profil użytkownika ${user.name}`}>{user.name}</LinkToUser>,<br/>{dateConverter.toStageDate(create_date)}</PublishedBy>
         <Share url={props.url} />
       </Sticky>
     </Wrapper>

@@ -73,6 +73,7 @@ const ArticleInfo = styled.header`
 
 const Title = styled.h3`
   font-size:1.2em;
+  line-height:1.2;
   font-weight:lighter;
 `
 

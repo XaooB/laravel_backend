@@ -19,8 +19,7 @@ const ListItem = styled.li`
   animation:animateComment .3s ease-in;
   flex-flow:row nowrap;
   justify-content:flex-start;
-  padding-top:25px;
-  }
+  margin-top:25px;
   &:not(:last-child) {
     margin-bottom:15px;
   }
@@ -39,7 +38,7 @@ const ListItem = styled.li`
 const Article = styled.article`
   flex:1;
   ul {
-    margin-left:20px;
+    margin-left:-20px;
     @media only screen and (min-width: 640px) {
       margin-left:-20px;
     }
@@ -50,13 +49,21 @@ const Header = styled.header`
   display:flex;
   justify-content:space-between;
   align-items:baseline;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
+  @media (min-width: 640px) {
+    flex-flow: row wrap;
+  }
 `;
 
 const Added = styled.span`
   font-size:.8em;
+  text-align:left;
+  line-height:1.3;
   letter-spacing:.6px;
   color:#c8c8c8;
+  @media (min-width: 640px) {
+    text-align: right;
+  }
 `;
 
 const Content = styled.p`
@@ -179,7 +186,7 @@ class SingleComment extends Component {
             {!comment.modify_date
               ? <Added title={comment.create_date}>{dateConverter.toStageDate(comment.create_date)}</Added>
               : (
-                <Added title={`${comment.create_date}, edited at ${comment.modify_date}`}>{dateConverter.toStageDate(comment.create_date)}, edited {dateConverter.toStageDate(comment.modify_date)}</Added>
+                <Added title={`${comment.create_date}, edited at ${comment.modify_date}`}>{dateConverter.toStageDate(comment.create_date)}, <br/>edytowano {dateConverter.toStageDate(comment.modify_date)}</Added>
               )
             }
           </Header>

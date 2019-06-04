@@ -47,7 +47,7 @@ const UserImageContainer = styled.figure`
   min-height:55px;
   max-width:55px;
   max-height:55px;
-  margin-top:10px;
+  margin-top:14px;
   margin-right:10px;
   overflow:hidden;
   align-self:flex-start;

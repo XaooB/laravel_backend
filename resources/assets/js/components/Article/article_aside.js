@@ -14,8 +14,8 @@ const Wrapper = styled.aside`
 `;
 
 const Header = styled.h3`
-  font-size:1.4em;
-  font-weight:lighter;
+  font-size:1.8em;
+  font-family:'RSBold';
 `;
 
 const Centered = styled.div`

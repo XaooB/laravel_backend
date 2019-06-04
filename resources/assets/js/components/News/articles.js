@@ -37,9 +37,8 @@ const Header = styled.div`
 `
 
 const Title = styled.h3`
-  font-family:'AvenirLTR';
-  font-size:1.25em;
-  font-weight:lighter;
+  font-family:'RSBold';
+  font-size:1.4em;
 `
 
 const Item = styled.span`

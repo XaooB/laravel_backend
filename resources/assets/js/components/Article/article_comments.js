@@ -8,8 +8,8 @@ import { connect } from 'react-redux';
 import {fetchComments, setCommentStatus} from '../../actions/'
 
 const Title = styled.h3`
-  font-size:1.4em;
-  font-weight:lighter;
+  font-size:1.8em;
+  font-family:'RSBold';
   margin-top:50px;
 `
 
