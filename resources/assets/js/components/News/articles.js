@@ -24,7 +24,7 @@ const Header = styled.div`
   padding:15px 0;
   position:sticky;
   z-index:20;
-  top:96px;
+  top:112px;
   background:#fff;
   display:flex;
   flex-flow:row nowrap;

@@ -3,20 +3,14 @@ import styled from 'styled-components';
 
 const ImageContainer = styled.figure`
   justify-content:center;
-  min-width:45px;
-  min-height:45px;
-  max-width:45px;
-  max-height:45px;
+  min-width:42px;
+  min-height:42px;
+  max-width:42px;
+  max-height:42px;
   margin-right:10px;
   overflow:hidden;
   align-self:flex-start;
   border-radius:100%;
-  @media (min-width: 640px) {
-    min-width:55px;
-    min-height:55px;
-    max-width:55px;
-    max-height:55px;
-  }
 `
 
 const Image = styled.img`

@@ -70,16 +70,24 @@ const Content = styled.p`
   white-space:pre-line;
   text-align:justify;
   padding:8px 0;
+  margin-left:-50px;
   font-size:1.05em;
+  @media (min-width: 640px) {
+    margin-left:0;
+  }
 `;
 
 const Footer = styled.footer`
   margin-top:6px;
+  margin-left:-50px;
   display:flex;
   flex-flow:row wrap;
   align-items:center;
   justify-content:flex-start;
   margin-bottom:15px;
+  @media (min-width: 640px) {
+    margin-left:0;
+  }
 `;
 
 const ActionName = styled.span`

@@ -104,13 +104,19 @@ class ArticleEditForm extends Component {
     const { articleToEdit, fetchCategories } = this.props;
     await fetchCategories();
 
-    articleToEdit.length ? this.setState({ articleToEdit: articleToEdit}, () => {
+    articleToEdit.length ? this.setState({ articleToEdit: articleToEdit }, () => {
+      let categoryID = this.setCategoryID(articleToEdit[0].category).idcategory
       this.setState({
         title: articleToEdit[0].title,
-        category: articleToEdit[0].category,
+        category: categoryID,
         content: articleToEdit[0].content
       })
     }) : '';
+  }
+
+  setCategoryID(cat) {
+    const { categories } = this.props.article;
+    return categories.find(item => cat === item.name);
   }
 
   async handleEdit() {
@@ -152,6 +158,8 @@ class ArticleEditForm extends Component {
   render() {
     const { title, category, content, summary, file, fetchingStatus } = this.state;
     const { label, articleToEdit, article  } = this.props;
+
+    console.log(category);
 
     return (
       <Container>

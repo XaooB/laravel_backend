@@ -27,18 +27,18 @@ const dateConverter = {
 
     if(secondsDiff < 2) return ` teraz`;
     if(secondsDiff > 1 && secondsDiff < 5) return ` ${secondsDiff} sekundy temu`;
-    if(secondsDiff > 5 && secondsDiff < 60) return ` ${secondsDiff} sekund temu`;
+    if(secondsDiff >= 5 && secondsDiff < 60) return ` ${secondsDiff} sekund temu`;
 
     if(minutesDiff < 2) return ` minutę temu`;
     if(minutesDiff > 1 && minutesDiff < 5) return ` ${minutesDiff} minuty temu`;
-    if(minutesDiff > 5 && minutesDiff < 60) return ` ${minutesDiff} minut temu`;
+    if(minutesDiff >= 5 && minutesDiff < 60) return ` ${minutesDiff} minut temu`;
 
     if(hoursDiff < 2) return ` godzinę temu`;
     if(hoursDiff > 1 && hoursDiff < 5) return ` ${hoursDiff} godziny temu`;
-    if(hoursDiff > 5 && hoursDiff < 24) return ` ${hoursDiff} godzin temu`;
+    if(hoursDiff >= 5 && hoursDiff < 24) return ` ${hoursDiff} godzin temu`;
 
     if(dayDiff < 2) return ` wczoraj`;
-    if(dayDiff > 1) return ` ${dayDiff} dni temu`;
+    if(dayDiff >= 2) return ` ${dayDiff} dni temu`;
   }
 }
 

@@ -48,7 +48,7 @@ const Category = styled.span`
 
 const Title = styled.h2`
   font-family: 'RSBold';
-  font-size:1.7em;
+  font-size:1.6em;
   line-height: 1.1em;
   color:#ffffff;
   @media (min-width: 480px) {
@@ -61,38 +61,31 @@ const Title = styled.h2`
 `
 
 const LinkTo = styled(Link)`
-  position:absolute;
-  left:43%
-  transform: translateX(-50%);
-  bottom:20px;
-  font-size:1.1em;
-  width:calc(100% - 100px);
-  max-width:650px;
+  margin:0 10px;
+  max-width:700px;
   color:inherit;
   &:hover ${Category} {
     &:before {
       width:calc(100% - 101px);
     }
   }
-  @media (min-width: 640px) {
-    left:35%;
-    width:auto;
-    font-size:1em;
-    bottom:40px;
-  }
+`
+
+const Test = styled.div`
+  margin:0 auto;
+  max-width:1300px;
 `
 
 const BlackOverlay = styled.div`
   position:absolute;
   background: linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 65%);
-  padding-top:70px;
-  padding-bottom:40px;
+  padding-top:100px;
+  padding-bottom:50px;
   width:100%;
   bottom:0;
   left:0;
   @media (min-width: 640px) {
-    padding-top:250px;
-    padding-bottom:50px;
+    padding-top:150px;
   }
 `
 
@@ -102,7 +95,8 @@ const Meta = styled.div`
   margin-bottom:5px;
   svg {
     position:relative;
-    top:1px;
+    top:2px;
+    margin-right:3px;
   }
   @media (min-width: 640px) {
     font-size:.95em;
@@ -128,6 +122,7 @@ const MainArticle = props => {
         <Image src={image}  title={title} alt={title} />
       </ImageWrapper>
       <BlackOverlay>
+      <Test>
         <LinkTo to={link}>
           <Meta>
             <Date><FaRegClock/> {dateConverter.toStageDate(create_date)}</Date>
@@ -136,6 +131,7 @@ const MainArticle = props => {
           <Title>{title}</Title>
           <Category>{category}</Category>
         </LinkTo>
+        </Test>
       </BlackOverlay>
     </Article>
   )

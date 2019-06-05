@@ -28,7 +28,9 @@ const Container = styled.div`
 `
 
 const ArticleTitle = styled.h4`
-  padding:20px 15px 15px 15px;
+  height:74px;
+  padding:15px;
+  vertical-align:center;
   border-bottom:1px solid #ededed;
 `
 
@@ -38,7 +40,7 @@ const CommentContent = styled.textarea`
   background:transparent;
   padding:15px;
   outline:none;
-  height:calc(100% - 117px);
+  height:calc(100% - 139px);
   width:100%;
 `
 
@@ -62,6 +64,7 @@ class AddCommentModalMobile extends Component {
     }
 
     this.handlePost = this.handlePost.bind(this);
+    this.setTextareaRef = this.setTextareaRef.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleTextarea = this.handleTextarea.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -74,33 +77,41 @@ class AddCommentModalMobile extends Component {
   async handlePost(e) {
     e.preventDefault();
 
-
     const { content } = this.state;
     const { commentID, article, showAnswerForm, statusModal } = this.props;
     const idsubreference = !commentID ? 0 : commentID;
 
-    this.setState({ fetchingStatus: true });
+    if(content.length < 1) {
+      this.textareaRef.style.border = '1px solid #ee324e';
+    } else {
+      this.setState({ fetchingStatus: true });
 
-    !statusModal
-    ? await this.props.addComment({content, idsubreference: 0, idreference: article.data.idarticle})
-    : await this.props.addComment({content, idsubreference, idreference: article.data.idarticle});
-    this.setState({ fetchingStatus: false });
-    this.props.openCommentModal();
+      !statusModal
+      ? await this.props.addComment({content, idsubreference: 0, idreference: article.data.idarticle})
+      : await this.props.addComment({content, idsubreference, idreference: article.data.idarticle});
+      this.setState({ fetchingStatus: false, content: '' });
+      this.props.openCommentModal();
+    }
   }
 
   async handleEdit(e) {
     e.preventDefault();
-    this.setState({fetchingStatus: true});
 
     const { content } = this.state,
-          { commentID, article } = this.props;
+    { commentID, article } = this.props;
 
-    await this.props.editComment({content, selectedCommentID: commentID, articleID: article.data.idarticle});
-    this.setState({
-      content: '',
-      fetchingStatus: false
-    })
-    this.closeModal();
+    if(content.length < 1) {
+      this.textareaRef.style.border = '1px solid #ee324e';
+    } else {
+      this.setState({fetchingStatus: true})
+      await this.props.editComment({content, selectedCommentID: commentID, articleID: article.data.idarticle});
+      this.setState({content: '', fetchingStatus: false });
+      this.closeModal();
+    }
+  }
+
+  setTextareaRef(node) {
+    this.textareaRef = node;
   }
 
   closeModal() {
@@ -136,6 +147,7 @@ class AddCommentModalMobile extends Component {
             onChange={this.handleTextarea}
             value={content}
             type='text'
+            ref={this.setTextareaRef}
             placeholder='Napisz komentarz..'></CommentContent>
           <ButtonWrapper>
             <Button
