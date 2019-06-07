@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Title from './admin_content_title';
 import Filters from './admin_filters';
-import ArticleTable from './article_table';
+import PlayerTable from './players_table';
 import Button from '../Reusable/button';
 
 const Container = styled.section`
@@ -24,23 +24,23 @@ const Wrapper = styled.section`
   margin:1px 20px;
 `
 
-const ArticleContent = props => {
+const PlayerContent = props => {
   return (
     <Container>
-      <Title>Twoje artykuły</Title>
+      <Title>Zawodnicy</Title>
       <Wrapper>
-        <Link to='/admin/articles/add'>
-          <Button name='Dodaj artykuł' blue />
+        <Link to='/admin/players/add'>
+          <Button name='Dodaj zawodnika' blue />
         </Link>
       </Wrapper>
       <Wrapper>
         <Filters />
       </Wrapper>
       <Wrapper>
-        <ArticleTable />
+        <PlayerTable />
       </Wrapper>
     </Container>
   );
 };
 
-export default ArticleContent;
+export default PlayerContent;

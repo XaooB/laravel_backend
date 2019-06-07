@@ -14,7 +14,7 @@ const ImageContainer = styled.figure`
 `
 
 const Image = styled.img`
-  height:55px;
+  height:42px;
 `
 
 const User = props => {

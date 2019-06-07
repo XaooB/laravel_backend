@@ -12,6 +12,7 @@ import AddCommentForm from './article_comments_form';
 import EditCommentForm from './article_comments_edit_form';
 import dateConverter from '../../helpers/dateConverter';
 import ConfimationModal from '../Reusable/modal_confirmation';
+import variableCSS from '../../css/variables';
 import { selectedCommentID, deleteComment, hideComment } from '../../actions';
 
 const ListItem = styled.li`
@@ -60,7 +61,7 @@ const Added = styled.span`
   text-align:left;
   line-height:1.3;
   letter-spacing:.6px;
-  color:#c8c8c8;
+  color:${variableCSS.darkGray};
   @media (min-width: 640px) {
     text-align: right;
   }
@@ -104,20 +105,20 @@ const FooterItem = styled.button`
   cursor:pointer;
   padding:3px;
   border:none;
-  color:rgb(169,169,169);
+  color:${variableCSS.darkGray}
   cursor:pointer;
   &:not(:last-child) {
     margin-right:6px;
   }
   &:hover {
-    color:#00529f;
+    color:${variableCSS.blue};
   }
 `
 
 const LinkTo = styled(Link)`
   color:inherit;
   &:hover {
-    color:#00529f;
+    color:${variableCSS.blue};
   }
 `
 
@@ -242,7 +243,7 @@ class SingleComment extends Component {
                 }
                 {user[0].tier > 2 && user[0].iduser !== comment.user.iduser
                   ? (
-                    <FooterItem title="Zbanuj komentarz" style={{ color: '#ee324e' }} onClick={this.handleHide}>
+                    <FooterItem title="Zbanuj komentarz" style={{ color: variableCSS.crimson }} onClick={this.handleHide}>
                       <IoIosFlag />
                       <ActionName>Zbanuj</ActionName>
                     </FooterItem>
@@ -259,7 +260,7 @@ class SingleComment extends Component {
                 user={user} articleID={articleID}
                 commentID={comment.idcomment}
                 author={comment.user.name}
-                handleForm={() => this.handlePostForm()} />
+                handleForm={this.handlePostForm} />
             : ''}
           {
             comment.comments ? <Comments comments={comment.comments} user={user} articleID={articleID} /> : ''}

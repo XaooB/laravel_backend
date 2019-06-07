@@ -9,6 +9,7 @@ import { StoreAdminArticleToEdit, fetchAdminArticles, searchAdminArticles } from
 import { MdEdit, MdDeleteForever } from 'react-icons/md';
 import ModalNotification from '../Reusable/modal_notification';
 import ConfimationModal from '../Reusable/modal_confirmation';
+import variablesCSS from '../../css/variables';
 import { API } from '../../helpers/api';
 
 const Table = styled.table`
@@ -48,7 +49,7 @@ const CustomRadio = styled.label`
     width:16px;
     height:16px;
     border-radius:6px;
-    border:2px solid #ee324e;
+    border:2px solid ${variablesCSS.blue};
   }
 `
 
@@ -59,7 +60,7 @@ const CustomRadio = styled.label`
     position:absolute;
     left:3px;
     top:-1px;
-    color:#ee324e;
+    color:${variablesCSS.blue};
  }
 `
 

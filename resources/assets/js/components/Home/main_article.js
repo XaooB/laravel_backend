@@ -48,7 +48,7 @@ const Category = styled.span`
 
 const Title = styled.h2`
   font-family: 'RSBold';
-  font-size:1.6em;
+  font-size:1.65em;
   line-height: 1.1em;
   color:#ffffff;
   @media (min-width: 480px) {

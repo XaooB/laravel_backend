@@ -5,10 +5,12 @@ import Button from '../Reusable/button';
 import Wrapper from '../Reusable/wrapper';
 import { connect } from 'react-redux';
 import { searchAdminArticles, setAdminLoadCounter } from '../../actions/';
+import variablesCSS from '../../css/variables';
 
 const Select = styled.select`
   padding:10px;
-  border-radius:3px;
+  border-radius:${variablesCSS.radius};
+  border:1px solid ${variablesCSS.gray};
   outline: none;
   align-self:flex-start;
 `
@@ -16,9 +18,9 @@ const Select = styled.select`
 const Search = styled.input`
   align-self:flex-end;
   padding:10px;
-  border-radius:3px;
+  border-radius:${variablesCSS.radius};
   outline: none;
-  border:1px solid rgb(169,169,169);
+  border:1px solid ${variablesCSS.gray};
 `
 
 class ArticleFilters extends Component {

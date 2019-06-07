@@ -81,7 +81,9 @@ class EditCommentForm extends Component {
   }
 
   componentDidMount() {
-    this.setState({content: this.props.content})
+    const { content } = this.props;
+
+    this.setState({ content, charactersUsed: content.length })
   }
 
   handleTextarea(event) {

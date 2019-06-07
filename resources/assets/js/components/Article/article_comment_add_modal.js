@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../Reusable/button';
 import { connect } from 'react-redux';
 import { addComment, editComment } from '../../actions/';
+import variableCSS from '../../css/variables';
 
 const Container = styled.div`
   position:fixed;
@@ -30,7 +31,6 @@ const Container = styled.div`
 const ArticleTitle = styled.h4`
   height:74px;
   padding:15px;
-  vertical-align:center;
   border-bottom:1px solid #ededed;
 `
 
@@ -82,7 +82,7 @@ class AddCommentModalMobile extends Component {
     const idsubreference = !commentID ? 0 : commentID;
 
     if(content.length < 1) {
-      this.textareaRef.style.border = '1px solid #ee324e';
+      this.textareaRef.style.border = '2px solid #ee324e';
     } else {
       this.setState({ fetchingStatus: true });
 
@@ -101,7 +101,7 @@ class AddCommentModalMobile extends Component {
     { commentID, article } = this.props;
 
     if(content.length < 1) {
-      this.textareaRef.style.border = '1px solid #ee324e';
+      this.textareaRef.style.border = '2px solid #ee324e';
     } else {
       this.setState({fetchingStatus: true})
       await this.props.editComment({content, selectedCommentID: commentID, articleID: article.data.idarticle});
@@ -124,7 +124,7 @@ class AddCommentModalMobile extends Component {
   }
 
   componentDidMount() {
-    const { isEditing, content } = this.props;
+    const { isEditing } = this.props;
 
     if(isEditing)
       this.setState({content: this.props.content});
@@ -160,13 +160,13 @@ class AddCommentModalMobile extends Component {
                     name="Dodaj post"
                     onClick={this.handlePost}
                     isFetching={fetchingStatus}
-                    warning />
+                    blue />
                 ) : (
                   <Button
                     name="Edytuj"
                     onClick={this.handleEdit}
                     isFetching={fetchingStatus}
-                    warning />
+                    blue />
                 )
               }
           </ButtonWrapper>

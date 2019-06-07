@@ -15,7 +15,7 @@ const ImageWrapper = styled.figure`
 `
 
 const Image = styled.img`
-  height:250px;
+  height:275px;
   @media (min-width: 480px) {
     width:100%;
     height:100%;

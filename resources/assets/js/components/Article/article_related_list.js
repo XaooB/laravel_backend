@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   display:flex;
   flex-flow:row wrap;
   justify-content:space-between;
-  margin: 0 2.5px;
+  margin: 15px 2.5px;
 `
 
 const RelatedList = props => {
