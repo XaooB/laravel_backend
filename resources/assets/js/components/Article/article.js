@@ -13,12 +13,6 @@ const ArticleWrapper = styled.article`
   flex-flow:column wrap;
   background:white;
   flex: 3;
-  @media (min-width: 900px) {
-    padding-right:25px;
-  }
-  section:last-child section {
-    padding:0;
-  }
 `;
 
 const Section = styled.section`
@@ -29,10 +23,12 @@ const Section = styled.section`
 
 const Wrapper = styled.section`
   flex:6;
-  margin-top:20px;
   background:white;
   @media (min-width: 480px) {
-    padding-left:25px;
+    padding-left:20px;
+  }
+  @media (min-width: 900px) {
+    padding:0 20px;
     margin-top:0;
   }
 `

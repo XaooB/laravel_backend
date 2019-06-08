@@ -1,15 +1,16 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
+import variablesCSS from '../../css/variables';
 
 const Button = styled.button`
   display:inline-flex;
   justify-content:space-between;
   align-items:center;
   cursor:pointer;
-  background:#ee324e;
+  background:${variablesCSS.blue};
   outline:none;
   border:1px solid #999;
-  border-radius:3px;
+  border-radius:${variablesCSS.radius};
   padding:8px 8px;
   margin:2px 0;
   margin-right: 6px;

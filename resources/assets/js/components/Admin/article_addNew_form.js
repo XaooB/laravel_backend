@@ -1,22 +1,20 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import Title from './admin_content_title';
+import MiniLoader from '../Reusable/mini_loader';
 import Button from '../Reusable/button';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../../actions/'
+import { FaRegFileImage } from "react-icons/fa";
 import { withRouter } from 'react-router-dom';
+import variablesCSS from '../../css/variables';
 
 const Container = styled.section`
   margin-left:1px;
   margin:20px;
   margin-top:5px;
   align-items:center;
-  svg {
-    color:#c6c6c6;
-    font-size:1.25em;
-    font-family: 'SSPL';
-  }
 `
 
 const Wrapper = styled.section`
@@ -35,13 +33,32 @@ const Input = styled.input`
   width:100%;
   padding:12px;
   border-radius:10px;
-  border:none;
-  border:2px solid #e5e5e5;
+  border:2px solid ${variablesCSS.gray};
+  background:${variablesCSS.gray};
   &:focus {
-    border: 2px solid #00529f;
+    border: 2px solid ${variablesCSS.darkGray};
   }
   &[type='file'] {
+    display:none;
     border:none;
+  }
+  &::placeholder {
+    color:#1e1e1e;
+  }
+`
+
+const UploadLabel = styled.label`
+  display:flex;
+  cursor: pointer;
+  height:43px;
+  border-radius:${variablesCSS.radius};
+  padding:14px;
+  letter-spacing:.35px;
+  font-size:.85em;
+  background:${variablesCSS.gray};
+  svg {
+    font-size:1.2em;
+    margin-right:4px;
   }
 `
 
@@ -50,22 +67,26 @@ const Textarea = styled.textarea`
   resize: vertical;
   border-radius:10px;
   padding:12px;
-  min-height:100px;
-  max-height:250px;
-  border:none;
+  min-height:175px;
+  max-height:400px;
   outline:none;
-  border:2px solid #e5e5e5;
+  background:${variablesCSS.gray};
+  border:2px solid ${variablesCSS.gray};
   &:focus {
-    border: 2px solid #00529f;
+    border: 2px solid ${variablesCSS.darkGray};
+  }
+  &::placeholder {
+    color:#1e1e1e;
   }
 `
 
 const Select = styled.select`
-  padding:12px;
+  padding:13px;
   border-radius:12px;
   width:100%;
+  border:none;
+  background:${variablesCSS.gray};
   outline:none;
-  border:2px solid #e5e5e5;
 `
 
 const BtnWrapper = styled.div`
@@ -83,7 +104,7 @@ class AddNewArticleForm extends Component {
     this.state = {
       articleToEdit: [],
       title: '',
-      category: 'Wybierz kategorię..',
+      category: 0,
       content: '',
       summary: '',
       file: '',
@@ -140,48 +161,52 @@ class AddNewArticleForm extends Component {
     return (
       <Container>
       <Title>{label}</Title>
-        <Wrapper>
-        {
-            <Fragment>
-              <form>
-                <Field>
-                  <Input type='text' placeholder='Tytuł'  maxLength='75' onChange={(e) => this.setState({title: e.target.value})} value={ title }  />
-                </Field>
-                <Field>
-                {
-                  article.categories.length ?
-                  (
-                    <Select onChange={this.handleSelect}>
-                      {
-                        article.categories.map(item => <option key={item.idcategory} value={item.idcategory}>{item.name}</option>)
-                      }
-                    </Select>
-                  ) : (
-                    'Pobieram kategorie..'
-                  )
-                }
-                </Field>
-                <Field>
-                  <Textarea type='text' placeholder='Opis' onChange={(e) => this.setState({content: e.target.value})} value={ content } />
-                </Field>
-                <Field>
-                  <Input type='file' onChange={(e) => this.setState({file: e.target.files[0]})} />
-                </Field>
-              </form>
-              <BtnWrapper>
-                <Button
-                  name='&larr; Cofnij'
-                  onClick={() => { this.props.history.goBack() } }
-                  title='Powrót' />
-                <Button name='Dodaj'
-                  warning
-                  onClick={() => { this.handleSubmit() } }
-                  title='Dodaj artykuł'
-                  isFetching={this.state.fetchingStatus} />
-              </BtnWrapper>
-            </Fragment>
-        }
-        </Wrapper>
+      {
+        article.categories.length
+        ? (
+          <Wrapper>
+          {
+              <Fragment>
+                <form>
+                  <Field>
+                    <Input type='text' placeholder='Tytuł'  maxLength='75' onChange={(e) => this.setState({title: e.target.value})} value={ title }  />
+                  </Field>
+                  <Field>
+                  <Select onChange={this.handleSelect} value={category}>
+                    <option key={0} value={0} disabled>Wybierz kategorię..</option>
+                    {
+                      article.categories.map(
+                        item => <option key={item.idcategory} value={item.idcategory}>{item.name}</option>
+                      )
+                    }
+                  </Select>
+                  </Field>
+                  <Field>
+                    <Textarea type='text' placeholder='Opis' onChange={(e) => this.setState({content: e.target.value})} value={ content } />
+                  </Field>
+                  <Field>
+                    <UploadLabel htmlFor='upload'><FaRegFileImage />Wybierz zdjęcie</UploadLabel>
+                    <Input type='file' id='upload' onChange={(e) => this.setState({file: e.target.files[0]})} />
+                  </Field>
+                </form>
+                <BtnWrapper>
+                  <Button
+                    name='&larr; Cofnij'
+                    onClick={() => { this.props.history.goBack() } }
+                    title='Powrót' />
+                  <Button name='Dodaj'
+                    blue
+                    onClick={() => { this.handleSubmit() } }
+                    title='Dodaj artykuł'
+                    isFetching={this.state.fetchingStatus} />
+                </BtnWrapper>
+              </Fragment>
+          }
+          </Wrapper>
+        ) : (
+          <MiniLoader />
+        )
+      }
       </Container>
     )
   }

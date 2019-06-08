@@ -9,15 +9,18 @@ import Notification from '../Reusable/modal_notification';
 const Header = styled.header`
   background:white;
   color:#1e1e1e;
-  margin-bottom:40px;
+  margin: 0 5px 40px 5px;
 `
 
 const Title = styled.h2`
   display:block;
-  font-family:'AvenirLTB';
-  font-size:1.7em;
+  font-family:'RSBold';
+  font-size:1.65em;
+  @media (min-width: 480px) {
+    font-size:2em;
+  }
   @media (min-width: 640px) {
-    font-size:2.3em;
+    font-size:2.4em;
   }
 `
 

@@ -13,6 +13,7 @@ import {
 } from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
+import variablesCSS from '../../css/variables';
 
 const Nav = styled.nav`
   padding-top:5px;
@@ -33,8 +34,7 @@ const LinkTo = styled(Link)`
   color:inherit;
   display:block;
   &:hover {
-    color:#fff;
-    background:#00529f;
+    background:${variablesCSS.gray};
   }
 `
 
